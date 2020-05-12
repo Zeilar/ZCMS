@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function() {
+   return 'Hello'; 
 });
+
+Route::post('/ping', 'PingController@ping')->name('ping');
+
+// Route::post('/ping', 'PingController@ping')->skipMiddleware(VerifyCsrfToken::class)->name('ping');

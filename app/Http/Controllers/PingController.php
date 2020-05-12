@@ -6,5 +6,9 @@ use Illuminate\Http\Request;
 
 class PingController extends Controller
 {
-    //
+    public function ping(Request $request) {
+        return response()->json([
+            'hello world' => 'yes',
+        ]);
+    }
 }
