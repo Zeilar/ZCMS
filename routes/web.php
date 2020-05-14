@@ -14,9 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function() {
-   return 'Hello'; 
+    // App\User::create([
+    //     'username' => 'test',
+    //     'email' => 'test@test.com',
+    //     'password' => Illuminate\Support\Facades\Hash::make('123'),
+    // ]);
+    return 'Hello'; 
 });
 
-Route::post('/ping', 'PingController@ping')->name('ping');
+Route::post('/login', 'AuthController@login')->name('login');
 
-// Route::post('/ping', 'PingController@ping')->skipMiddleware(VerifyCsrfToken::class)->name('ping');
+Route::post('/ping', 'PingController@ping')->name('ping');
