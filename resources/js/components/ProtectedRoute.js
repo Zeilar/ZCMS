@@ -1,6 +1,5 @@
 import Unauthorized from './Unauthorized';
 import { Route } from 'react-router-dom';
-import Loading from './Loading';
 import React from 'react';
 
 export default function ProtectedRoute({ component: Component, ...rest }) {

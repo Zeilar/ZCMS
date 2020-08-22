@@ -43,6 +43,10 @@ class AuthController extends Controller
         ]);
     }
 
+    public function logout() {
+        Auth::logout();
+    }
+
     public function authenticate(Request $request) {
         return response()->json(['user' => auth()->user()]);
     }

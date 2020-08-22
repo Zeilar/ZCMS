@@ -12,6 +12,7 @@
 }
 
 img,
+svg,
 button {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -20,6 +21,8 @@ button {
 }
 
 body {
-  background: #292929;
+  flex-direction: column;
+  min-height: 100vh;
+  display: flex;
 }
 

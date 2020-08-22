@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 
-export default function Loading() {
+export default function Navbar() {
     return (
-        <div>
-            Loading
-        </div>
+        <header>
+            <nav>
+                Navbar
+            </nav>
+        </header>
     );
 }

@@ -9,8 +9,8 @@ export default function App() {
     return (
         <Router>
             <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/" component={Landing} />
+                <Route exact path='/login' component={Login} />
+                <Route exact path='/' component={Landing} />
                 <Route path='*' component={NotFound} />
             </Switch>
         </Router>
