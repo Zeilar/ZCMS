@@ -72247,7 +72247,7 @@ var _localStorage$getItem;
 
 
 
-document.querySelector('html').classList.add((_localStorage$getItem = localStorage.getItem('theme')) !== null && _localStorage$getItem !== void 0 ? _localStorage$getItem : 'light');
+document.querySelector('html').setAttribute('data-theme', (_localStorage$getItem = localStorage.getItem('theme')) !== null && _localStorage$getItem !== void 0 ? _localStorage$getItem : 'light');
 if (document.getElementById('app')) react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_0__["default"], null), document.getElementById('app'));
 
 /***/ }),
@@ -72305,7 +72305,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _NotFound__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NotFound */ "./resources/js/components/NotFound.js");
 /* harmony import */ var _Landing__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Landing */ "./resources/js/components/Landing.js");
-/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Login */ "./resources/js/components/Login.js");
+/* harmony import */ var _Navbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Navbar */ "./resources/js/components/Navbar.js");
+/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Login */ "./resources/js/components/Login.js");
+
 
 
 
@@ -72315,14 +72317,12 @@ __webpack_require__.r(__webpack_exports__);
 function App() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Route"], {
     exact: true,
-    path: "/login",
-    component: _Login__WEBPACK_IMPORTED_MODULE_5__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Route"], {
-    exact: true,
     path: "/",
     component: _Landing__WEBPACK_IMPORTED_MODULE_4__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Route"], {
-    path: "*",
+    path: "/login",
+    component: _Login__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Route"], {
     component: _NotFound__WEBPACK_IMPORTED_MODULE_3__["default"]
   })));
 }
@@ -72353,16 +72353,14 @@ function Landing(_ref) {
   var user = JSON.parse(localStorage.getItem('user'));
 
   function logout() {
-    localStorage.removeItem('user');
     fetch('/logout', {
       method: 'GET'
     });
+    localStorage.removeItem('user');
     history.push('/');
   }
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navbar__WEBPACK_IMPORTED_MODULE_3__["default"], null), "Landing page", user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome, ", user.username) : '', !user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
-    to: "/login"
-  }, "Login") : '', user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navbar__WEBPACK_IMPORTED_MODULE_3__["default"], null), "Landing page", user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome, ", user.username) : '', user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
     onClick: logout,
     to: "/"
   }, "Logout") : '');
@@ -72386,11 +72384,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
+/* harmony import */ var _Navbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Navbar */ "./resources/js/components/Navbar.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -72450,7 +72450,7 @@ function Login() {
     return _login.apply(this, arguments);
   }
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Login"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Navbar__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Login"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
     onSubmit: login
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
@@ -72478,10 +72478,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 
 function Navbar() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, "Navbar"));
+  var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_1__["createUseStyles"])({
+    header: {
+      background: 'rgb(15, 15, 15)'
+    },
+    navbar: {
+      margin: '0 var(--container-margin)',
+      padding: '0.5rem',
+      display: 'flex'
+    },
+    navList: {
+      display: 'flex'
+    },
+    navItem: {
+      margin: '0 0.5rem',
+      display: 'flex'
+    },
+    navLink: {
+      'border-radius': '0.25rem',
+      'text-decoration': 'none',
+      padding: '0.75rem 1.5rem',
+      position: 'relative',
+      color: 'white',
+      '&::after': {
+        transition: 'width 0.15s linear',
+        transform: 'translateX(-50%)',
+        position: 'absolute',
+        background: 'white',
+        content: '""',
+        height: '2px',
+        left: '50%',
+        bottom: '0',
+        width: '0'
+      },
+      '&.active': {
+        color: 'var(--color-secondary)',
+        '&::after': {
+          background: 'var(--color-secondary)',
+          width: '100%'
+        }
+      },
+      '&:hover::after': {
+        width: '100%'
+      }
+    }
+  });
+  var classes = styles();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+    className: classes.header
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+    className: classes.navbar
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: classes.navList
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: classes.navItem
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
+    exact: true,
+    className: classes.navLink,
+    to: "/"
+  }, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: classes.navItem
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
+    className: classes.navLink,
+    to: "/login"
+  }, "Login")))));
 }
 
 /***/ }),
@@ -72587,8 +72652,8 @@ function Unauthorized() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Angelin Backend\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Angelin Backend\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\wamp64\www\ZCMS\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\ZCMS\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

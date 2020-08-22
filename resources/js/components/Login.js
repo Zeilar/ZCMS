@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
+import Navbar from './Navbar';
 
 export default function Login() {
     const history = useHistory();
@@ -32,6 +33,7 @@ export default function Login() {
 
     return (
         <div>
+            <Navbar />
             <h1>Login</h1>
 
             <form onSubmit={login}>
