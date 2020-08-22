@@ -2,26 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+// Load our app.html (including React) on every single path
+Route::view('/{path?}', 'app');
 
-Route::get('/', function() {
-    // App\User::create([
-    //     'username' => 'test',
-    //     'email' => 'test@test.com',
-    //     'password' => Illuminate\Support\Facades\Hash::make('123'),
-    // ]);
-    return 'Hello'; 
+Route::middleware(['throttle:5,1'])->group(function() {
+    Route::post('/login', 'AuthController@login')->name('login'); 
 });
-
-Route::post('/login', 'AuthController@login')->name('login');
-
-Route::post('/ping', 'PingController@ping')->name('ping');
+Route::post('/authenticate', 'AuthController@authenticate')->name('authenticate');
