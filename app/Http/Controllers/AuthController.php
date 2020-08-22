@@ -18,7 +18,7 @@ class AuthController extends Controller
         
         // Attempt to log in
         if (Auth::attempt([$fieldType => $id, 'password' => request('password')])) {
-            return response()->json(['message' => 'Successfully logged in!']);
+            return response()->json(['message' => 'Successfully logged in!', 'user' => auth()->user()]);
         }
 
         // Check if user exists
@@ -44,7 +44,6 @@ class AuthController extends Controller
     }
 
     public function authenticate(Request $request) {
-        $user = auth()->user();
-        return response()->json(['user' => isset($user) ? ['username' => $user->username, 'email' => $user->email] : null]);
+        return response()->json(['user' => auth()->user()]);
     }
 }

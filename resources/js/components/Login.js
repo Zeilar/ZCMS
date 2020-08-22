@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
-import Landing from './Landing';
 
-export default function Login({ user, setUser }) {
+export default function Login() {
     const history = useHistory();
-    if (user) history.push('/');
+    if (localStorage.getItem('user')) history.push('/');
 
     const password = useRef();
     const id = useRef();
@@ -24,9 +23,9 @@ export default function Login({ user, setUser }) {
         });
         response = await response.json();
         if (response.error) {
-            console.log(response.error);
+            console.log(response.message);
         } else {
-            setUser(response.user);
+            localStorage.setItem('user', JSON.stringify(response.user));
             history.push('/');
         }
     }
