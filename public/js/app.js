@@ -12199,7 +12199,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "@-webkit-keyframes slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@keyframes slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh) scale(1);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh) scale(0.5);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh) scale(1);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh) scale(0.5);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@keyframes fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}", ""]);
+exports.push([module.i, "@-webkit-keyframes slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@keyframes slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@keyframes fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}", ""]);
 
 // exports
 
@@ -83415,7 +83415,7 @@ function ErrorModal(_ref) {
       height: '100%',
       width: '100%',
       '&.close': {
-        animation: 'fade-out 0.25s linear forwards'
+        animation: 'fade-out 0.15s linear forwards'
       }
     }
   });
@@ -83428,7 +83428,7 @@ function ErrorModal(_ref) {
     modal.current.classList.add('close');
     setTimeout(function () {
       setActive(false);
-    }, 250);
+    }, 150);
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {

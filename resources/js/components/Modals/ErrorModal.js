@@ -68,7 +68,7 @@ export default function ErrorModal({ message, setActive }) {
             height: '100%',
             width: '100%',
             '&.close': {
-                animation: 'fade-out 0.25s linear forwards',
+                animation: 'fade-out 0.15s linear forwards',
             }
         },
     });
@@ -83,7 +83,7 @@ export default function ErrorModal({ message, setActive }) {
 
         setTimeout(() => {
             setActive(false);
-        }, 250);
+        }, 150);
     }
 
     return (

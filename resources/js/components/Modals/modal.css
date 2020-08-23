@@ -11,11 +11,11 @@
 
 @keyframes shrink-out {
     from {
-        transform: translate(-50%, 30vh) scale(1);
+        transform: translate(-50%, 30vh);
         opacity: 1;
     }
     to {
-        transform: translate(-50%, 30vh) scale(0.5);
+        transform: translate(-50%, 20vh);
         opacity: 0;
     }
 }
