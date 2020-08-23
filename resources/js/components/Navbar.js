@@ -5,7 +5,9 @@ import { NavLink } from 'react-router-dom';
 export default function Navbar() {
     const styles = createUseStyles({
         header: {
-            background: 'rgb(15, 15, 15)',
+            'border-bottom': '1px solid var(--color-secondary)',
+            'box-shadow': '0 0 5px 0 rgba(0, 0, 0, 0.75)',
+            background: 'var(--body-bg)',
         },
         navbar: {
             margin: '0 var(--container-margin)', 
@@ -20,11 +22,11 @@ export default function Navbar() {
             display: 'flex',
         },
         navLink: {
+            color: 'var(--text-primary)',
             'border-radius': '0.25rem',
             'text-decoration': 'none',
             padding: '0.75rem 1.5rem',
             position: 'relative',
-            color: 'white',
             '&::after': {
                 transition: 'width 0.15s linear',
                 transform: 'translateX(-50%)',
@@ -63,6 +65,11 @@ export default function Navbar() {
                     <li className={classes.navItem}>
                         <NavLink className={classes.navLink} to='/login'>
                             Login
+                        </NavLink>
+                    </li>
+                    <li className={classes.navItem}>
+                        <NavLink className={classes.navLink} to='/logout'>
+                            Logout
                         </NavLink>
                     </li>
                 </ul>

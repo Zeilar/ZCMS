@@ -1,25 +1,18 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import ErrorModal from './Modals/ErrorModal';
 import { createUseStyles } from 'react-jss';
-import { NavLink } from 'react-router-dom';
 import Navbar from './Navbar';
 
-export default function Landing({ history }) {
-    const user = JSON.parse(localStorage.getItem('user'));
-
-    function logout() {
-        fetch('/logout', { method: 'GET' });
-        localStorage.removeItem('user');
-        history.push('/');
-    }
-
+export default function Landing(props) {
+    const [showError, setShowError] = useState(true);
+    
     return (
         <>
+            {props.location.state && showError && <ErrorModal setActive={setShowError} message={props.location.state} />}
             <Navbar />
-            Landing page
-
-            {user ? <h1>Welcome, {user.username}</h1> : ''}
-
-            {user ? <NavLink onClick={logout} to="/">Logout</NavLink> : ''}
+            <section>
+                Landing page
+            </section>
         </>
     );
 }

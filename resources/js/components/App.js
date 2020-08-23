@@ -1,10 +1,10 @@
-import { BrowserRouter as Router, Route, NavLink, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
-import React, { useState } from 'react';
 import NotFound from './NotFound';
 import Landing from './Landing';
-import Navbar from './Navbar';
+import Logout from './Logout';
 import Login from './Login';
+import React from 'react';
 
 export default function App() {
     return (
@@ -12,6 +12,7 @@ export default function App() {
             <Switch>
                 <Route exact path='/' component={Landing} />
                 <Route path='/login' component={Login} />
+                <Route path='/logout' component={Logout} />
                 <Route component={NotFound} />
             </Switch>
         </Router>
