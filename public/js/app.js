@@ -12199,7 +12199,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "@-webkit-keyframes slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@keyframes slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@keyframes fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}", ""]);
+exports.push([module.i, "@-webkit-keyframes error-modal-slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@keyframes error-modal-slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes error-modal-shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes error-modal-shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes error-modal-fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@keyframes error-modal-fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes error-modal-fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes error-modal-fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}", ""]);
 
 // exports
 
@@ -49834,6 +49834,23 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
+/***/ "./node_modules/react-cool-onclickoutside/dist/index.esm.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/react-cool-onclickoutside/dist/index.esm.js ***!
+  \******************************************************************/
+/*! exports provided: default, DEFAULT_IGNORE_CLASS */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_IGNORE_CLASS", function() { return DEFAULT_IGNORE_CLASS; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(e,r){return _arrayWithHoles(e)||_iterableToArrayLimit(e,r)||_unsupportedIterableToArray(e,r)||_nonIterableRest()}function _toConsumableArray(e){return _arrayWithoutHoles(e)||_iterableToArray(e)||_unsupportedIterableToArray(e)||_nonIterableSpread()}function _arrayWithoutHoles(e){if(Array.isArray(e))return _arrayLikeToArray(e)}function _arrayWithHoles(e){if(Array.isArray(e))return e}function _iterableToArray(e){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(e))return Array.from(e)}function _iterableToArrayLimit(e,r){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(e)){var t=[],n=!0,o=!1,a=void 0;try{for(var i,u=e[Symbol.iterator]();!(n=(i=u.next()).done)&&(t.push(i.value),!r||t.length!==r);n=!0);}catch(e){o=!0,a=e}finally{try{n||null==u.return||u.return()}finally{if(o)throw a}}return t}}function _unsupportedIterableToArray(e,r){if(e){if("string"==typeof e)return _arrayLikeToArray(e,r);var t=Object.prototype.toString.call(e).slice(8,-1);return"Object"===t&&e.constructor&&(t=e.constructor.name),"Map"===t||"Set"===t?Array.from(e):"Arguments"===t||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t)?_arrayLikeToArray(e,r):void 0}}function _arrayLikeToArray(e,r){(null==r||r>e.length)&&(r=e.length);for(var t=0,n=new Array(r);t<r;t++)n[t]=e[t];return n}function _nonIterableSpread(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}function _nonIterableRest(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var canUsePassiveEvents=function(){if("undefined"==typeof window||"function"!=typeof window.addEventListener)return!1;var e=!1,r=Object.defineProperty({},"passive",{get:function(){e=!0}}),t=function(){return null};return window.addEventListener("test",t,r),window.removeEventListener("test",t,r),e},DEFAULT_IGNORE_CLASS="ignore-onclickoutside",hasIgnoreClass=function(e,r){for(var t=e.target;t;){var n;if(null===(n=t.classList)||void 0===n?void 0:n.contains(r))return!0;t=t.parentElement}return!1},clickedOnScrollbar=function(e){return document.documentElement.clientWidth<=e.clientX||document.documentElement.clientHeight<=e.clientY},getEventOptions=function(e){return!(!e.includes("touch")||!canUsePassiveEvents())&&{passive:!0}},useOnclickOutside=function(e){var r=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},t=r.refs,n=r.disabled,o=void 0!==n&&n,a=r.eventTypes,i=void 0===a?["mousedown","touchstart"]:a,u=r.excludeScrollbar,c=void 0!==u&&u,l=r.ignoreClass,s=void 0===l?DEFAULT_IGNORE_CLASS:l,f=Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(e),d=Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),y=_slicedToArray(d,2),v=y[0],b=y[1];Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])((function(){f.current=e}),[e]);var m=Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])((function(e){b((function(r){return[].concat(_toConsumableArray(r),[{current:e}])}))}),[]);return Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])((function(){if((null==t?void 0:t.length)||v.length){var e=function(e){if(!hasIgnoreClass(e,s)){var r=[];(t||v).forEach((function(e){var t=e.current;t&&r.push(t)})),c&&clickedOnScrollbar(e)||r.length&&r.every((function(r){return!r.contains(e.target)}))&&f.current(e)}},r=function(){i.forEach((function(r){document.removeEventListener(r,e,getEventOptions(r))}))};if(!o)return i.forEach((function(r){document.addEventListener(r,e,getEventOptions(r))})),function(){r()};r()}}),[v,s,c,o,JSON.stringify(i)]),m};/* harmony default export */ __webpack_exports__["default"] = (useOnclickOutside);
+
+
+/***/ }),
+
 /***/ "./node_modules/react-display-name/lib/getDisplayName.js":
 /*!***************************************************************!*\
   !*** ./node_modules/react-display-name/lib/getDisplayName.js ***!
@@ -83219,7 +83236,7 @@ function Login() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
       to: {
         pathname: '/',
-        state: 'You are already logged in'
+        state: 'You are already logged in.'
       }
     });
   }
@@ -83311,7 +83328,7 @@ function Logout() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Redirect"], {
       to: {
         pathname: '/',
-        state: 'You are already logged out'
+        state: 'You are already logged out.'
       }
     });
   }
@@ -83323,7 +83340,7 @@ function Logout() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Redirect"], {
     to: {
       pathname: '/',
-      state: 'You have been logged out'
+      state: 'You have been logged out.'
     }
   });
 }
@@ -83341,12 +83358,14 @@ function Logout() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ErrorModal; });
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var react_cool_onclickoutside__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-cool-onclickoutside */ "./node_modules/react-cool-onclickoutside/dist/index.esm.js");
 /* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
-/* harmony import */ var _modal_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modal.css */ "./resources/js/components/Modals/modal.css");
-/* harmony import */ var _modal_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_modal_css__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _modal_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modal.css */ "./resources/js/components/Modals/modal.css");
+/* harmony import */ var _modal_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_modal_css__WEBPACK_IMPORTED_MODULE_5__);
+
 
 
 
@@ -83358,8 +83377,8 @@ function ErrorModal(_ref) {
   document.querySelector('body').style.overflowY = 'hidden';
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_3__["createUseStyles"])({
     errorModal: {
-      'box-shadow': '0 4px 10px 0 rgba(0, 0, 0, 0.25)',
-      animation: 'slide-in 0.5s ease-out forwards',
+      animation: 'error-modal-slide-in 0.5s ease-out forwards',
+      'box-shadow': '0 0 5px 0 rgba(0, 0, 0, 0.25)',
       background: 'var(--color-primary)',
       transform: 'translate(-50%, -50%)',
       'justify-content': 'center',
@@ -83370,58 +83389,59 @@ function ErrorModal(_ref) {
       display: 'flex',
       left: '50%',
       '&.close': {
-        animation: 'shrink-out 0.25s linear'
+        animation: 'error-modal-shrink-out 0.25s linear'
       }
     },
     content: {
       'justify-content': 'center',
       'flex-direction': 'column',
       'align-items': 'center',
-      padding: '1.5rem',
-      display: 'flex'
+      display: 'flex',
+      padding: '1rem'
     },
     messages: {
-      'margin-top': '1.5rem'
+      'margin': '1.5rem'
     },
     message: {
       color: 'var(--text-secondary)',
       'text-align': 'center'
     },
     title: {
-      'margin-bottom': '0.25rem',
-      'font-size': '1.25rem',
+      color: 'var(--text-secondary)',
+      'margin-bottom': '0.5rem',
       'text-align': 'center',
-      'text-weight': 'bold'
+      'font-size': '1.25rem',
+      'font-weight': 'bold'
     },
     close: {
-      'border-bottom-right-radius': 'inherit',
-      'border-bottom-left-radius': 'inherit',
+      transition: 'transform 0.15s ease-in-out',
       background: 'var(--color-secondary)',
+      'letter-spacing': '1px',
       padding: '0.75rem 0',
-      cursor: 'pointer',
-      color: 'white',
       width: '100%',
-      '&:hover': {}
+      '&:hover': {
+        transform: 'scale(1.02)'
+      }
     },
     triangle: {
       color: 'var(--color-secondary)',
       'font-size': '250%'
     },
     dimmer: {
-      animation: 'fade-in 0.25s linear forwards',
+      animation: 'error-modal-fade-in 0.25s linear forwards',
       background: 'black',
       position: 'fixed',
       opacity: '0.25',
       height: '100%',
       width: '100%',
       '&.close': {
-        animation: 'fade-out 0.15s linear forwards'
+        animation: 'error-modal-fade-out 0.15s linear forwards'
       }
     }
   });
   var classes = styles();
-  var dimmer = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])();
-  var modal = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])();
+  var dimmer = Object(react__WEBPACK_IMPORTED_MODULE_4__["useRef"])();
+  var modal = Object(react__WEBPACK_IMPORTED_MODULE_4__["useRef"])();
 
   function close() {
     dimmer.current.classList.add('close');
@@ -83431,27 +83451,33 @@ function ErrorModal(_ref) {
     }, 150);
   }
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  var wrapper = Object(react_cool_onclickoutside__WEBPACK_IMPORTED_MODULE_2__["default"])(function () {
+    close();
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_4___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
     className: classes.dimmer,
     ref: dimmer
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
+    className: classes.wrapper,
+    ref: wrapper
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
     className: classes.errorModal,
     ref: modal
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
     className: classes.content
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__["FontAwesomeIcon"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
     className: classes.triangle,
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faExclamationTriangle"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
     className: classes.messages
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("p", {
     className: classes.title
-  }, "Something went wrong"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+  }, "Something went wrong"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("p", {
     className: classes.message
-  }, message))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+  }, message)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("button", {
     onClick: close,
-    className: classes.close
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, "Dismiss"))));
+    className: "btnPrimary ".concat(classes.close)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("span", null, "Dismiss"))))));
 }
 
 /***/ }),

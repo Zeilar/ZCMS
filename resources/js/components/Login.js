@@ -10,7 +10,7 @@ export default function Login() {
         return <Redirect to={
             {
                 pathname: '/',
-                state: 'You are already logged in',
+                state: 'You are already logged in.',
             }
         } />
     }

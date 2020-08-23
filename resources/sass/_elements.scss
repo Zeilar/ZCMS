@@ -1,5 +1,14 @@
 .btnPrimary {
-    
+    transition: background-color 0.15s ease-in-out;
+    background-color: var(--color-secondary);
+    padding: 05rem 0.75rem;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white;
+
+    &:hover, &:focus {
+        background-color: var(--color-secondary-dark);
+    }
 }
 
 .btnSecondary {

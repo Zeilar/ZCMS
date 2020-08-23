@@ -6,7 +6,7 @@ export default function Logout() {
         return <Redirect to={
             {
                 pathname: '/',
-                state: 'You are already logged out',
+                state: 'You are already logged out.',
             }
         } />
     }
@@ -16,7 +16,7 @@ export default function Logout() {
     return <Redirect to={
         {
             pathname: '/',
-            state: 'You have been logged out',
+            state: 'You have been logged out.',
         }
     } />
 }
