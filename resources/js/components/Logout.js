@@ -1,7 +1,7 @@
 import { Redirect } from 'react-router-dom';
 import React from 'react';
 
-export default function Logout() {
+export default function Logout({ history }) {
     if (localStorage.getItem('user') === null) {
         return <Redirect to={
             {
@@ -13,17 +13,9 @@ export default function Logout() {
             }
         } />
     }
-    
-    fetch('/logout', { method: 'GET' });
+
+    fetch('/logout', { method: 'POST' });
     localStorage.removeItem('user');
 
-    return <Redirect to={
-        {
-            pathname: '/',
-            state: {
-                message: 'You have been logged out.',
-                type: 'success',
-            }
-        }
-    } />
+    return <Redirect to="/" />
 }

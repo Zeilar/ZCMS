@@ -9,7 +9,10 @@ export default function PopupModal({ message, type, setActive }) {
     document.querySelector('body').style.overflowY = 'hidden';
 
     const styles = createUseStyles({
-        PopupModal: {
+        wrapper: {
+            'z-index': '1000001',
+        },
+        modal: {
             animation: 'popup-modal-slide-in 0.5s ease-out forwards',
             'box-shadow': '0 0 5px 0 rgba(0, 0, 0, 0.25)',
             transform: 'translate(-50%, -50%)',
@@ -68,6 +71,7 @@ export default function PopupModal({ message, type, setActive }) {
         },
         dimmer: {
             animation: 'popup-modal-fade-in 0.25s linear forwards',
+            'z-index': '1000000',
             background: 'black',
             position: 'fixed',
             opacity: '0.25',
@@ -100,7 +104,7 @@ export default function PopupModal({ message, type, setActive }) {
         <>
             <div className={classes.dimmer} ref={dimmer}></div>
             <div className={classes.wrapper} ref={wrapper}>
-                <div className={classes.PopupModal} ref={modal}>
+                <div className={classes.modal} ref={modal}>
                     <div className={classes.content}>
                         <FontAwesomeIcon className={classes.triangle} icon={type === 'error' ? faExclamationTriangle : faCheckCircle} />
                         <div className={classes.messages}>

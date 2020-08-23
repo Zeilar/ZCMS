@@ -83328,7 +83328,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 
 
-function Logout() {
+function Logout(_ref) {
+  var history = _ref.history;
+
   if (localStorage.getItem('user') === null) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Redirect"], {
       to: {
@@ -83342,17 +83344,11 @@ function Logout() {
   }
 
   fetch('/logout', {
-    method: 'GET'
+    method: 'POST'
   });
   localStorage.removeItem('user');
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Redirect"], {
-    to: {
-      pathname: '/',
-      state: {
-        message: 'You have been logged out.',
-        type: 'success'
-      }
-    }
+    to: "/"
   });
 }
 
@@ -83388,7 +83384,10 @@ function PopupModal(_ref) {
       setActive = _ref.setActive;
   document.querySelector('body').style.overflowY = 'hidden';
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_3__["createUseStyles"])({
-    PopupModal: {
+    wrapper: {
+      'z-index': '1000001'
+    },
+    modal: {
       animation: 'popup-modal-slide-in 0.5s ease-out forwards',
       'box-shadow': '0 0 5px 0 rgba(0, 0, 0, 0.25)',
       transform: 'translate(-50%, -50%)',
@@ -83447,6 +83446,7 @@ function PopupModal(_ref) {
     },
     dimmer: {
       animation: 'popup-modal-fade-in 0.25s linear forwards',
+      'z-index': '1000000',
       background: 'black',
       position: 'fixed',
       opacity: '0.25',
@@ -83479,7 +83479,7 @@ function PopupModal(_ref) {
     className: classes.wrapper,
     ref: wrapper
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
-    className: classes.PopupModal,
+    className: classes.modal,
     ref: modal
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
     className: classes.content
