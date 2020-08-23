@@ -6,17 +6,24 @@ export default function Logout() {
         return <Redirect to={
             {
                 pathname: '/',
-                state: 'You are already logged out.',
+                state: {
+                    message: 'You are already logged out.',
+                    type: 'error',
+                }
             }
         } />
     }
+    
     fetch('/logout', { method: 'GET' });
     localStorage.removeItem('user');
 
     return <Redirect to={
         {
             pathname: '/',
-            state: 'You have been logged out.',
+            state: {
+                message: 'You have been logged out.',
+                type: 'success',
+            }
         }
     } />
 }

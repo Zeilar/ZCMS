@@ -1,19 +1,19 @@
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clickOutside from 'react-cool-onclickoutside';
 import { createUseStyles } from 'react-jss';
 import React, { useRef } from 'react';
 import './modal.css';
 
-export default function ErrorModal({ message, setActive }) {
+export default function PopupModal({ message, type, setActive }) {
     document.querySelector('body').style.overflowY = 'hidden';
 
     const styles = createUseStyles({
-        errorModal: {
-            animation: 'error-modal-slide-in 0.5s ease-out forwards',
+        PopupModal: {
+            animation: 'popup-modal-slide-in 0.5s ease-out forwards',
             'box-shadow': '0 0 5px 0 rgba(0, 0, 0, 0.25)',
-            background: 'var(--color-primary)',
             transform: 'translate(-50%, -50%)',
+            background: 'var(--color-primary)',
             'justify-content': 'center',
             'flex-direction': 'column',
             'border-radius': '0.25rem',
@@ -22,7 +22,7 @@ export default function ErrorModal({ message, setActive }) {
             display: 'flex',
             left: '50%',
             '&.close': {
-                animation: 'error-modal-shrink-out 0.25s linear',
+                animation: 'popup-modal-shrink-out 0.25s linear',
             }
         },
         content: {
@@ -48,27 +48,33 @@ export default function ErrorModal({ message, setActive }) {
         },
         close: {
             transition: 'transform 0.15s ease-in-out',
-            background: 'var(--color-secondary)',
+            background: type === 'error' ? 'rgb(200, 0, 0)' : 'rgb(0, 150, 0)',
             'letter-spacing': '1px',
             padding: '0.75rem 0',
             width: '100%',
             '&:hover': {
                 transform: 'scale(1.02)',
             },
+            '&.error:hover': {
+                'background-color': 'rgb(175, 0, 0)',
+            },
+            '&.success:hover': {
+                'background-color': 'rgb(0, 125, 0)',
+            },
         },
         triangle: {
-            color: 'var(--color-secondary)',
+            color: type === 'error' ? 'rgb(200, 0, 0)' : 'rgb(0, 150, 0)',
             'font-size': '250%',
         },
         dimmer: {
-            animation: 'error-modal-fade-in 0.25s linear forwards',
+            animation: 'popup-modal-fade-in 0.25s linear forwards',
             background: 'black',
             position: 'fixed',
             opacity: '0.25',
             height: '100%',
             width: '100%',
             '&.close': {
-                animation: 'error-modal-fade-out 0.15s linear forwards',
+                animation: 'popup-modal-fade-out 0.15s linear forwards',
             }
         },
     });
@@ -94,14 +100,16 @@ export default function ErrorModal({ message, setActive }) {
         <>
             <div className={classes.dimmer} ref={dimmer}></div>
             <div className={classes.wrapper} ref={wrapper}>
-                <div className={classes.errorModal} ref={modal}>
+                <div className={classes.PopupModal} ref={modal}>
                     <div className={classes.content}>
-                        <FontAwesomeIcon className={classes.triangle} icon={faExclamationTriangle} />
+                        <FontAwesomeIcon className={classes.triangle} icon={type === 'error' ? faExclamationTriangle : faCheckCircle} />
                         <div className={classes.messages}>
-                            <p className={classes.title}>Something went wrong</p>
+                            <p className={classes.title}>
+                                {type === 'error' ? 'Something went wrong' : 'Success'}
+                            </p>
                             <p className={classes.message}>{message}</p>
                         </div>
-                        <button onClick={close} className={`btnPrimary ${classes.close}`}>
+                        <button onClick={close} className={`btnPrimary ${type === 'error' ? 'error' : 'success'} ${classes.close}`}>
                             <span>Dismiss</span>
                         </button>
                     </div>

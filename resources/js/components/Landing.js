@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import ErrorModal from './Modals/ErrorModal';
+import PopupModal from './Modals/PopupModal';
 import { createUseStyles } from 'react-jss';
 import Navbar from './Navbar';
 
 export default function Landing(props) {
     const [showError, setShowError] = useState(true);
-    
+    const state = props.location.state;
+
     return (
         <>
-            {props.location.state && showError && <ErrorModal setActive={setShowError} message={props.location.state} />}
+            {state && showError && <PopupModal setActive={setShowError} message={state.message} type={state.type} />}
             <Navbar />
             <section>
                 Landing page

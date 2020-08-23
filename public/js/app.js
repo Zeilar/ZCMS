@@ -12199,7 +12199,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "@-webkit-keyframes error-modal-slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@keyframes error-modal-slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes error-modal-shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes error-modal-shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes error-modal-fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@keyframes error-modal-fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes error-modal-fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes error-modal-fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}", ""]);
+exports.push([module.i, "@-webkit-keyframes popup-modal-slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@keyframes popup-modal-slide-in {\r\n    from {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes popup-modal-shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes popup-modal-shrink-out {\r\n    from {\r\n        transform: translate(-50%, 30vh);\r\n        opacity: 1;\r\n    }\r\n    to {\r\n        transform: translate(-50%, 20vh);\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes popup-modal-fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@keyframes popup-modal-fade-in {\r\n    from {\r\n        opacity: 0;\r\n    }\r\n    to {\r\n        opacity: 0.25;\r\n    }\r\n}\r\n\r\n@-webkit-keyframes popup-modal-fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}\r\n\r\n@keyframes popup-modal-fade-out {\r\n    from {\r\n        opacity: 0.25;\r\n    }\r\n    to {\r\n        opacity: 0;\r\n    }\r\n}", ""]);
 
 // exports
 
@@ -83167,7 +83167,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Landing; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Modals_ErrorModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Modals/ErrorModal */ "./resources/js/components/Modals/ErrorModal.js");
+/* harmony import */ var _Modals_PopupModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Modals/PopupModal */ "./resources/js/components/Modals/PopupModal.js");
 /* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
 /* harmony import */ var _Navbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navbar */ "./resources/js/components/Navbar.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -83192,9 +83192,11 @@ function Landing(props) {
       showError = _useState2[0],
       setShowError = _useState2[1];
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, props.location.state && showError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Modals_ErrorModal__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  var state = props.location.state;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, state && showError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Modals_PopupModal__WEBPACK_IMPORTED_MODULE_1__["default"], {
     setActive: setShowError,
-    message: props.location.state
+    message: state.message,
+    type: state.type
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navbar__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, "Landing page"));
 }
 
@@ -83236,7 +83238,10 @@ function Login() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
       to: {
         pathname: '/',
-        state: 'You are already logged in.'
+        state: {
+          message: 'You are already logged in.',
+          type: 'error'
+        }
       }
     });
   }
@@ -83328,7 +83333,10 @@ function Logout() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Redirect"], {
       to: {
         pathname: '/',
-        state: 'You are already logged out.'
+        state: {
+          message: 'You are already logged out.',
+          type: 'error'
+        }
       }
     });
   }
@@ -83340,23 +83348,26 @@ function Logout() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Redirect"], {
     to: {
       pathname: '/',
-      state: 'You have been logged out.'
+      state: {
+        message: 'You have been logged out.',
+        type: 'success'
+      }
     }
   });
 }
 
 /***/ }),
 
-/***/ "./resources/js/components/Modals/ErrorModal.js":
+/***/ "./resources/js/components/Modals/PopupModal.js":
 /*!******************************************************!*\
-  !*** ./resources/js/components/Modals/ErrorModal.js ***!
+  !*** ./resources/js/components/Modals/PopupModal.js ***!
   \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ErrorModal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PopupModal; });
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
 /* harmony import */ var react_cool_onclickoutside__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-cool-onclickoutside */ "./node_modules/react-cool-onclickoutside/dist/index.esm.js");
@@ -83371,16 +83382,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function ErrorModal(_ref) {
+function PopupModal(_ref) {
   var message = _ref.message,
+      type = _ref.type,
       setActive = _ref.setActive;
   document.querySelector('body').style.overflowY = 'hidden';
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_3__["createUseStyles"])({
-    errorModal: {
-      animation: 'error-modal-slide-in 0.5s ease-out forwards',
+    PopupModal: {
+      animation: 'popup-modal-slide-in 0.5s ease-out forwards',
       'box-shadow': '0 0 5px 0 rgba(0, 0, 0, 0.25)',
-      background: 'var(--color-primary)',
       transform: 'translate(-50%, -50%)',
+      background: 'var(--color-primary)',
       'justify-content': 'center',
       'flex-direction': 'column',
       'border-radius': '0.25rem',
@@ -83389,7 +83401,7 @@ function ErrorModal(_ref) {
       display: 'flex',
       left: '50%',
       '&.close': {
-        animation: 'error-modal-shrink-out 0.25s linear'
+        animation: 'popup-modal-shrink-out 0.25s linear'
       }
     },
     content: {
@@ -83415,27 +83427,33 @@ function ErrorModal(_ref) {
     },
     close: {
       transition: 'transform 0.15s ease-in-out',
-      background: 'var(--color-secondary)',
+      background: type === 'error' ? 'rgb(200, 0, 0)' : 'rgb(0, 150, 0)',
       'letter-spacing': '1px',
       padding: '0.75rem 0',
       width: '100%',
       '&:hover': {
         transform: 'scale(1.02)'
+      },
+      '&.error:hover': {
+        'background-color': 'rgb(175, 0, 0)'
+      },
+      '&.success:hover': {
+        'background-color': 'rgb(0, 125, 0)'
       }
     },
     triangle: {
-      color: 'var(--color-secondary)',
+      color: type === 'error' ? 'rgb(200, 0, 0)' : 'rgb(0, 150, 0)',
       'font-size': '250%'
     },
     dimmer: {
-      animation: 'error-modal-fade-in 0.25s linear forwards',
+      animation: 'popup-modal-fade-in 0.25s linear forwards',
       background: 'black',
       position: 'fixed',
       opacity: '0.25',
       height: '100%',
       width: '100%',
       '&.close': {
-        animation: 'error-modal-fade-out 0.15s linear forwards'
+        animation: 'popup-modal-fade-out 0.15s linear forwards'
       }
     }
   });
@@ -83461,22 +83479,22 @@ function ErrorModal(_ref) {
     className: classes.wrapper,
     ref: wrapper
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
-    className: classes.errorModal,
+    className: classes.PopupModal,
     ref: modal
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
     className: classes.content
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
     className: classes.triangle,
-    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faExclamationTriangle"]
+    icon: type === 'error' ? _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faExclamationTriangle"] : _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faCheckCircle"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
     className: classes.messages
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("p", {
     className: classes.title
-  }, "Something went wrong"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("p", {
+  }, type === 'error' ? 'Something went wrong' : 'Success'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("p", {
     className: classes.message
   }, message)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("button", {
     onClick: close,
-    className: "btnPrimary ".concat(classes.close)
+    className: "btnPrimary ".concat(type === 'error' ? 'error' : 'success', " ").concat(classes.close)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("span", null, "Dismiss"))))));
 }
 

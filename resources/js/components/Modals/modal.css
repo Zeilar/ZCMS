@@ -1,4 +1,4 @@
-@keyframes error-modal-slide-in {
+@keyframes popup-modal-slide-in {
     from {
         transform: translate(-50%, 20vh);
         opacity: 0;
@@ -9,7 +9,7 @@
     }
 }
 
-@keyframes error-modal-shrink-out {
+@keyframes popup-modal-shrink-out {
     from {
         transform: translate(-50%, 30vh);
         opacity: 1;
@@ -20,7 +20,7 @@
     }
 }
 
-@keyframes error-modal-fade-in {
+@keyframes popup-modal-fade-in {
     from {
         opacity: 0;
     }
@@ -29,7 +29,7 @@
     }
 }
 
-@keyframes error-modal-fade-out {
+@keyframes popup-modal-fade-out {
     from {
         opacity: 0.25;
     }
