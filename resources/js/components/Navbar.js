@@ -26,6 +26,7 @@ export default function Navbar() {
             'border-radius': '0.25rem',
             'text-decoration': 'none',
             padding: '0.75rem 1.5rem',
+            'user-select': 'none',
             position: 'relative',
             '&::after': {
                 transition: 'width 0.15s linear',
