@@ -6,7 +6,7 @@ export default function Navbar() {
     const styles = createUseStyles({
         header: {
             'border-bottom': '1px solid var(--color-secondary)',
-            'box-shadow': '0 0 5px 0 rgba(0, 0, 0, 0.75)',
+            'box-shadow': '0 0 10px 2px rgba(0, 0, 0, 0.25)',
             background: 'var(--body-bg)',
         },
         navbar: {
