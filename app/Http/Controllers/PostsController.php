@@ -14,7 +14,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        if (!auth()->user()->can('viewAny', $post)) {
+        if (!auth()->user()->can('viewAny', Post::class)) {
             return abort(401);
         }
     }
@@ -27,7 +27,7 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        if (!auth()->user()->can('create', $post)) {
+        if (!auth()->user()->can('create', Post::class)) {
             return abort(401);
         }
 
