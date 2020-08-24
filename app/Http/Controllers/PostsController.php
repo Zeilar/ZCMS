@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 
-class PostController extends Controller
+class PostsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        if (!auth()->user()->can('viewAny', $post)) {
+            return abort(401);
+        }
     }
 
     /**
@@ -25,6 +27,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create', $post)) {
+            return abort(401);
+        }
+
         $request->validate([
             'title'   => 'required|string|min:3|max:100',
             'content' => 'required|string|min:3',
@@ -40,6 +46,19 @@ class PostController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Post $post)
+    {
+        if (!auth()->user()->can('view', $post)) {
+            return abort(401);
+        }
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -48,7 +67,9 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        // TODO: validation
+        if (!auth()->user()->can('update', $post)) {
+            return abort(401);
+        }
 
         $post->update([
             'title'     => $request->title,   
@@ -70,10 +91,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        // TODO: validation
+        if (!auth()->user()->can('delete', $post)) {
+            return abort(401);
+        }
 
         $post_id = $post->id;
-
         $post->delete();
 
         return response()->json([

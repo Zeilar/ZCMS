@@ -9,10 +9,21 @@ Route::post('/logout', 'AuthController@logout')->name('logout');
 Route::post('/login', 'AuthController@login')->name('login');
 
 // PostsController
-Route::resource('post', 'PostsController');
+Route::resource('post', 'PostsController', ['except' => ['create', 'edit']]);
 
 // Admin -> UsersController
-Route::resource('/admin/users', 'Admin\UsersController');
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
+    Route::resource('/users', 'UsersController', ['except' => ['create', 'edit']]);
+});
 
-// Load our app.html (including React) on every single path
+
+
+Route::get('/test', function() {
+    $user = App\User::where('username', 'admin')->first();
+    dd($user->hasAnyRole(['admin', 'teset']));
+});
+
+
+
+// Load app.html (including React) on every single path
 Route::view('/{path?}', 'app');

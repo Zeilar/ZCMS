@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Http\Request;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -15,7 +15,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        if (!auth()->user()->can('viewAny', User::class)) {
+            return abort (401);
+        }
     }
 
     /**
@@ -25,7 +27,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        if (!auth()->user()->can('create', User::class)) {
+            return abort (401);
+        }
     }
 
     /**
@@ -36,7 +40,14 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!auth()->user()->can('create', User::class)) {
+            return abort (401);
+        }
+        
+        // TODO: admin create user
+        // User::create([
+
+        // ]);
     }
 
     /**
@@ -47,7 +58,9 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        //
+        if (!auth()->user()->can('view', $user)) {
+            return abort (401);
+        }
     }
 
     /**
@@ -58,7 +71,9 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        if (!auth()->user()->can('update', $user)) {
+            return abort (401);
+        }
     }
 
     /**
@@ -70,7 +85,9 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        if (!auth()->user()->can('update', $user)) {
+            return abort (401);
+        }
     }
 
     /**
@@ -81,6 +98,11 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        if (!auth()->user()->can('delete', $user)) {
+            return abort (401);
+        }
+
+        $user->roles()->detach();
+        $user->delete();
     }
 }

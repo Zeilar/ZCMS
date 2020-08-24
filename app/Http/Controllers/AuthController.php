@@ -11,6 +11,8 @@ class AuthController extends Controller
 {
     public function login()
     {
+        if (Auth::check()) return response()->json(['error' => true, 'message' => 'You are already logged in.']);
+
         $id = request('id'); // Email or username - we don't know yet
 
         // Determine whether $id is an email or username and change it accordingly
