@@ -16,14 +16,5 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
     Route::resource('/users', 'UsersController', ['except' => ['create', 'edit']]);
 });
 
-
-
-Route::get('/test', function() {
-    $user = App\User::where('username', 'admin')->first();
-    dd($user->hasAnyRole(['admin', 'teset']));
-});
-
-
-
 // Load app.html (including React) on every single path
 Route::view('/{path?}', 'app');

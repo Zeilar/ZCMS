@@ -37,7 +37,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function safe_data() {
+    public function safe_data(): array {
         return [
             'username' => $this->username,
             'email'    => $this->email,
@@ -53,15 +53,15 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    public function isAuthor(Post $post) {
+    public function isAuthor(Post $post): bool {
         return $this->id === $post->user->id;
     }
 
-    public function hasRole(string $role) {
+    public function hasRole(string $role): bool {
         return $this->roles()->where('name', $role)->first() ?? false;
     }
 
-    public function hasRoles(array $roles) {
+    public function hasRoles(array $roles): bool {
         foreach ($roles as $role) {
             if ($this->roles()->where('name', $role)->get()->count() <= 0) {
                 return false;
@@ -70,7 +70,7 @@ class User extends Authenticatable
         return true;
     }
 
-    public function hasAnyRole(array $roles) {
+    public function hasAnyRole(array $roles): bool {
         if ($this->roles()->whereIn('name', $roles)->first() !== null) {
             return true;
         }
