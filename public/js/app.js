@@ -83138,17 +83138,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function App() {
-  fetch("/post/5", {
-    method: 'DELETE'
-  }).then(function (response) {
-    console.log('RESPONSE', response);
-
-    if (response.status == 200) {
-      console.log('All went fine');
-    } else {
-      console.log('ERROR!', response);
-    }
-  });
+  // fetch("/post/5", {method: 'DELETE'})
+  //     .then(response => {
+  //         console.log('RESPONSE', response);
+  //         if (response.status == 200) {
+  //             console.log('All went fine');
+  //         } else {
+  //             console.log('ERROR!', response);
+  //         }
+  //     });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Route"], {
     exact: true,
     path: "/",

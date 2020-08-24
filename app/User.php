@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password',
+        'username', 'email', 'password', 'role',
     ];
 
     /**
@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email_verified_at', 'created_at', 'updated_at',
+        'password', 'remember_token', 'email_verified_at',
     ];
 
     /**
@@ -37,10 +37,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function get_meta() {
+    public function safe_data() {
         return [
             'username' => $this->username,
             'email'    => $this->email,
+            'role'     => $this->role,
         ];
     }
 

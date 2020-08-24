@@ -30,11 +30,13 @@ class PostController extends Controller
             'content' => 'required|string|min:3',
         ]);
 
-        return response()->json(Post::create([
+        $post = Post::create([
             'title'   => $request->title,
             'content' => $request->content,
             'user_id' => auth()->user()->id ?? 1, // TODO: remove null coalescing
-        ]));
+        ]);
+
+        return response()->json(['message' => 'Post was successfully created.', 'post' => $post]);
     }
 
     /**
@@ -49,11 +51,15 @@ class PostController extends Controller
         // TODO: validation
 
         $post->update([
-            'title'   => $request->title,   
-            'content' => $request->content,
+            'title'     => $request->title,   
+            'content'   => $request->content,
+            'edited_by' => auth()->user()->username,
         ]);
 
-        return response()->json(['post' => ['title' => $request->title, 'content' => $request->content]]);
+        return response()->json([
+            'message' => 'Post was successfully updated.',
+            'post'    => $post,
+        ]);
     }
 
     /**
@@ -66,10 +72,13 @@ class PostController extends Controller
     {
         // TODO: validation
 
+        $post_id = $post->id;
+
         $post->delete();
 
         return response()->json([
             'message' => 'Post was successfully deleted.',
+            'post_id' => $post_id,
         ]);
     }
 }

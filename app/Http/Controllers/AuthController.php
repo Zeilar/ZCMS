@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\User;
 use Auth;
@@ -18,37 +19,57 @@ class AuthController extends Controller
         
         // Attempt to log in
         if (Auth::attempt([$fieldType => $id, 'password' => request('password')])) {
-            return response()->json(['message' => 'Successfully logged in!', 'user' => auth()->user()]);
+            return response()->json(['error' => false, 'message' => 'Successfully logged in!', 'user' => auth()->user()]);
         }
 
         // Check if user exists
         if (empty(User::where($fieldType, $id)->first())) {
-            return response()->json(['error' => true, 'message' => 'User does not exist']);
+            return response()->json(['error' => true, 'message' => 'User does not exist.']);
         }
 
         // If the user does exist, it means the password was incorrect
         if (User::where($fieldType, $id)->count()) {
-            return response()->json(['error' => true, 'message' => 'Incorrect password']);
+            return response()->json(['error' => true, 'message' => 'Incorrect password.']);
         }
 
         // If none of the above executes, something has gone wrong
-        return response()->json(['error' => true, 'message' => 'Something went wrong, please try again']);
+        return response()->json(['error' => true, 'message' => 'Something went wrong, please try again.']);
     }
 
     public function register(Request $request) {
+        if (Auth::check()) return response()->json(['error' => true, 'message' => 'Please log out and try again.']);
+
         $request->validate([
-            'username' => 'required|string|unique:users|min:5|max:15',
-            'email'    => 'required|string|email|unique:users',
-            'password' => 'required|string|min:5',
+            'username'              => 'required|string|unique:users|min:5|max:15',
+            'email'                 => 'required|string|email|unique:users',
+            'password'              => 'required|string|confirmed|min:5|max:30',
+            'password_confirmation' => 'required|string|min:5|max:30',
+        ]);
+
+        $user = User::create([
+            'username' => $request->username,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+            'role'     => 'user',
+        ]);
+
+        Auth::attempt(['username' => $user->username, 'password' => $user->password]);
+
+        return response()->json([
+            'error'   => false,
+            'message' => 'Your account was successfully created.',
+            'user'    => $user->safe_data()
         ]);
     }
 
     public function logout() {
+        if (!Auth::check()) return response()->json(['error' => true, 'message' => 'You are already logged out.']);
         Auth::logout();
-        return;
+        return response()->json(['error' => false, 'message' => 'You have been successfully logged out.']);
     }
 
     public function authenticate(Request $request) {
-        return response()->json(['user' => auth()->user()]);
+        if (!Auth::check()) return abort(401);
+        return response()->json(['user' => auth()->user()->safe_data()]);
     }
 }

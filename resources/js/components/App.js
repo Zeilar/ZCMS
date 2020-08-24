@@ -7,15 +7,15 @@ import Login from './Login';
 import React from 'react';
 
 export default function App() {
-    fetch("/post/5", {method: 'DELETE'})
-        .then(response => {
-            console.log('RESPONSE', response);
-            if (response.status == 200) {
-                console.log('All went fine');
-            } else {
-                console.log('ERROR!', response);
-            }
-        });
+    // fetch("/post/5", {method: 'DELETE'})
+    //     .then(response => {
+    //         console.log('RESPONSE', response);
+    //         if (response.status == 200) {
+    //             console.log('All went fine');
+    //         } else {
+    //             console.log('ERROR!', response);
+    //         }
+    //     });
 
     return (
         <Router>
