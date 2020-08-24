@@ -33,7 +33,7 @@ class PostController extends Controller
         return response()->json(Post::create([
             'title'   => $request->title,
             'content' => $request->content,
-            'user_id' => auth()->user()->id,
+            'user_id' => auth()->user()->id ?? 1, // TODO: remove null coalescing
         ]));
     }
 
@@ -48,14 +48,12 @@ class PostController extends Controller
     {
         // TODO: validation
 
-        dd($request->all());
-
-        return response()->json([$request, $post]);
-
         $post->update([
             'title'   => $request->title,   
             'content' => $request->content,
         ]);
+
+        return response()->json(['post' => ['title' => $request->title, 'content' => $request->content]]);
     }
 
     /**
