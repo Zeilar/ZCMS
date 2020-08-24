@@ -59,17 +59,17 @@ export default function Navbar() {
             <nav className={classes.navbar}>
                 <ul className={classes.navList}>
                     <li className={classes.navItem}>
-                        <NavLink exact className={classes.navLink} to='/'>
+                        <NavLink exact className={classes.navLink} to="/">
                             Home
                         </NavLink>
                     </li>
                     <li className={classes.navItem}>
-                        <NavLink className={classes.navLink} to='/login'>
+                        <NavLink className={classes.navLink} to="/login">
                             Login
                         </NavLink>
                     </li>
                     <li className={classes.navItem}>
-                        <NavLink className={classes.navLink} to='/logout'>
+                        <NavLink className={classes.navLink} to="/logout">
                             Logout
                         </NavLink>
                     </li>

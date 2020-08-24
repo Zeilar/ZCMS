@@ -1,7 +1,7 @@
 import { Redirect } from 'react-router-dom';
 import React from 'react';
 
-export default function Logout({ history }) {
+export default function Logout() {
     if (localStorage.getItem('user') === null) {
         return <Redirect to={
             {
