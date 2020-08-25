@@ -27,7 +27,7 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check() && !auth()->user()->can('create', Post::class)) {
+        if (!Auth::check() || !auth()->user()->can('create', Post::class)) {
             return abort(403);
         }
 
@@ -65,7 +65,7 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        if (Auth::check() && !auth()->user()->can('update', $post)) {
+        if (!Auth::check() || !auth()->user()->can('update', $post)) {
             return abort(403);
         }
 
@@ -89,7 +89,7 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
-        if (Auth::check() && !auth()->user()->can('delete', $post)) {
+        if (!Auth::check() || !auth()->user()->can('delete', $post)) {
             return abort(403);
         }
 

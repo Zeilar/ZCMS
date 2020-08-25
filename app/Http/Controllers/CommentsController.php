@@ -27,15 +27,15 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check() && !auth()->user()->can('create', Comment::class)) {
+        if (!Auth::check() || !auth()->user()->can('create', Comment::class)) {
             return abort(403);
         }
 
         $request->validate(['content' => 'required|string|min:3']);
 
         $comment = Comment::create([
-            'title'   => $request->title,
             'content' => $request->content,
+            'post_id' => $request->post_id,
             'user_id' => auth()->user()->id ?? 1, // TODO: remove null coalescing
         ]);
 
@@ -62,7 +62,7 @@ class CommentsController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        if (Auth::check() && !auth()->user()->can('update', $comment)) {
+        if (!Auth::check() || !auth()->user()->can('update', $comment)) {
             return abort(403);
         }
 
@@ -86,7 +86,7 @@ class CommentsController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        if (Auth::check() && !auth()->user()->can('delete', $comment)) {
+        if (!Auth::check() || !auth()->user()->can('delete', $comment)) {
             return abort(403);
         }
 
