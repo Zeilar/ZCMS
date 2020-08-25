@@ -16,6 +16,10 @@ class Post extends Model
         return $this->hasMany(PostLike::class);
     }
 
+    public function tags() {
+        return $this->belongsToMany(Tag::class);
+    }
+
     public function solution() {
         return $this->hasOne(Comment::class, 'solutionTo_id', 'solution_id');
     }
