@@ -66,15 +66,25 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        if (!Auth::check() || !auth()->user()->can('update', $post)) {
+        $user = auth()->user();
+        if (empty($user) || !$user->can('update', $post)) {
             return abort(403);
         }
 
         $post->update([
             'title'     => $request->title,   
             'content'   => $request->content,
-            'edited_by' => auth()->user()->username,
+            'edited_by' => $user->username,
         ]);
+
+        $validTags = [];
+        $tags = explode(', ', $request->tags);
+        foreach ($tags as $tag) {
+            $tag = Tag::where('name', $tag)->first();
+            if ($tag !== null) array_push($validTags, $tag->id);
+        }
+        $post->tags()->sync($validTags);
+        $post->tags = $post->tags()->pluck('name');
 
         return response()->json([
             'message' => 'Post was successfully updated.',
@@ -118,21 +128,5 @@ class PostsController extends Controller
             PostLike::create(['user_id' => $user->id, 'post_id' => $post->id]);
             return response()->json(['likes' => $post->likes->count(), 'post_id' => $post->id]);
         }
-    }
-
-    public function updateTags(Request $request, Post $post) {
-        if (!Auth::check() || !auth()->user()->can('update', $post)) {
-            return abort(403);
-        }
-
-        $validTags = [];
-        $tags = explode(', ', $request->tags);
-        foreach ($tags as $tag) {
-            $tag = Tag::where('name', $tag)->first();
-            if ($tag !== null) array_push($validTags, $tag->id);
-        }
-        $post->tags()->sync($validTags);
-
-        return response()->json($post->tags()->pluck('name'));
     }
 }

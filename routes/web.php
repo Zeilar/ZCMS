@@ -21,7 +21,5 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('IsOnline
     Route::resource('/users', 'UsersController', ['except' => ['create', 'edit']]);
 });
 
-Route::post('/test', 'PostsController@updateTags');
-
 // Load app.html (including React) on every single path
 Route::view('/{path?}', 'app');
