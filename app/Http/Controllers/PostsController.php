@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PostLike;
 use App\Post;
+use App\Tag;
 use Auth;
 
 class PostsController extends Controller
@@ -117,5 +118,21 @@ class PostsController extends Controller
             PostLike::create(['user_id' => $user->id, 'post_id' => $post->id]);
             return response()->json(['likes' => $post->likes->count(), 'post_id' => $post->id]);
         }
+    }
+
+    public function updateTags(Request $request, Post $post) {
+        if (!Auth::check() || !auth()->user()->can('update', $post)) {
+            return abort(403);
+        }
+
+        $validTags = [];
+        $tags = explode(', ', $request->tags);
+        foreach ($tags as $tag) {
+            $tag = Tag::where('name', $tag)->first();
+            if ($tag !== null) array_push($validTags, $tag->id);
+        }
+        $post->tags()->sync($validTags);
+
+        return response()->json($post->tags()->pluck('name'));
     }
 }
