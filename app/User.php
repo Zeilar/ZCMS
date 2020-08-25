@@ -37,13 +37,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function safe_data(): array {
-        return [
-            'username' => $this->username,
-            'email'    => $this->email,
-            'role'     => $this->role,
-        ];
-    }
 
     public function posts() {
         return $this->hasMany(Post::class);
@@ -61,8 +54,12 @@ class User extends Authenticatable
         return $this->id === $post->user->id;
     }
 
+    public function isCommenter(Comment $comment): bool {
+        return $this->id === $comment->user->id;
+    }
+
     public function hasRole(string $role): bool {
-        return $this->roles()->where('name', $role)->first() ?? false;
+        return $this->roles()->where('name', $role)->first() ? true : false;
     }
 
     public function hasRoles(array $roles): bool {
@@ -79,5 +76,13 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public function safe_data(): array {
+        return [
+            'username' => $this->username,
+            'email'    => $this->email,
+            'roles'    => $this->roles()->pluck('name'),
+        ];
     }
 }

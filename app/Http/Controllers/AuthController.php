@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\User;
+use App\Role;
 use Auth;
 
 class AuthController extends Controller
@@ -21,7 +22,7 @@ class AuthController extends Controller
         
         // Attempt to log in
         if (Auth::attempt([$fieldType => $id, 'password' => request('password')])) {
-            return response()->json(['error' => false, 'message' => 'Successfully logged in!', 'user' => auth()->user()]);
+            return response()->json(['error' => false, 'message' => 'Successfully logged in!', 'user' => auth()->user()->safe_data()]);
         }
 
         // Check if user exists
@@ -52,8 +53,9 @@ class AuthController extends Controller
             'username' => $request->username,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role'     => 'user',
         ]);
+        $userRole = Role::where('name', 'user')->first();
+        $user->roles()->attach($userRole);
 
         Auth::attempt(['username' => $user->username, 'password' => $user->password]);
 

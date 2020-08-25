@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
@@ -18,18 +19,8 @@ class UsersController extends Controller
         if (!auth()->user()->can('viewAny', User::class)) {
             return abort (401);
         }
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        if (!auth()->user()->can('create', User::class)) {
-            return abort (401);
-        }
+        return response()->json(User::all());
     }
 
     /**
@@ -44,10 +35,17 @@ class UsersController extends Controller
             return abort (401);
         }
         
-        // TODO: admin create user
-        // User::create([
+        $user = User::create([
+            'username' => $request->username,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-        // ]);
+        return response()->json([
+            'message' => 'Successfully created user.',
+            'user'    => $user,
+            'error'   => false,
+        ]);
     }
 
     /**
@@ -61,19 +59,8 @@ class UsersController extends Controller
         if (!auth()->user()->can('view', $user)) {
             return abort (401);
         }
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        if (!auth()->user()->can('update', $user)) {
-            return abort (401);
-        }
+        return response()->json($user);
     }
 
     /**
@@ -88,6 +75,12 @@ class UsersController extends Controller
         if (!auth()->user()->can('update', $user)) {
             return abort (401);
         }
+
+        return response()->json([
+            'message' => 'Successfully updated user.',
+            'user'    => $user,
+            'error'   => false,
+        ]);
     }
 
     /**
@@ -102,7 +95,14 @@ class UsersController extends Controller
             return abort (401);
         }
 
+        $user_id = $user->id;
         $user->roles()->detach();
         $user->delete();
+
+        return response()->json([
+            'message' => 'Successfully deleted user.',
+            'user_id' => $user_id,
+            'error'   => false,
+        ]);
     }
 }

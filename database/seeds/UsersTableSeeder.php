@@ -46,5 +46,9 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('123'),
         ]);
         $user->roles()->sync([$userRole->id]);
+
+        factory(User::class, 10)->create()->each(function($user, $userRole) {
+            $user->roles()->attach($userRole);
+        });
     }
 }

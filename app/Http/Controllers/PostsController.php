@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PostLike;
 use App\Post;
+use Auth;
 
 class PostsController extends Controller
 {
@@ -15,9 +16,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        if (!auth()->user()->can('viewAny', Post::class)) {
-            return abort(401);
-        }
+        return response()->json(Post::all());
     }
 
     /**
@@ -28,8 +27,8 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        if (!auth()->user()->can('create', Post::class)) {
-            return abort(401);
+        if (Auth::check() && !auth()->user()->can('create', Post::class)) {
+            return abort(403);
         }
 
         $request->validate([
@@ -54,9 +53,7 @@ class PostsController extends Controller
      */
     public function show(Post $post)
     {
-        if (!auth()->user()->can('view', $post)) {
-            return abort(401);
-        }
+        return response()->json($post);
     }
 
     /**
@@ -68,8 +65,8 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        if (!auth()->user()->can('update', $post)) {
-            return abort(401);
+        if (Auth::check() && !auth()->user()->can('update', $post)) {
+            return abort(403);
         }
 
         $post->update([
@@ -92,11 +89,12 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
-        if (!auth()->user()->can('delete', $post)) {
-            return abort(401);
+        if (Auth::check() && !auth()->user()->can('delete', $post)) {
+            return abort(403);
         }
 
         $post_id = $post->id;
+        $post->likes()->delete();
         $post->delete();
 
         return response()->json([
@@ -107,17 +105,17 @@ class PostsController extends Controller
 
     public function like(Request $request, Post $post) {
         $user = auth()->user();
-        if (!$user->can('like', $post)) {
-            return abort(401);
+        if (empty($user) || !$user->can('like', $post)) {
+            return abort(403);
         }
         
         // Remove already existing like, or like it if it hasn't been already
         if ($postLike = $user->postLikes()->where('post_id', $post->id)->first()) {
             $postLike->delete();
-            return response()->json(['action' => 'unlike', 'post_id' => $post->id]);
+            return response()->json(['likes' => $post->likes->count(), 'post_id' => $post->id]);
         } else {
             PostLike::create(['user_id' => $user->id, 'post_id' => $post->id]);
-            return response()->json(['action' => 'like', 'post_id' => $post->id]);
+            return response()->json(['likes' => $post->likes->count(), 'post_id' => $post->id]);
         }
     }
 }
