@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\CommentLike;
 use App\Comment;
 use Auth;
 
@@ -107,10 +108,10 @@ class CommentsController extends Controller
         // Remove already existing like, or like it if it hasn't been already
         if ($commentLike = $user->commentLikes()->where('comment_id', $comment->id)->first()) {
             $commentLike->delete();
-            return response()->json(['likes' => $comment->likes->count(), 'action' => 'unlike', 'comment_id' => $comment->id]);
+            return response()->json(['likes' => $comment->likes->count(), 'comment_id' => $comment->id]);
         } else {
             CommentLike::create(['user_id' => $user->id, 'comment_id' => $comment->id]);
-            return response()->json(['likes' => $comment->likes->count(), 'action' => 'like', 'comment_id' => $comment->id]);
+            return response()->json(['likes' => $comment->likes->count(), 'comment_id' => $comment->id]);
         }
     }
 }

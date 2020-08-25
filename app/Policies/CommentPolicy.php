@@ -92,4 +92,9 @@ class CommentPolicy
     {
         return $user->hasRole('admin');
     }
+
+    public function like(User $user, Comment $comment)
+    {
+        return Auth::check();
+    }
 }
