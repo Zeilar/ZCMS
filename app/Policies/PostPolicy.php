@@ -92,4 +92,9 @@ class PostPolicy
     {
         return $user->hasRole('admin');
     }
+
+    public function like(User $user, Post $post)
+    {
+        return Auth::check();
+    }
 }

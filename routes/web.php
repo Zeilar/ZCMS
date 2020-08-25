@@ -10,6 +10,7 @@ Route::post('/login', 'AuthController@login')->name('login');
 
 // PostsController
 Route::resource('post', 'PostsController', ['except' => ['create', 'edit']]);
+Route::patch('/post/{post}/like', 'PostsController@like');
 
 // Admin -> UsersController
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {

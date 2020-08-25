@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\PostLike;
 use App\Post;
 
 class PostsController extends Controller
@@ -102,5 +103,21 @@ class PostsController extends Controller
             'message' => 'Post was successfully deleted.',
             'post_id' => $post_id,
         ]);
+    }
+
+    public function like(Request $request, Post $post) {
+        $user = auth()->user();
+        if (!$user->can('like', $post)) {
+            return abort(401);
+        }
+        
+        // Remove already existing like, or like it if it hasn't been already
+        if ($postLike = $user->postLikes()->where('post_id', $post->id)->first()) {
+            $postLike->delete();
+            return response()->json(['action' => 'unlike', 'post_id' => $post->id]);
+        } else {
+            PostLike::create(['user_id' => $user->id, 'post_id' => $post->id]);
+            return response()->json(['action' => 'like', 'post_id' => $post->id]);
+        }
     }
 }
