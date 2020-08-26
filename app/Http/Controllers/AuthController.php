@@ -22,7 +22,7 @@ class AuthController extends Controller
         
         // Attempt to log in
         if (Auth::attempt([$fieldType => $id, 'password' => request('password')])) {
-            return response()->json(['error' => false, 'message' => 'Successfully logged in!', 'user' => auth()->user()->safe_data()]);
+            return response()->json(['error' => false, 'message' => 'Successfully logged in!', 'user' => auth()->user()->publicData()]);
         }
 
         // Check if user exists
@@ -62,7 +62,7 @@ class AuthController extends Controller
         return response()->json([
             'error'   => false,
             'message' => 'Your account was successfully created.',
-            'user'    => $user->safe_data()
+            'user'    => $user->publicData()
         ]);
     }
 
@@ -74,6 +74,6 @@ class AuthController extends Controller
 
     public function authenticate(Request $request) {
         if (!Auth::check()) return abort(401);
-        return response()->json(['user' => auth()->user()->safe_data()]);
+        return response()->json(['user' => auth()->user()->publicData()]);
     }
 }
