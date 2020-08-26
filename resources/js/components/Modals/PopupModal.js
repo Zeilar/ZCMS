@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import React, { useRef } from 'react';
 import './modal.css';
 
-export default function PopupModal({ message, type, setActive, title = 'Something went wrong' }) {
+export default function PopupModal({ message = 'Something went wrong', type = 'error', title = 'Error', setActive }) {
     document.querySelector('body').style.overflowY = 'hidden';
 
     const styles = createUseStyles({
@@ -51,10 +51,16 @@ export default function PopupModal({ message, type, setActive, title = 'Somethin
         },
         close: {
             transition: 'transform 0.15s ease-in-out',
-            background: type === 'error' ? 'rgb(200, 0, 0)' : 'rgb(0, 150, 0)',
+            'background-color': 'var(--color-secondary)',
             'letter-spacing': '1px',
             padding: '0.75rem 0',
             width: '100%',
+            '&.error': {
+                background: 'rgb(200, 0, 0)',
+            },
+            '&.success': {
+                background: 'rgb(0, 150, 0)',
+            },
             '&:hover': {
                 transform: 'scale(1.02)',
             },
@@ -65,9 +71,15 @@ export default function PopupModal({ message, type, setActive, title = 'Somethin
                 'background-color': 'rgb(0, 125, 0)',
             },
         },
-        triangle: {
-            color: type === 'error' ? 'rgb(200, 0, 0)' : 'rgb(0, 150, 0)',
+        icon: {
+            color: 'var(--color-secondary)',
             'font-size': '250%',
+            '&.error': {
+                color: 'rgb(200, 0, 0)',
+            },
+            '&.success': {
+                color: 'rgb(0, 150, 0)',
+            },
         },
         dimmer: {
             animation: 'popup-modal-fade-in 0.25s linear forwards',
@@ -106,14 +118,15 @@ export default function PopupModal({ message, type, setActive, title = 'Somethin
             <div className={classes.wrapper} ref={wrapper}>
                 <div className={classes.modal} ref={modal}>
                     <div className={classes.content}>
-                        <FontAwesomeIcon className={classes.triangle} icon={type === 'error' ? faExclamationTriangle : faCheckCircle} />
+                        {type === 'error' && <FontAwesomeIcon className={`${classes.icon} error`} icon={faExclamationTriangle} />}
+                        {type === 'success' && <FontAwesomeIcon className={`${classes.icon} success`} icon={faCheckCircle} />}
                         <div className={classes.messages}>
                             <p className={classes.title}>
-                                {type === 'error' ? title : 'Success'}
+                                {title}
                             </p>
                             <p className={classes.message}>{message}</p>
                         </div>
-                        <button onClick={close} className={`btnPrimary ${type === 'error' ? 'error' : 'success'} ${classes.close}`}>
+                        <button onClick={close} className={`btnPrimary ${type} ${classes.close}`}>
                             <span>Dismiss</span>
                         </button>
                     </div>

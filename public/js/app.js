@@ -84182,8 +84182,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
-/* harmony import */ var _Landing__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Landing */ "./resources/js/components/Landing.js");
-/* harmony import */ var _Navbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Navbar */ "./resources/js/components/Navbar.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -84193,20 +84191,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
-
-function Login() {
+function Login(_ref) {
+  var setPopup = _ref.setPopup,
+      setPopupContent = _ref.setPopupContent;
   var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["useHistory"])();
 
   if (localStorage.getItem('user')) {
+    setPopupContent({
+      message: 'You are already logged in.',
+      type: 'error'
+    });
+    setPopup(true);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
-      to: {
-        pathname: '/',
-        state: {
-          message: 'You are already logged in.',
-          type: 'error'
-        }
-      }
+      push: true,
+      to: history.goBack()
     });
   }
 
@@ -84334,10 +84332,11 @@ function Logout(_ref) {
                 localStorage.removeItem('user');
               }
 
+              console.log(response);
               setPopupContent(response);
               setPopup(true);
 
-            case 6:
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -84381,11 +84380,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function PopupModal(_ref) {
-  var message = _ref.message,
-      type = _ref.type,
-      setActive = _ref.setActive,
+  var _ref$message = _ref.message,
+      message = _ref$message === void 0 ? 'Something went wrong' : _ref$message,
+      _ref$type = _ref.type,
+      type = _ref$type === void 0 ? 'error' : _ref$type,
       _ref$title = _ref.title,
-      title = _ref$title === void 0 ? 'Something went wrong' : _ref$title;
+      title = _ref$title === void 0 ? 'Error' : _ref$title,
+      setActive = _ref.setActive;
   document.querySelector('body').style.overflowY = 'hidden';
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_3__["createUseStyles"])({
     wrapper: {
@@ -84430,10 +84431,16 @@ function PopupModal(_ref) {
     },
     close: {
       transition: 'transform 0.15s ease-in-out',
-      background: type === 'error' ? 'rgb(200, 0, 0)' : 'rgb(0, 150, 0)',
+      'background-color': 'var(--color-secondary)',
       'letter-spacing': '1px',
       padding: '0.75rem 0',
       width: '100%',
+      '&.error': {
+        background: 'rgb(200, 0, 0)'
+      },
+      '&.success': {
+        background: 'rgb(0, 150, 0)'
+      },
       '&:hover': {
         transform: 'scale(1.02)'
       },
@@ -84444,9 +84451,15 @@ function PopupModal(_ref) {
         'background-color': 'rgb(0, 125, 0)'
       }
     },
-    triangle: {
-      color: type === 'error' ? 'rgb(200, 0, 0)' : 'rgb(0, 150, 0)',
-      'font-size': '250%'
+    icon: {
+      color: 'var(--color-secondary)',
+      'font-size': '250%',
+      '&.error': {
+        color: 'rgb(200, 0, 0)'
+      },
+      '&.success': {
+        color: 'rgb(0, 150, 0)'
+      }
     },
     dimmer: {
       animation: 'popup-modal-fade-in 0.25s linear forwards',
@@ -84487,18 +84500,21 @@ function PopupModal(_ref) {
     ref: modal
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
     className: classes.content
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
-    className: classes.triangle,
-    icon: type === 'error' ? _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faExclamationTriangle"] : _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faCheckCircle"]
+  }, type === 'error' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+    className: "".concat(classes.icon, " error"),
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faExclamationTriangle"]
+  }), type === 'success' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+    className: "".concat(classes.icon, " success"),
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faCheckCircle"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
     className: classes.messages
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("p", {
     className: classes.title
-  }, type === 'error' ? title : 'Success'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("p", {
+  }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("p", {
     className: classes.message
   }, message)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("button", {
     onClick: close,
-    className: "btnPrimary ".concat(type === 'error' ? 'error' : 'success', " ").concat(classes.close)
+    className: "btnPrimary ".concat(type, " ").concat(classes.close)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("span", null, "Dismiss"))))));
 }
 

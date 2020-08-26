@@ -17,6 +17,8 @@ export default function Logout({ setPopup, setPopupContent }) {
             localStorage.removeItem('user');
         }
 
+        console.log(response);
+
         setPopupContent(response);
         setPopup(true);
     }

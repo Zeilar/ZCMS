@@ -43,7 +43,11 @@ class PostsController extends Controller
             'user_id' => auth()->user()->id ?? 1, // TODO: remove null coalescing
         ]);
 
-        return response()->json(['message' => 'Post was successfully created.', 'post' => $post]);
+        return response()->json([
+            'message' => 'Post was successfully created.',
+            'type'    => 'success',
+            'post'    => $post,
+        ]);
     }
 
     /**
@@ -88,6 +92,7 @@ class PostsController extends Controller
 
         return response()->json([
             'message' => 'Post was successfully updated.',
+            'type'    => 'success',
             'post'    => $post,
         ]);
     }
@@ -110,6 +115,7 @@ class PostsController extends Controller
 
         return response()->json([
             'message' => 'Post was successfully deleted.',
+            'type'    => 'success',
             'post_id' => $post_id,
         ]);
     }

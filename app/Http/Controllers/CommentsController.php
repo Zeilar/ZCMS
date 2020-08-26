@@ -74,7 +74,8 @@ class CommentsController extends Controller
 
         return response()->json([
             'message' => 'Comment was successfully updated.',
-            'comment'    => $comment,
+            'type'    => 'success',
+            'comment' => $comment,
         ]);
     }
 
@@ -94,8 +95,9 @@ class CommentsController extends Controller
         $comment->delete();
 
         return response()->json([
-            'message' => 'Comment was successfully deleted.',
+            'message'    => 'Comment was successfully deleted.',
             'comment_id' => $comment_id,
+            'type'       => 'success',
         ]);
     }
 

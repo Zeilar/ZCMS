@@ -1,21 +1,16 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
-import Landing from './Landing';
-import Navbar from './Navbar';
 
-export default function Login() {
+export default function Login({ setPopup, setPopupContent }) {
     const history = useHistory();
     if (localStorage.getItem('user')) {
-        return <Redirect to={
-            {
-                pathname: '/',
-                state: {
-                    message: 'You are already logged in.',
-                    type: 'error',
-                }
-            }
-        } />
+        setPopupContent({
+            message: 'You are already logged in.',
+            type: 'error',
+        });
+        setPopup(true);
+        return <Redirect push to={history.goBack()} />
     }
 
     const password = useRef();
