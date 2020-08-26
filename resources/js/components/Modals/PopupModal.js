@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import React, { useRef } from 'react';
 import './modal.css';
 
-export default function PopupModal({ message, type, setActive }) {
+export default function PopupModal({ message, type, setActive, title = 'Something went wrong' }) {
     document.querySelector('body').style.overflowY = 'hidden';
 
     const styles = createUseStyles({
@@ -109,7 +109,7 @@ export default function PopupModal({ message, type, setActive }) {
                         <FontAwesomeIcon className={classes.triangle} icon={type === 'error' ? faExclamationTriangle : faCheckCircle} />
                         <div className={classes.messages}>
                             <p className={classes.title}>
-                                {type === 'error' ? 'Something went wrong' : 'Success'}
+                                {type === 'error' ? title : 'Success'}
                             </p>
                             <p className={classes.message}>{message}</p>
                         </div>

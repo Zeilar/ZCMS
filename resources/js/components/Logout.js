@@ -1,21 +1,27 @@
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import React from 'react';
 
-export default function Logout() {
-    if (localStorage.getItem('user') === null) {
-        return <Redirect to={
-            {
-                pathname: '/',
-                state: {
-                    message: 'You are already logged out.',
-                    type: 'error',
-                }
-            }
-        } />
+export default function Logout({ setPopup, setPopupContent }) {
+    const history = useHistory();
+
+    async function popupModal() {
+        const response = await fetch('/logout', { method: 'POST' })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                return data;
+            });
+
+        if (!response.error) {
+            localStorage.removeItem('user');
+        }
+
+        setPopupContent(response);
+        setPopup(true);
     }
 
-    fetch('/logout', { method: 'POST' });
-    localStorage.removeItem('user');
+    popupModal();
 
-    return <Redirect to="/" />
+    return <Redirect push to={history.goBack() ?? '/'} />;
 }

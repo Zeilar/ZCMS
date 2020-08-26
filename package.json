@@ -30,6 +30,7 @@
         "js-cookie": "^2.2.1",
         "react-cool-onclickoutside": "^1.5.5",
         "react-jss": "^10.4.0",
-        "react-router-dom": "^5.2.0"
+        "react-router-dom": "^5.2.0",
+        "react-router-last-location": "^2.0.1"
     }
 }
