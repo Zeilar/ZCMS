@@ -54,8 +54,7 @@ class AuthController extends Controller
             'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        $userRole = Role::where('name', 'user')->first();
-        $user->roles()->attach($userRole);
+        $user->roles()->attach(Role::where('name', 'user')->first());
 
         Auth::attempt(['username' => $user->username, 'password' => $user->password]);
 
