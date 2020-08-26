@@ -84327,16 +84327,11 @@ function Logout(_ref) {
 
             case 2:
               response = _context.sent;
-
-              if (!response.error) {
-                localStorage.removeItem('user');
-              }
-
-              console.log(response);
+              if (!response.error) localStorage.removeItem('user');
               setPopupContent(response);
               setPopup(true);
 
-            case 7:
+            case 6:
             case "end":
               return _context.stop();
           }

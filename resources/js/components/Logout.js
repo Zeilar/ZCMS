@@ -12,17 +12,10 @@ export default function Logout({ setPopup, setPopupContent }) {
             .then(data => {
                 return data;
             });
-
-        if (!response.error) {
-            localStorage.removeItem('user');
-        }
-
-        console.log(response);
-
+        if (!response.error) localStorage.removeItem('user');
         setPopupContent(response);
         setPopup(true);
     }
-
     popupModal();
 
     return <Redirect push to={history.goBack() ?? '/'} />;
