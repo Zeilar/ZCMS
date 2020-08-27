@@ -4,24 +4,19 @@ import React from 'react';
 export default function ProtectedRoute({ component: Component, ...rest }) {
     const history = useHistory();
 
-    return (
-        <Route {...rest} render={
+    if (localStorage.getItem('user')) {
+        return <Route {...rest} render={
             (props) => {
-                if (localStorage.getItem('user')) {
-                    return <Component {...props} />;
-                } else {
-                    return <Redirect push to={
-                        {
-                            pathname: history.goBack(),
-                            state: {
-                                message: 'Access unauthorized.',
-                                type: 'error',
-                                title: 401,
-                            }
-                        }
-                    } />
-                }
+                return <Component {...props} />;
             }
         } />
-    );
+    } else {
+        rest.setPopupContent({
+            message: 'Please log in first.',
+            title: '401 Unauthorized',
+            type: 'error',
+        });
+        rest.setPopup(true);
+        return <Redirect push to={history.goBack() ?? '/'} />
+    }
 }

@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import AdminDashboard from './Admin/AdminDashboard';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar({ user, users, setUsers, adminDashboard, setAdminDashboard }) {
     const styles = createUseStyles({
         header: {
             'border-bottom': '1px solid var(--color-secondary)',
@@ -10,12 +11,18 @@ export default function Navbar() {
             background: 'var(--body-bg)',
         },
         navbar: {
-            margin: '0 var(--container-margin)', 
             padding: '0.5rem',
             display: 'flex',
         },
+        navbarLeft: {
+            width: 'var(--container-margin)',
+        },
+        navbarRight: {
+            width: 'var(--container-margin)',
+        },
         navList: {
             display: 'flex',
+            flex: '1',
         },
         navItem: {
             margin: '0 0.5rem',
@@ -54,9 +61,19 @@ export default function Navbar() {
     });
     const classes = styles();
 
+    let dashboard;
+    useEffect(() => {
+        if (user && user.roles.includes('admin') && adminDashboard) {
+            
+        }
+    }, [dashboard, adminDashboard, setAdminDashboard, AdminDashboard, user, users, setUsers]);
+
     return (
         <header className={classes.header}>
             <nav className={classes.navbar}>
+                <div className={classes.navbarLeft}>
+
+                </div>
                 <ul className={classes.navList}>
                     <li className={classes.navItem}>
                         <NavLink exact className={classes.navLink} to="/">
@@ -74,7 +91,15 @@ export default function Navbar() {
                         </NavLink>
                     </li>
                 </ul>
+                <div className={classes.navbarRight}>
+                    {
+                        adminDashboard
+                            ? <button onClick={() => setAdminDashboard(false)}>Close admin</button>
+                            : <button onClick={() => setAdminDashboard(true)}>Open admin</button>
+                    }
+                </div>
             </nav>
+            {adminDashboard && <AdminDashboard users={users} setUsers={setUsers} setAdminDashboard={setAdminDashboard} />}
         </header>
     );
 }

@@ -2,15 +2,18 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
 
-export default function Login({ setPopup, setPopupContent }) {
+export default function Login({ user, setUser, setPopup, setPopupContent }) {
     const history = useHistory();
-    if (localStorage.getItem('user')) {
+
+    console.log('login comp');
+
+    if (user) {
         setPopupContent({
             message: 'You are already logged in.',
             type: 'error',
         });
         setPopup(true);
-        return <Redirect push to={history.goBack()} />
+        return <Redirect push to={history.goBack() ?? '/'} />
     }
 
     const password = useRef();
@@ -18,7 +21,7 @@ export default function Login({ setPopup, setPopupContent }) {
 
     async function login(e) {
         e.preventDefault();
-        let response = await fetch('/login', {
+        const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,12 +30,13 @@ export default function Login({ setPopup, setPopupContent }) {
                 id: id.current.value,
                 password: password.current.value,
             }),
-        });
-        response = await response.json();
+        })
+        .then(response => response.json());
+
         if (response.error) {
             console.log(response.message);
         } else {
-            localStorage.setItem('user', JSON.stringify(response.user));
+            setUser(response.user);
             history.push('/');
         }
     }

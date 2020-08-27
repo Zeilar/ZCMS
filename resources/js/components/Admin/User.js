@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 
-export default function Landing() {
+export default function User({ user }) {
     return (
-        <>
-            <section>
-                Landing page
-            </section>
-        </>
+        <div>
+            <p>{user.username}</p>
+            
+            <hr />
+        </div>
     );
 }
