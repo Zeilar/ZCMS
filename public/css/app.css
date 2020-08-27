@@ -61,7 +61,6 @@ button {
 body {
   background-color: var(--body-bg);
   color: var(--text-secondary);
-  overflow-y: scroll;
   font-size: 100%;
 }
 

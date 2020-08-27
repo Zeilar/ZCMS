@@ -2,12 +2,27 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import Users from './Users';
 
-export default function AdminDashboard({ users, setUsers, setAdminDashboard }) {
+export default function AdminDashboard({ open }) {
+    const styles = createUseStyles({
+        dashboard: {
+            transition: 'height 0.5s ease-in-out',
+            overflow: 'hidden',
+        },
+    });
+    const classes = styles();
+
+    const [height, setHeight] = useState(0);
+    const dashboard = useRef();
+
+    useEffect(() => {
+
+    }, [open]);
+
     return (
-        <div>
+        <div className={classes.dashboard} ref={dashboard} style={{ height: open ? height : 0 }}>
             Admin Dashboard
 
-            {/* <Users users={users} setUsers={setUsers} /> */}
+            <Users setHeight={setHeight} />
         </div>
     );
 }

@@ -3,7 +3,7 @@ import AdminDashboard from './Admin/AdminDashboard';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 
-export default function Navbar({ user, users, setUsers, adminDashboard, setAdminDashboard }) {
+export default function Navbar({ user }) {
     const styles = createUseStyles({
         header: {
             'border-bottom': '1px solid var(--color-secondary)',
@@ -61,12 +61,15 @@ export default function Navbar({ user, users, setUsers, adminDashboard, setAdmin
     });
     const classes = styles();
 
-    let dashboard;
+    const [adminDashboardOpen, setAdminDashboardOpen] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [users, setUsers] = useState();
+
     useEffect(() => {
-        if (user && user.roles.includes('admin') && adminDashboard) {
-            
+        if (user && user.roles && user.roles.includes('admin')) {
+            setIsAdmin(true);
         }
-    }, [dashboard, adminDashboard, setAdminDashboard, AdminDashboard, user, users, setUsers]);
+    }, [adminDashboardOpen, user, setIsAdmin]);
 
     return (
         <header className={classes.header}>
@@ -92,14 +95,10 @@ export default function Navbar({ user, users, setUsers, adminDashboard, setAdmin
                     </li>
                 </ul>
                 <div className={classes.navbarRight}>
-                    {
-                        adminDashboard
-                            ? <button onClick={() => setAdminDashboard(false)}>Close admin</button>
-                            : <button onClick={() => setAdminDashboard(true)}>Open admin</button>
-                    }
+                    {isAdmin && <button onClick={() => setAdminDashboardOpen(p => !p)}>Toggle admin</button>}
                 </div>
             </nav>
-            {adminDashboard && <AdminDashboard users={users} setUsers={setUsers} setAdminDashboard={setAdminDashboard} />}
+            {isAdmin && <AdminDashboard open={adminDashboardOpen} />}
         </header>
     );
 }

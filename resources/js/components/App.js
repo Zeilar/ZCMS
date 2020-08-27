@@ -9,10 +9,8 @@ import Login from './Login';
 import Main from './Main';
 
 export default function App() {
-    const [adminDashboard, setAdminDashboard] = useState(false);
     const [popupContent, setPopupContent] = useState({});
     const [popup, setPopup] = useState(false);
-    const [users, setUsers] = useState();
     const [user, setUser] = useState();
 
     async function authenticate() {
@@ -33,7 +31,7 @@ export default function App() {
     return (
         <Router>
             {popup && <PopupModal setActive={setPopup} message={popupContent.message} type={popupContent.type} title={popupContent.title} />}
-            <Navbar user={user} users={users} setUsers={setUser} adminDashboard={adminDashboard} setAdminDashboard={setAdminDashboard} />
+            <Navbar user={user} />
             <Switch>
                 <Route exact path="/" component={Main} />
                 <Route path="/login" component={() => <Login user={user} setUser={setUser} setPopup={setPopup} setPopupContent={setPopupContent} />} />

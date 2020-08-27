@@ -84070,14 +84070,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
 /* harmony import */ var _Users__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Users */ "./resources/js/components/Admin/Users.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
 function AdminDashboard(_ref) {
-  var users = _ref.users,
-      setUsers = _ref.setUsers,
-      setAdminDashboard = _ref.setAdminDashboard;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Admin Dashboard");
+  var open = _ref.open;
+  var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_1__["createUseStyles"])({
+    dashboard: {
+      transition: 'height 0.5s ease-in-out',
+      overflow: 'hidden'
+    }
+  });
+  var classes = styles();
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      height = _useState2[0],
+      setHeight = _useState2[1];
+
+  var dashboard = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {}, [open]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: classes.dashboard,
+    ref: dashboard,
+    style: {
+      height: open ? height : 0
+    }
+  }, "Admin Dashboard", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Users__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    setHeight: setHeight
+  }));
 }
 
 /***/ }),
@@ -84126,12 +84159,30 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
 function Users(_ref) {
-  var users = _ref.users,
-      setUsers = _ref.setUsers;
+  var setHeight = _ref.setHeight;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(),
+      _useState2 = _slicedToArray(_useState, 2),
+      users = _useState2[0],
+      setUsers = _useState2[1];
+
+  var usersContainer = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])();
 
   function getUsers() {
     return _getUsers.apply(this, arguments);
@@ -84149,18 +84200,21 @@ function Users(_ref) {
               }).then(function (response) {
                 return response.json();
               }).then(function (data) {
-                if (!users) {
-                  data = data.map(function (user) {
-                    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_User__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                      key: user.id,
-                      user: user
-                    });
+                data = data.map(function (user) {
+                  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_User__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                    key: user.id,
+                    user: user
                   });
-                  setUsers(data);
-                }
+                });
+                setUsers(data);
               });
 
             case 2:
+              setHeight(function (p) {
+                return p + usersContainer.current.getBoundingClientRect().height;
+              });
+
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -84172,8 +84226,10 @@ function Users(_ref) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     if (users == null) getUsers();
-  }, [users, getUsers]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, users);
+  }, [users, getUsers, setUsers, usersContainer, setHeight]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    ref: usersContainer
+  }, users);
 }
 
 /***/ }),
@@ -84228,30 +84284,20 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function App() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])({}),
       _useState2 = _slicedToArray(_useState, 2),
-      adminDashboard = _useState2[0],
-      setAdminDashboard = _useState2[1];
+      popupContent = _useState2[0],
+      setPopupContent = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])({}),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
       _useState4 = _slicedToArray(_useState3, 2),
-      popupContent = _useState4[0],
-      setPopupContent = _useState4[1];
+      popup = _useState4[0],
+      setPopup = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(),
       _useState6 = _slicedToArray(_useState5, 2),
-      popup = _useState6[0],
-      setPopup = _useState6[1];
-
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(),
-      _useState8 = _slicedToArray(_useState7, 2),
-      users = _useState8[0],
-      setUsers = _useState8[1];
-
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(),
-      _useState10 = _slicedToArray(_useState9, 2),
-      user = _useState10[0],
-      setUser = _useState10[1];
+      user = _useState6[0],
+      setUser = _useState6[1];
 
   function authenticate() {
     return _authenticate.apply(this, arguments);
@@ -84293,11 +84339,7 @@ function App() {
     type: popupContent.type,
     title: popupContent.title
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_Navbar__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    user: user,
-    users: users,
-    setUsers: setUser,
-    adminDashboard: adminDashboard,
-    setAdminDashboard: setAdminDashboard
+    user: user
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/",
@@ -84743,16 +84785,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Admin_AdminDashboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Admin/AdminDashboard */ "./resources/js/components/Admin/AdminDashboard.js");
 /* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
 
 function Navbar(_ref) {
-  var user = _ref.user,
-      users = _ref.users,
-      setUsers = _ref.setUsers,
-      adminDashboard = _ref.adminDashboard,
-      setAdminDashboard = _ref.setAdminDashboard;
+  var user = _ref.user;
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_2__["createUseStyles"])({
     header: {
       'border-bottom': '1px solid var(--color-secondary)',
@@ -84808,10 +84858,27 @@ function Navbar(_ref) {
     }
   });
   var classes = styles();
-  var dashboard;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      adminDashboardOpen = _useState2[0],
+      setAdminDashboardOpen = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      isAdmin = _useState4[0],
+      setIsAdmin = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(),
+      _useState6 = _slicedToArray(_useState5, 2),
+      users = _useState6[0],
+      setUsers = _useState6[1];
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (user && user.roles.includes('admin') && adminDashboard) {}
-  }, [dashboard, adminDashboard, setAdminDashboard, _Admin_AdminDashboard__WEBPACK_IMPORTED_MODULE_1__["default"], user, users, setUsers]);
+    if (user && user.roles && user.roles.includes('admin')) {
+      setIsAdmin(true);
+    }
+  }, [adminDashboardOpen, user, setIsAdmin]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
     className: classes.header
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
@@ -84838,18 +84905,14 @@ function Navbar(_ref) {
     to: "/logout"
   }, "Logout"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classes.navbarRight
-  }, adminDashboard ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  }, isAdmin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: function onClick() {
-      return setAdminDashboard(false);
+      return setAdminDashboardOpen(function (p) {
+        return !p;
+      });
     }
-  }, "Close admin") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: function onClick() {
-      return setAdminDashboard(true);
-    }
-  }, "Open admin"))), adminDashboard && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Admin_AdminDashboard__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    users: users,
-    setUsers: setUsers,
-    setAdminDashboard: setAdminDashboard
+  }, "Toggle admin"))), isAdmin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Admin_AdminDashboard__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    open: adminDashboardOpen
   }));
 }
 
