@@ -84,9 +84,9 @@ export default function Navbar({ user }) {
     useEffect(() => {
         if (!isAdmin && user && user.roles && user.roles.includes('admin')) {
             setIsAdmin(true);
-            const body = document.querySelector('body');
-            body.style.overflowY = adminDashboardOpen ? 'hidden' : 'auto';
         }
+        const body = document.querySelector('body');
+        body.style.overflowY = adminDashboardOpen ? 'hidden' : 'auto';
     }, [adminDashboardOpen, user, setIsAdmin]);
 
     return (

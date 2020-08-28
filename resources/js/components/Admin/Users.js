@@ -1,5 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import TableHeaders from '../Elements/Table/TableHeaders';
+import TableHeader from '../Elements/Table/TableHeader';
+import TableRows from '../Elements/Table/TableRows';
+import TableRow from '../Elements/Table/TableRow';
 import { createUseStyles } from 'react-jss';
+import Table from '../Elements/Table/Table';
 import User from './User';
 
 export default function Users() {
@@ -17,7 +22,7 @@ export default function Users() {
         await fetch(`/api/admin/users`, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
-                data = data.map(user => <User key={user.id} user={user} />);
+                // data = data.map(user => <User key={user.id} user={user} />);
                 setUsers(data);
             });
     }
@@ -28,7 +33,9 @@ export default function Users() {
 
     return (
         <div className={`${classes.users} scrollbar`} ref={usersContainer}>
-            {users}
+            <Table ignore={['created_at', 'updated_at']}>
+                {users}
+            </Table>
         </div>
     );
 }
