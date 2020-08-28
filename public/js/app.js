@@ -84362,8 +84362,6 @@ function Users() {
       users = _useState2[0],
       setUsers = _useState2[1];
 
-  var usersContainer = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])();
-
   function getUsers() {
     return _getUsers.apply(this, arguments);
   }
@@ -84380,8 +84378,7 @@ function Users() {
               }).then(function (response) {
                 return response.json();
               }).then(function (data) {
-                // data = data.map(user => <User key={user.id} user={user} />);
-                setUsers(data);
+                return setUsers(data);
               });
 
             case 2:
@@ -84396,12 +84393,13 @@ function Users() {
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     if (users == null) getUsers();
-  }, [users, getUsers, setUsers, usersContainer]);
+  }, [users, getUsers, setUsers]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "".concat(classes.users, " scrollbar"),
-    ref: usersContainer
+    className: "".concat(classes.users, " scrollbar")
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Elements_Table_Table__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    ignore: ['created_at', 'updated_at']
+    index: true,
+    ignore: ['id', 'created_at', 'updated_at'],
+    blueprint: users && users[0]
   }, users));
 }
 
@@ -84583,7 +84581,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function Table(_ref) {
   var children = _ref.children,
-      ignore = _ref.ignore;
+      ignore = _ref.ignore,
+      blueprint = _ref.blueprint,
+      index = _ref.index;
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_1__["createUseStyles"])({
     table: {
       'flex-direction': 'column',
@@ -84599,22 +84599,20 @@ function Table(_ref) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (children) {
-      var parameters = children[0];
-
       if (ignore) {
         ignore.forEach(function (element) {
-          delete parameters[element];
+          delete blueprint[element];
         });
       }
 
-      if (tableHeaders.length < Object.keys(parameters).length) {
+      if (tableHeaders.length < Object.keys(blueprint).length) {
         var _loop = function _loop(key) {
           setTableHeaders(function (p) {
             return [].concat(_toConsumableArray(p), [key]);
           });
         };
 
-        for (var key in parameters) {
+        for (var key in blueprint) {
           _loop(key);
         }
       }
@@ -84623,6 +84621,7 @@ function Table(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classes.table
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TableHeaders__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    index: index,
     items: children,
     headers: tableHeaders
   }));
@@ -84647,7 +84646,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function TableHeader(_ref) {
   var children = _ref.children,
-      name = _ref.name;
+      name = _ref.name,
+      index = _ref.index;
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_1__["createUseStyles"])({
     header: {
       'flex-direction': 'column',
@@ -84658,7 +84658,6 @@ function TableHeader(_ref) {
     row: {}
   });
   var classes = styles();
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {});
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classes.header
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -84685,8 +84684,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
 /* harmony import */ var _TableHeader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TableHeader */ "./resources/js/components/Elements/Table/TableHeader.js");
 /* harmony import */ var _TableRow__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TableRow */ "./resources/js/components/Elements/Table/TableRow.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_4__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -84694,7 +84710,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function TableHeaders(_ref) {
   var items = _ref.items,
-      headers = _ref.headers;
+      headers = _ref.headers,
+      index = _ref.index;
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_1__["createUseStyles"])({
     headers: {
       'flex-direction': 'row',
@@ -84702,9 +84719,42 @@ function TableHeaders(_ref) {
     }
   });
   var classes = styles();
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      indexItems = _useState2[0],
+      setIndexItems = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState4 = _slicedToArray(_useState3, 2),
+      rowIndex = _useState4[0],
+      setRowIndex = _useState4[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (index && items && rowIndex < items.length) {
+      var _loop = function _loop(i) {
+        setRowIndex(function (p) {
+          return p + 1;
+        });
+        setIndexItems(function (p) {
+          return [].concat(_toConsumableArray(p), [/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TableRow__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            key: Math.random(),
+            value: i
+          })]);
+        });
+      };
+
+      for (var i = 1; i <= items.length; i++) {
+        _loop(i);
+      }
+    }
+  });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classes.headers
-  }, headers.map(function (header) {
+  }, index && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TableHeader__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    name: "#",
+    index: "test"
+  }, indexItems), headers.map(function (header) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TableHeader__WEBPACK_IMPORTED_MODULE_2__["default"], {
       key: header,
       name: header

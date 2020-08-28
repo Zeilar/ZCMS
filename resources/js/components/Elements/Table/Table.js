@@ -3,7 +3,7 @@ import { createUseStyles } from 'react-jss';
 import TableHeaders from './TableHeaders';
 import TableHeader from './TableHeader';
 
-export default function Table({ children, ignore }) {
+export default function Table({ children, ignore, blueprint, index }) {
     const styles = createUseStyles({
         table: {
             'flex-direction': 'column',
@@ -16,16 +16,14 @@ export default function Table({ children, ignore }) {
 
     useEffect(() => {
         if (children) {
-            const parameters = children[0];
-
             if (ignore) {
                 ignore.forEach(element => {
-                    delete parameters[element];
+                    delete blueprint[element];
                 });
             }
 
-            if (tableHeaders.length < Object.keys(parameters).length) {
-                for (const key in parameters) {
+            if (tableHeaders.length < Object.keys(blueprint).length) {
+                for (const key in blueprint) {
                     setTableHeaders(p => [...p, key]);
                 }
             }
@@ -34,7 +32,7 @@ export default function Table({ children, ignore }) {
 
     return (
         <div className={classes.table}>
-            <TableHeaders items={children} headers={tableHeaders} />
+            <TableHeaders index={index} items={children} headers={tableHeaders} />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 
-export default function TableHeader({ children, name }) {
+export default function TableHeader({ children, name, index }) {
     const styles = createUseStyles({
         header: {
             'flex-direction': 'column',
@@ -16,10 +16,6 @@ export default function TableHeader({ children, name }) {
         },
     });
     const classes = styles();
-
-    useEffect(() => {
-        
-    });
 
     return (
         <div className={classes.header}>

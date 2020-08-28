@@ -16,24 +16,20 @@ export default function Users() {
     const classes = styles();
 
     const [users, setUsers] = useState();
-    const usersContainer = useRef();
 
     async function getUsers() {
         await fetch(`/api/admin/users`, { method: 'GET' })
             .then(response => response.json())
-            .then(data => {
-                // data = data.map(user => <User key={user.id} user={user} />);
-                setUsers(data);
-            });
+            .then(data => setUsers(data));
     }
 
     useEffect(() => {
         if (users == null) getUsers();
-    }, [users, getUsers, setUsers, usersContainer]);
+    }, [users, getUsers, setUsers]);
 
     return (
-        <div className={`${classes.users} scrollbar`} ref={usersContainer}>
-            <Table ignore={['created_at', 'updated_at']}>
+        <div className={`${classes.users} scrollbar`}>
+            <Table index={true} ignore={['id', 'created_at', 'updated_at']} blueprint={users && users[0]}>
                 {users}
             </Table>
         </div>
