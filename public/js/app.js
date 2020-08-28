@@ -84089,7 +84089,7 @@ function AdminDashboard(_ref) {
   var open = _ref.open;
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_1__["createUseStyles"])({
     dashboard: {
-      transition: 'height 0.5s ease-in-out',
+      transition: 'height 0.15s linear',
       overflow: 'hidden'
     }
   });

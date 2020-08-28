@@ -5,7 +5,7 @@ import Users from './Users';
 export default function AdminDashboard({ open }) {
     const styles = createUseStyles({
         dashboard: {
-            transition: 'height 0.5s ease-in-out',
+            transition: 'height 0.15s linear',
             overflow: 'hidden',
         },
     });
