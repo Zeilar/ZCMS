@@ -14,3 +14,20 @@
 .btnSecondary {
 
 }
+
+.scrollbar {
+    &::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--color-secondary);
+        border: 1px solid transparent;
+        background-clip: padding-box;
+        border-radius: 10px;
+    }
+}

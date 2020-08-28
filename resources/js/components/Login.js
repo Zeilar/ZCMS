@@ -46,8 +46,8 @@ export default function Login({ user, setUser, setPopup, setPopupContent }) {
             <h1>Login</h1>
 
             <form onSubmit={login}>
-                <input type="text" ref={id} />
-                <input type="password" ref={password} />
+                <input type="text" ref={id} placeholder="Username" />
+                <input type="password" ref={password} placeholder="Password" />
                 <button type="submit">Go</button>
             </form>
         </div>

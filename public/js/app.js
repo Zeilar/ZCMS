@@ -84066,10 +84066,13 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; // 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AdminDashboard; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
-/* harmony import */ var _Users__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Users */ "./resources/js/components/Admin/Users.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
+/* harmony import */ var _Users__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Users */ "./resources/js/components/Admin/Users.js");
+/* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Home */ "./resources/js/components/Admin/Home.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -84085,32 +84088,196 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
+
 function AdminDashboard(_ref) {
-  var open = _ref.open;
-  var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_1__["createUseStyles"])({
+  var user = _ref.user,
+      open = _ref.open,
+      setOpen = _ref.setOpen;
+  var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_3__["createUseStyles"])({
     dashboard: {
-      transition: 'height 0.15s linear',
-      overflow: 'hidden'
-    }
+      transition: 'transform 0.25s linear',
+      background: 'var(--color-primary)',
+      transform: 'translateY(-100%)',
+      overflow: 'hidden',
+      position: 'fixed',
+      height: '100vh',
+      width: '100vw',
+      left: 0,
+      top: 0,
+      '&.open': {
+        transform: 'translateY(0)'
+      }
+    },
+    banner: {
+      'box-shadow': '0 0 10px 2px rgba(0, 0, 0, 0.25)',
+      background: 'var(--color-secondary)',
+      'align-items': 'center',
+      display: 'flex',
+      height: '2rem',
+      color: 'white'
+    },
+    bannerContent: {
+      padding: '0.5rem'
+    },
+    close: {
+      background: 'rgb(50, 50, 50)',
+      'justify-content': 'center',
+      'align-items': 'center',
+      'margin-left': 'auto',
+      display: 'flex',
+      height: '2rem',
+      width: '2rem'
+    },
+    circle: {
+      'font-size': '1.25rem',
+      color: 'white'
+    },
+    wrapper: {
+      display: 'flex',
+      height: '100%'
+    },
+    sidebar: {
+      'box-shadow': '0 0 10px 2px rgba(0, 0, 0, 0.25)',
+      background: 'var(--body-bg)',
+      width: '15vw'
+    },
+    sidebarUser: {
+      'justify-content': 'center',
+      'flex-direction': 'column',
+      'align-items': 'center',
+      position: 'relative',
+      display: 'flex',
+      height: '100px'
+    },
+    hr: {
+      border: 0,
+      'border-image': 'linear-gradient(to left, transparent 1%, rgba(0, 0, 0, 0.5) 50%, transparent 100%) 1',
+      'border-bottom': '1px solid',
+      position: 'absolute',
+      width: '75%',
+      bottom: 0
+    },
+    content: {
+      overflow: 'auto',
+      display: 'flex',
+      padding: '1rem',
+      flex: 1
+    },
+    sidebarList: {
+      padding: '1rem 0'
+    },
+    sidebarItem: {
+      transition: 'background 0.15s ease-in-out',
+      'border-left': '4px solid transparent',
+      color: 'var(--text-secondary)',
+      'align-items': 'center',
+      padding: '0.75rem 1rem',
+      'user-select': 'none',
+      cursor: 'pointer',
+      display: 'flex',
+      '&:hover': {
+        background: 'var(--color-primary)',
+        color: 'var(--text-primary)'
+      },
+      '&.active': {
+        'border-color': 'var(--color-secondary)',
+        color: 'var(--color-secondary)'
+      }
+    },
+    sidebarItemIcon: {
+      'margin-right': '0.5rem'
+    },
+    sidebarItemText: {}
   });
   var classes = styles();
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(home),
       _useState2 = _slicedToArray(_useState, 2),
-      height = _useState2[0],
-      setHeight = _useState2[1];
+      activeItem = _useState2[0],
+      setActiveItem = _useState2[1];
 
-  var dashboard = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {}, [open]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: classes.dashboard,
-    ref: dashboard,
-    style: {
-      height: open ? height : 0
+  var users = Object(react__WEBPACK_IMPORTED_MODULE_2__["useRef"])();
+  var home = Object(react__WEBPACK_IMPORTED_MODULE_2__["useRef"])();
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setOpen(false);
+  });
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    if (activeItem == null) setActiveItem(home);
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("section", {
+    className: "".concat(classes.dashboard, " ").concat(open ? 'open' : '')
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
+    className: classes.banner
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
+    className: classes.bannerContent
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("span", {
+    className: classes.title
+  }, "ZCMS Admin")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("button", {
+    className: classes.close,
+    onClick: function onClick() {
+      return setOpen(false);
     }
-  }, "Admin Dashboard", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Users__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    setHeight: setHeight
-  }));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+    className: classes.circle,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faTimes"]
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
+    className: classes.wrapper
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
+    className: classes.sidebar
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
+    className: classes.sidebarUser
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("p", null, user.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("hr", {
+    className: classes.hr
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("ul", {
+    className: classes.sidebarList
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("li", {
+    className: "".concat(classes.sidebarItem, " ").concat(activeItem && activeItem === home ? 'active' : ''),
+    ref: home,
+    onClick: function onClick() {
+      return setActiveItem(home);
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+    className: classes.sidebarItemIcon,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faHome"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("span", {
+    className: classes.sidebarItemText
+  }, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("li", {
+    className: "".concat(classes.sidebarItem, " ").concat(activeItem && activeItem === users ? 'active' : ''),
+    ref: users,
+    onClick: function onClick() {
+      return setActiveItem(users);
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+    className: classes.sidebarItemIcon,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faUsers"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("span", {
+    className: classes.sidebarItemText
+  }, "Users")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
+    className: classes.content
+  }, activeItem === home && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_Home__WEBPACK_IMPORTED_MODULE_5__["default"], null), activeItem === users && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_Users__WEBPACK_IMPORTED_MODULE_4__["default"], null))));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/Admin/Home.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/Admin/Home.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Home; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
+
+
+function Home() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Home");
 }
 
 /***/ }),
@@ -84174,8 +84341,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function Users(_ref) {
-  var setHeight = _ref.setHeight;
+function Users() {
+  var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_2__["createUseStyles"])({
+    users: {}
+  });
+  var classes = styles();
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(),
       _useState2 = _slicedToArray(_useState, 2),
@@ -84210,11 +84380,6 @@ function Users(_ref) {
               });
 
             case 2:
-              setHeight(function (p) {
-                return p + usersContainer.current.getBoundingClientRect().height;
-              });
-
-            case 3:
             case "end":
               return _context.stop();
           }
@@ -84226,8 +84391,9 @@ function Users(_ref) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     if (users == null) getUsers();
-  }, [users, getUsers, setUsers, usersContainer, setHeight]);
+  }, [users, getUsers, setUsers, usersContainer]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "".concat(classes.users, " scrollbar"),
     ref: usersContainer
   }, users);
 }
@@ -84315,9 +84481,8 @@ function App() {
               }).then(function (response) {
                 if (response.status === 401) return false;
                 return response.json();
-              }).then(function (_ref) {
-                var user = _ref.user;
-                if (user) setUser(user);
+              }).then(function (data) {
+                if (!user) setUser(data.user);
               });
 
             case 2:
@@ -84332,7 +84497,7 @@ function App() {
 
   Object(react__WEBPACK_IMPORTED_MODULE_3__["useEffect"])(function () {
     if (user == null) authenticate();
-  }, [user]);
+  }, [user, authenticate, setUser]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, popup && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_Modals_PopupModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
     setActive: setPopup,
     message: popupContent.message,
@@ -84470,10 +84635,12 @@ function Login(_ref) {
     onSubmit: login
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
-    ref: id
+    ref: id,
+    placeholder: "Username"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "password",
-    ref: password
+    ref: password,
+    placeholder: "Password"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
     type: "submit"
   }, "Go")));
@@ -84780,11 +84947,13 @@ if(false) {}
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Navbar; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Admin_AdminDashboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Admin/AdminDashboard */ "./resources/js/components/Admin/AdminDashboard.js");
-/* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Admin_AdminDashboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Admin/AdminDashboard */ "./resources/js/components/Admin/AdminDashboard.js");
+/* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -84801,23 +84970,30 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
 function Navbar(_ref) {
   var user = _ref.user;
-  var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_2__["createUseStyles"])({
+  var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_4__["createUseStyles"])({
     header: {
-      'border-bottom': '1px solid var(--color-secondary)',
       'box-shadow': '0 0 10px 2px rgba(0, 0, 0, 0.25)',
-      background: 'var(--body-bg)'
+      background: 'var(--color-secondary)'
     },
     navbar: {
+      'align-items': 'center',
       padding: '0.5rem',
-      display: 'flex'
+      display: 'flex',
+      height: '2rem'
     },
     navbarLeft: {
       width: 'var(--container-margin)'
     },
     navbarRight: {
-      width: 'var(--container-margin)'
+      width: 'var(--container-margin)',
+      'justify-content': 'flex-end',
+      'padding-right': '0.5rem',
+      'align-items': 'center',
+      display: 'flex'
     },
     navList: {
       display: 'flex',
@@ -84855,64 +85031,78 @@ function Navbar(_ref) {
       '&:hover::after': {
         width: '100%'
       }
+    },
+    adminToggler: {
+      'justify-content': 'center',
+      'align-items': 'center',
+      'border-radius': '50%',
+      display: 'flex',
+      height: '1rem',
+      width: '1rem'
+    },
+    arrows: {
+      color: 'var(--color-secondary)'
     }
   });
   var classes = styles();
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(false),
       _useState2 = _slicedToArray(_useState, 2),
       adminDashboardOpen = _useState2[0],
       setAdminDashboardOpen = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(false),
       _useState4 = _slicedToArray(_useState3, 2),
       isAdmin = _useState4[0],
       setIsAdmin = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(),
-      _useState6 = _slicedToArray(_useState5, 2),
-      users = _useState6[0],
-      setUsers = _useState6[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (user && user.roles && user.roles.includes('admin')) {
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    if (!isAdmin && user && user.roles && user.roles.includes('admin')) {
       setIsAdmin(true);
+      var body = document.querySelector('body');
+      body.style.overflowY = adminDashboardOpen ? 'hidden' : 'auto';
     }
   }, [adminDashboardOpen, user, setIsAdmin]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("header", {
     className: classes.header
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("nav", {
     className: classes.navbar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
     className: classes.navbarLeft
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("ul", {
     className: classes.navList
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("li", {
     className: classes.navItem
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["NavLink"], {
     exact: true,
     className: classes.navLink,
     to: "/"
-  }, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+  }, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("li", {
     className: classes.navItem
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["NavLink"], {
     className: classes.navLink,
     to: "/login"
-  }, "Login")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+  }, "Login")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("li", {
     className: classes.navItem
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["NavLink"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["NavLink"], {
     className: classes.navLink,
     to: "/logout"
-  }, "Logout"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, "Logout"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
     className: classes.navbarRight
-  }, isAdmin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  }, isAdmin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("button", {
+    className: classes.adminToggler,
     onClick: function onClick() {
       return setAdminDashboardOpen(function (p) {
         return !p;
       });
     }
-  }, "Toggle admin"))), isAdmin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Admin_AdminDashboard__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    open: adminDashboardOpen
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
+    className: classes.arrows,
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faAngleDoubleDown"]
+  })))), isAdmin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_Admin_AdminDashboard__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    user: user,
+    open: adminDashboardOpen,
+    setOpen: setAdminDashboardOpen
   }));
 }
 

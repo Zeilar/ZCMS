@@ -19,14 +19,14 @@ export default function App() {
                 if (response.status === 401) return false;
                 return response.json();
             })
-            .then(({ user }) => {
-                if (user) setUser(user);
+            .then(data => {
+                if (!user) setUser(data.user);
             });
     }
 
     useEffect(() => {
         if (user == null) authenticate();
-    }, [user]);
+    }, [user, authenticate, setUser]);
 
     return (
         <Router>
