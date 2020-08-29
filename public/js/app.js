@@ -84397,8 +84397,7 @@ function Users() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "".concat(classes.users, " scrollbar")
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Elements_Table_Table__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    index: true,
-    ignore: ['id', 'created_at', 'updated_at'],
+    ignore: ['created_at', 'updated_at'],
     blueprint: users && users[0]
   }, users));
 }
@@ -84554,7 +84553,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
 /* harmony import */ var _TableHeaders__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TableHeaders */ "./resources/js/components/Elements/Table/TableHeaders.js");
-/* harmony import */ var _TableHeader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TableHeader */ "./resources/js/components/Elements/Table/TableHeader.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -84574,7 +84572,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -84646,16 +84643,17 @@ __webpack_require__.r(__webpack_exports__);
 
 function TableHeader(_ref) {
   var children = _ref.children,
-      name = _ref.name,
-      index = _ref.index;
+      name = _ref.name;
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_1__["createUseStyles"])({
     header: {
       'flex-direction': 'column',
-      display: 'flex',
-      border: '1px solid blue'
+      display: 'flex'
     },
-    title: {},
-    row: {}
+    title: {
+      'text-transform': 'capitalize',
+      'font-weight': 600,
+      padding: '0.5rem'
+    }
   });
   var classes = styles();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -84788,13 +84786,12 @@ function TableRow(_ref) {
   var value = _ref.value;
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_1__["createUseStyles"])({
     row: {
+      'border-bottom': '1px solid var(--border-primary)',
       'flex-direction': 'row',
-      display: 'flex',
-      border: '1px solid red'
+      display: 'flex'
     }
   });
-  var classes = styles(); // console.log(value);
-
+  var classes = styles();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classes.row
   }, value);

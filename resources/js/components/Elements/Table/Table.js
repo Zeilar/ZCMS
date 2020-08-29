@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import TableHeaders from './TableHeaders';
-import TableHeader from './TableHeader';
 
 export default function Table({ children, ignore, blueprint, index }) {
     const styles = createUseStyles({

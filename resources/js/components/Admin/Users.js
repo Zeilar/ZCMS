@@ -29,7 +29,7 @@ export default function Users() {
 
     return (
         <div className={`${classes.users} scrollbar`}>
-            <Table index={true} ignore={['id', 'created_at', 'updated_at']} blueprint={users && users[0]}>
+            <Table ignore={['created_at', 'updated_at']} blueprint={users && users[0]}>
                 {users}
             </Table>
         </div>

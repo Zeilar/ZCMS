@@ -1,18 +1,16 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 
-export default function TableHeader({ children, name, index }) {
+export default function TableHeader({ children, name }) {
     const styles = createUseStyles({
         header: {
             'flex-direction': 'column',
             display: 'flex',
-            border: '1px solid blue',
         },
         title: {
-
-        },
-        row: {
-
+            'text-transform': 'capitalize',
+            'font-weight': 600,
+            padding: '0.5rem',
         },
     });
     const classes = styles();
