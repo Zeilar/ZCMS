@@ -2,8 +2,33 @@
     padding: 0 var(--container-margin);
     background: var(--color-gray);
     @include centerFlex;
+    position: relative;
     @include col;
     padding: 3%;
+
+    #themeToggler {
+        position: absolute;
+        font-size: 2rem;
+        height: 50px;
+        width: 50px;
+        right: 10px;
+        top: 10px;
+
+        .togglerIcon {
+            @include centerFlex;
+            cursor: pointer;
+            height: 100%;
+            width: 100%;
+
+            &.light {
+                color: rgb(207, 176, 0);
+            }
+
+            &.dark {
+                color: white;
+            }
+        }
+    }
 
     .siteHeaderLink {
         color: var(--color-secondary);

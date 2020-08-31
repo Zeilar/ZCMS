@@ -1,4 +1,5 @@
 <header class="header">
+    <div id="themeToggler"></div>
     <a class="siteHeaderLink" href="{{ route('index') }}">
         <h1 class="siteHeader">ZCMS</h1>
     </a>

@@ -181,9 +181,36 @@ input::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   flex-direction: column;
   display: flex;
   padding: 3%;
+}
+
+.header #themeToggler {
+  position: absolute;
+  font-size: 2rem;
+  height: 50px;
+  width: 50px;
+  right: 10px;
+  top: 10px;
+}
+
+.header #themeToggler .togglerIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+}
+
+.header #themeToggler .togglerIcon.light {
+  color: #cfb000;
+}
+
+.header #themeToggler .togglerIcon.dark {
+  color: white;
 }
 
 .header .siteHeaderLink {
