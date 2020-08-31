@@ -192,6 +192,11 @@ input::placeholder {
   padding: 0;
 }
 
+input::-webkit-autofill,
+input ::-webkit-autofill {
+  color: red;
+}
+
 a {
   color: var(--color-link);
 }
@@ -269,6 +274,18 @@ a:hover {
   width: 100%;
 }
 
+.authLogo {
+  color: var(--color-secondary);
+  margin-bottom: 50px;
+  text-align: center;
+  margin-top: 100px;
+  font-size: 2rem;
+}
+
+.authLogo:hover {
+  text-decoration: none;
+}
+
 .authWrapper {
   margin: auto;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
@@ -279,7 +296,7 @@ a:hover {
   border-radius: 5px;
   min-height: 450px;
   min-width: 450px;
-  margin-top: 10%;
+  margin-top: 0;
   padding: 50px;
   flex-direction: column;
   display: flex;

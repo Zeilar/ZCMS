@@ -1,6 +1,10 @@
 @extends('app', ['disable' => ['header', 'footer']])
 
 @section('content')
+    <a class="authLogo" href="{{ route('index') }}">
+        <h1>ZCMS</h1>
+    </a>
+
     <form class="authWrapper" action="{{ route('register.submit') }}" method="POST">
         @csrf
 
@@ -12,7 +16,7 @@
             </div>
             <input
                 class="@error('username') error @enderror" type="text" value="{{ old('username') }}"
-                placeholder="Username" required name="username" id="username"
+                placeholder="Username" required name="username" id="username" autocomplete="off"
             />
         </div>
 
@@ -22,7 +26,7 @@
             </div>
             <input
                 class="@error('email') error @enderror" type="email" value="{{ old('email') }}"
-                placeholder="Email" required name="email" id="email"
+                placeholder="Email" required name="email" id="email" autocomplete="off"
             />
         </div>
 

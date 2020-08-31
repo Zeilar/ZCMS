@@ -48,6 +48,10 @@ input {
         opacity: 0.5;
         padding: 0;
     }
+
+    &::-webkit-autofill, ::-webkit-autofill {
+        color: red;
+    }
 }
 
 a {
