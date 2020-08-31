@@ -28,5 +28,9 @@
             Sign in
         </button>
 
+            <p class="signup">
+                <span class="signupText">Not a member?</span>
+                <a class="signupLink" href="{{ route('register.form') }}">Sign up</a>
+            </p>
     </form>
 @endsection

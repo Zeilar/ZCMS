@@ -47375,11 +47375,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function Checkbox() {
   var styles = Object(react_jss__WEBPACK_IMPORTED_MODULE_3__["createUseStyles"])({
+    wrapper: {},
     box: {
       border: '1px solid var(--border-primary)',
       'justify-content': 'center',
       'align-items': 'center',
       'border-radius': '4px',
+      cursor: 'pointer',
       display: 'flex',
       height: '25px',
       width: '25px',
@@ -47415,27 +47417,33 @@ function Checkbox() {
 
   var checkbox = Object(react__WEBPACK_IMPORTED_MODULE_2__["useRef"])();
   var wrapper = Object(react__WEBPACK_IMPORTED_MODULE_2__["useRef"])();
+
+  function toggleChecked() {
+    setChecked(function (p) {
+      return !p;
+    });
+  }
+
   Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
     var parent = wrapper.current.parentNode;
-    setChecked(checkbox.current.checked);
     setHtmlId(parent.getAttribute('data-id'));
     setName(parent.getAttribute('data-name'));
-  });
+    setChecked(checkbox.current.checked);
+  }, [setHtmlId, setName, setChecked, toggleChecked, wrapper]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
+    className: classes.wrapper,
     ref: wrapper
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("input", {
     ref: checkbox,
-    onChange: function onChange() {
-      return setChecked(function (p) {
-        return !p;
-      });
-    },
+    checked: checked,
+    onChange: toggleChecked,
     hidden: true,
     type: "checkbox",
     name: name,
     id: htmlId
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
-    className: "".concat(classes.box).concat(checked ? ' checked' : '')
+    className: "".concat(classes.box).concat(checked ? ' checked' : ''),
+    onClick: toggleChecked
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_0__["FontAwesomeIcon"], {
     className: "".concat(classes.check).concat(checked ? ' show' : ''),
     icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__["faCheck"]
