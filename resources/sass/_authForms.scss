@@ -1,0 +1,39 @@
+.authWrapper {
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-primary);
+    @include centerFlex;
+    border-radius: 5px;
+    max-width: 50%;
+    @include col;
+    margin: auto;
+    padding: 3%;
+
+    .authHeader {
+        margin-bottom: 20px;
+    }
+
+    .input-row {
+        margin: 10px 0;
+        @include col;
+        width: 250px;
+
+        input {
+            background: var(--color-primary);
+            letter-spacing: 1px;
+            padding: 10px 15px;
+            font-weight: 600;
+
+            &::placeholder {
+                letter-spacing: 0;
+            }
+
+            &:focus {
+
+            }
+        }
+    }
+
+    .authSubmit {
+        margin-top: 20px;
+    }
+}

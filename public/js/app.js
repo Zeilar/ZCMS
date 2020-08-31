@@ -97,11 +97,14 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./nav */ "./resources/js/nav.js");
+/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nav__WEBPACK_IMPORTED_MODULE_1__);
 var _localStorage$getItem;
 
 // import App from './components/App';
 // import ReactDOM from 'react-dom';
 // import React from 'react';
+
 
 document.querySelector('html').setAttribute('data-theme', (_localStorage$getItem = localStorage.getItem('theme')) !== null && _localStorage$getItem !== void 0 ? _localStorage$getItem : 'light'); // if (document.getElementById('app')) ReactDOM.render(<App />, document.getElementById('app'));
 
@@ -122,6 +125,17 @@ document.querySelector('html').setAttribute('data-theme', (_localStorage$getItem
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/nav.js":
+/*!*****************************!*\
+  !*** ./resources/js/nav.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
 
 /***/ }),
 

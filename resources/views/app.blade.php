@@ -13,10 +13,10 @@
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
-    <body class="scrollbar">
-        <main class="scrollbar" id="app">
+    <body>
+        <main id="app">
             @include('partials.header')
-            <div class="scrollbar" id="content">
+            <div id="content">
                 @yield('content')
             </div>
             @include('partials.sidebar')

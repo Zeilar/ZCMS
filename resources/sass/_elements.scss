@@ -1,13 +1,17 @@
 .btnPrimary {
     transition: background-color 0.15s ease-in-out;
     background-color: var(--color-secondary);
-    padding: 05rem 0.75rem;
-    border-radius: 2px;
+    border-radius: 4px;
+    padding: 10px 20px;
     font-weight: bold;
-    color: white;
+    color: black;
+
+    &.block {
+        width: 100%;
+    }
 
     &:hover, &:focus {
-        background-color: var(--color-secondary-dark);
+        //background-color: var(--color-secondary-dark);
     }
 }
 
@@ -33,17 +37,14 @@
 }
 
 input {
-    border: 0;
-    border-bottom: 2px solid var(--border-primary);
-    transition: border-color 0.25s ease-out;
+    border: 1px solid var(--border-primary);
     color: var(--text-primary);
-    padding: 4px 0;
+    border-radius: 2px;
+    padding: 6px;
 
-    ::placeholder {
-        color: var(--text-third);
-    }
-
-    &:focus {
-        border-color: var(--color-secondary);
+    &::placeholder {
+        color: var(--text-neutral);
+        user-select: none;
+        opacity: 0.5;
     }
 }

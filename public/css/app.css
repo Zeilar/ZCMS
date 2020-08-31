@@ -1,7 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);:root {
   --color-secondary-faded: rgba(0, 220, 250, 0.25);
-  --color-secondary: rgb(0, 220, 250);
-  --color-gray: rgb(40, 45, 50);
+  --color-secondary: rgb(0, 255, 136);
+  --text-neutral: rgb(150, 150, 150);
+  --color-gray: rgb(20, 20, 20);
   --container-margin: 25vw;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   scroll-behavior: smooth;
@@ -11,7 +12,6 @@
   --text-secondary: rgb(200, 200, 200);
   --border-primary: rgb(100, 100, 100);
   --color-primary: rgb(50, 50, 50);
-  --text-third: rgb(150, 150, 150);
   --body-bg: rgb(15, 15, 15);
   --text-primary: white;
 }
@@ -30,7 +30,6 @@
   --border-primary: rgb(200, 200, 200);
   --color-primary: rgb(240, 240, 240);
   --text-secondary: rgb(50, 50, 50);
-  --text-third: rgb(100, 100, 100);
   --text-primary: black;
   --body-bg: white;
 }
@@ -43,6 +42,21 @@
 :root[data-theme=light] ::selection {
   background: rgba(0, 0, 0, 0.5);
   color: var(--color-secondary);
+}
+
+:root ::-webkit-scrollbar {
+  width: 12px;
+}
+
+:root ::-webkit-scrollbar-track {
+  background: none;
+}
+
+:root ::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-radius: 10px;
 }
 
 *,
@@ -71,30 +85,42 @@ button {
   border: 0;
 }
 
+label {
+  cursor: pointer;
+}
+
 body {
   background-color: var(--body-bg);
   color: var(--text-secondary);
+  min-height: 100vh;
   font-size: 100%;
+  flex-direction: column;
+  display: flex;
 }
 
 #app {
   flex-direction: column;
-  min-height: 100vh;
   display: flex;
+  flex: 1;
+}
+
+#content {
+  flex-direction: column;
+  display: flex;
+  flex: 1;
 }
 
 .btnPrimary {
   transition: background-color 0.15s ease-in-out;
   background-color: var(--color-secondary);
-  padding: 5rem 0.75rem;
-  border-radius: 2px;
+  border-radius: 4px;
+  padding: 10px 20px;
   font-weight: bold;
-  color: white;
+  color: black;
 }
 
-.btnPrimary:hover,
-.btnPrimary:focus {
-  background-color: var(--color-secondary-dark);
+.btnPrimary.block {
+  width: 100%;
 }
 
 .scrollbar::-webkit-scrollbar {
@@ -113,31 +139,40 @@ body {
 }
 
 input {
-  border: 0;
-  border-bottom: 2px solid var(--border-primary);
-  transition: border-color 0.25s ease-out;
+  border: 1px solid var(--border-primary);
   color: var(--text-primary);
-  padding: 4px 0;
+  border-radius: 2px;
+  padding: 6px;
 }
 
-input ::-moz-placeholder {
-  color: var(--text-third);
+input::-moz-placeholder {
+  color: var(--text-neutral);
+  -moz-user-select: none;
+       user-select: none;
+  opacity: 0.5;
 }
 
-input :-ms-input-placeholder {
-  color: var(--text-third);
+input:-ms-input-placeholder {
+  color: var(--text-neutral);
+  -ms-user-select: none;
+      user-select: none;
+  opacity: 0.5;
 }
 
-input ::-ms-input-placeholder {
-  color: var(--text-third);
+input::-ms-input-placeholder {
+  color: var(--text-neutral);
+  -ms-user-select: none;
+      user-select: none;
+  opacity: 0.5;
 }
 
-input ::placeholder {
-  color: var(--text-third);
-}
-
-input:focus {
-  border-color: var(--color-secondary);
+input::placeholder {
+  color: var(--text-neutral);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  opacity: 0.5;
 }
 
 .header {
@@ -174,11 +209,12 @@ input:focus {
 }
 
 .header .navbar .navlist .navitem .navlink {
-  color: var(--color-secondary);
+  transition: color 0.25s ease-out;
   text-transform: uppercase;
   letter-spacing: 1px;
   position: relative;
   font-weight: 600;
+  color: white;
   padding: 10px;
 }
 
@@ -194,9 +230,73 @@ input:focus {
   left: 0;
 }
 
+.header .navbar .navlist .navitem .navlink:hover,
+.header .navbar .navlist .navitem .navlink.active {
+  color: var(--color-secondary);
+}
+
 .header .navbar .navlist .navitem .navlink:hover::after,
-.header .navbar .navlist .navitem .navlink:focus::after,
 .header .navbar .navlist .navitem .navlink.active::after {
   width: 100%;
+}
+
+.authWrapper {
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  max-width: 50%;
+  flex-direction: column;
+  display: flex;
+  margin: auto;
+  padding: 3%;
+}
+
+.authWrapper .authHeader {
+  margin-bottom: 20px;
+}
+
+.authWrapper .input-row {
+  margin: 10px 0;
+  flex-direction: column;
+  display: flex;
+  width: 250px;
+}
+
+.authWrapper .input-row input {
+  background: var(--color-primary);
+  letter-spacing: 1px;
+  padding: 10px 15px;
+  font-weight: 600;
+}
+
+.authWrapper .input-row input::-moz-placeholder {
+  letter-spacing: 0;
+}
+
+.authWrapper .input-row input:-ms-input-placeholder {
+  letter-spacing: 0;
+}
+
+.authWrapper .input-row input::-ms-input-placeholder {
+  letter-spacing: 0;
+}
+
+.authWrapper .input-row input::placeholder {
+  letter-spacing: 0;
+}
+
+.authWrapper .authSubmit {
+  margin-top: 20px;
+}
+
+#footer {
+  background: var(--color-gray);
+  color: var(--color-secondary);
+  text-align: center;
+  margin-top: auto;
+  padding: 2%;
 }
 
