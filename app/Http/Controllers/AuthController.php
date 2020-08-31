@@ -57,7 +57,7 @@ class AuthController extends Controller
         if (!$user) return abort(400);
         $user->roles()->attach(Role::where('name', 'user')->first());
 
-        if (!Auth::attempt(['username' => $user->username, 'password' => $user->password])) {
+        if (!Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             return abort(500);
         }
 
