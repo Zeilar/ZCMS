@@ -33960,14 +33960,18 @@ function Themetoggler() {
       theme = _useState2[0],
       setTheme = _useState2[1];
 
+  function toggleTheme() {
+    var whichTheme = theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', whichTheme);
+    setTheme(whichTheme);
+  }
+
   Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
     root.setAttribute('data-theme', theme);
   }, [theme, setTheme]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
     className: "togglerIcon ".concat(theme === 'dark' ? 'dark' : 'light'),
-    onClick: function onClick() {
-      return setTheme(theme === 'dark' ? 'light' : 'dark');
-    }
+    onClick: toggleTheme
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__["FontAwesomeIcon"], {
     icon: theme === 'dark' ? _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faMoon"] : _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_0__["faLightbulb"]
   }));
