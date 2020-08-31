@@ -1,31 +1,32 @@
 .authWrapper {
+    margin: auto;
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
     border: 1px solid var(--border-primary);
     @include centerFlex;
     border-radius: 5px;
-    min-height: 500px;
-    min-width: 500px;
-    max-width: 50%;
+    min-height: 450px;
+    min-width: 450px;
+    margin-top: 10%;
+    padding: 50px;
     @include col;
-    margin: auto;
-    padding: 3%;
 
     .authHeader {
+        letter-spacing: 1px;
         margin-bottom: 40px;
+        font-size: 2rem;
     }
 
     .inputRow {
+        position: relative;
         margin: 10px 0;
         @include col;
         width: 100%;
 
         input {
-            border-color: var(--color-secondary);
             background: var(--color-primary);
             border-radius: 20px;
             text-align: center;
-            padding: 10px 20px;
-            font-weight: 600;
+            padding: 10px 50px;
             font-size: 1rem;
 
             &::placeholder {
@@ -37,6 +38,25 @@
                     opacity: 0;
                 }
             }
+        }
+
+        .inputIcon, #passwordToggler {
+            @include centerAbsolute('y');
+            height: 20px;
+            width: 20px;
+        }
+
+        .inputIcon {
+            color: var(--text-secondary);
+            @include centerFlex;
+            left: 20px;
+        }
+
+        #passwordToggler {
+            @include centerFlex;
+            cursor: pointer;
+            right: 20px;
+            left: unset;
         }
     }
 
@@ -58,6 +78,7 @@
 
     .authSubmit {
         border-radius: 20px;
+        margin-bottom: 20px;
         padding: 12px 20px;
         margin-top: 30px;
     }

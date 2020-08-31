@@ -1,3 +1,5 @@
+@empty($disable) @php $disable = [] @endphp @endempty
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -14,14 +16,15 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
+        <div id="themeToggler" title="Toggle dark or light mode"></div>
         <main id="app">
-            @include('partials.header')
+            @includeUnless(in_array('header', $disable), 'partials.header')
             <div id="content">
                 @yield('content')
             </div>
-            @include('partials.sidebar')
+            @includeUnless(in_array('sidebar', $disable), 'partials.sidebar')
         </main>
-        @include('partials.footer')
+        @includeUnless(in_array('footer', $disable), 'partials.footer')
         @yield('footer')
         <script src="{{ asset('js/app.js') }}"></script>
     </body>

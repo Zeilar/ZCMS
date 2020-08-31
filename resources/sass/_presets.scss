@@ -6,6 +6,7 @@
     --container-margin: 25vw;
 
     &[data-theme=dark] {
+        --border-secondary: var(--color-secondary);
         --text-secondary: rgb(245, 245, 245);
         --border-primary: rgb(100, 100, 100);
         --color-primary: rgb(50, 50, 50);
@@ -20,6 +21,7 @@
     }
 
     &[data-theme=light] {
+        --border-secondary: rgb(150, 150, 150);
         --border-primary: rgb(200, 200, 200);
         --color-primary: rgb(240, 240, 240);
         --text-secondary: rgb(50, 50, 50);
@@ -63,6 +65,11 @@
 
 img, svg, button {
     user-select: none;
+}
+
+img {
+    max-height: 100%;
+    max-width: 100%;
 }
 
 button {

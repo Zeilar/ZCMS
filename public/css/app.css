@@ -9,6 +9,7 @@
 }
 
 :root[data-theme=dark] {
+  --border-secondary: var(--color-secondary);
   --text-secondary: rgb(245, 245, 245);
   --border-primary: rgb(100, 100, 100);
   --color-primary: rgb(50, 50, 50);
@@ -28,6 +29,7 @@
 }
 
 :root[data-theme=light] {
+  --border-secondary: rgb(150, 150, 150);
   --border-primary: rgb(200, 200, 200);
   --color-primary: rgb(240, 240, 240);
   --text-secondary: rgb(50, 50, 50);
@@ -79,6 +81,11 @@ button {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+
+img {
+  max-height: 100%;
+  max-width: 100%;
 }
 
 button {
@@ -145,7 +152,7 @@ body {
 }
 
 input {
-  border: 1px solid var(--border-primary);
+  border: 1px solid var(--border-secondary);
   color: var(--text-primary);
   border-radius: 2px;
   padding: 6px;
@@ -200,44 +207,14 @@ a:hover {
   justify-content: center;
   align-items: center;
   position: relative;
+  padding: 50px;
   flex-direction: column;
   display: flex;
-  padding: 3%;
-}
-
-.header #themeToggler {
-  position: absolute;
-  font-size: 2rem;
-  height: 50px;
-  width: 50px;
-  right: 10px;
-  top: 10px;
-}
-
-.header #themeToggler .togglerIcon {
-  transition: transform 0.15s linear;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  height: 100%;
-  width: 100%;
-}
-
-.header #themeToggler .togglerIcon:hover {
-  transform: scale(1.1);
-}
-
-.header #themeToggler .togglerIcon.light {
-  color: #cfb000;
-}
-
-.header #themeToggler .togglerIcon.dark {
-  color: white;
 }
 
 .header .siteHeaderLink {
   color: var(--color-secondary);
+  text-decoration: none;
   letter-spacing: 2px;
   margin-bottom: 40px;
   padding: 10px 20px;
@@ -262,6 +239,7 @@ a:hover {
 .header .navbar .navlist .navitem .navlink {
   transition: color 0.25s ease-out;
   text-transform: uppercase;
+  text-decoration: none;
   letter-spacing: 1px;
   position: relative;
   font-weight: 600;
@@ -292,26 +270,29 @@ a:hover {
 }
 
 .authWrapper {
+  margin: auto;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
   border: 1px solid var(--border-primary);
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  min-height: 500px;
-  min-width: 500px;
-  max-width: 50%;
+  min-height: 450px;
+  min-width: 450px;
+  margin-top: 10%;
+  padding: 50px;
   flex-direction: column;
   display: flex;
-  margin: auto;
-  padding: 3%;
 }
 
 .authWrapper .authHeader {
+  letter-spacing: 1px;
   margin-bottom: 40px;
+  font-size: 2rem;
 }
 
 .authWrapper .inputRow {
+  position: relative;
   margin: 10px 0;
   flex-direction: column;
   display: flex;
@@ -319,12 +300,10 @@ a:hover {
 }
 
 .authWrapper .inputRow input {
-  border-color: var(--color-secondary);
   background: var(--color-primary);
   border-radius: 20px;
   text-align: center;
-  padding: 10px 20px;
-  font-weight: 600;
+  padding: 10px 50px;
   font-size: 1rem;
 }
 
@@ -360,6 +339,33 @@ a:hover {
   opacity: 0;
 }
 
+.authWrapper .inputRow .inputIcon,
+.authWrapper .inputRow #passwordToggler {
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  height: 20px;
+  width: 20px;
+}
+
+.authWrapper .inputRow .inputIcon {
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 20px;
+}
+
+.authWrapper .inputRow #passwordToggler {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  right: 20px;
+  left: unset;
+}
+
 .authWrapper .rememberRow {
   justify-content: space-between;
   margin: 10px 0;
@@ -382,6 +388,7 @@ a:hover {
 
 .authWrapper .authSubmit {
   border-radius: 20px;
+  margin-bottom: 20px;
   padding: 12px 20px;
   margin-top: 30px;
 }
@@ -396,5 +403,12 @@ a:hover {
   text-align: center;
   margin-top: auto;
   padding: 2%;
+}
+
+#themeToggler {
+  position: absolute;
+  font-size: 2rem;
+  right: 10px;
+  top: 10px;
 }
 

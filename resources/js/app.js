@@ -1,5 +1,6 @@
-import Checkbox from './components/Checkbox';
+import PasswordToggler from './components/PasswordToggler';
 import ThemeToggler from './components/ThemeToggler';
+import Checkbox from './components/Checkbox';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import './bootstrap';
@@ -17,4 +18,9 @@ if (checkBoxes.length) {
     checkBoxes.forEach(checkBox => {
         ReactDOM.render(<Checkbox />, checkBox);
     });
+}
+
+const passwordToggler = document.getElementById('passwordToggler');
+if (passwordToggler) {
+    ReactDOM.render(<PasswordToggler />, passwordToggler);
 }

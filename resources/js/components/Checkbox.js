@@ -47,7 +47,7 @@ export default function Checkbox() {
         setHtmlId(parent.getAttribute('data-id'));
         setName(parent.getAttribute('data-name'));
         setChecked(checkbox.current.checked);
-    }, [setHtmlId, setName, setChecked, toggleChecked, wrapper]);
+    }, [setHtmlId, setName, setChecked, wrapper]);
 
     return (
         <div className={classes.wrapper} ref={wrapper}>

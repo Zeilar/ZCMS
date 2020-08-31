@@ -1,5 +1,4 @@
 <header class="header">
-    <div id="themeToggler" title="Toggle dark or light mode"></div>
     <a class="siteHeaderLink" href="{{ route('index') }}">
         <h1 class="siteHeader">ZCMS</h1>
     </a>
