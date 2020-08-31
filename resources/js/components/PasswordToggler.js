@@ -1,6 +1,6 @@
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
 export default function PasswordToggler() {
     const [type, setType] = useState('password');
@@ -13,11 +13,5 @@ export default function PasswordToggler() {
         setType(newType);
     }
 
-    useEffect(() => {
-        const htmlId = icon.current.parentNode.getAttribute('data-id');
-        const currentType = document.getElementById(htmlId).getAttribute('type') === 'password' ? 'password' : 'text';
-        setType(currentType);
-    });
-
-    return <FontAwesomeIcon forwardedRef={icon} icon={type === 'password' ? faEye : faEyeSlash} onClick={togglePassword} />;
+    return <FontAwesomeIcon forwardedRef={icon} icon={type === 'password' ? faEyeSlash : faEye} onClick={togglePassword} />;
 }

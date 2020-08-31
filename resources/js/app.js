@@ -20,7 +20,9 @@ if (checkBoxes.length) {
     });
 }
 
-const passwordToggler = document.getElementById('passwordToggler');
-if (passwordToggler) {
-    ReactDOM.render(<PasswordToggler />, passwordToggler);
+const passwordTogglers = document.querySelectorAll('.passwordToggler');
+if (passwordTogglers.length) {
+    passwordTogglers.forEach(toggler => {
+       ReactDOM.render(<PasswordToggler />, toggler);    
+    });
 }

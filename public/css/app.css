@@ -300,11 +300,35 @@ a:hover {
 }
 
 .authWrapper .inputRow input {
-  background: var(--color-primary);
   border-radius: 20px;
   text-align: center;
   padding: 10px 50px;
+  background: none;
   font-size: 1rem;
+}
+
+.authWrapper .inputRow input.error {
+  border-color: red;
+}
+
+.authWrapper .inputRow input.error::-moz-placeholder {
+  color: red;
+  opacity: 1;
+}
+
+.authWrapper .inputRow input.error:-ms-input-placeholder {
+  color: red;
+  opacity: 1;
+}
+
+.authWrapper .inputRow input.error::-ms-input-placeholder {
+  color: red;
+  opacity: 1;
+}
+
+.authWrapper .inputRow input.error::placeholder {
+  color: red;
+  opacity: 1;
 }
 
 .authWrapper .inputRow input::-moz-placeholder {
@@ -340,7 +364,7 @@ a:hover {
 }
 
 .authWrapper .inputRow .inputIcon,
-.authWrapper .inputRow #passwordToggler {
+.authWrapper .inputRow .passwordToggler {
   position: absolute;
   transform: translateY(-50%);
   top: 50%;
@@ -357,7 +381,7 @@ a:hover {
   left: 20px;
 }
 
-.authWrapper .inputRow #passwordToggler {
+.authWrapper .inputRow .passwordToggler {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -386,6 +410,12 @@ a:hover {
   padding-left: 5px;
 }
 
+.authWrapper .rememberRow .forgotPassword {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .authWrapper .authSubmit {
   border-radius: 20px;
   margin-bottom: 20px;
@@ -393,7 +423,7 @@ a:hover {
   margin-top: 30px;
 }
 
-.authWrapper .signup {
+.authWrapper .footer {
   margin-top: auto;
 }
 

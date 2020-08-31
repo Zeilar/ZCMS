@@ -10,7 +10,7 @@ use Auth;
 
 class AuthController extends Controller
 {
-    public function login()
+    public function login(Request $request)
     {
         if (Auth::check()) return abort(405);
 
@@ -21,21 +21,18 @@ class AuthController extends Controller
         request()->merge([$fieldType => $id]);
 
         // Attempt to log in
-        if (Auth::attempt([$fieldType => $id, 'password' => request('password')])) {
-            return redirect()->back();
+        if (Auth::attempt([$fieldType => $id, 'password' => $request->password], $request->remember ? true : false)) {
+            return redirect(route('index'));
         }
 
         // Check if user exists
         if (empty(User::where($fieldType, $id)->first())) {
-            true; // user does not exist handler
+            return redirect()->back()->withErrors(['id' => 'User does not exist.'])->withInput(['id' => $id]);
         }
 
         // If the user does exist, it means the password was incorrect
         if (User::where($fieldType, $id)->count()) {
-            return response()->json([
-                'message' => 'Incorrect password.',
-                'type'    => 'error',
-            ]);
+            return redirect()->back()->withErrors(['password' => 'Incorrect password']);
         }
 
         // If none of the above executes, something has gone wrong
@@ -57,16 +54,19 @@ class AuthController extends Controller
             'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        if (!$user) return abort(400);
         $user->roles()->attach(Role::where('name', 'user')->first());
 
-        Auth::attempt(['username' => $user->username, 'password' => $user->password]);
+        if (!Auth::attempt(['username' => $user->username, 'password' => $user->password])) {
+            return abort(500);
+        }
 
-        return redirect()->back();
+        return redirect(route('index'));
     }
 
     public function logout() {
-        if (!Auth::check()) return redirect()->back(); // already logged out
+        if (!Auth::check()) return abort(405);
         Auth::logout();
-        return redirect('/'); // logged out successfully
+        return redirect(route('index'));
     }
 }
