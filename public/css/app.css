@@ -12,6 +12,7 @@
   --text-secondary: rgb(245, 245, 245);
   --border-primary: rgb(100, 100, 100);
   --color-primary: rgb(50, 50, 50);
+  --color-link: rgb(0, 225, 250);
   --body-bg: rgb(15, 15, 15);
   --text-primary: white;
 }
@@ -30,6 +31,7 @@
   --border-primary: rgb(200, 200, 200);
   --color-primary: rgb(240, 240, 240);
   --text-secondary: rgb(50, 50, 50);
+  --color-link: rgb(0, 127, 255);
   --text-primary: black;
   --body-bg: white;
 }
@@ -184,7 +186,7 @@ input::placeholder {
 }
 
 a {
-  color: #003afa;
+  color: var(--color-link);
 }
 
 a:hover {

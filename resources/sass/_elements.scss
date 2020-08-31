@@ -51,7 +51,7 @@ input {
 }
 
 a {
-    color: rgb(0, 58, 250);
+    color: var(--color-link);
 
     &:hover {
         text-decoration: underline;

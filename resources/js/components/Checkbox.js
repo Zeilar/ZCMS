@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { createUseStyle, createUseStyles } from 'react-jss';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import React, { useState, useRef, useEffect } from 'react';
+import { createUseStyles } from 'react-jss';
 
 export default function Checkbox() {
     const styles = createUseStyles({
@@ -39,7 +39,6 @@ export default function Checkbox() {
         setChecked(checkbox.current.checked);
         setHtmlId(parent.getAttribute('data-id'));
         setName(parent.getAttribute('data-name'));
-        console.log(checkbox.current.checked);
     });
 
     return (
