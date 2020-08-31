@@ -5,6 +5,8 @@
     border-radius: 5px;
     max-width: 50%;
     @include col;
+    min-width: 500px;
+    min-height: 500px;
     margin: auto;
     padding: 3%;
 
@@ -12,28 +14,50 @@
         margin-bottom: 20px;
     }
 
-    .input-row {
+    .inputRow {
         margin: 10px 0;
         @include col;
-        width: 250px;
+        width: 100%;
 
         input {
+            border-color: var(--color-secondary);
             background: var(--color-primary);
-            letter-spacing: 1px;
-            padding: 10px 15px;
+            border-radius: 20px;
+            text-align: center;
+            padding: 10px 20px;
             font-weight: 600;
+            font-size: 1rem;
 
             &::placeholder {
-                letter-spacing: 0;
+                text-align: center;
             }
 
             &:focus {
+                &::placeholder {
+                    opacity: 0;
+                }
+            }
+        }
+    }
 
+    .rememberRow {
+        justify-content: space-between;
+        @include row;
+        width: 100%;
+
+        .checkboxWrapper {
+            @include centerFlex;
+            @include row;
+
+            label {
+                margin-left: 5px;
             }
         }
     }
 
     .authSubmit {
+        border-radius: 20px;
+        padding: 12px 20px;
         margin-top: 20px;
     }
 }
