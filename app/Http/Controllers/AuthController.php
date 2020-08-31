@@ -12,29 +12,22 @@ class AuthController extends Controller
 {
     public function login()
     {
-        if (Auth::check()) return response()->json(['error' => true, 'message' => 'You are already logged in.']);
+        if (Auth::check()) return abort(405);
 
         $id = request('id'); // Email or username - we don't know yet
 
         // Determine whether $id is an email or username and change it accordingly
         $fieldType = filter_var($id, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         request()->merge([$fieldType => $id]);
-        
+
         // Attempt to log in
         if (Auth::attempt([$fieldType => $id, 'password' => request('password')])) {
-            return response()->json([
-                'user'    => auth()->user()->publicData(),
-                'message' => 'Successfully logged in!',
-                'type'    => 'success',
-            ]);
+            return redirect()->back();
         }
 
         // Check if user exists
         if (empty(User::where($fieldType, $id)->first())) {
-            return response()->json([
-                'message' => 'User does not exist.',
-                'type'    => 'error',
-            ]);
+            true; // user does not exist handler
         }
 
         // If the user does exist, it means the password was incorrect
@@ -46,14 +39,11 @@ class AuthController extends Controller
         }
 
         // If none of the above executes, something has gone wrong
-        return response()->json([
-            'message' => 'Something went wrong, please try again.',
-            'type'    => 'error',
-        ]);
+        return abort(400);
     }
 
     public function register(Request $request) {
-        if (Auth::check()) return response()->json(['error' => true, 'message' => 'Please log out and try again.']);
+        if (Auth::check()) return abort(405);
 
         $request->validate([
             'username'              => 'required|string|unique:users|min:5|max:15',
@@ -71,27 +61,12 @@ class AuthController extends Controller
 
         Auth::attempt(['username' => $user->username, 'password' => $user->password]);
 
-        return response()->json([
-            'message' => 'Your account was successfully created.',
-            'user'    => $user->publicData(),
-            'type'    => 'success',
-        ]);
+        return redirect()->back();
     }
 
     public function logout() {
-        if (!Auth::check()) return response()->json([
-            'message' => 'You are already logged out.',
-            'type'    => 'error',
-        ]);
+        if (!Auth::check()) return redirect()->back(); // already logged out
         Auth::logout();
-        return response()->json([
-            'message' => 'You have been successfully logged out.',
-            'type'    => 'success',
-        ]);
-    }
-
-    public function authenticate(Request $request) {
-        if (!Auth::check()) return abort(401);
-        return response()->json(['user' => auth()->user()->publicData()]);
+        return redirect('/'); // logged out successfully
     }
 }

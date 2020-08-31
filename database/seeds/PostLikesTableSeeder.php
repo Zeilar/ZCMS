@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Comment;
+use App\PostLike;
+use App\Post;
 
-class CommentsTableSeeder extends Seeder
+class PostLikesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +13,6 @@ class CommentsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Comment::class, 100)->create();
+        factory(PostLike::class, Post::count() * 5)->create();
     }
 }

@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use App\Thread;
-use App\Post;
+use App\User;
 
-class PostsTableSeeder extends Seeder
+class ThreadsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Post::class, Thread::count() * 10)->create();
+        factory(Thread::class, User::count() * 3)->create();
     }
 }

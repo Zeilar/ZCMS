@@ -5,27 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PostLike;
 use App\Post;
-use App\Tag;
 use Auth;
 
 class PostsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return response()->json(Post::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         if (!Auth::check() || !auth()->user()->can('create', Post::class)) {
@@ -50,24 +38,11 @@ class PostsController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function show(Post $post)
     {
         return response()->json($post);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Post $post)
     {
         $user = auth()->user();
@@ -76,11 +51,12 @@ class PostsController extends Controller
         }
 
         $post->update([
-            'title'     => $request->title,   
+            'title'     => $request->title,
             'content'   => $request->content,
             'edited_by' => $user->username,
         ]);
 
+        /*
         $validTags = [];
         $tags = explode(', ', $request->tags);
         foreach ($tags as $tag) {
@@ -89,6 +65,7 @@ class PostsController extends Controller
         }
         $post->tags()->sync($validTags);
         $post->tags = $post->tags()->pluck('name');
+        */
 
         return response()->json([
             'message' => 'Post was successfully updated.',
@@ -97,12 +74,6 @@ class PostsController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Post $post)
     {
         if (!Auth::check() || !auth()->user()->can('delete', $post)) {
@@ -122,10 +93,9 @@ class PostsController extends Controller
 
     public function like(Request $request, Post $post) {
         $user = auth()->user();
-        if (empty($user) || !$user->can('like', $post)) {
-            return abort(403);
-        }
-        
+        if (empty($user)) return abort (401);
+        if (!$user->can('like', $post)) return abort(403);
+
         // Remove already existing like, or like it if it hasn't been already
         if ($postLike = $user->postLikes()->where('post_id', $post->id)->first()) {
             $postLike->delete();

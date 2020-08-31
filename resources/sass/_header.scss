@@ -1,0 +1,52 @@
+.header {
+    padding: 0 var(--container-margin);
+    background: var(--color-gray);
+    @include centerFlex;
+    @include col;
+    padding: 3%;
+
+    .siteHeaderLink {
+        color: var(--color-secondary);
+        margin-bottom: 40px;
+        padding: 10px 20px;
+        line-height: 0.7;
+        font-size: 2rem;
+    }
+
+    .navbar {
+        @include row;
+
+        .navlist {
+            @include row;
+
+            .navitem {
+                margin: 0 20px;
+
+                .navlink {
+                    color: var(--color-secondary);
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    position: relative;
+                    font-weight: 600;
+                    padding: 10px;
+
+                    &::after {
+                        background: var(--color-secondary);
+                        transition: width 0.25s ease-out;
+                        border-radius: 10px;
+                        position: absolute;
+                        content: '';
+                        height: 2px;
+                        bottom: 0;
+                        width: 0;
+                        left: 0;
+                    }
+
+                    &:hover::after, &:focus::after, &.active::after {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -2,26 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('api')->group(function() {
-    // AuthController
-    Route::post('/authenticate', 'AuthController@authenticate');
-    Route::post('/register', 'AuthController@register');
-    Route::post('/logout', 'AuthController@logout');
-    Route::post('/login', 'AuthController@login');
+// AuthController
+Route::post('/register', 'AuthController@register')->name('register.submit');
+Route::post('/login', 'AuthController@login')->name('login.submit');
+Route::get('/logout', 'AuthController@logout')->name('logout');
+Route::view('/register', 'register')->name('register.form');
+Route::view('/login', 'login')->name('login.form');
 
-    // PostsController
-    Route::resource('posts', 'PostsController', ['except' => ['create', 'edit']]);
-    Route::post('/posts/{post}/like', 'PostsController@like');
+// ThreadsController
+Route::resource('threads', 'ThreadsController', ['except' => ['create']]);
 
-    // CommentsController
-    Route::resource('comments', 'CommentsController', ['except' => ['create', 'edit']]);
-    Route::post('/comments/{comment}/like', 'CommentsController@like');
+// PostsController
+Route::resource('posts', 'PostsController', ['except' => ['create', 'edit']]);
+Route::post('/Posts/{comment}/like', 'PostsController@like');
 
-    // Admin -> UsersController
-    Route::namespace('Admin')->prefix('admin')->middleware('IsOnline')->group(function() {
-        Route::resource('/users', 'UsersController', ['except' => ['create', 'edit']]);
-    });
+// Admin -> UsersController
+Route::namespace('Admin')->prefix('admin')->middleware('IsOnline')->group(function() {
+    Route::resource('/users', 'UsersController', ['except' => ['create']]);
 });
 
-// Load app.html (including React) on every single path
-Route::view('/{path?}', 'app');
+Route::view('/', 'app')->name('index');

@@ -13,8 +13,16 @@
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
-    <body>
-        <main id="app"></main>
+    <body class="scrollbar">
+        <main class="scrollbar" id="app">
+            @include('partials.header')
+            <div class="scrollbar" id="content">
+                @yield('content')
+            </div>
+            @include('partials.sidebar')
+        </main>
+        @include('partials.footer')
+        @yield('footer')
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>
