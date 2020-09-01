@@ -1,7 +1,14 @@
 :root {
-    --color-secondary-faded: rgba(0, 220, 250, 0.25);
+    --color-secondary-gradient: linear-gradient(
+        45deg, 
+        rgb(0, 255, 236) 0%,
+        rgb(0, 255, 211) 20%,
+        rgb(0, 255, 186) 50%,
+        rgb(0, 255, 161) 75%,
+        rgb(0, 255, 136) 100%
+    );
     --color-secondary: rgb(0, 255, 136);
-    --text-neutral: rgb(150, 150, 150);
+    --color-neutral: rgb(150, 150, 150);
     --color-gray: rgb(20, 20, 20);
     --container-margin: 25vw;
 

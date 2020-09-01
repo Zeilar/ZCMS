@@ -1,9 +1,9 @@
 @extends('app', ['disable' => ['header', 'footer']])
 
 @section('content')
-    <a class="authLogo" href="{{ route('index') }}">
-        <h1>ZCMS</h1>
-    </a>
+    <h1 class="authLogo">
+        <a class="authLogoLink" href="{{ route('index') }}">ZCMS</a>
+    </h1>
 
     <form class="authWrapper" action="{{ route('login.submit') }}" method="POST">
         @csrf

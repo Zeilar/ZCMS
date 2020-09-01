@@ -1,5 +1,6 @@
 .btnPrimary {
-    transition: background-color 0.15s ease-in-out;
+    transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
+    background-image: var(--color-secondary-gradient);
     background-color: var(--color-secondary);
     border-radius: 4px;
     padding: 10px 20px;
@@ -8,10 +9,6 @@
 
     &.block {
         width: 100%;
-    }
-
-    &:hover, &:focus {
-        //background-color: var(--color-secondary-dark);
     }
 }
 
@@ -43,7 +40,7 @@ input {
     padding: 6px;
 
     &::placeholder {
-        color: var(--text-neutral);
+        color: var(--color-neutral);
         user-select: none;
         opacity: 0.5;
         padding: 0;
