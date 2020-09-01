@@ -324,19 +324,28 @@ a:hover {
 }
 
 .authWrapper .inputRow {
+  background: var(--color-secondary-gradient);
+  border-radius: 20px;
   position: relative;
   margin: 10px 0;
   flex-direction: column;
   display: flex;
+  height: 40px;
   width: 100%;
 }
 
 .authWrapper .inputRow input {
-  border-radius: 20px;
+  background-color: var(--color-third);
+  height: calc(40px - 2px);
+  width: calc(100% - 2px);
+  border-radius: inherit;
   text-align: center;
+  position: relative;
   padding: 10px 50px;
-  background: none;
   font-size: 1rem;
+  border: 0;
+  left: 1px;
+  top: 1px;
 }
 
 .authWrapper .inputRow input.error {
