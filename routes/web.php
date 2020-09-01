@@ -21,4 +21,6 @@ Route::namespace('Admin')->prefix('admin')->middleware('IsOnline')->group(functi
     Route::resource('/users', 'UsersController', ['except' => ['create']]);
 });
 
-Route::view('/', 'app')->name('index');
+Route::get('/', function() {
+    return view('home', ['categories' => App\Category::all()]);
+})->name('index');

@@ -1,4 +1,9 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);:root {
+@import url(https://fonts.googleapis.com/css?family=Nunito);@font-face {
+  font-family: "Raleway";
+  src: url(/fonts/Raleway-VariableFont_wght.ttf?3b5635ac5d39c28200bf3993d90d09c7);
+}
+
+:root {
   --color-secondary-gradient: linear-gradient(
       45deg,
       rgb(0, 255, 236) 0%,
@@ -127,6 +132,7 @@ body {
 }
 
 #content {
+  padding: 25px;
   flex-direction: column;
   display: flex;
   flex: 1;
@@ -227,13 +233,17 @@ a:hover {
   display: flex;
 }
 
-.header .siteHeader {
-  letter-spacing: 2px;
+.header #hero {
   margin-bottom: 40px;
+  text-align: center;
+}
+
+.header #hero .siteHeader {
+  letter-spacing: 2px;
   padding: 10px 20px;
 }
 
-.header .siteHeader .siteHeaderLink {
+.header #hero .siteHeader .siteHeaderLink {
   background: var(--color-secondary-gradient);
   color: var(--color-secondary);
   text-decoration: none;
@@ -246,6 +256,11 @@ a:hover {
           user-select: none;
   line-height: 0.7;
   font-size: 3rem;
+}
+
+.header #hero .siteSlogan {
+  font-family: Raleway;
+  color: white;
 }
 
 .header .navbar {
@@ -295,26 +310,6 @@ a:hover {
   width: 100%;
 }
 
-.authLogo {
-  margin-bottom: 50px;
-  text-align: center;
-  margin-top: 100px;
-}
-
-.authLogo .authLogoLink {
-  background: var(--color-secondary-gradient);
-  color: var(--color-secondary);
-  text-decoration: none;
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  font-size: 3rem;
-}
-
 .authWrapper {
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
   border: 1px solid var(--border-primary);
@@ -324,6 +319,7 @@ a:hover {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  margin-top: 150px;
   min-height: 450px;
   min-width: 450px;
   padding: 50px;
@@ -343,7 +339,8 @@ a:hover {
 }
 
 .authWrapper .inputRow {
-  background: var(--color-secondary-gradient);
+  background-image: var(--color-secondary-gradient);
+  background-color: var(--color-secondary);
   border-radius: 20px;
   position: relative;
   margin: 10px 0;
@@ -351,6 +348,10 @@ a:hover {
   display: flex;
   height: 40px;
   width: 100%;
+}
+
+.authWrapper .inputRow.error {
+  background: red;
 }
 
 .authWrapper .inputRow input {
@@ -365,10 +366,6 @@ a:hover {
   border: 0;
   left: 1px;
   top: 1px;
-}
-
-.authWrapper .inputRow input.error {
-  border-color: red;
 }
 
 .authWrapper .inputRow input::-moz-placeholder {
@@ -477,6 +474,7 @@ a:hover {
 
 #themeToggler {
   position: absolute;
+  z-index: 1000000;
   font-size: 2rem;
   right: 10px;
   top: 10px;

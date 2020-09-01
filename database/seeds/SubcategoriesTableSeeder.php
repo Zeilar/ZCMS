@@ -13,6 +13,6 @@ class SubcategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Subcategory::class, Category::count() * 3)->create();
+        factory(Subcategory::class, Category::count() * 5)->create();
     }
 }

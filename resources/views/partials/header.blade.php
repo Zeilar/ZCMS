@@ -1,9 +1,12 @@
 <header class="header">
-    <h1 class="siteHeader">
-        <a class="siteHeaderLink knockout" href="{{ route('index') }}">
-            ZCMS
-        </a>
-    </h1>
+    <div id="hero">
+        <h1 class="siteHeader">
+            <a class="siteHeaderLink knockout" href="{{ route('index') }}">
+                ZCMS
+            </a>
+        </h1>
+        <p class="siteSlogan">The pioneer hangout</p>
+    </div>
     <nav class="navbar">
         <ul class="navlist">
             @guest

@@ -6,20 +6,30 @@
     padding: 50px;
     @include col;
 
-    .siteHeader {
-        letter-spacing: 2px;
+    #hero {
         margin-bottom: 40px;
-        padding: 10px 20px;
+        text-align: center;
 
-        .siteHeaderLink {
-            background: var(--color-secondary-gradient);
-            color: var(--color-secondary); // fallback
-            text-decoration: none; 
-            @include knockout;
-            line-height: 0.7;
-            font-size: 3rem;
+        .siteHeader {
+            letter-spacing: 2px;
+            padding: 10px 20px;
+
+            .siteHeaderLink {
+                background: var(--color-secondary-gradient);
+                color: var(--color-secondary); // fallback
+                text-decoration: none; 
+                @include knockout;
+                line-height: 0.7;
+                font-size: 3rem;
+            }
+        }
+
+        .siteSlogan {
+            font-family: Raleway;
+            color: white;
         }
     }
+
 
     .navbar {
         @include row;

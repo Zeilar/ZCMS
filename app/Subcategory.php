@@ -15,4 +15,8 @@ class Subcategory extends Model
     public function category() {
         return $this->belongsTo(Category::class);
     }
+
+    public function latestThread() {
+        return $this->threads()->limit(1)->latest()->first() ?? false;
+    }
 }

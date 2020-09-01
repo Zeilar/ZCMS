@@ -106,6 +106,7 @@ body {
 }
 
 #content {
+    padding: 25px;
     @include col;
     flex: 1;
 }
