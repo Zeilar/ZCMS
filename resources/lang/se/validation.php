@@ -135,6 +135,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'username' => 'Användarnamnet',
+        'email' => 'Emailen',
+        'password' => 'Lösenordet',
+        'password_confirmation' => 'Lösenordet',
+    ],
 
 ];
