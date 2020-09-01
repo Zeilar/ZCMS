@@ -6,15 +6,14 @@ import Icon from '@mdi/react';
 export default function Themetoggler() {
     const styles = createUseStyles({
         icon: {
-            'transition': 'transform 0.15s linear',
             'justify-content': 'center',
             'align-items': 'center',
-            'cursor': 'pointer',
-            'height': '100%',
-            'width': '100%',
+            cursor: 'pointer',
             display: 'flex',
+            height: '100%',
+            width: '100%',
             '&:hover': {
-                transform: 'scale(1.1)',
+                animation: 'themeToggler 0.75s linear forwards',
             },
             '&.light': {
                 color: 'rgb(207, 176, 0)',
