@@ -6,7 +6,7 @@
         "watch": "npm run development -- --watch",
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "prod": "npm run production",
+        "prod": "cross-env NODE_ENV=production ENV_FILE=./.env.production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
@@ -32,6 +32,7 @@
         "@mdi/js": "^5.5.55",
         "@mdi/react": "^1.4.0",
         "js-cookie": "^2.2.1",
+        "mix-env-file": "^0.1.0",
         "react-cool-onclickoutside": "^1.5.5",
         "react-jss": "^10.4.0",
         "react-router-dom": "^5.2.0",

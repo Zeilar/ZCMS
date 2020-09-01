@@ -10,6 +10,7 @@
         --text-secondary: rgb(245, 245, 245);
         --border-primary: rgb(100, 100, 100);
         --color-primary: rgb(50, 50, 50);
+        --color-third: rgb(30, 30, 30);
         --color-link: rgb(0, 225, 250);
         --body-bg: rgb(15, 15, 15);
         --text-primary: white;
@@ -23,11 +24,12 @@
     &[data-theme=light] {
         --border-secondary: rgb(150, 150, 150);
         --border-primary: rgb(200, 200, 200);
-        --color-primary: rgb(240, 240, 240);
+        --color-primary: rgb(250, 250, 250);
         --text-secondary: rgb(50, 50, 50);
+        --color-third: rgb(245, 245, 245);
         --color-link: rgb(0, 127, 255);
+        --body-bg: rgb(250, 250, 250);
         --text-primary: black;
-        --body-bg: white;
 
         ::selection {
             color: var(--color-secondary);

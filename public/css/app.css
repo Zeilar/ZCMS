@@ -13,6 +13,7 @@
   --text-secondary: rgb(245, 245, 245);
   --border-primary: rgb(100, 100, 100);
   --color-primary: rgb(50, 50, 50);
+  --color-third: rgb(30, 30, 30);
   --color-link: rgb(0, 225, 250);
   --body-bg: rgb(15, 15, 15);
   --text-primary: white;
@@ -31,11 +32,12 @@
 :root[data-theme=light] {
   --border-secondary: rgb(150, 150, 150);
   --border-primary: rgb(200, 200, 200);
-  --color-primary: rgb(240, 240, 240);
+  --color-primary: rgb(250, 250, 250);
   --text-secondary: rgb(50, 50, 50);
+  --color-third: rgb(245, 245, 245);
   --color-link: rgb(0, 127, 255);
+  --body-bg: rgb(250, 250, 250);
   --text-primary: black;
-  --body-bg: white;
 }
 
 :root[data-theme=light] ::-moz-selection {
@@ -287,16 +289,16 @@ a:hover {
 }
 
 .authWrapper {
-  margin: auto;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
   border: 1px solid var(--border-primary);
+  background: var(--color-third);
+  margin: 0 auto auto auto;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
   min-height: 450px;
   min-width: 450px;
-  margin-top: 0;
   padding: 50px;
   flex-direction: column;
   display: flex;
@@ -409,7 +411,7 @@ a:hover {
 }
 
 .authWrapper .rememberRow .checkboxWrapper label {
-  padding-left: 5px;
+  padding-left: 10px;
 }
 
 .authWrapper .rememberRow .forgotPassword {

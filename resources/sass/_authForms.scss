@@ -11,14 +11,14 @@
 }
 
 .authWrapper {
-    margin: auto;
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
     border: 1px solid var(--border-primary);
+    background: var(--color-third);
+    margin: 0 auto auto auto;
     @include centerFlex;
     border-radius: 5px;
     min-height: 450px;
     min-width: 450px;
-    margin-top: 0;
     padding: 50px;
     @include col;
 
@@ -92,7 +92,7 @@
             @include row;
 
             label {
-                padding-left: 5px;
+                padding-left: 10px;
             }
         }
 
