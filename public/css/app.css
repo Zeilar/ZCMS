@@ -228,11 +228,19 @@ a:hover {
 }
 
 .header .siteHeaderLink {
+  background: var(--color-secondary-gradient);
+  -webkit-text-fill-color: transparent;
   color: var(--color-secondary);
+  -webkit-background-clip: text;
+          background-clip: text;
   text-decoration: none;
   letter-spacing: 2px;
   margin-bottom: 40px;
   padding: 10px 20px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   line-height: 0.7;
   font-size: 2rem;
 }

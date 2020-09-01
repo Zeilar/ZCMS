@@ -7,11 +7,15 @@
     @include col;
 
     .siteHeaderLink {
-        color: var(--color-secondary);
+        background: var(--color-secondary-gradient);
+        -webkit-text-fill-color: transparent;
+        color: var(--color-secondary); // fallback
+        background-clip: text;
         text-decoration: none;
         letter-spacing: 2px;
         margin-bottom: 40px;
         padding: 10px 20px;
+        user-select: none;
         line-height: 0.7;
         font-size: 2rem;
     }
