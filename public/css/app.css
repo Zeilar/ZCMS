@@ -291,8 +291,16 @@ a:hover {
 }
 
 .authLogo .authLogoLink {
+  background: var(--color-secondary-gradient);
+  -webkit-text-fill-color: transparent;
   color: var(--color-secondary);
+  -webkit-background-clip: text;
+          background-clip: text;
   text-decoration: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   font-size: 3rem;
 }
 
