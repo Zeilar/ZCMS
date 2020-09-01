@@ -1,7 +1,9 @@
 <header class="header">
-    <a class="siteHeaderLink" href="{{ route('index') }}">
-        <h1 class="siteHeader">ZCMS</h1>
-    </a>
+    <h1 class="siteHeader">
+        <a class="siteHeaderLink knockout" href="{{ route('index') }}">
+            ZCMS
+        </a>
+    </h1>
     <nav class="navbar">
         <ul class="navlist">
             @guest
@@ -11,7 +13,7 @@
                     </a>
                 </li>
                 <li class="navitem">
-                    <a class="navlink" href="{{ route('register.form') }}">
+                    <a class="navlink {{ request()->is('register') ? 'active' : '' }}" href="{{ route('register.form') }}">
                         Register
                     </a>
                 </li>

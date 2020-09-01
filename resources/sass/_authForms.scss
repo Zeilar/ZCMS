@@ -5,11 +5,9 @@
 
     .authLogoLink {
         background: var(--color-secondary-gradient);
-        -webkit-text-fill-color: transparent;
         color: var(--color-secondary); // fallback
-        background-clip: text;
         text-decoration: none;
-        user-select: none; // if user selects the text it will look weird
+        @include knockout;
         font-size: 3rem;
     }
 }

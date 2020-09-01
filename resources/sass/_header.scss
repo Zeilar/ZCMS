@@ -6,18 +6,19 @@
     padding: 50px;
     @include col;
 
-    .siteHeaderLink {
-        background: var(--color-secondary-gradient);
-        -webkit-text-fill-color: transparent;
-        color: var(--color-secondary); // fallback
-        background-clip: text;
-        text-decoration: none;
+    .siteHeader {
         letter-spacing: 2px;
         margin-bottom: 40px;
         padding: 10px 20px;
-        user-select: none;
-        line-height: 0.7;
-        font-size: 2rem;
+
+        .siteHeaderLink {
+            background: var(--color-secondary-gradient);
+            color: var(--color-secondary); // fallback
+            text-decoration: none; 
+            @include knockout;
+            line-height: 0.7;
+            font-size: 2rem;
+        }
     }
 
     .navbar {
