@@ -65,6 +65,14 @@ class User extends Authenticatable
         return $this->roles()->where('name', $role)->first() ? true : false;
     }
 
+    public function sentMessages() {
+        return $this->hasMany(ChatMessage::class, 'sender_id');
+    }
+
+    public function receivedMessages() {
+        return $this->hasMany(ChatMessage::class, 'receiver_id');
+    }
+
     public function hasRoles(array $roles): bool {
         foreach ($roles as $role) {
             if ($this->roles()->where('name', $role)->get()->count() <= 0) {
