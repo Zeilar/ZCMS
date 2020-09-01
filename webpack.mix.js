@@ -22,11 +22,12 @@ if (mix.inProduction()) {
     
 	// App
 	mix.copyDirectory('app', 'dist/zcms/app');
+    mix.copyDirectory('bootstrap', 'dist/zcms/bootstrap');
 	mix.copyDirectory('config', 'dist/zcms/config');
 	mix.copyDirectory('database', 'dist/zcms/database');
-	mix.copyDirectory('resources/views', 'dist/zcms/resources/views');
+	mix.copyDirectory('resources', 'dist/zcms/resources');
 	mix.copyDirectory('routes', 'dist/zcms/routes');
-    mix.copyDirectory('storage/app/public', 'dist/zcms/storage/app/public');
+    mix.copyDirectory('storage', 'dist/zcms/storage');
 	mix.copyDirectory('tests', 'dist/zcms/tests');
 
 	// Public

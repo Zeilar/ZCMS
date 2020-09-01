@@ -2,13 +2,17 @@
 
 @section('content')
     <h1 class="authLogo">
-        <a class="authLogoLink" href="{{ route('index') }}">ZCMS</a>
+        <a class="authLogoLink" href="{{ route('index') }}">
+            {{ config('app.name', 'ZCMS') }}
+        </a>
     </h1>
 
     <form class="authWrapper" action="{{ route('login.submit') }}" method="POST">
         @csrf
 
-        <h2 class="authHeader">Sign in</h2>
+        <h2 class="authHeader">
+            @lang('partials.login')
+        </h2>
 
         @error('id') <p class="authError">{{ $message }}</p> @enderror
         <div class="inputRow @error('id') error @enderror">
@@ -23,26 +27,36 @@
             <div class="inputIcon">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="lock" class="svg-inline--fa fa-lock fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"></path></svg>
             </div>
-            <input type="password" required placeholder="Password" name="password" id="password" autocomplete="off" />
+            <input type="password" required placeholder="@lang('input.password')" name="password" id="password" autocomplete="off" />
             <div class="passwordToggler" data-id="password"><!-- PasswordToggler component --></div>
         </div>
 
         <div class="rememberRow">
             <div class="checkboxWrapper">
                 <div class="checkbox" data-name="remember" data-id="remember"></div>
-                <label for="remember">Remember me</label>
+                <label for="remember">
+                    @lang('input.remember_me')
+                </label>
             </div>
 
             <a class="forgotPassword" href="{{ route('register.form') }}">
-                <p>Forgot password?</p>
+                <p>
+                    @lang('auth_form.forgot_password')
+                </p>
             </a>
         </div>
 
-        <button class="authSubmit btnPrimary block" type="submit">Sign in</button>
+        <button class="authSubmit btnPrimary block" type="submit">
+            @lang('partials.login')
+        </button>
 
         <div class="footer">
-            <span class="signupText">Not a member?</span>
-            <a class="signupLink" href="{{ route('register.form') }}">Register</a>
+            <span class="signupText">
+                @lang('auth_form.not_member')
+            </span>
+            <a class="signupLink" href="{{ route('register.form') }}">
+                @lang('partials.register')
+            </a>
         </div>
     </form>
 @endsection

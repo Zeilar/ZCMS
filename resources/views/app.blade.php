@@ -1,13 +1,13 @@
 @empty($disable) @php $disable = [] @endphp @endempty
 
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', session('locale')) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>
-            @yield('pageTitle', 'ZCMS - The pioneer hangout')
+            @yield('pageTitle', config('app.name', 'ZCMS') . ' - ' . __('partials.slogan'))
         </title>
 
         <!-- Fonts -->
@@ -18,7 +18,9 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        <div id="themeToggler" title="Toggle dark or light mode"></div>
+        <div>
+            <div id="themeToggler" title="@lang('partials.themeToggler')"></div>
+        </div>
         <main id="app">
             @includeUnless(in_array('header', $disable), 'partials.header')
             <div id="content">

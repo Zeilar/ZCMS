@@ -2,28 +2,30 @@
     <div id="hero">
         <h1 class="siteHeader">
             <a class="siteHeaderLink" href="{{ route('index') }}">
-                ZCMS
+                {{ config('app.name', 'ZCMS') }}
             </a>
         </h1>
-        <p class="siteSlogan">The pioneer hangout</p>
+        <p class="siteSlogan">
+            @lang('partials.slogan')
+        </p>
     </div>
     <nav id="navbar">
         <ul class="navlist">
             @guest
                 <li class="navitem">
                     <a class="navlink {{ request()->is('login') ? 'active' : '' }}" href="{{ route('login.form') }}">
-                        Login
+                        @lang('partials.login')
                     </a>
                 </li>
                 <li class="navitem">
                     <a class="navlink {{ request()->is('register') ? 'active' : '' }}" href="{{ route('register.form') }}">
-                        Register
+                        @lang('partials.register')
                     </a>
                 </li>
             @else
                 <li class="navitem">
                     <a class="navlink" href="{{ route('logout') }}">
-                        Logout
+                        @lang('partials.logout')
                     </a>
                 </li>
             @endguest
