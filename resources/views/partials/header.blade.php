@@ -32,6 +32,7 @@
 </header>
 
 <script>
+    // Scroll header folding animation
     document.addEventListener('scroll', function() {
         const header = document.querySelector('#header');
         const threshold = header.getBoundingClientRect().height;

@@ -15,4 +15,12 @@ class Thread extends Model
     public function posts() {
         return $this->hasMany(Post::class);
     }
+
+    public function opPost() {
+        return $this->posts()->limit(1)->first() ?? false;
+    }
+
+    public function op() {
+        return $this->opPost()->user ?? false;
+    }
 }

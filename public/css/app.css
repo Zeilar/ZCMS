@@ -244,8 +244,8 @@ a:hover {
 #header #hero {
   text-align: center;
   margin: 50px 25px;
-  margin-bottom: 0;
   overflow: hidden;
+  margin-bottom: 0;
   height: 90px;
 }
 
@@ -322,6 +322,25 @@ a:hover {
   width: 100%;
 }
 
+.authLogo {
+  background: var(--color-secondary-gradient);
+  margin-bottom: 50px;
+  text-align: center;
+  margin-top: 150px;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-size: 3rem;
+}
+
+.authLogo .authLogoLink {
+  text-decoration: none;
+}
+
 .authWrapper {
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
   border: 1px solid var(--border-primary);
@@ -331,7 +350,6 @@ a:hover {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  margin-top: 150px;
   min-height: 450px;
   min-width: 450px;
   padding: 50px;
@@ -367,7 +385,7 @@ a:hover {
 }
 
 .authWrapper .inputRow input {
-  background-color: var(--color-third);
+  background-color: var(--body-bg);
   height: calc(40px - 2px);
   width: calc(100% - 2px);
   border-radius: inherit;
@@ -473,7 +491,12 @@ a:hover {
 }
 
 .authWrapper .footer {
+  text-align: center;
   margin-top: auto;
+}
+
+.authWrapper .footer .footerReturn {
+  margin-top: 20px;
 }
 
 #footer {
