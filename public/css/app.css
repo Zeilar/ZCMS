@@ -308,6 +308,11 @@ a:hover {
   font-size: 2rem;
 }
 
+.authWrapper .authError {
+  margin-top: 10px;
+  color: red;
+}
+
 .authWrapper .inputRow {
   position: relative;
   margin: 10px 0;
@@ -326,26 +331,6 @@ a:hover {
 
 .authWrapper .inputRow input.error {
   border-color: red;
-}
-
-.authWrapper .inputRow input.error::-moz-placeholder {
-  color: red;
-  opacity: 1;
-}
-
-.authWrapper .inputRow input.error:-ms-input-placeholder {
-  color: red;
-  opacity: 1;
-}
-
-.authWrapper .inputRow input.error::-ms-input-placeholder {
-  color: red;
-  opacity: 1;
-}
-
-.authWrapper .inputRow input.error::placeholder {
-  color: red;
-  opacity: 1;
 }
 
 .authWrapper .inputRow input::-moz-placeholder {

@@ -27,12 +27,12 @@ class AuthController extends Controller
 
         // Check if user exists
         if (empty(User::where($fieldType, $id)->first())) {
-            return redirect()->back()->withErrors(['id' => 'User does not exist.'])->withInput(['id' => $id]);
+            return redirect()->back()->withErrors(['id' => 'That user does not exist.'])->withInput(['id' => $id]);
         }
 
         // If the user does exist, it means the password was incorrect
         if (User::where($fieldType, $id)->count()) {
-            return redirect()->back()->withErrors(['password' => 'Incorrect password']);
+            return redirect()->back()->withErrors(['password' => 'Incorrect password.']);
         }
 
         // If none of the above executes, something has gone wrong

@@ -28,6 +28,11 @@
         font-size: 2rem;
     }
 
+    .authError {
+        margin-top: 10px;
+        color: red;
+    }
+
     .inputRow {
         position: relative;
         margin: 10px 0;
@@ -43,11 +48,6 @@
 
             &.error {
                 border-color: red;
-
-                &::placeholder {
-                    color: red;
-                    opacity: 1;
-                }
             }
 
             &::placeholder {
