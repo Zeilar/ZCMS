@@ -7,7 +7,7 @@
       rgb(0, 255, 161) 75%,
       rgb(0, 255, 136) 100%
   );
-  --color-secondary: rgb(0, 255, 136);
+  --color-secondary: rgb(0, 255, 186);
   --color-neutral: rgb(150, 150, 150);
   --color-gray: rgb(20, 20, 20);
   --container-margin: 25vw;
@@ -245,7 +245,7 @@ a:hover {
       -ms-user-select: none;
           user-select: none;
   line-height: 0.7;
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
 .header .navbar {

@@ -41,12 +41,12 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function postLikes() {
-        return $this->hasMany(PostLike::class);
+    public function threads() {
+        return $this->hasMany(Thread::class);
     }
 
-    public function commentLikes() {
-        return $this->hasMany(CommentLike::class);
+    public function postLikes() {
+        return $this->hasMany(PostLike::class);
     }
 
     public function roles() {
@@ -57,8 +57,8 @@ class User extends Authenticatable
         return $this->id === $post->user->id;
     }
 
-    public function isCommenter(Comment $comment): bool {
-        return $this->id === $comment->user->id;
+    public function isOp(Thread $thread): bool {
+        return $this->id === $thread->user->id;
     }
 
     public function hasRole(string $role): bool {
