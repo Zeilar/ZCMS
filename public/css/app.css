@@ -221,29 +221,40 @@ a:hover {
   text-decoration: underline;
 }
 
-.header {
+#header {
+  transition: transform 0.35s 0.25s ease-in;
   padding: 0 var(--container-margin);
   background: var(--color-gray);
+  transform: translateY(0);
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  padding: 50px;
+  position: -webkit-sticky;
+  position: sticky;
   flex-direction: column;
   display: flex;
+  top: 0;
 }
 
-.header #hero {
-  margin-bottom: 40px;
+#header.hide {
+  transition-timing-function: ease-out;
+  transform: translateY(-140px);
+}
+
+#header #hero {
   text-align: center;
+  margin: 50px 25px;
+  margin-bottom: 0;
+  overflow: hidden;
+  height: 90px;
 }
 
-.header #hero .siteHeader {
+#header #hero .siteHeader {
   letter-spacing: 2px;
   padding: 10px 20px;
 }
 
-.header #hero .siteHeader .siteHeaderLink {
+#header #hero .siteHeader .siteHeaderLink {
   background: var(--color-secondary-gradient);
   color: var(--color-secondary);
   text-decoration: none;
@@ -258,26 +269,27 @@ a:hover {
   font-size: 3rem;
 }
 
-.header #hero .siteSlogan {
+#header #hero .siteSlogan {
   font-family: Raleway;
   color: white;
 }
 
-.header .navbar {
+#header #navbar {
+  margin: 50px 25px;
   flex-direction: row;
   display: flex;
 }
 
-.header .navbar .navlist {
+#header #navbar .navlist {
   flex-direction: row;
   display: flex;
 }
 
-.header .navbar .navlist .navitem {
+#header #navbar .navlist .navitem {
   margin: 0 20px;
 }
 
-.header .navbar .navlist .navitem .navlink {
+#header #navbar .navlist .navitem .navlink {
   transition: color 0.25s ease-out;
   text-transform: uppercase;
   text-decoration: none;
@@ -288,7 +300,7 @@ a:hover {
   padding: 10px;
 }
 
-.header .navbar .navlist .navitem .navlink::after {
+#header #navbar .navlist .navitem .navlink::after {
   background: var(--color-secondary);
   transition: width 0.25s ease-out;
   border-radius: 10px;
@@ -300,13 +312,13 @@ a:hover {
   left: 0;
 }
 
-.header .navbar .navlist .navitem .navlink:hover,
-.header .navbar .navlist .navitem .navlink.active {
+#header #navbar .navlist .navitem .navlink:hover,
+#header #navbar .navlist .navitem .navlink.active {
   color: var(--color-secondary);
 }
 
-.header .navbar .navlist .navitem .navlink:hover::after,
-.header .navbar .navlist .navitem .navlink.active::after {
+#header #navbar .navlist .navitem .navlink:hover::after,
+#header #navbar .navlist .navitem .navlink.active::after {
   width: 100%;
 }
 
@@ -473,11 +485,11 @@ a:hover {
 }
 
 #themeToggler {
-  position: absolute;
   z-index: 1000000;
   font-size: 2rem;
-  right: 10px;
-  top: 10px;
+  position: fixed;
+  right: 20px;
+  top: 20px;
 }
 
 @-webkit-keyframes themeToggler {

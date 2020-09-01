@@ -17,7 +17,7 @@ class UsersController extends Controller
     public function index()
     {
         if (!auth()->user()->can('viewAny', User::class)) {
-            return abort (401);
+            return abort(403);
         }
 
         return response()->json(User::all());
@@ -32,7 +32,7 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         if (!auth()->user()->can('create', User::class)) {
-            return abort (401);
+            return abort (403);
         }
         
         $user = User::create([
@@ -57,7 +57,7 @@ class UsersController extends Controller
     public function show(User $user)
     {
         if (!auth()->user()->can('view', $user)) {
-            return abort (401);
+            return abort (403);
         }
 
         return response()->json($user);
@@ -73,7 +73,7 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         if (!auth()->user()->can('update', $user)) {
-            return abort (401);
+            return abort (403);
         }
 
         return response()->json([
@@ -92,7 +92,7 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         if (!auth()->user()->can('delete', $user)) {
-            return abort (401);
+            return abort (403);
         }
 
         $user_id = $user->id;

@@ -1,13 +1,13 @@
-<header class="header">
+<header id="header">
     <div id="hero">
         <h1 class="siteHeader">
-            <a class="siteHeaderLink knockout" href="{{ route('index') }}">
+            <a class="siteHeaderLink" href="{{ route('index') }}">
                 ZCMS
             </a>
         </h1>
         <p class="siteSlogan">The pioneer hangout</p>
     </div>
-    <nav class="navbar">
+    <nav id="navbar">
         <ul class="navlist">
             @guest
                 <li class="navitem">
@@ -30,3 +30,15 @@
         </ul>
     </nav>
 </header>
+
+<script>
+    document.addEventListener('scroll', function() {
+        const header = document.querySelector('#header');
+        const threshold = header.getBoundingClientRect().height;
+        if (window.scrollY >= threshold) {
+            header.classList.add('hide');
+        } else {
+            header.classList.remove('hide');
+        }
+    })
+</script>
