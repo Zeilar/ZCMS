@@ -21,7 +21,7 @@ if (checkBoxes.length) {
 
 const passwordTogglers = document.querySelectorAll('.passwordToggler');
 if (passwordTogglers.length) {
-    passwordTogglers.forEach(toggler => {
-       ReactDOM.render(<PasswordToggler />, toggler);    
+    passwordTogglers.forEach(passwordToggler => {
+       ReactDOM.render(<PasswordToggler />, passwordToggler);    
     });
 }
