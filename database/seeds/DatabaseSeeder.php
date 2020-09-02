@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ThreadsTableSeeder::class);
         $this->call(PostsTableSeeder::class);
         $this->call(PostLikesTableSeeder::class);
+        $this->call(LanguagesTableSeeder::class);
     }
 }

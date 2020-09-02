@@ -1,16 +1,32 @@
-#themeToggler {
+#toolbar {
+    @include centerFlex;
     z-index: 1000000;
-    font-size: 2rem;
     position: fixed;
+    @include col;
+    width: 40px;
     right: 20px;
     top: 20px;
-}
 
-@keyframes themeToggler {
-    50% {
-        transform: scale(1.15);
+    #themeToggler {
+        @include centerFlex;
+        font-size: 2rem;
+        width: inherit;
+        height: 40px;
     }
-    100% {
-        transform: scale(1);
+
+    #languageToggler {
+        position: relative;
+        margin-top: 10px;
+        width: inherit;
+        height: 40px;
+    }
+
+    @keyframes themeToggler {
+        50% {
+            transform: scale(1.15);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
 }

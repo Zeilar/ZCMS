@@ -30,6 +30,10 @@ Route::middleware('CheckLocale')->group(function() {
         return redirect()->back();
     });
 
+    Route::get('/languages', function() {
+        return response()->json(App\Language::all()->pluck('name'));
+    });
+
     Route::get('/', function() {
         return view('home', ['categories' => App\Category::all()]);
     })->name('index');
