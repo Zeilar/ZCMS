@@ -9,7 +9,7 @@ class Chatroom extends Model
     protected $guarded = [];
 
     public function users() {
-        return $this->hasMany(ChatroomUser::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function messages() {

@@ -53,6 +53,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function chatrooms() {
+        return $this->belongsToMany(Chatroom::class);
+    }
+
     public function isAuthor(Post $post): bool {
         return $this->id === $post->user->id;
     }
@@ -95,10 +99,6 @@ class User extends Authenticatable
             'email'    => $this->email,
             'roles'    => $this->roles()->pluck('name'),
         ];
-    }
-
-    public function chatrooms() {
-        return $this->hasMany(ChatroomUser::class);
     }
 
     public function chatmessages() {
