@@ -321,7 +321,6 @@ a:hover {
   background: var(--color-secondary-gradient);
   margin-bottom: 50px;
   text-align: center;
-  margin-top: 150px;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
@@ -329,6 +328,7 @@ a:hover {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  margin-top: 80px;
   font-size: 3rem;
 }
 

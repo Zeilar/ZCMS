@@ -2,8 +2,8 @@
     background: var(--color-secondary-gradient);
     margin-bottom: 50px;
     text-align: center;
-    margin-top: 150px;
     @include knockout;
+    margin-top: 80px;
     font-size: 3rem;
 
     .authLogoLink {
