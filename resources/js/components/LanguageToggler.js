@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 
 export default function LanguageToggler() {
@@ -18,6 +18,15 @@ export default function LanguageToggler() {
             display: 'flex',
             height: '40px',
             width: '40px',
+            '&:hover::after': {
+                background: 'rgba(0, 0, 0, 0.25)',
+                position: 'absolute',
+                display: 'block',
+                height: '40px',
+                content: '""',
+                width: '40px',
+                top: 0,
+            }
         },
         buttons: {
             'flex-direction': 'row-reverse',
@@ -49,7 +58,7 @@ export default function LanguageToggler() {
     return (
         <div className={classes.wrapper} onMouseLeave={() => setOpen(false)}>
             <button className={classes.current} onMouseEnter={() => setOpen(true)}>
-                <img src={`/storage/icons/flag-${locale}.png`} alt="Flag"/>
+                <img src={`/storage/icons/flag-${locale}.png`} />
             </button>
             <div className={`${classes.buttons} ${open ? 'show' : ''}`}>
                 {
@@ -57,7 +66,7 @@ export default function LanguageToggler() {
                         language !== locale &&
                             <form action={`/language/${language}`} method="GET" key={language}>
                                 <button className={classes.button}>
-                                    <img src={`/storage/icons/flag-${language}.png`} alt="Flag"/>
+                                    <img src={`/storage/icons/flag-${language}.png`} />
                                 </button>
                             </form>
                     ))
