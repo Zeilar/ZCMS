@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import useOnclickOutside, { useOnClickOutside } from 'react-cool-onclickoutside';
 import { createUseStyles } from 'react-jss';
 
 export default function LanguageToggler() {
@@ -16,7 +15,7 @@ export default function LanguageToggler() {
             width: '40px',
         },
         button: {
-            'margin-left': '10px',
+            'margin-right': '10px',
             background: 'none',
             display: 'flex',
             height: '40px',
@@ -26,7 +25,8 @@ export default function LanguageToggler() {
             'flex-direction': 'row-reverse',
             position: 'absolute',
             display: 'flex',
-            right: '50px',
+            cursor: 'pointer',
+            right: '40px',
             top: 0,
         },
     });
@@ -41,17 +41,13 @@ export default function LanguageToggler() {
         setLanguages(response);
     }
 
-    const wrapper = useOnclickOutside(() => {
-        setOpen(false);
-    });
-
     useEffect(() => {
         if (languages == null) getLanguages();
     }, [languages]);
 
     return (
-        <div className={classes.wrapper} ref={wrapper}>
-            <button className={classes.current} onClick={() => setOpen(p => !p)}>
+        <div className={classes.wrapper} onMouseLeave={() => setOpen(false)}>
+            <button className={classes.current} onMouseEnter={() => setOpen(true)}>
                 <img src={`/storage/icons/flag-${locale}.png`} alt="Flag"/>
             </button>
             <div className={classes.buttons}>

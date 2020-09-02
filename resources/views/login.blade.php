@@ -55,7 +55,7 @@
                 @lang('auth_form.not_member')
             </span>
             <a class="signupLink" href="{{ route('register.form') }}">
-                @lang('partials.register')
+                @lang('auth_form.create_account')
             </a>
         </div>
     </form>
