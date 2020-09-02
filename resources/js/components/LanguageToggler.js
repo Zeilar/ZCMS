@@ -5,8 +5,6 @@ export default function LanguageToggler() {
     const styles = createUseStyles({
         wrapper: {
             position: 'relative',
-            height: '40px',
-            width: '40px',
         },
         current: {
             background: 'none',
