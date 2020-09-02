@@ -21,10 +21,10 @@ export default function LanguageToggler() {
             '&:hover::after': {
                 background: 'rgba(0, 0, 0, 0.25)',
                 position: 'absolute',
+                height: 'inherit',
                 display: 'block',
-                height: '40px',
+                width: 'inherit',
                 content: '""',
-                width: '40px',
                 top: 0,
             }
         },
