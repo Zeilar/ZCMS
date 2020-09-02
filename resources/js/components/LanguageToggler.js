@@ -24,10 +24,13 @@ export default function LanguageToggler() {
         buttons: {
             'flex-direction': 'row-reverse',
             position: 'absolute',
-            display: 'flex',
             cursor: 'pointer',
+            display: 'none',
             right: '40px',
             top: 0,
+            '&.show': {
+                display: 'flex',
+            },
         },
     });
     const classes = styles();
@@ -50,9 +53,9 @@ export default function LanguageToggler() {
             <button className={classes.current} onMouseEnter={() => setOpen(true)}>
                 <img src={`/storage/icons/flag-${locale}.png`} alt="Flag"/>
             </button>
-            <div className={classes.buttons}>
+            <div className={`${classes.buttons} ${open ? 'show' : ''}`}>
                 {
-                    open && languages && languages.map(language => (
+                    languages && languages.map(language => (
                         language !== locale &&
                             <form action={`/language/${language}`} method="GET" key={language}>
                                 <button className={classes.button}>

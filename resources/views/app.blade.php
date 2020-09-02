@@ -6,6 +6,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>
+            @yield('pageTitle', config('app.name', 'ZCMS') . ' - ' . __('partials.slogan'))
+        </title>
+
+        <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
         <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -22,10 +28,7 @@
         <link rel="manifest" href="/manifest.json">
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-        <title>
-            @yield('pageTitle', config('app.name', 'ZCMS') . ' - ' . __('partials.slogan'))
-        </title>
-
+        
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">

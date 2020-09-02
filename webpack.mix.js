@@ -34,5 +34,5 @@ if (mix.inProduction()) {
 	mix.copyDirectory('public/css', 'dist/zcms.angelin.dev/css');
 	mix.copyDirectory('public/js', 'dist/zcms.angelin.dev/js');
 
-    mix.copy('.env.production', 'dist/zcms/');
+    mix.copy('.env.production', 'dist/zcms/.env.production');
 }
