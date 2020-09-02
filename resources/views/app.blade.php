@@ -47,8 +47,9 @@
                 @yield('content')
             </div>
             @includeUnless(in_array('sidebar', $disable), 'partials.sidebar')
+            @includeUnless(in_array('footer', $disable), 'partials.footer')
         </main>
-        @includeUnless(in_array('footer', $disable), 'partials.footer')
+        @includeUnless(in_array('chat', $disable), 'partials.chat')
         @yield('footer')
         <script src="{{ asset('js/app.js') }}"></script>
     </body>

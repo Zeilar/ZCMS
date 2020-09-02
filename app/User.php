@@ -96,4 +96,12 @@ class User extends Authenticatable
             'roles'    => $this->roles()->pluck('name'),
         ];
     }
+
+    public function chatrooms() {
+        return $this->hasMany(ChatroomUser::class);
+    }
+
+    public function chatmessages() {
+        return $this->hasMany(Chatmessage::class);
+    }
 }

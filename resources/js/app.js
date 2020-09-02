@@ -2,6 +2,7 @@ import PasswordToggler from './components/PasswordToggler';
 import LanguageToggler from './components/LanguageToggler';
 import ThemeToggler from './components/ThemeToggler';
 import Checkbox from './components/Checkbox';
+import Chat from './components/Chat';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import './bootstrap';
@@ -28,4 +29,9 @@ if (passwordTogglers.length) {
 const languageToggler = document.getElementById('languageToggler');
 if (languageToggler) {
     ReactDOM.render(<LanguageToggler />, languageToggler);
+}
+
+const chat = document.querySelector('#chat');
+if (chat) {
+    ReactDOM.render(<Chat />, chat);
 }

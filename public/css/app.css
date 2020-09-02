@@ -503,6 +503,7 @@ a:hover {
 }
 
 #toolbar {
+  transform: translateY(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -512,7 +513,7 @@ a:hover {
   display: flex;
   width: 40px;
   right: 20px;
-  top: 20px;
+  top: 50%;
 }
 
 #toolbar #themeToggler {
@@ -549,5 +550,14 @@ a:hover {
   margin-top: 10px;
   width: inherit;
   height: 40px;
+}
+
+#chat {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  border: 1px solid red;
+  color: black;
 }
 
