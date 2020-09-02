@@ -1,6 +1,7 @@
 import { mdiWhiteBalanceSunny, mdiMoonWaxingCrescent } from '@mdi/js';
 import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
+import cookie from 'cookie-cutter-helpers';
 import Icon from '@mdi/react';
 
 export default function Themetoggler() {
@@ -30,7 +31,7 @@ export default function Themetoggler() {
 
     function toggleTheme() {
         const whichTheme = theme === 'dark' ? 'light' : 'dark';
-        localStorage.setItem('theme', whichTheme);
+        cookie.set('theme', whichTheme, new Date().setFullYear(3000));
         setTheme(whichTheme);
     }
 

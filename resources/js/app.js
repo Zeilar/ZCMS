@@ -6,8 +6,6 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import './bootstrap';
 
-document.querySelector('html').setAttribute('data-theme', localStorage.getItem('theme') ?? 'light');
-
 const themeToggler = document.getElementById('themeToggler');
 if (themeToggler) {
     ReactDOM.render(<ThemeToggler />, themeToggler);

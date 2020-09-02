@@ -32,6 +32,7 @@
         "@fortawesome/react-fontawesome": "^0.1.11",
         "@mdi/js": "^5.5.55",
         "@mdi/react": "^1.4.0",
+        "cookie-cutter-helpers": "^1.0.6",
         "js-cookie": "^2.2.1",
         "mix-env-file": "^0.1.0",
         "react-cool-onclickoutside": "^1.5.5",
