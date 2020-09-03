@@ -4,6 +4,14 @@ object-assign
 @license MIT
 */
 
+/*!
+ * Pusher JavaScript Library v7.0.0
+ * https://pusher.com/
+ *
+ * Copyright 2020, Pusher
+ * Released under the MIT licence.
+ */
+
 /**
  * A better abstraction over CSS.
  *

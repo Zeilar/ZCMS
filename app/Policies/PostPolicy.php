@@ -42,6 +42,7 @@ class PostPolicy
      */
     public function create(User $user)
     {
+        if ($user->suspended()) return false;
         return Auth::check();
     }
 
@@ -54,6 +55,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
+        if ($user->suspended()) return false;
         return $user->hasAnyRole(['admin', 'moderator']) || $user->isAuthor($post);
     }
 
@@ -66,6 +68,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
+        if ($user->suspended()) return false;
         return $user->hasRole('admin');
     }
 
@@ -78,6 +81,7 @@ class PostPolicy
      */
     public function restore(User $user, Post $post)
     {
+        if ($user->suspended()) return false;
         return $user->hasRole('admin');
     }
 
@@ -90,11 +94,13 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post)
     {
+        if ($user->suspended()) return false;
         return $user->hasRole('admin');
     }
 
     public function like(User $user, Post $post)
     {
+        if ($user->suspended()) return false;
         return Auth::check();
     }
 }

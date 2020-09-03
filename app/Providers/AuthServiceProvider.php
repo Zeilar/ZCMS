@@ -13,6 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        'App\Chatmessage' => 'App\Policies\ChatmessagePolicy',
         'App\Comment' => 'App\Policies\CommentPolicy',
         'App\User' => 'App\Policies\UserPolicy',
         'App\Post' => 'App\Policies\PostPolicy',

@@ -11,14 +11,13 @@ class PostsController extends Controller
 {
     public function index()
     {
+        $this->authorize('viewAny', Chatmessage::class);
         return response()->json(Post::all());
     }
 
     public function store(Request $request)
     {
-        if (!Auth::check() || !auth()->user()->can('create', Post::class)) {
-            return abort(403);
-        }
+        $this->authorize('create', Chatmessage::class);
 
         $request->validate([
             'title'   => 'required|string|min:3|max:100',
@@ -45,11 +44,9 @@ class PostsController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        $user = auth()->user();
-        if (empty($user) || !$user->can('update', $post)) {
-            return abort(403);
-        }
+        $this->authorize('update', $post);
 
+        $user = auth()->user();
         $post->update([
             'title'     => $request->title,
             'content'   => $request->content,
@@ -76,9 +73,7 @@ class PostsController extends Controller
 
     public function destroy(Post $post)
     {
-        if (!Auth::check() || !auth()->user()->can('delete', $post)) {
-            return abort(403);
-        }
+        $this->authorize('delete', $post);
 
         $post_id = $post->id;
         $post->likes()->delete();
@@ -92,9 +87,7 @@ class PostsController extends Controller
     }
 
     public function like(Request $request, Post $post) {
-        $user = auth()->user();
-        if (empty($user)) return abort (401);
-        if (!$user->can('like', $post)) return abort(403);
+        $this->authorize('like', $post);
 
         // Remove already existing like, or like it if it hasn't been already
         if ($postLike = $user->postLikes()->where('post_id', $post->id)->first()) {

@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PostsTableSeeder::class);
         $this->call(PostLikesTableSeeder::class);
         $this->call(LanguagesTableSeeder::class);
+        $this->call(ChatmessagesTableSeeder::class);
     }
 }

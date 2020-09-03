@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-use App\Chatroom;
-
-Broadcast::channel('chat.{roomId}', function($user, $roomId) {
-    $users = Chatroom::find($roomId)->users;
-    return ['users' => $users, 'roomId' => $roomId];
+Broadcast::channel('shoutbox', function($user) {
+    return ['user' => $user];
 });

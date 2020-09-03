@@ -47,7 +47,7 @@ class UsersTableSeeder extends Seeder
         ]);
         $user->roles()->sync([$userRole->id]);
 
-        factory(User::class, 10)->create()->each(function($user, $userRole) {
+        factory(User::class, 10)->create()->each(function($user) use ($userRole) {
             $user->roles()->attach($userRole);
         });
     }

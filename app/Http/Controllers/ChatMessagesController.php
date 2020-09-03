@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\ChatMessage;
 use Illuminate\Http\Request;
+use App\ChatMessage;
+use Auth;
 
 class ChatMessagesController extends Controller
 {
@@ -14,17 +15,8 @@ class ChatMessagesController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->authorize('viewAny', Chatmessage::class);
+        return Chatmessage::orderByDesc('id')->limit(30)->with('user.roles')->get();
     }
 
     /**
@@ -35,29 +27,7 @@ class ChatMessagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ChatMessage  $chatMessage
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ChatMessage $chatMessage)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ChatMessage  $chatMessage
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ChatMessage $chatMessage)
-    {
-        //
+        $this->authorize('create', Chatmessage::class);
     }
 
     /**
@@ -69,7 +39,7 @@ class ChatMessagesController extends Controller
      */
     public function update(Request $request, ChatMessage $chatMessage)
     {
-        //
+        $this->authorize('update', $chatMessage);
     }
 
     /**
@@ -80,6 +50,6 @@ class ChatMessagesController extends Controller
      */
     public function destroy(ChatMessage $chatMessage)
     {
-        //
+        $this->authorize('delete', $chatMessage);
     }
 }

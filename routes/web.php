@@ -17,6 +17,9 @@ Route::middleware('CheckLocale')->group(function() {
     Route::resource('posts', 'PostsController', ['except' => ['create', 'edit']]);
     Route::post('/Posts/{comment}/like', 'PostsController@like');
 
+    // ChatmessagesController
+    Route::resource('chatmessages', 'ChatmessagesController', ['except' => ['create', 'edit', 'show']]);
+
     // Admin -> UsersController
     Route::namespace('Admin')->prefix('admin')->middleware('IsOnline')->group(function() {
         Route::resource('/users', 'UsersController', ['except' => ['create']]);

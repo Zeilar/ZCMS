@@ -2,9 +2,10 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
+use \Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -53,10 +54,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    public function chatrooms() {
-        return $this->belongsToMany(Chatroom::class);
-    }
-
     public function isAuthor(Post $post): bool {
         return $this->id === $post->user->id;
     }
@@ -65,16 +62,8 @@ class User extends Authenticatable
         return $this->id === $thread->user->id;
     }
 
-    public function hasRole(string $role): bool {
-        return $this->roles()->where('name', $role)->first() ? true : false;
-    }
-
-    public function sentMessages() {
-        return $this->hasMany(ChatMessage::class, 'sender_id');
-    }
-
-    public function receivedMessages() {
-        return $this->hasMany(ChatMessage::class, 'receiver_id');
+    public function hasRole(string ...$roles): bool {
+        return $this->roles()->whereIn('name', $roles)->first() ? true : false;
     }
 
     public function hasRoles(array $roles): bool {
@@ -103,5 +92,26 @@ class User extends Authenticatable
 
     public function chatmessages() {
         return $this->hasMany(Chatmessage::class);
+    }
+
+    public function suspensions() {
+        return $this->hasMany(Suspension::class);
+    }
+
+    public function suspended() {
+        return $this->suspensions()->where('expiration', '>=', Carbon::now())->first() ? true : false;
+    }
+
+    public function suspend(string $message, $expiration) {
+        $suspension = Suspension::create([
+            'expiration' => $expiration ?? Carbon::now(),
+            'message' => $message ?? null,
+            'user_id' => $this->id,
+        ]);
+        return $suspension;
+    }
+    
+    public function highestRole() {
+        return $this->roles()->orderBy('clearance')->first();
     }
 }
