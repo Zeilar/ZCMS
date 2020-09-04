@@ -17,7 +17,7 @@ export default function Chatmessage({ message }) {
         meta: {
             'justify-content': 'space-between',
             color: 'var(--chat-text)',
-            'margin-bottom': '2px',
+            'margin-bottom': '4px',
             'font-size': '0.8rem',
             padding: '0 10px',
             display: 'flex',
