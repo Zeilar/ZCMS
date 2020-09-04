@@ -18,6 +18,7 @@ export default function Chatmessage({ message }) {
             'justify-content': 'space-between',
             color: 'var(--chat-text)',
             'margin-bottom': '2px',
+            'font-size': '0.8rem',
             padding: '0 10px',
             display: 'flex',
         },
@@ -29,7 +30,6 @@ export default function Chatmessage({ message }) {
         },
     });
     const classes = styles();
-
 
     return (
         <div className={classes.message}>

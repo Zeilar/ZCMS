@@ -26,14 +26,14 @@ Route::middleware('CheckLocale')->group(function() {
     });
 
     Route::get('/language/{language}', function($language) {
-        if (!in_array($language, ['en', 'se'])) {
+        if (!App\Language::all()->contains($language)) {
             return abort(400);
         }
         session()->put('locale', $language);
         return redirect()->back();
     });
 
-    Route::get('/languages', function() {
+    Route::post('/api/languages', function() {
         return response()->json(App\Language::all()->pluck('name'));
     });
 

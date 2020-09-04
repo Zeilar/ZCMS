@@ -9,21 +9,22 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Chatmessage;
 
 class NewChatmessage implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+    public $message;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct(Chatmessage $message)
     {
-        $this->user = $user;
+        $this->message = $message;
     }
 
     /**
@@ -33,6 +34,6 @@ class NewChatmessage implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('chat');
+        return new PresenceChannel('shoutbox');
     }
 }

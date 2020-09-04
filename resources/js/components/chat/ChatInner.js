@@ -4,12 +4,13 @@ import { createUseStyles } from 'react-jss';
 import Chatmessage from './Chatmessage';
 import Icon from '@mdi/react';
 
-export default function ChatInner({ setShow }) {
+export default function ChatInner({ setShow, messages, user }) {
     const styles = createUseStyles({
         chatInner: {
             'box-shadow': '0 0 25px 0 rgba(0, 0, 0, 0.15)',
             background: 'var(--chat-primary)',
             'flex-direction': 'column',
+            'margin-bottom': '20px',
             'max-height': '500px',
             'max-width': '400px',
             display: 'flex',
@@ -32,15 +33,22 @@ export default function ChatInner({ setShow }) {
             position: 'relative',
         },
         close: {
+            background: 'var(--color-primary)',
+            color: 'var(--text-primary)',
             'justify-content': 'center',
             'align-items': 'center',
+            'border-radius': '5px',
             'margin-left': 'auto',
-            background: 'none',
             display: 'flex',
+            padding: '5px',
+            '&:hover': {
+                background: 'var(--color-secondary)',
+                color: 'var(--text-secondary)',
+            },
         },
         closeIcon: {
+            color: 'inherit',
             height: '20px',
-            color: 'black',
             width: '20px',
         },
         input: {
@@ -57,8 +65,8 @@ export default function ChatInner({ setShow }) {
         },
         inputLine: {
             transition: 'width 0.15s linear',
+            background: 'var(--color-main)',
             transform: 'translateX(-50%)',
-            background: 'rgb(10, 10, 10)',
             position: 'absolute',
             bottom: '5px',
             height: '2px',
@@ -70,7 +78,6 @@ export default function ChatInner({ setShow }) {
             'align-items': 'center',
             display: 'flex',
             height: '100%',
-            'width': '0',
         },
         loadingIcon: {
             height: '75px',
@@ -78,29 +85,27 @@ export default function ChatInner({ setShow }) {
         },
     });
     const classes = styles();
+        
+    const messagesContainer = useRef();
+    const form = useRef();
 
-    window.Echo.join('shoutbox')
-        .here(users => {
+    async function submit(e) {
+        e.preventDefault();
+        const formData = new FormData(form.current);
+        const response = await fetch('/chatmessages', { method: 'POST', body: formData })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    console.log('something went wrong');
+                }
+            })
 
-        })
-        .listen('NewChatmessage', e => {
-            console.log(e);
-        });
-
-    const [messages, setMessages] = useState();
-    const [user, setUser] = useState();
+        // console.log(response);
+    }
 
     useEffect(() => {
-        if (messages == null) {
-            fetch('/chatmessages')
-                .then(response => response.json())
-                .then(messages => setMessages(messages));
-        }
-        if (user == null) {
-            fetch('/authenticate', { method: 'POST' })
-                .then(response => response.json())
-                .then(user => setUser(user));
-        }
+        
     });
 
     return (
@@ -111,7 +116,7 @@ export default function ChatInner({ setShow }) {
                 </button>
             </div>
 
-            <div className={`${classes.content} scrollbar`}>
+            <div className={`${classes.content} scrollbar`} ref={messagesContainer}>
                 {
                     messages
                         ? messages.map(message => (
@@ -123,14 +128,14 @@ export default function ChatInner({ setShow }) {
                 }
             </div>
 
-            <div className={classes.footer}>
+            <form className={classes.footer} onSubmit={submit} ref={form}>
                 {
                     user
-                        ? <input className={classes.input} type="text" placeholder="Aa" />
-                        : <input className={classes.input} type="text" placeholder="Aa" title="Please log in first" disabled />
+                        ? <input className={classes.input} type="text" name="content" placeholder="Aa" autoComplete="off" />
+                        : <input className={classes.input} type="text" name="content" placeholder="Aa" autoComplete="off" title="Please log in first" disabled />
                 }
                 <div className={`inputLine ${classes.inputLine}`}></div>
-            </div>
+            </form>
         </div>
     );
 }

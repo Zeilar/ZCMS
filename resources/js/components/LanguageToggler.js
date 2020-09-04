@@ -47,7 +47,7 @@ export default function LanguageToggler() {
     const [open, setOpen] = useState(false);
 
     async function getLanguages() {
-        const response = await fetch('/languages').then(response => response.json());
+        const response = await fetch('/api/languages', { method: 'POST' }).then(response => response.json());
         setLanguages(response);
     }
 

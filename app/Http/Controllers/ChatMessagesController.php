@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewChatmessage;
 use Illuminate\Http\Request;
 use App\ChatMessage;
 use Auth;
@@ -16,7 +17,7 @@ class ChatMessagesController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Chatmessage::class);
-        return Chatmessage::orderByDesc('id')->limit(30)->with('user.roles')->get();
+        return Chatmessage::orderByDesc('id')->limit(Chatmessage::$MAX_PER_PAGE)->with('user.roles')->get();
     }
 
     /**
@@ -28,6 +29,16 @@ class ChatMessagesController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Chatmessage::class);
+
+        $message = Chatmessage::create([
+            'user_id' => auth()->user()->id,
+            'content' => $request->content,
+        ]);
+        $message->user = $message->user;
+
+        broadcast(new NewChatmessage($message));
+
+        return response()->json($message);
     }
 
     /**
