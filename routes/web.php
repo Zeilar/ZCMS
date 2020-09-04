@@ -40,4 +40,11 @@ Route::middleware('CheckLocale')->group(function() {
     Route::get('/', function() {
         return view('home', ['categories' => App\Category::all()]);
     })->name('index');
+
+    Route::post('/authenticate', function() {
+        $user = auth()->user();
+        if (empty($user)) return false;
+        $user->roles = $user->roles()->pluck('name');
+        return response()->json(auth()->user());
+    });
 });

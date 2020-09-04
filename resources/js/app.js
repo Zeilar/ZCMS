@@ -2,7 +2,7 @@ import PasswordToggler from './components/PasswordToggler';
 import LanguageToggler from './components/LanguageToggler';
 import ThemeToggler from './components/ThemeToggler';
 import Checkbox from './components/Checkbox';
-import Chat from './components/Chat';
+import Chat from './components/chat/Chat';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import './bootstrap';

@@ -25,8 +25,8 @@
             padding: 10px 20px;
 
             .siteHeaderLink {
-                background: var(--color-secondary-gradient);
-                color: var(--color-secondary); // fallback
+                background: var(--color-main-gradient);
+                color: var(--color-main); // fallback
                 text-decoration: none; 
                 @include knockout;
                 line-height: 0.7;
@@ -61,7 +61,7 @@
                     padding: 10px;
 
                     &::after {
-                        background: var(--color-secondary);
+                        background: var(--color-main);
                         transition: width 0.25s ease-out;
                         border-radius: 10px;
                         position: absolute;
@@ -73,7 +73,7 @@
                     }
 
                     &:hover, &.active {
-                        color: var(--color-secondary);
+                        color: var(--color-main);
 
                         &::after {
                             width: 100%;

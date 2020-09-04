@@ -1,7 +1,7 @@
 .btnPrimary {
     transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
-    background-image: var(--color-secondary-gradient);
-    background-color: var(--color-secondary);
+    background-image: var(--color-main-gradient);
+    background-color: var(--color-main);
     border-radius: 4px;
     padding: 10px 20px;
     font-weight: bold;
@@ -26,8 +26,8 @@
     }
 
     &::-webkit-scrollbar-thumb {
-        background: var(--color-secondary);
-        border: 1px solid transparent;
+        border: 1px solid var(--color-main);
+        background: rgba(0, 0, 0, 0.35);
         background-clip: padding-box;
         border-radius: 10px;
     }
@@ -46,8 +46,8 @@ input {
         padding: 0;
     }
 
-    &::-webkit-autofill, ::-webkit-autofill {
-        color: red;
+    &[disabled] {
+        cursor: not-allowed;
     }
 }
 
