@@ -36,6 +36,7 @@
         "js-cookie": "^2.2.1",
         "laravel-echo": "^1.8.1",
         "mix-env-file": "^0.1.0",
+        "moment": "^2.27.0",
         "pusher-js": "^7.0.0",
         "react-cool-onclickoutside": "^1.5.5",
         "react-jss": "^10.4.0",

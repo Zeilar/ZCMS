@@ -1,5 +1,5 @@
 :root {
-    --color-secondary-gradient: linear-gradient(
+    --color-main-gradient: linear-gradient(
         45deg, 
         rgb(0, 255, 236) 0%,
         rgb(0, 255, 211) 20%,
@@ -7,39 +7,41 @@
         rgb(0, 255, 161) 75%,
         rgb(0, 255, 136) 100%
     );
-    --color-secondary: rgb(0, 255, 186);
+    --color-main: rgb(0, 255, 186);
     --color-neutral: rgb(150, 150, 150);
     --color-gray: rgb(20, 20, 20);
     --container-margin: 25vw;
 
     &[data-theme=dark] {
-        --border-secondary: var(--color-secondary);
+        --border-secondary: var(--color-main);
         --text-secondary: rgb(245, 245, 245);
         --border-primary: rgb(100, 100, 100);
+        --color-secondary: rgb(30, 30, 30);
         --color-primary: rgb(50, 50, 50);
-        --color-third: rgb(30, 30, 30);
+        --color-third: rgb(70, 70, 70);
         --color-link: rgb(0, 225, 250);
         --body-bg: rgb(15, 15, 15);
         --text-primary: white;
 
         ::selection {
-            background: var(--color-secondary);
+            background: var(--color-main);
             color: black;
         }
     }
 
     &[data-theme=light] {
         --border-secondary: rgb(150, 150, 150);
+        --color-secondary: rgb(245, 245, 245);
         --border-primary: rgb(200, 200, 200);
         --color-primary: rgb(250, 250, 250);
         --text-secondary: rgb(50, 50, 50);
-        --color-third: rgb(245, 245, 245);
+        --color-third: rgb(235, 235, 235);
         --color-link: rgb(0, 127, 255);
         --body-bg: rgb(250, 250, 250);
         --text-primary: black;
 
         ::selection {
-            color: var(--color-secondary);
+            color: var(--color-main);
             background: black;
         }
     }
@@ -53,7 +55,7 @@
     }
 
     ::-webkit-scrollbar-thumb {
-        background: var(--color-secondary);
+        background: var(--color-main);
         border: 1px solid transparent;
         background-clip: padding-box;
         border-radius: 10px;

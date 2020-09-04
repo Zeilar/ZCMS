@@ -37,10 +37,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        <div id="toolbar">
-            <div id="themeToggler" title="@lang('partials.themeToggler')"></div>
-            <div id="languageToggler"></div>
-        </div>
+        @includeUnless(in_array('toolbar', $disable), 'partials.toolbar')
         <main id="app">
             @includeUnless(in_array('header', $disable), 'partials.header')
             <div id="content">

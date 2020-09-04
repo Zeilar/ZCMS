@@ -1,5 +1,5 @@
 .authLogo {
-    background: var(--color-secondary-gradient);
+    background: var(--color-main-gradient);
     margin-bottom: 50px;
     text-align: center;
     @include knockout;
@@ -14,7 +14,7 @@
 .authWrapper {
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
     border: 1px solid var(--border-primary);
-    background: var(--color-third);
+    background: var(--color-secondary);
     margin: 0 auto auto auto;
     @include centerFlex;
     border-radius: 5px;
@@ -35,8 +35,8 @@
     }
 
     .inputRow {
-        background-image: var(--color-secondary-gradient);
-        background-color: var(--color-secondary);
+        background-image: var(--color-main-gradient);
+        background-color: var(--color-main);
         border-radius: 20px;
         position: relative;
         margin: 10px 0;
