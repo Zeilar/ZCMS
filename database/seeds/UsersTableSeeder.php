@@ -16,7 +16,6 @@ class UsersTableSeeder extends Seeder
     {
         $adminRole = Role::where('name', 'admin')->first();
         $moderatorRole = Role::where('name', 'moderator')->first();
-        $authorRole = Role::where('name', 'author')->first();
         $userRole = Role::where('name', 'user')->first();
         
         $admin = User::create([
@@ -24,21 +23,14 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('123'),
         ]);
-        $admin->roles()->sync([$adminRole->id, $moderatorRole->id, $authorRole->id, $userRole->id]);
+        $admin->roles()->sync([$adminRole->id, $moderatorRole->id, $userRole->id]);
 
         $moderator = User::create([
             'username' => 'Moderator',
             'email' => 'moderator@moderator.com',
             'password' => Hash::make('123'),
         ]);
-        $moderator->roles()->sync([$moderatorRole->id, $authorRole->id, $userRole->id]);
-
-        $author = User::create([
-            'username' => 'Author',
-            'email' => 'author@author.com',
-            'password' => Hash::make('123'),
-        ]);
-        $author->roles()->sync([$authorRole->id, $userRole->id]);
+        $moderator->roles()->sync([$moderatorRole->id, $userRole->id]);
 
         $user = User::create([
             'username' => 'User',

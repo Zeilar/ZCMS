@@ -31,14 +31,12 @@ export default function Chat() {
     const [show, setShow] = useState(false);
     const [user, setUser] = useState();
 
-    window.Echo.leave('shoutbox');
-    window.Echo.join('shoutbox')
-        .listen('NewChatmessage', e => {
-            console.log(e);
-        });
-
     useEffect(() => {
-        console.log('render Chat.js');
+        window.Echo.leave('shoutbox');
+        window.Echo.join('shoutbox')
+            .listen('NewChatmessage', e => {
+                setMessages(prev => [...prev.slice(1), e.message]);
+            });
         if (messages == null) {
             fetch('/chatmessages')
                 .then(response => response.json())
@@ -49,7 +47,7 @@ export default function Chat() {
                 .then(response => response.json())
                 .then(user => setUser(user));
         }
-    });
+    }, [user, messages, setMessages]);
 
     return (
         <div className={classes.chatOuter}>

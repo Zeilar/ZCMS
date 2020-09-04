@@ -12,9 +12,8 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name' => 'admin', 'clearance' => 1]);
-        Role::create(['name' => 'moderator', 'clearance' => 2]);
-        Role::create(['name' => 'author', 'clearance' => 3]);
-        Role::create(['name' => 'user', 'clearance' => 4]);
+        Role::create(['name' => 'admin', 'color' => 'rgb(255, 0, 0)', 'clearance' => 1]);
+        Role::create(['name' => 'moderator', 'color' => 'rgb(255, 127, 0)', 'clearance' => 2]);
+        Role::create(['name' => 'user', 'clearance' => 3]);
     }
 }

@@ -87,25 +87,26 @@ export default function ChatInner({ setShow, messages, user }) {
     const classes = styles();
         
     const messagesContainer = useRef();
+    const input = useRef();
     const form = useRef();
 
     async function submit(e) {
         e.preventDefault();
         const formData = new FormData(form.current);
-        const response = await fetch('/chatmessages', { method: 'POST', body: formData })
+        await fetch('/chatmessages', { method: 'POST', body: formData })
             .then(response => {
                 if (response.status === 200) {
+                    input.current.value = '';
                     return response.json();
                 } else {
-                    console.log('something went wrong');
+                    console.log('Something went wrong');
                 }
-            })
-
-        // console.log(response);
+            });
     }
 
     useEffect(() => {
-        
+        messagesContainer.current.scrollTop = 99999;
+        input.current.focus();
     });
 
     return (
@@ -131,8 +132,8 @@ export default function ChatInner({ setShow, messages, user }) {
             <form className={classes.footer} onSubmit={submit} ref={form}>
                 {
                     user
-                        ? <input className={classes.input} type="text" name="content" placeholder="Aa" autoComplete="off" />
-                        : <input className={classes.input} type="text" name="content" placeholder="Aa" autoComplete="off" title="Please log in first" disabled />
+                        ? <input className={classes.input} ref={input} type="text" name="content" placeholder="Aa" autoComplete="off" />
+                        : <input className={classes.input} ref={input} type="text" name="content" placeholder="Aa" autoComplete="off" title="Please log in first" disabled />
                 }
                 <div className={`inputLine ${classes.inputLine}`}></div>
             </form>
