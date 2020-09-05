@@ -1,10 +1,10 @@
-import { mdiClose, mdiLoading, mdiAlertCircleOutline } from '@mdi/js';
+import { mdiClose, mdiLoading, mdiAlertCircleOutline, mdiAccount } from '@mdi/js';
 import React, { useState, useRef, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import Chatmessage from './Chatmessage';
 import Icon from '@mdi/react';
 
-export default function ChatInner({ setShow, messages, getMessages, user, error }) {
+export default function ChatInner({ setShow, messages, getMessages, user, users, error }) {
     const styles = createUseStyles({
         chatInner: {
             'box-shadow': '0 0 25px 0 rgba(0, 0, 0, 0.15)',
@@ -27,7 +27,19 @@ export default function ChatInner({ setShow, messages, getMessages, user, error 
         },
         toolbarText: {
             'font-family': 'Raleway',
+            'margin-right': 'auto',
             'margin-left': '20px',
+        },
+        toolbarUsers: {
+            'align-items': 'center',
+            display: 'flex',
+        },
+        toolbarUsersIcon: {
+            height: '20px',
+            width: '20px',
+        },
+        toolbarUsersText: {
+
         },
         content: {
             position: 'relative',
@@ -46,7 +58,7 @@ export default function ChatInner({ setShow, messages, getMessages, user, error 
             'justify-content': 'center',
             'align-items': 'center',
             'border-radius': '5px',
-            'margin-left': 'auto',
+            'margin-left': '10px',
             display: 'flex',
             padding: '5px',
             '&:hover': {
@@ -133,8 +145,18 @@ export default function ChatInner({ setShow, messages, getMessages, user, error 
     return (
         <div className={classes.chatInner}>
             <div className={classes.toolbar}>
-                <p className={classes.toolbarText}>Shoutbox</p>
-
+                <p className={classes.toolbarText}>
+                    Shoutbox
+                </p>
+                {
+                    user &&
+                        <div className={classes.toolbarUsers}>
+                            <Icon className={classes.toolbarUsersIcon} path={mdiAccount} />
+                            <span className={classes.toolbarUsersText}>
+                                {users}
+                            </span>
+                        </div>
+                }
                 <button className={classes.close} onClick={() => setShow(false)}>
                     <Icon className={classes.closeIcon} path={mdiClose} />
                 </button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { mdiChatProcessingOutline } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import ChatInner from './ChatInner';
@@ -30,6 +30,7 @@ export default function Chat() {
     const [messages, setMessages] = useState();
     const [error, setError] = useState(false);
     const [show, setShow] = useState(false);
+    const [users, setUsers] = useState([]);
     const [user, setUser] = useState();
 
     async function getMessages() {
@@ -49,7 +50,13 @@ export default function Chat() {
     useEffect(() => {
         window.Echo.leave('shoutbox');
         window.Echo.join('shoutbox')
+            .here(users => {
+                setUsers(users.length);
+            })
+            .joining(user => setUsers(p => p + 1))
+            .leaving(user => setUsers(p => p - 1))
             .listen('NewChatmessage', e => {
+                console.log(e);
                 setMessages(prev => [...prev.slice(1), e.message]);
             });
         if (messages == null) getMessages();
@@ -59,11 +66,11 @@ export default function Chat() {
                 .then(user => setUser(user))
                 .catch(error => error);
         }
-    }, [user, messages, setMessages]);
+    }, [user, messages, setMessages, setUsers]);
 
     return (
         <div className={classes.chatOuter}>
-            {show && <ChatInner error={error} getMessages={getMessages} messages={messages} user={user} setShow={setShow} />}
+            {show && <ChatInner error={error} getMessages={getMessages} messages={messages} users={users} user={user} setShow={setShow} />}
             <button className={classes.toggler} onClick={() => setShow(p => !p)}>
                 <Icon className={classes.icon} path={mdiChatProcessingOutline} />
             </button>

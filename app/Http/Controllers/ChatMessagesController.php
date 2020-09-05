@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Events\NewChatmessage;
 use Illuminate\Http\Request;
-use App\ChatMessage;
+use App\Chatmessage;
 use Auth;
 
-class ChatMessagesController extends Controller
+class ChatmessagesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -45,22 +45,22 @@ class ChatMessagesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ChatMessage  $chatMessage
+     * @param  \App\Chatmessage  $chatmessage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ChatMessage $chatMessage)
+    public function update(Request $request, Chatmessage $chatmessage)
     {
-        $this->authorize('update', $chatMessage);
+        $this->authorize('update', $chatmessage);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ChatMessage  $chatMessage
+     * @param  \App\Chatmessage  $chatmessage
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ChatMessage $chatMessage)
+    public function destroy(Chatmessage $chatmessage)
     {
-        $this->authorize('delete', $chatMessage);
+        $this->authorize('delete', $chatmessage);
     }
 }
