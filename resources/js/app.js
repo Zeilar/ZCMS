@@ -1,6 +1,7 @@
 import PasswordToggler from './components/PasswordToggler';
 import LanguageToggler from './components/LanguageToggler';
 import ThemeToggler from './components/ThemeToggler';
+import './components/admin/Dashboard/_loader';
 import Checkbox from './components/Checkbox';
 import Chat from './components/chat/Chat';
 import ReactDOM from 'react-dom';

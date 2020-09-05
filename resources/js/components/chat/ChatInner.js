@@ -14,6 +14,8 @@ export default function ChatInner({ setShow, messages, getMessages, user, users,
             'max-height': '500px',
             'max-width': '400px',
             display: 'flex',
+            height: '50vh',
+            width: '20vw',
         },
         toolbar: {
             background: 'var(--color-main-gradient)',
@@ -44,9 +46,7 @@ export default function ChatInner({ setShow, messages, getMessages, user, users,
         content: {
             position: 'relative',
             overflow: 'auto',
-            height: '50vh',
             margin: '5px',
-            width: '20vw',
         },
         footer: {
             background: 'var(--color-primary)',

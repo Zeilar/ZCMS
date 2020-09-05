@@ -24,6 +24,11 @@
                 </li>
             @else
                 <li class="navitem">
+                    <a class="navlink" href="{{ route('admin.index') }}">
+                        Admin
+                    </a>
+                </li>
+                <li class="navitem">
                     <a class="navlink" href="{{ route('logout') }}">
                         @lang('partials.logout')
                     </a>

@@ -22,7 +22,8 @@ Route::middleware('CheckLocale')->group(function() {
 
     // Admin -> UsersController
     Route::namespace('Admin')->prefix('admin')->middleware('IsOnline')->group(function() {
-        Route::resource('/users', 'UsersController', ['except' => ['create']]);
+        Route::resource('/users', 'UsersController', ['except' => ['create', 'edit', 'show']]);
+        Route::get('/', 'DashboardController@index')->name('admin.index');
     });
 
     Route::get('/language/{language}', function($language) {
