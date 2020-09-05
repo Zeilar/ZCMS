@@ -13,10 +13,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Chatmessage' => 'App\Policies\ChatmessagePolicy',
-        'App\Comment' => 'App\Policies\CommentPolicy',
-        'App\User' => 'App\Policies\UserPolicy',
-        'App\Post' => 'App\Policies\PostPolicy',
+        'App\Chatmessage' => \App\Policies\ChatmessagePolicy::class,
+        'App\User' => \App\Policies\UserPolicy::class,
+        'App\Post' => \App\Policies\PostPolicy::class,
     ];
 
     /**
@@ -27,7 +26,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
     }
 }

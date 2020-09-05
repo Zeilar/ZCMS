@@ -1,10 +1,10 @@
+import { mdiClose, mdiLoading, mdiAlertCircleOutline } from '@mdi/js';
 import React, { useState, useRef, useEffect } from 'react';
-import { mdiClose, mdiLoading } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import Chatmessage from './Chatmessage';
 import Icon from '@mdi/react';
 
-export default function ChatInner({ setShow, messages, user }) {
+export default function ChatInner({ setShow, messages, user, error }) {
     const styles = createUseStyles({
         chatInner: {
             'box-shadow': '0 0 25px 0 rgba(0, 0, 0, 0.15)',
@@ -23,6 +23,7 @@ export default function ChatInner({ setShow, messages, user }) {
             padding: '5px',
         },
         content: {
+            position: 'relative',
             overflow: 'auto',
             height: '50vh',
             margin: '5px',
@@ -64,8 +65,8 @@ export default function ChatInner({ setShow, messages, user }) {
             },
         },
         inputLine: {
+            background: 'var(--color-main-gradient)',
             transition: 'width 0.15s linear',
-            background: 'var(--color-main)',
             transform: 'translateX(-50%)',
             position: 'absolute',
             bottom: '5px',
@@ -74,18 +75,27 @@ export default function ChatInner({ setShow, messages, user }) {
             width: 0,
         },
         loading: {
-            'justify-content': 'center',
-            'align-items': 'center',
-            display: 'flex',
             height: '100%',
         },
         loadingIcon: {
             height: '75px',
             width: '75px',
         },
+        chatError: {
+            'flex-direction': 'column',
+        },
+        chatErrorIcon: {
+            'align-self': 'center',
+            height: '50px',
+            width: '50px',
+        },
+        chatErrorMessage: {
+            'margin-top': '5px',
+        },
     });
     const classes = styles();
         
+    const [inputError, setInputError] = useState(false);
     const messagesContainer = useRef();
     const input = useRef();
     const form = useRef();
@@ -94,13 +104,9 @@ export default function ChatInner({ setShow, messages, user }) {
         e.preventDefault();
         const formData = new FormData(form.current);
         await fetch('/chatmessages', { method: 'POST', body: formData })
-            .then(response => {
-                if (response.status === 200) {
-                    input.current.value = '';
-                    return response.json();
-                } else {
-                    console.log('Something went wrong');
-                }
+            .then(response => input.current.value = '')
+            .catch(error => {
+                setInputError(true);
             });
     }
 
@@ -119,13 +125,18 @@ export default function ChatInner({ setShow, messages, user }) {
 
             <div className={`${classes.content} scrollbar`} ref={messagesContainer}>
                 {
-                    messages
-                        ? messages.map(message => (
-                            <Chatmessage key={message.id} message={message} />
-                        ))
-                        : <div className={classes.loading}>
-                            <Icon className={classes.loadingIcon} path={mdiLoading} spin={1} />
+                    error
+                        ? <div className={`${classes.chatError} centerAbsolute centerFlex`}>
+                            <Icon className={classes.chatErrorIcon} path={mdiAlertCircleOutline} color="red" />
+                            <p className={classes.chatErrorMessage}>Something went wrong</p>
                         </div>
+                        : messages
+                            ? messages.map(message => (
+                                <Chatmessage key={message.id} message={message} />
+                            ))
+                            : <div className={`${classes.loading} centerFlex`}>
+                                <Icon className={classes.loadingIcon} path={mdiLoading} spin={1} />
+                            </div>
                 }
             </div>
 
@@ -133,7 +144,7 @@ export default function ChatInner({ setShow, messages, user }) {
                 {
                     user
                         ? <input className={classes.input} ref={input} type="text" name="content" placeholder="Aa" autoComplete="off" />
-                        : <input className={classes.input} ref={input} type="text" name="content" placeholder="Aa" autoComplete="off" title="Please log in first" disabled />
+                        : <input className={classes.input} ref={input} type="text" name="content" placeholder="Please log in first" autoComplete="off" disabled />
                 }
                 <div className={`inputLine ${classes.inputLine}`}></div>
             </form>

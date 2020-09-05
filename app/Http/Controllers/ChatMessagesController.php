@@ -16,7 +16,7 @@ class ChatMessagesController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Chatmessage::class);
+        // $this->authorize('viewAny', Chatmessage::class);
         return Chatmessage::orderByDesc('id')->limit(Chatmessage::$MAX_PER_PAGE)->with('user.roles')->get();
     }
 
