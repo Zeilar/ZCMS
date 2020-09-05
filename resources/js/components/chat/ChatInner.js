@@ -50,6 +50,7 @@ export default function ChatInner({ setShow, messages, getMessages, user, users,
         },
         footer: {
             background: 'var(--color-primary)',
+            'margin-top': 'auto',
             position: 'relative',
         },
         close: {

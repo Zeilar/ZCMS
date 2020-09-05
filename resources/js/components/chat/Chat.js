@@ -56,7 +56,6 @@ export default function Chat() {
             .joining(user => setUsers(p => p + 1))
             .leaving(user => setUsers(p => p - 1))
             .listen('NewChatmessage', e => {
-                console.log(e);
                 setMessages(prev => [...prev.slice(1), e.message]);
             });
         if (messages == null) getMessages();
