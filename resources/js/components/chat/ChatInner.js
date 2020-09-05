@@ -16,11 +16,18 @@ export default function ChatInner({ setShow, messages, user, error }) {
             display: 'flex',
         },
         toolbar: {
+            background: 'var(--color-main-gradient)',
             'border-top-right-radius': '5px',
             'border-top-left-radius': '5px',
-            background: 'var(--color-main)',
+            'align-items': 'center',
+            'font-weight': 'bold',
             display: 'flex',
             padding: '5px',
+            color: 'black',
+        },
+        toolbarText: {
+            'font-family': 'Raleway',
+            'margin-left': '20px',
         },
         content: {
             position: 'relative',
@@ -118,6 +125,8 @@ export default function ChatInner({ setShow, messages, user, error }) {
     return (
         <div className={classes.chatInner}>
             <div className={classes.toolbar}>
+                <p className={classes.toolbarText}>Shoutbox</p>
+
                 <button className={classes.close} onClick={() => setShow(false)}>
                     <Icon className={classes.closeIcon} path={mdiClose} />
                 </button>
