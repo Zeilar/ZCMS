@@ -29,7 +29,7 @@ export default function Chat() {
 
     const [messages, setMessages] = useState();
     const [error, setError] = useState(false);
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
     const [user, setUser] = useState();
 
     async function getMessages() {
