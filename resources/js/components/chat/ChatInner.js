@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss';
 import Chatmessage from './Chatmessage';
 import Icon from '@mdi/react';
 
-export default function ChatInner({ setShow, messages, user, error }) {
+export default function ChatInner({ setShow, messages, getMessages, user, error }) {
     const styles = createUseStyles({
         chatInner: {
             'box-shadow': '0 0 25px 0 rgba(0, 0, 0, 0.15)',
@@ -82,14 +82,17 @@ export default function ChatInner({ setShow, messages, user, error }) {
             width: 0,
         },
         loading: {
+            display: 'flex',
             height: '100%',
         },
         loadingIcon: {
+            margin: 'auto',
             height: '75px',
             width: '75px',
         },
         chatError: {
             'flex-direction': 'column',
+            display: 'flex',
         },
         chatErrorIcon: {
             'align-self': 'center',
@@ -97,7 +100,12 @@ export default function ChatInner({ setShow, messages, user, error }) {
             width: '50px',
         },
         chatErrorMessage: {
-            'margin-top': '5px',
+            'white-space': 'nowrap',
+            'font-weight': 'bold',
+            'margin-top': '10px',
+        },
+        chatErrorRefresh: {
+            'margin-top': '10px',
         },
     });
     const classes = styles();
@@ -135,15 +143,20 @@ export default function ChatInner({ setShow, messages, user, error }) {
             <div className={`${classes.content} scrollbar`} ref={messagesContainer}>
                 {
                     error
-                        ? <div className={`${classes.chatError} centerAbsolute centerFlex`}>
+                        ? <div className={`${classes.chatError} centerAbsolute`}>
                             <Icon className={classes.chatErrorIcon} path={mdiAlertCircleOutline} color="red" />
-                            <p className={classes.chatErrorMessage}>Something went wrong</p>
+                            <p className={classes.chatErrorMessage}>
+                                Something went wrong
+                            </p>
+                            <button className={`${classes.chatErrorRefresh} btnPrimary`} onClick={() => getMessages(true)}>
+                                Try again
+                            </button>
                         </div>
-                        : messages
+                        : messages && messages.length
                             ? messages.map(message => (
                                 <Chatmessage key={message.id} message={message} />
                             ))
-                            : <div className={`${classes.loading} centerFlex`}>
+                            : <div className={classes.loading}>
                                 <Icon className={classes.loadingIcon} path={mdiLoading} spin={1} />
                             </div>
                 }
