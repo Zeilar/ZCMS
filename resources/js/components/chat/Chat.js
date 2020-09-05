@@ -27,6 +27,7 @@ export default function Chat() {
     });
     const classes = styles();
 
+    const [connected, setConnected] = useState(false);
     const [messages, setMessages] = useState();
     const [error, setError] = useState(false);
     const [show, setShow] = useState(false);
@@ -48,16 +49,18 @@ export default function Chat() {
     }
 
     useEffect(() => {
-        window.Echo.leave('shoutbox');
-        window.Echo.join('shoutbox')
-            .here(users => {
-                setUsers(users.length);
-            })
-            .joining(user => setUsers(p => p + 1))
-            .leaving(user => setUsers(p => p - 1))
-            .listen('NewChatmessage', e => {
-                setMessages(prev => [...prev.slice(1), e.message]);
-            });
+        if (messages?.length && !error && !connected) {
+            window.Echo.join('shoutbox')
+                .here(users => {
+                    setUsers(users.length);
+                })
+                .joining(user => setUsers(p => p + 1))
+                .leaving(user => setUsers(p => p - 1))
+                .listen('NewChatmessage', e => {
+                    setMessages(prev => [...prev.slice(1), e.message]);
+                });
+            setConnected(true);
+        }
         if (messages == null) getMessages();
         if (user == null) {
             fetch('/authenticate', { method: 'POST' })
