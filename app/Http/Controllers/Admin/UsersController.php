@@ -72,7 +72,11 @@ class UsersController extends Controller
     {
         $this->authorize('delete', $user);
 
-        $user->roles()->detach();
+        $user->chatmessages()->delete();
+        $user->postLikes()->delete();
+        $user->threads()->delete();
+        $user->roles()->delete();
+        $user->posts()->delete();
         $user->delete();
 
         return response()->json(User::all());

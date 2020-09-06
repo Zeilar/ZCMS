@@ -69,13 +69,13 @@ export default function User({ id, username, email, setUsers }) {
                 editing &&
                     <tr>
                         <td className={`${classes.td} edit`}>
-                            <input type="text" name="id" defaultValue={id} />
+                            <input type="number" name="id" defaultValue={id} />
                         </td>
                         <td className={`${classes.td} edit`}>
                             <input type="text" name="username" defaultValue={username} />
                         </td>
                         <td className={`${classes.td} edit`}>
-                            <input type="text" name="email" defaultValue={email} />
+                            <input type="email" name="email" defaultValue={email} />
                         </td>
                         <td className={`${classes.td} edit actions`}>
                             <button className="btnDashboard" onClick={() => setEditing(false)}>
