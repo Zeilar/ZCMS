@@ -1,6 +1,8 @@
 {
     "private": true,
     "scripts": {
+        "clear": "php artisan cache:clear && php artisan route:clear && php artisan view:clear && php artisan config:clear",
+        "seed": "php artisan migrate:fresh --seed",
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",

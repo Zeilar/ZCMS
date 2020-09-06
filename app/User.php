@@ -114,4 +114,9 @@ class User extends Authenticatable
     public function highestRole() {
         return $this->roles()->orderBy('clearance')->first();
     }
+
+    public function higherClearance(User $user): bool {
+        // Clearance are ordered from 1 and up, with the highest rank being 1
+        return $this->highestRole()->clearance < $user->highestRole()->clearance;
+    }
 }

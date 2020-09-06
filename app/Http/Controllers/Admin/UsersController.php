@@ -16,11 +16,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        if (!auth()->user()->can('viewAny', User::class)) {
-            return abort(403);
-        }
+        $this->authorize('viewAny', User::class);
 
-        return response()->json(User::all());
+        return view('admin.users');
     }
 
     /**
@@ -31,9 +29,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        if (!auth()->user()->can('create', User::class)) {
-            return abort (403);
-        }
+        $this->authorize('create', User::class);
         
         $user = User::create([
             'username' => $request->username,
@@ -91,18 +87,16 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        if (!auth()->user()->can('delete', $user)) {
-            return abort (403);
-        }
+        $this->authorize('delete', $user);
 
-        $user_id = $user->id;
         $user->roles()->detach();
         $user->delete();
 
-        return response()->json([
-            'message' => 'Successfully deleted user.',
-            'user_id' => $user_id,
-            'type'    => 'success',
-        ]);
+        return response()->json(User::all());
+    }
+
+    public function all() {
+        $this->authorize('viewAny', User::class);
+        return response()->json(User::all());
     }
 }

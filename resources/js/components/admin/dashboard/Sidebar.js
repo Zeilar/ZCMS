@@ -16,6 +16,7 @@ export default function Sidebar({ active = 'dashboard' }) {
             'align-items': 'center',
             display: 'flex',
             padding: '10px',
+            height: '80px',
         },
         username: {
             'margin-left': '5px',

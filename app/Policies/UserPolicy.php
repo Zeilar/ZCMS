@@ -54,7 +54,7 @@ class UserPolicy
     public function update(User $user, User $model)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->hasRole('admin') && $user->higherClearance($model);
     }
 
     /**
@@ -67,7 +67,7 @@ class UserPolicy
     public function delete(User $user, User $model)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->hasRole('admin') && $user->higherClearance($model);
     }
 
     /**
@@ -80,7 +80,7 @@ class UserPolicy
     public function restore(User $user, User $model)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->hasRole('admin') && $user->higherClearance($model);
     }
 
     /**
@@ -93,6 +93,11 @@ class UserPolicy
     public function forceDelete(User $user, User $model)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->hasRole('admin') && $user->higherClearance($model);
+    }
+
+    public function suspend(User $user, User $model) {
+        if ($user->suspended()) return false;
+        return $user->hasRole('moderator') && $user->higherClearance($model);
     }
 }
