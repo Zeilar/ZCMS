@@ -7,8 +7,8 @@
       rgb(0, 255, 161) 75%,
       rgb(0, 255, 136) 100%
   );
-  --color-main: rgb(0, 255, 186);
   --color-neutral: rgb(150, 150, 150);
+  --color-main: rgb(0, 255, 186);
   --color-gray: rgb(20, 20, 20);
   --container-margin: 25vw;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -136,17 +136,43 @@ body {
 }
 
 .btnPrimary {
-  transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
-  background-image: var(--color-main-gradient);
-  background-color: var(--color-main);
+  transition: background 0.15s linear, color 0.15s linear;
+  background: #007fff;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   border-radius: 4px;
-  padding: 10px 20px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   font-weight: bold;
-  color: black;
+  color: white;
+  padding: 10px;
 }
 
 .btnPrimary.block {
   width: 100%;
+}
+
+.btnPrimary:hover {
+  background: #0064ff;
+}
+
+.btnDashboard {
+  background: var(--dashboard-primary);
+  transition: background 0.05s linear;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  margin-right: 5px;
+  color: white;
+  padding: 8px;
+}
+
+.btnDashboard:hover {
+  background: var(--dashboard-secondary);
 }
 
 .scrollbar::-webkit-scrollbar {
@@ -165,7 +191,7 @@ body {
 }
 
 input {
-  border: 1px solid var(--border-secondary);
+  border: 1px solid var(--border-primary);
   color: var(--text-primary);
   border-radius: 2px;
   padding: 6px;
@@ -493,10 +519,12 @@ a:hover {
 }
 
 .authWrapper .authSubmit {
+  background: var(--color-main-gradient);
   border-radius: 20px;
   margin-bottom: 20px;
   padding: 12px 20px;
   margin-top: 30px;
+  color: black;
 }
 
 .authWrapper .footer {

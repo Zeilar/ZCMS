@@ -1,19 +1,35 @@
 .btnPrimary {
-    transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
-    background-image: var(--color-main-gradient);
-    background-color: var(--color-main);
+    transition: background 0.15s linear, color 0.15s linear;
+    background: rgb(0, 127, 255);
+    height: fit-content;
     border-radius: 4px;
-    padding: 10px 20px;
+    width: fit-content;
     font-weight: bold;
-    color: black;
+    color: white;
+    padding: 10px;
 
     &.block {
         width: 100%;
     }
+
+    &:hover {
+        background: rgb(0, 100, 255);
+    }
 }
 
-.btnSecondary {
+.btnDashboard {
+    background: var(--dashboard-primary);
+    transition: background 0.05s linear;
+    height: fit-content;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    margin-right: 5px;
+    color: white;
+    padding: 8px;
 
+    &:hover{
+        background: var(--dashboard-secondary),    
+    }
 }
 
 .scrollbar {
@@ -34,7 +50,7 @@
 }
 
 input {
-    border: 1px solid var(--border-secondary);
+    border: 1px solid var(--border-primary);
     color: var(--text-primary);
     border-radius: 2px;
     padding: 6px;

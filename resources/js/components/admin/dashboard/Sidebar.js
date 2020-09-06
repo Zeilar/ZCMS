@@ -6,7 +6,8 @@ import Icon from '@mdi/react';
 export default function Sidebar({ active = 'dashboard' }) {
     const styles = createUseStyles({
         sidebar: {
-            background: 'rgb(25, 35, 40)',
+            background: 'var(--dashboard-primary)',
+            color: 'var(--color-secondary)',
             'flex-direction': 'column',
             display: 'flex',
             width: '20vw',
@@ -28,13 +29,13 @@ export default function Sidebar({ active = 'dashboard' }) {
         },
         item: {
             transition: 'background 0.1s linear',
-            color: 'rgb(200, 200, 200)',
             'align-items': 'center',
             'user-select': 'none',
+            color: 'inherit',
             display: 'flex',
             padding: '15px',
             '&.active': {
-                background: 'rgb(20, 30, 35)',
+                background: 'var(--dashboard-secondary)',
             },
             '&:hover:not(.active)': {
                 background: 'rgb(35, 50, 55)',
