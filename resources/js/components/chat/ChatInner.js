@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss';
 import Chatmessage from './Chatmessage';
 import Icon from '@mdi/react';
 
-export default function ChatInner({ setShow, messages, getMessages, user, users, error }) {
+export default function ChatInner({ show, setShow, messages, getMessages, user, users, error, messagesContainer }) {
     const styles = createUseStyles({
         chatInner: {
             'box-shadow': '0 0 25px 0 rgba(0, 0, 0, 0.15)',
@@ -13,9 +13,14 @@ export default function ChatInner({ setShow, messages, getMessages, user, users,
             'margin-bottom': '20px',
             'max-height': '500px',
             'max-width': '400px',
-            display: 'flex',
             height: '50vh',
             width: '20vw',
+            '&.show': {
+                display: 'flex',
+            },
+            '&.hide': {
+                display: 'none',
+            },
         },
         toolbar: {
             background: 'var(--color-main-gradient)',
@@ -124,7 +129,6 @@ export default function ChatInner({ setShow, messages, getMessages, user, users,
     const classes = styles();
         
     const [inputError, setInputError] = useState(false);
-    const messagesContainer = useRef();
     const input = useRef();
     const form = useRef();
 
@@ -144,7 +148,7 @@ export default function ChatInner({ setShow, messages, getMessages, user, users,
     });
 
     return (
-        <div className={classes.chatInner}>
+        <div className={`${classes.chatInner} ${show ? 'show': 'hide'}`}>
             <div className={classes.toolbar}>
                 <p className={classes.toolbarText}>
                     Shoutbox

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use \Carbon\Carbon;
 use App\User;
 
 class UsersController extends Controller
@@ -17,7 +18,6 @@ class UsersController extends Controller
     public function index()
     {
         $this->authorize('viewAny', User::class);
-
         return view('admin.users');
     }
 
@@ -45,21 +45,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        if (!auth()->user()->can('view', $user)) {
-            return abort (403);
-        }
-
-        return response()->json($user);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -68,9 +53,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if (!auth()->user()->can('update', $user)) {
-            return abort (403);
-        }
+        $this->authorize('update', $user);
 
         return response()->json([
             'message' => 'Successfully updated user.',
@@ -98,5 +81,16 @@ class UsersController extends Controller
     public function all() {
         $this->authorize('viewAny', User::class);
         return response()->json(User::all());
+    }
+
+    public function suspend(Request $request, User $user) {
+        $this->authorize('suspend', $user);
+        // TODO: suspend user
+    }
+
+    public function pardon(User $user) {
+        $this->authorize('pardon', $user);
+        $user->suspensions()->where('expiration', '>=', Carbon::now())->delete();
+        return response(true);
     }
 }

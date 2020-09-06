@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { mdiChatProcessingOutline } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import ChatInner from './ChatInner';
@@ -33,6 +33,7 @@ export default function Chat() {
     const [show, setShow] = useState(false);
     const [users, setUsers] = useState([]);
     const [user, setUser] = useState();
+    const messagesContainer = useRef();
 
     async function getMessages() {
         setMessages([]);
@@ -72,7 +73,7 @@ export default function Chat() {
 
     return (
         <div className={classes.chatOuter}>
-            {show && <ChatInner error={error} getMessages={getMessages} messages={messages} users={users} user={user} setShow={setShow} />}
+            <ChatInner messagesContainer={messagesContainer} show={show} error={error} getMessages={getMessages} messages={messages} users={users} user={user} setShow={setShow} />
             <button className={classes.toggler} onClick={() => setShow(p => !p)}>
                 <Icon className={classes.icon} path={mdiChatProcessingOutline} />
             </button>

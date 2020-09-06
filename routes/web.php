@@ -24,6 +24,7 @@ Route::middleware('CheckLocale')->group(function() {
     Route::namespace('Admin')->prefix('admin')->middleware('IsOnline')->group(function() {
         Route::resource('/users', 'UsersController', ['except' => ['create', 'edit', 'show']]);
         Route::get('/', 'DashboardController@index')->name('admin.index');
+        Route::post('/users/{user}/pardon', 'UsersController@pardon');
         Route::get('/users/all', 'UsersController@all');
     });
 
