@@ -55,9 +55,14 @@ class UsersController extends Controller
     {
         $this->authorize('update', $user);
 
+        $user->update([
+            'username' => $request->username ?? $user->username,
+            'email'    => $request->email ?? $user->email,
+        ]);
+
         return response()->json([
-            'message' => 'Successfully updated user.',
-            'user'    => $user,
+            'message' => __('status_messages.success_update', ['resource' => __('status_messages.resource.user')]),
+            'users'   => User::all(),
             'type'    => 'success',
         ]);
     }

@@ -54,6 +54,8 @@ export default function Users() {
     const classes = styles();
 
     const [searchResults, setSearchResults] = useState([]);
+    const [errorContent, setErrorContent] = useState();
+    const [error, setError] = useState(false);
     const [users, setUsers] = useState([]);
     const searchInput = useRef();
 

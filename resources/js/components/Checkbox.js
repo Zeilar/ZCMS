@@ -18,7 +18,7 @@ export default function Checkbox() {
             height: '25px',
             width: '25px',
             '&.checked': {
-                'background-color': 'var(--color-main)',
+                'background': 'var(--color-main-gradient)',
                 'border-color': 'var(--color-main)',
             },
         },

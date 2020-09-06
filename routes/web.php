@@ -29,7 +29,7 @@ Route::middleware('CheckLocale')->group(function() {
     });
 
     Route::get('/language/{language}', function($language) {
-        if (!App\Language::all()->contains($language)) {
+        if (empty(App\Language::where('name', $language)->first())) {
             return abort(400);
         }
         session()->put('locale', $language);
