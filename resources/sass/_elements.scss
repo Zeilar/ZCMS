@@ -25,7 +25,21 @@
     font-size: 0.9rem;
     margin-right: 5px;
     color: white;
+    display: flex;
     padding: 8px;
+
+    span {
+        align-self: center;
+        margin-left: 2px;
+    }
+
+    &.delete {
+        background: rgb(200, 0 ,0);
+
+        &:hover {
+            background: red;
+        }
+    }
 
     &:hover{
         background: var(--dashboard-secondary),    

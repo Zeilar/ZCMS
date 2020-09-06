@@ -1,15 +1,28 @@
+import { mdiTrashCan, mdiSquareEditOutline } from '@mdi/js';
 import React, { useState, useRef, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
+import Icon from '@mdi/react';
 
 export default function User({ id, username, email, setUsers }) {
     const styles = createUseStyles({
         td: {
             'border-top': '1px solid rgb(225, 225, 225)',
-            padding: '15px',
-
+            padding: '8px 15px',
+            '&.actions': {
+                display: 'flex',
+            },
             '&.edit': {
                 border: 0,
             },
+        },
+        tr: {
+            '&:nth-child(odd)': {
+                background: 'rgb(250, 250, 250)',
+            },
+        },
+        icon: {
+            height: '20px',
+            width: '20px',
         },
     });
     const classes = styles();
@@ -41,12 +54,14 @@ export default function User({ id, username, email, setUsers }) {
                 <td className={classes.td}>{id}</td>
                 <td className={classes.td}>{username}</td>
                 <td className={classes.td}>{email}</td>
-                <td className={classes.td}>
+                <td className={`${classes.td} actions`}>
                     <button className="btnDashboard" onClick={edit}>
-                        Edit
+                        <Icon className={classes.icon} path={mdiSquareEditOutline} />
+                        <span>Edit</span>
                     </button>
-                    <button className="btnDashboard" onClick={remove}>
-                        Delete
+                    <button className="btnDashboard delete" onClick={remove}>
+                        <Icon className={classes.icon} path={mdiTrashCan} />
+                        <span>Delete</span>
                     </button>
                 </td>
             </tr>
@@ -62,7 +77,7 @@ export default function User({ id, username, email, setUsers }) {
                         <td className={`${classes.td} edit`}>
                             <input type="text" name="email" defaultValue={email} />
                         </td>
-                        <td className={`${classes.td} edit`}>
+                        <td className={`${classes.td} edit actions`}>
                             <button className="btnDashboard" onClick={() => setEditing(false)}>
                                 Cancel
                             </button>

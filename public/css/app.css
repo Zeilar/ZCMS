@@ -168,7 +168,21 @@ body {
   font-size: 0.9rem;
   margin-right: 5px;
   color: white;
+  display: flex;
   padding: 8px;
+}
+
+.btnDashboard span {
+  align-self: center;
+  margin-left: 2px;
+}
+
+.btnDashboard.delete {
+  background: #c80000;
+}
+
+.btnDashboard.delete:hover {
+  background: red;
 }
 
 .btnDashboard:hover {
