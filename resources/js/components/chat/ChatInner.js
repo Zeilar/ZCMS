@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss';
 import Chatmessage from './Chatmessage';
 import Icon from '@mdi/react';
 
-export default function ChatInner({ show, setShow, messages, getMessages, user, users, error, messagesContainer }) {
+export default function ChatInner({ show, setShow, messages, getMessages, user, users, error }) {
     const styles = createUseStyles({
         chatInner: {
             'box-shadow': '0 0 25px 0 rgba(0, 0, 0, 0.15)',
@@ -129,6 +129,7 @@ export default function ChatInner({ show, setShow, messages, getMessages, user, 
     const classes = styles();
         
     const [inputError, setInputError] = useState(false);
+    const messagesContainer = useRef();
     const input = useRef();
     const form = useRef();
 
