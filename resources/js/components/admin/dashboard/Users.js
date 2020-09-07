@@ -20,6 +20,7 @@ export default function Users() {
         table: {
             border: '1px solid rgb(225, 225, 225)',
             'border-collapse': 'collapse',
+            'table-layout': 'fixed',
             width: '100%',
         },
         toolbar: {
@@ -31,6 +32,9 @@ export default function Users() {
             'text-align': 'left',
             'font-weight': 500,
             padding: '15px',
+            '&.small': {
+                width: '50px',
+            }
         },
         header: {
             'margin-bottom': '15px',
@@ -130,10 +134,10 @@ export default function Users() {
                     <table className={classes.table}>
                         <thead className={classes.thead}>
                             <tr className={classes.tr}>
-                                <th className={classes.th}>
+                                <th className={`${classes.th} small`}>
                                     <input type="checkbox" />
                                 </th>
-                                <th className={classes.th}>ID</th>
+                                <th className={`${classes.th} small`}>ID</th>
                                 <th className={classes.th}>Username</th>
                                 <th className={classes.th}>Email</th>
                                 <th className={classes.th}>Actions</th>

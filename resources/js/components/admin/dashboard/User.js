@@ -94,7 +94,7 @@ export default function User({ id, username, email, setUsers, checkboxes }) {
             {
                 editing &&
                     <tr>
-                        <td></td>
+                        <td className={`${classes.td} edit`}></td>
                         <td className={`${classes.td} edit`}>
                             {id}
                         </td>
