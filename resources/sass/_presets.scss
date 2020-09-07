@@ -114,7 +114,13 @@ body {
 }
 
 input {
+    transition: box-shadow 0.05s linear;
+
     &[type=checkbox] {
         cursor: pointer;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 1px var(--color-link),
     }
 }

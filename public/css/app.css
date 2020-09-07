@@ -120,8 +120,16 @@ body {
   flex: 1;
 }
 
+input {
+  transition: box-shadow 0.05s linear;
+}
+
 input[type=checkbox] {
   cursor: pointer;
+}
+
+input:focus {
+  box-shadow: 0 0 0 1px var(--color-link);
 }
 
 .btnPrimary {
