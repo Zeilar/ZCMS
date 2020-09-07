@@ -50,7 +50,7 @@ export default function Users() {
             'margin-left': '10px',
             padding: '5px',
             '&:focus': {
-                'box-shadow': '0 0 0 2px var(--dashboard-primary)',
+                'box-shadow': '0 0 0 1px var(--dashboard-primary)',
             },
         },
     });
@@ -58,10 +58,10 @@ export default function Users() {
 
     const [searchResults, setSearchResults] = useState([]);
     const [errorContent, setErrorContent] = useState();
+    const [checkboxes, setCheckboxes] = useState([]);
     const [bulkAction, setBulkAction] = useState();
     const [error, setError] = useState(false);
     const [users, setUsers] = useState([]);
-    const checkboxes = useRef([]);
     const searchInput = useRef();
 
     async function getUsers() {
@@ -102,8 +102,13 @@ export default function Users() {
         }
     }
 
+    function checkAll() {
+        
+    }
+
     useEffect(() => {
         if (users.length <= 0) getUsers();
+        // console.log(checkboxes);
     }, [users, getUsers]);
 
     return (
@@ -135,7 +140,7 @@ export default function Users() {
                         <thead className={classes.thead}>
                             <tr className={classes.tr}>
                                 <th className={`${classes.th} small`}>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" onClick={checkAll} />
                                 </th>
                                 <th className={`${classes.th} small`}>ID</th>
                                 <th className={classes.th}>Username</th>
@@ -147,10 +152,10 @@ export default function Users() {
                             {
                                 searchInput?.current?.value !== ''
                                     ? searchResults.map(({ id, username, email }) => (
-                                        <User id={id} username={username} email={email} setUsers={setUsers} checkboxes={checkboxes} key={id} />
+                                        <User id={id} username={username} email={email} setUsers={setUsers} checkboxes={checkboxes} setCheckboxes={setCheckboxes} key={id} />
                                     ))
                                     : users.map(({ id, username, email }) => (
-                                        <User id={id} username={username} email={email} setUsers={setUsers} checkboxes={checkboxes} key={id} />
+                                        <User id={id} username={username} email={email} setUsers={setUsers} checkboxes={checkboxes} setCheckboxes={setCheckboxes} key={id} />
                                     ))
                             }
                         </tbody>

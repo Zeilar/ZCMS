@@ -4,7 +4,7 @@ import SubmitButton from '../../SubmitButton';
 import { createUseStyles } from 'react-jss';
 import Icon from '@mdi/react';
 
-export default function User({ id, username, email, setUsers, checkboxes }) {
+export default function User({ id, username, email, setUsers, checkboxes, setCheckboxes }) {
     const styles = createUseStyles({
         td: {
             'border-top': '1px solid rgb(225, 225, 225)',
@@ -29,7 +29,6 @@ export default function User({ id, username, email, setUsers, checkboxes }) {
     const classes = styles();
 
     const [editing, setEditing] = useState(false);
-    const [checked, setChecked] = useState(false);
     const inputUsername = useRef();
     const inputEmail = useRef();
 
@@ -56,26 +55,40 @@ export default function User({ id, username, email, setUsers, checkboxes }) {
     }
 
     function toggleCheckbox() {
-        const index = checkboxes.current.indexOf(id);
-        if (index !== -1) {
-            setChecked(false);
-            checkboxes.current.splice(index, 1);
+        const index = checkboxes.indexOf(id);
+        if (index === -1) {
+            console.log('doesnt exist, push');
+            setCheckboxes(p => [...checkboxes, id]);
+            // setChecked(true);
+            // checkboxes.push(id);
         } else {
-            setChecked(true);
-            checkboxes.current.push(id);
+            console.log('exists, remove');
+            setCheckboxes(p => {
+                let newArray = p;
+                console.log(newArray);
+                newArray = newArray.slice(0, 5);
+                console.log(newArray);
+                return newArray;
+            });
+            // setChecked(false);
+            // checkboxes.splice(index, 1);
         }
     }
 
     useEffect(() => {
-        const index = checkboxes.current.indexOf(id);
-        setChecked(index !== -1 ? true : false);
-    });
+        const index = checkboxes.indexOf(id);
+        // setChecked(index === -1 ? false : true);
+        if (index === -1) {
+            // setCheckboxes(p => [...checkboxes, id]);
+        }
+        // console.log(checkboxes);
+    }, [ checkboxes, setCheckboxes, id]);
 
     return (
         <>
             <tr className={classes.tr}>
                 <td className={classes.td}>
-                    <input type="checkbox" onChange={toggleCheckbox} checked={checked} />
+                    <input type="checkbox" onChange={toggleCheckbox} />
                 </td>
                 <td className={classes.td}>{id}</td>
                 <td className={classes.td}>{username}</td>
