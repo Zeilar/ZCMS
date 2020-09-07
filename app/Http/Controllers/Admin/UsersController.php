@@ -102,4 +102,17 @@ class UsersController extends Controller
         $user->suspensions()->where('expiration', '>=', Carbon::now())->update(['expiration' => Carbon::now()]);
         return response(true);
     }
+
+    public function bulkDelete(Request $request) {
+        $usersToDelete = [];
+        foreach (json_decode($request->users) as $user) {
+            $user = User::find($user);
+            if (empty($user)) return abort(400);
+            if (!auth()->user()->can('delete', $user)) return abort(403);
+            array_push($usersToDelete, $user);
+        }
+        foreach ($usersToDelete as $user) {
+            $user->delete();
+        }
+    }
 }
