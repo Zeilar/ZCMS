@@ -102,8 +102,7 @@ class UsersController extends Controller
     public function bulkDelete(Request $request) {
         $usersToDelete = [];
         foreach (json_decode($request->getContent()) as $user) {
-            $user = User::find($user);
-            if (empty($user)) return abort(404);
+            $user = User::findOrFail($user);
             if (!auth()->user()->can('delete', $user)) return abort(403);
             array_push($usersToDelete, $user);
         }

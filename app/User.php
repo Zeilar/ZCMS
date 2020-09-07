@@ -124,7 +124,7 @@ class User extends Authenticatable
         $this->chatmessages()->delete();
         $this->postLikes()->delete();
         $this->threads()->delete();
-        $this->roles()->delete();
+        $this->roles()->detach();
         $this->posts()->delete();
         return $this;
     }
