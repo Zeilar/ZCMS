@@ -59,21 +59,6 @@
   background: black;
 }
 
-:root ::-webkit-scrollbar {
-  width: 12px;
-}
-
-:root ::-webkit-scrollbar-track {
-  background: none;
-}
-
-:root ::-webkit-scrollbar-thumb {
-  background: var(--color-main);
-  border: 1px solid transparent;
-  background-clip: padding-box;
-  border-radius: 10px;
-}
-
 *,
 *::before,
 *::after {
@@ -271,7 +256,7 @@ a:hover {
 }
 
 #header {
-  transition: transform 0.35s 0.25s ease-in;
+  transition: transform 0.25s ease-in;
   padding: 0 var(--container-margin);
   background: var(--color-gray);
   transform: translateY(0);
