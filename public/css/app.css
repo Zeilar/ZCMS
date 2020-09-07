@@ -120,6 +120,10 @@ body {
   flex: 1;
 }
 
+input[type=checkbox] {
+  cursor: pointer;
+}
+
 .btnPrimary {
   transition: background 0.15s linear, color 0.15s linear;
   background: #007fff;

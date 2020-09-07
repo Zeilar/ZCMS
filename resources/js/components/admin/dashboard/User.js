@@ -4,7 +4,7 @@ import SubmitButton from '../../SubmitButton';
 import { createUseStyles } from 'react-jss';
 import Icon from '@mdi/react';
 
-export default function User({ id, username, email, setUsers, bulkSelects }) {
+export default function User({ id, username, email, setUsers, checkboxes }) {
     const styles = createUseStyles({
         td: {
             'border-top': '1px solid rgb(225, 225, 225)',
@@ -29,6 +29,7 @@ export default function User({ id, username, email, setUsers, bulkSelects }) {
     const classes = styles();
 
     const [editing, setEditing] = useState(false);
+    const [checked, setChecked] = useState(false);
     const inputUsername = useRef();
     const inputEmail = useRef();
 
@@ -54,11 +55,27 @@ export default function User({ id, username, email, setUsers, bulkSelects }) {
         setEditing(false);
     }
 
+    function toggleCheckbox() {
+        const index = checkboxes.current.indexOf(id);
+        if (index !== -1) {
+            setChecked(false);
+            checkboxes.current.splice(index, 1);
+        } else {
+            setChecked(true);
+            checkboxes.current.push(id);
+        }
+    }
+
+    useEffect(() => {
+        const index = checkboxes.current.indexOf(id);
+        setChecked(index !== -1 ? true : false);
+    });
+
     return (
         <>
             <tr className={classes.tr}>
                 <td className={classes.td}>
-                    <input type="checkbox" />
+                    <input type="checkbox" onChange={toggleCheckbox} checked={checked} />
                 </td>
                 <td className={classes.td}>{id}</td>
                 <td className={classes.td}>{username}</td>

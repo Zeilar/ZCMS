@@ -54,9 +54,10 @@ export default function Users() {
 
     const [searchResults, setSearchResults] = useState([]);
     const [errorContent, setErrorContent] = useState();
+    const [bulkAction, setBulkAction] = useState();
     const [error, setError] = useState(false);
     const [users, setUsers] = useState([]);
-    const bulkSelects = useRef();
+    const checkboxes = useRef([]);
     const searchInput = useRef();
 
     async function getUsers() {
@@ -77,10 +78,28 @@ export default function Users() {
         setSearchResults(results);
     }
 
+    async function bulk(e) {
+        const action = e.target.value;
+        if (action === 'edit') {
+            
+        }
+        if (action === 'delete') {
+            console.log('delete', checkboxes);
+            const args = {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(checkboxes.current),
+            };
+            await fetch('/admin/users/bulk/delete', args)
+                .then(response => response.json())
+                .then(users => setUsers(users));
+        }
+    }
+
     useEffect(() => {
         if (users.length <= 0) getUsers();
-
-        console.log(bulkSelects);
     }, [users, getUsers]);
 
     return (
@@ -93,6 +112,16 @@ export default function Users() {
                         <button className="btnDashboard">
                             Add user
                         </button>
+                        <div className={classes.bulk}>
+                            <select onChange={bulk}>
+                                <option>With selected</option>
+                                <option value="edit">Edit</option>
+                                <option value="delete">Delete</option>
+                            </select>
+                            <button className="btnDashboard">
+                                Apply
+                            </button>
+                        </div>
                         <div className={classes.search}>
                             <span>Search</span>
                             <input className={classes.searchInput} ref={searchInput} onInput={search} type="text" />
@@ -114,10 +143,10 @@ export default function Users() {
                             {
                                 searchInput?.current?.value !== ''
                                     ? searchResults.map(({ id, username, email }) => (
-                                        <User id={id} username={username} email={email} setUsers={setUsers} bulkSelects={bulkSelects} key={id} />
+                                        <User id={id} username={username} email={email} setUsers={setUsers} checkboxes={checkboxes} key={id} />
                                     ))
                                     : users.map(({ id, username, email }) => (
-                                        <User id={id} username={username} email={email} setUsers={setUsers} bulkSelects={bulkSelects} key={id} />
+                                        <User id={id} username={username} email={email} setUsers={setUsers} checkboxes={checkboxes} key={id} />
                                     ))
                             }
                         </tbody>

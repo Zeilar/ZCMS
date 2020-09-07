@@ -112,3 +112,9 @@ body {
     @include col;
     flex: 1;
 }
+
+input {
+    &[type=checkbox] {
+        cursor: pointer;
+    }
+}
