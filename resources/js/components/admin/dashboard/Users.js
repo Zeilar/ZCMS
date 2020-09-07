@@ -107,7 +107,7 @@ export default function Users() {
                         </thead>
                         <tbody className={classes.tbody}>
                             {
-                                searchResults.length > 0
+                                searchInput?.current?.value !== ''
                                     ? searchResults.map(({ id, username, email }) => (
                                         <User id={id} username={username} email={email} setUsers={setUsers} key={id} />
                                     ))
