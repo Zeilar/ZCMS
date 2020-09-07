@@ -594,6 +594,7 @@ a:hover {
 }
 
 #chat {
+  pointer-events: none;
   z-index: 100000000;
   position: fixed;
   bottom: 20px;

@@ -108,7 +108,7 @@ class User extends Authenticatable
             'message' => $message ?? null,
             'user_id' => $this->id,
         ]);
-        return $suspension;
+        return $this;
     }
     
     public function highestRole() {
@@ -118,5 +118,14 @@ class User extends Authenticatable
     public function higherClearance(User $user): bool {
         // Clearances are ordered from 1 and up, with the highest rank being 1
         return $this->hasRole('superadmin') || $this->highestRole()->clearance < $user->highestRole()->clearance;
+    }
+
+    public function deleteAll() {
+        $this->chatmessages()->delete();
+        $this->postLikes()->delete();
+        $this->threads()->delete();
+        $this->roles()->delete();
+        $this->posts()->delete();
+        return $this;
     }
 }

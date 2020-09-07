@@ -1,5 +1,5 @@
+import { mdiChatProcessingOutline, mdiClose } from '@mdi/js';
 import React, { useState, useEffect } from 'react';
-import { mdiChatProcessingOutline } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import ChatInner from './ChatInner';
 import Icon from '@mdi/react';
@@ -12,6 +12,7 @@ export default function Chat() {
         },
         toggler: {
             'justify-content': 'center',
+            'pointer-events': 'all',
             'align-items': 'center',
             'margin-left': 'auto',
             background: 'none',
@@ -74,7 +75,11 @@ export default function Chat() {
         <div className={classes.chatOuter}>
             <ChatInner show={show} error={error} getMessages={getMessages} messages={messages} users={users} user={user} setShow={setShow} />
             <button className={classes.toggler} onClick={() => setShow(p => !p)}>
-                <Icon className={classes.icon} path={mdiChatProcessingOutline} />
+                {
+                    show
+                        ? <Icon className={classes.icon} path={mdiClose} />
+                        : <Icon className={classes.icon} path={mdiChatProcessingOutline} />
+                }
             </button>
         </div>
     );

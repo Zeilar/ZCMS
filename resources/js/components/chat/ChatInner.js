@@ -8,18 +8,21 @@ export default function ChatInner({ show, setShow, messages, getMessages, user, 
     const styles = createUseStyles({
         chatInner: {
             'box-shadow': '0 0 25px 0 rgba(0, 0, 0, 0.15)',
+            transition: 'transform 0.15s linear',
             background: 'var(--chat-primary)',
             'flex-direction': 'column',
+            'pointer-events': 'all',
             'margin-bottom': '20px',
             'max-height': '500px',
             'max-width': '400px',
+            display: 'flex',
             height: '50vh',
             width: '20vw',
             '&.show': {
-                display: 'flex',
+                transform: 'translateY(0)', 
             },
             '&.hide': {
-                display: 'none',
+                transform: 'translateY(120%)', 
             },
         },
         toolbar: {

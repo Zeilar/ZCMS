@@ -31,7 +31,6 @@ export default function Users() {
             'text-align': 'left',
             'font-weight': 500,
             padding: '15px',
-            width: '25%',
         },
         header: {
             'margin-bottom': '15px',
@@ -57,6 +56,7 @@ export default function Users() {
     const [errorContent, setErrorContent] = useState();
     const [error, setError] = useState(false);
     const [users, setUsers] = useState([]);
+    const bulkSelects = useRef();
     const searchInput = useRef();
 
     async function getUsers() {
@@ -79,6 +79,8 @@ export default function Users() {
 
     useEffect(() => {
         if (users.length <= 0) getUsers();
+
+        console.log(bulkSelects);
     }, [users, getUsers]);
 
     return (
@@ -99,6 +101,9 @@ export default function Users() {
                     <table className={classes.table}>
                         <thead className={classes.thead}>
                             <tr className={classes.tr}>
+                                <th className={classes.th}>
+                                    <input type="checkbox" />
+                                </th>
                                 <th className={classes.th}>ID</th>
                                 <th className={classes.th}>Username</th>
                                 <th className={classes.th}>Email</th>
@@ -109,10 +114,10 @@ export default function Users() {
                             {
                                 searchInput?.current?.value !== ''
                                     ? searchResults.map(({ id, username, email }) => (
-                                        <User id={id} username={username} email={email} setUsers={setUsers} key={id} />
+                                        <User id={id} username={username} email={email} setUsers={setUsers} bulkSelects={bulkSelects} key={id} />
                                     ))
                                     : users.map(({ id, username, email }) => (
-                                        <User id={id} username={username} email={email} setUsers={setUsers} key={id} />
+                                        <User id={id} username={username} email={email} setUsers={setUsers} bulkSelects={bulkSelects} key={id} />
                                     ))
                             }
                         </tbody>

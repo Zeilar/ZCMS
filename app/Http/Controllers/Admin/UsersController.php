@@ -77,11 +77,7 @@ class UsersController extends Controller
     {
         $this->authorize('delete', $user);
 
-        $user->chatmessages()->delete();
-        $user->postLikes()->delete();
-        $user->threads()->delete();
-        $user->roles()->delete();
-        $user->posts()->delete();
+        $user->deleteAll();
         $user->delete();
 
         return response()->json(User::all());
@@ -107,12 +103,14 @@ class UsersController extends Controller
         $usersToDelete = [];
         foreach (json_decode($request->users) as $user) {
             $user = User::find($user);
-            if (empty($user)) return abort(400);
+            if (empty($user)) return abort(404);
             if (!auth()->user()->can('delete', $user)) return abort(403);
             array_push($usersToDelete, $user);
         }
         foreach ($usersToDelete as $user) {
+            $user->deleteAll();
             $user->delete();
         }
+        return response()->json(User::all());
     }
 }

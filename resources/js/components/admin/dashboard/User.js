@@ -4,7 +4,7 @@ import SubmitButton from '../../SubmitButton';
 import { createUseStyles } from 'react-jss';
 import Icon from '@mdi/react';
 
-export default function User({ id, username, email, setUsers }) {
+export default function User({ id, username, email, setUsers, bulkSelects }) {
     const styles = createUseStyles({
         td: {
             'border-top': '1px solid rgb(225, 225, 225)',
@@ -57,6 +57,9 @@ export default function User({ id, username, email, setUsers }) {
     return (
         <>
             <tr className={classes.tr}>
+                <td className={classes.td}>
+                    <input type="checkbox" />
+                </td>
                 <td className={classes.td}>{id}</td>
                 <td className={classes.td}>{username}</td>
                 <td className={classes.td}>{email}</td>
@@ -74,6 +77,7 @@ export default function User({ id, username, email, setUsers }) {
             {
                 editing &&
                     <tr>
+                        <td></td>
                         <td className={`${classes.td} edit`}>
                             {id}
                         </td>
