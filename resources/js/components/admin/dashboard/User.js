@@ -1,5 +1,6 @@
 import { mdiTrashCan, mdiSquareEditOutline } from '@mdi/js';
 import React, { useState, useRef, useEffect } from 'react';
+import SubmitButton from '../../SubmitButton';
 import { createUseStyles } from 'react-jss';
 import Icon from '@mdi/react';
 
@@ -83,11 +84,11 @@ export default function User({ id, username, email, setUsers }) {
                             <input type="email" ref={inputEmail} defaultValue={email} />
                         </td>
                         <td className={`${classes.td} edit actions`}>
+                            <SubmitButton className="btnDashboard" onClick={save}>
+                                Save
+                            </SubmitButton>
                             <button className="btnDashboard" onClick={() => setEditing(false)}>
                                 Cancel
-                            </button>
-                            <button className="btnDashboard" onClick={save}>
-                                Save
                             </button>
                         </td>
                     </tr>
