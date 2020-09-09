@@ -98,7 +98,8 @@ export default function Users() {
             };
             await fetch('/admin/users/bulk/delete', args)
                 .then(response => response.json())
-                .then(users => setUsers(users));
+                .then(users => setUsers(users))
+                .catch(error => alert(error));
         }
     }
 
@@ -108,7 +109,7 @@ export default function Users() {
 
     useEffect(() => {
         if (users.length <= 0) getUsers();
-        // console.log(checkboxes);
+        console.log(checkboxes);
     }, [users, getUsers]);
 
     return (

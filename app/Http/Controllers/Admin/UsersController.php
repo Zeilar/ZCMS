@@ -107,8 +107,7 @@ class UsersController extends Controller
             array_push($usersToDelete, $user);
         }
         foreach ($usersToDelete as $user) {
-            $user->deleteAll();
-            $user->delete();
+            $user->deleteAll()->delete();
         }
         return response()->json(User::all());
     }

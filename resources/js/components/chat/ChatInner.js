@@ -91,6 +91,9 @@ export default function ChatInner({ show, setShow, messages, getMessages, user, 
             '&:focus ~ .inputLine': {
                 width: 'calc(100% - 30px)',
             },
+            '&:focus': {
+                'box-shadow': 'none',
+            },
         },
         inputLine: {
             background: 'var(--color-main-gradient)',

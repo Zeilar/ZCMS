@@ -58,30 +58,20 @@ export default function User({ id, username, email, setUsers, checkboxes, setChe
         const index = checkboxes.indexOf(id);
         if (index === -1) {
             console.log('doesnt exist, push');
-            setCheckboxes(p => [...checkboxes, id]);
-            // setChecked(true);
-            // checkboxes.push(id);
+            setCheckboxes(p => [...p, id]);
         } else {
-            console.log('exists, remove');
-            setCheckboxes(p => {
-                let newArray = p;
-                console.log(newArray);
-                newArray = newArray.slice(0, 5);
-                console.log(newArray);
-                return newArray;
-            });
-            // setChecked(false);
-            // checkboxes.splice(index, 1);
+            console.log('exists, remove', index, checkboxes[index]);
+
+            setCheckboxes(p => [...p.splice(index, 1)]);
         }
     }
 
     useEffect(() => {
-        const index = checkboxes.indexOf(id);
+        // const index = checkboxes.indexOf(id);
         // setChecked(index === -1 ? false : true);
-        if (index === -1) {
-            // setCheckboxes(p => [...checkboxes, id]);
-        }
-        // console.log(checkboxes);
+        // if (index === -1) {
+        //     setCheckboxes(p => [...checkboxes, id]);
+        // }
     }, [ checkboxes, setCheckboxes, id]);
 
     return (
