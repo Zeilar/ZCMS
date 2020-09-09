@@ -63,6 +63,7 @@ export default function Users() {
     const [error, setError] = useState(false);
     const [users, setUsers] = useState([]);
     const searchInput = useRef();
+    const bulkSelect = useRef();
 
     async function getUsers() {
         await fetch('/admin/users/all')
@@ -82,8 +83,8 @@ export default function Users() {
         setSearchResults(results);
     }
 
-    async function bulk(e) {
-        const action = e.target.value;
+    async function bulk() {
+        const action = bulkSelect.current.value;
         if (action === 'edit') {
             
         }
@@ -107,10 +108,7 @@ export default function Users() {
 
         if (!checked) return setCheckboxes([]);
 
-        let newArray = [];
-        users.forEach(user => {
-            newArray.push(user.id);
-        });
+        const newArray = users.map(user => user.id);
         setCheckboxes(newArray);
     }
 
@@ -129,12 +127,12 @@ export default function Users() {
                             Add user
                         </button>
                         <div className={classes.bulk}>
-                            <select onChange={bulk}>
+                            <select ref={bulkSelect}>
                                 <option>With selected</option>
                                 <option value="edit">Edit</option>
                                 <option value="delete">Delete</option>
                             </select>
-                            <button className="btnDashboard">
+                            <button className="btnDashboard" onClick={bulk}>
                                 Apply
                             </button>
                         </div>
