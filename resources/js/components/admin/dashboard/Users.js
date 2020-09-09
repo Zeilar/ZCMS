@@ -105,11 +105,8 @@ export default function Users() {
 
     function checkAll(e) {
         const checked = e.target.checked;
-
         if (!checked) return setCheckboxes([]);
-
-        const newArray = users.map(user => user.id);
-        setCheckboxes(newArray);
+        setCheckboxes(users.map(user => user.id));
     }
 
     useEffect(() => {
