@@ -147,6 +147,9 @@ export default function Users() {
                                 <div className={classes.fieldRow}>
                                     <input type="password" name="password_confirmation" autoComplete="off" required />
                                 </div>
+                                <div className={classes.fieldRow}>
+                                    <input type="text" name="roles" autoComplete="off" required />
+                                </div>
                                 <button className="btnDashboard" type="submit">
                                     Create
                                 </button>
