@@ -88,13 +88,12 @@ export default function Users() {
             
         }
         if (action === 'delete') {
-            console.log('delete', checkboxes);
             const args = {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(checkboxes.current),
+                body: JSON.stringify(checkboxes),
             };
             await fetch('/admin/users/bulk/delete', args)
                 .then(response => response.json())
@@ -103,13 +102,20 @@ export default function Users() {
         }
     }
 
-    function checkAll() {
-        
+    function checkAll(e) {
+        const checked = e.target.checked;
+
+        if (!checked) return setCheckboxes([]);
+
+        let newArray = [];
+        users.forEach(user => {
+            newArray.push(user.id);
+        });
+        setCheckboxes(newArray);
     }
 
     useEffect(() => {
         if (users.length <= 0) getUsers();
-        console.log(checkboxes);
     }, [users, getUsers]);
 
     return (

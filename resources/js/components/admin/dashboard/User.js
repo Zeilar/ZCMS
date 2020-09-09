@@ -29,6 +29,7 @@ export default function User({ id, username, email, setUsers, checkboxes, setChe
     const classes = styles();
 
     const [editing, setEditing] = useState(false);
+    const [checked, setChecked] = useState(false);
     const inputUsername = useRef();
     const inputEmail = useRef();
 
@@ -57,28 +58,32 @@ export default function User({ id, username, email, setUsers, checkboxes, setChe
     function toggleCheckbox() {
         const index = checkboxes.indexOf(id);
         if (index === -1) {
-            console.log('doesnt exist, push');
             setCheckboxes(p => [...p, id]);
+            setChecked(true);
         } else {
-            console.log('exists, remove', index, checkboxes[index]);
-
-            setCheckboxes(p => [...p.splice(index, 1)]);
+            setCheckboxes(p => {
+                const newArray = p;
+                newArray.splice(index, 1);
+                return newArray;
+            });
+            setChecked(false);
         }
     }
 
     useEffect(() => {
-        // const index = checkboxes.indexOf(id);
-        // setChecked(index === -1 ? false : true);
-        // if (index === -1) {
-        //     setCheckboxes(p => [...checkboxes, id]);
-        // }
-    }, [ checkboxes, setCheckboxes, id]);
+        const index = checkboxes.indexOf(id);
+        if (index === -1) {
+            setChecked(false);
+        } else {
+            setChecked(true);
+        }
+    }, [checkboxes, setCheckboxes, id]);
 
     return (
         <>
             <tr className={classes.tr}>
                 <td className={classes.td}>
-                    <input type="checkbox" onChange={toggleCheckbox} />
+                    <input type="checkbox" onChange={toggleCheckbox} checked={checked} />
                 </td>
                 <td className={classes.td}>{id}</td>
                 <td className={classes.td}>{username}</td>
