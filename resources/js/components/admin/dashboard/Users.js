@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Tags from "@yaireo/tagify/dist/react.tagify";
 import { createUseStyles } from 'react-jss';
+import "@yaireo/tagify/dist/tagify.css";
 import Sidebar from './Sidebar';
 import User from './User';
 
@@ -119,6 +121,12 @@ export default function Users() {
         setCheckboxes(users.map(user => user.id));
     }
 
+    function roleInput(e) {
+        const values = JSON.parse(e.target.value);
+        const roles = values.map(role => role.value);
+        console.log(roles);
+    }
+
     useEffect(() => {
         if (users.length <= 0) getUsers();
     }, [users, getUsers]);
@@ -148,8 +156,9 @@ export default function Users() {
                                     <input type="password" name="password_confirmation" autoComplete="off" required />
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <input type="text" name="roles" autoComplete="off" required />
+                                    <Tags name="roles" value="user" onChange={roleInput} />
                                 </div>
+                                Tags
                                 <button className="btnDashboard" type="submit">
                                     Create
                                 </button>

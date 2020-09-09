@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \Carbon\Carbon;
+use App\Role;
 use App\User;
 
 class UsersController extends Controller
@@ -31,6 +32,13 @@ class UsersController extends Controller
     {
         $this->authorize('create', User::class);
 
+        $roles = [];
+        foreach (JSON_decode($request->roles) as $role) {
+            $role = Role::where('name', $role->value)->first();
+            if (empty($role)) return abort(400);
+            array_push($roles, $role->id);
+        }
+
         $request->validate([
             'username'              => 'required|string|unique:users|min:5|max:15',
             'email'                 => 'required|string|email|unique:users',
@@ -43,6 +51,7 @@ class UsersController extends Controller
             'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        $user->roles()->sync($roles);
 
         return redirect()->back();
     }
