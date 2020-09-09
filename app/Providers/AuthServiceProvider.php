@@ -16,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Chatmessage' => \App\Policies\ChatmessagePolicy::class,
         'App\User' => \App\Policies\UserPolicy::class,
         'App\Post' => \App\Policies\PostPolicy::class,
+        'App\Role' => \App\Policies\RolePolicy::class,
     ];
 
     /**

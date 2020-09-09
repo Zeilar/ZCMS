@@ -51,7 +51,7 @@ class UsersController extends Controller
             'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        $user->roles()->sync($roles);
+        if (count($roles) > 0) $user->roles()->sync($roles);
 
         return redirect()->back();
     }
@@ -67,10 +67,19 @@ class UsersController extends Controller
     {
         $this->authorize('update', $user);
 
+        $roles = [];
+        foreach (JSON_decode($request->roles) as $role) {
+            $role = Role::where('name', $role->value)->first();
+            if (!auth()->user()->can('giveRole', $role)) return abort(403);
+            if (empty($role)) return abort(400);
+            array_push($roles, $role->id);
+        }
+
         $user->update([
             'username' => $request->username ?? $user->username,
             'email'    => $request->email ?? $user->email,
         ]);
+        if (count($roles) > 0) $user->roles()->sync($roles);
 
         return response()->json([
             'message' => __('status_messages.success_update', ['resource' => __('status_messages.resource.user')]),
