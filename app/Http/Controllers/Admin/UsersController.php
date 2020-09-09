@@ -30,6 +30,13 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', User::class);
+
+        $request->validate([
+            'username'              => 'required|string|unique:users|min:5|max:15',
+            'email'                 => 'required|string|email|unique:users',
+            'password'              => 'required|string|confirmed|min:5|max:30',
+            'password_confirmation' => 'required|string|min:5|max:30',
+        ]);
         
         $user = User::create([
             'username' => $request->username,
@@ -37,11 +44,7 @@ class UsersController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return response()->json([
-            'message' => 'Successfully created user.',
-            'user'    => $user,
-            'type'    => 'success',
-        ]);
+        return redirect()->back();
     }
 
     /**
