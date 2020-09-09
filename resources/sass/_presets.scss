@@ -1,25 +1,24 @@
 :root {
-    --color-main-gradient: linear-gradient(
-        45deg, 
-        rgb(0, 255, 236) 0%,
-        rgb(0, 255, 211) 20%,
-        rgb(0, 255, 186) 50%,
-        rgb(0, 255, 161) 75%,
-        rgb(0, 255, 136) 100%
-    );
-    --color-neutral: rgb(150, 150, 150);
-    --color-main: rgb(0, 255, 186);
+    --border-secondary: rgb(150, 150, 150);
     --color-gray: rgb(20, 20, 20);
     --container-margin: 25vw;
 
     &[data-theme=dark] {
-        --border-secondary: var(--color-main);
+        --color-main-gradient: linear-gradient(
+            45deg, 
+            rgb(0, 255, 236) 0%,
+            rgb(0, 255, 211) 20%,
+            rgb(0, 255, 186) 50%,
+            rgb(0, 255, 161) 75%,
+            rgb(0, 255, 136) 100%
+        );
         --text-secondary: rgb(245, 245, 245);
         --border-primary: rgb(100, 100, 100);
         --color-secondary: rgb(30, 30, 30);
         --color-primary: rgb(50, 50, 50);
         --color-third: rgb(70, 70, 70);
         --color-link: rgb(0, 225, 250);
+        --color-main: rgb(0, 255, 186);
         --body-bg: rgb(15, 15, 15);
         --text-primary: white;
 
@@ -30,12 +29,20 @@
     }
 
     &[data-theme=light] {
-        --border-secondary: rgb(150, 150, 150);
+        --color-main-gradient: linear-gradient(
+            45deg, 
+            rgb(0, 215, 180) 0%,
+            rgb(0, 215, 165) 20%,
+            rgb(0, 215, 140) 50%,
+            rgb(0, 215, 115) 75%,
+            rgb(0, 215, 90) 100%
+        );
         --color-secondary: rgb(245, 245, 245);
         --border-primary: rgb(200, 200, 200);
         --text-secondary: rgb(50, 50, 50);
         --color-third: rgb(235, 235, 235);
         --color-link: rgb(0, 127, 255);
+        --color-main: rgb(0, 215, 140);
         --body-bg: rgb(250, 250, 250);
         --color-primary: white;
         --text-primary: black;

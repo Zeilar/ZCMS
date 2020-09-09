@@ -1,5 +1,5 @@
 #header {
-    transition: transform 0.25s ease-in;
+    transition: all 0.25s ease-in, background 0.25s ease-in;
     padding: 0 var(--container-margin);
     background: var(--color-gray);
     transform: translateY(0);
@@ -9,24 +9,36 @@
     top: 0;
 
     &.hide {
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
         transition-timing-function: ease-out;
-        transform: translateY(-140px);
+        transform: translateY(-130px);
+        background: var(--body-bg);
+
+        #navbar {
+            margin: 25px;
+
+            .navlist .navitem .navlink {
+                color: var(--text-secondary);
+            }
+        }
     }
 
     #hero {
+        flex-direction: column;
+        @include centerFlex;
         text-align: center;
-        margin: 50px 25px;
-        overflow: hidden;
+        margin: 40px 25px;
         margin-bottom: 0;
+        overflow: hidden;
         height: 90px;
 
         .siteHeader {
             letter-spacing: 2px;
-            padding: 10px 20px;
+            padding: 10px 0;
 
             .siteHeaderLink {
                 background: var(--color-main-gradient);
-                color: var(--color-main); // fallback
+                color: var(--color-main);
                 text-decoration: none; 
                 @include knockout;
                 line-height: 0.7;
@@ -41,7 +53,7 @@
     }
 
     #navbar {
-        margin: 50px 25px;
+        margin: 40px 25px;
         @include row;
 
         .navlist {
@@ -61,7 +73,7 @@
                     padding: 10px;
 
                     &::after {
-                        background: var(--color-main);
+                        background: var(--color-link);
                         transition: width 0.25s ease-out;
                         border-radius: 10px;
                         position: absolute;
@@ -73,7 +85,7 @@
                     }
 
                     &:hover, &.active {
-                        color: var(--color-main);
+                        color: var(--color-link);
 
                         &::after {
                             width: 100%;
