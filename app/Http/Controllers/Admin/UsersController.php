@@ -68,11 +68,13 @@ class UsersController extends Controller
         $this->authorize('update', $user);
 
         $roles = [];
-        foreach (JSON_decode($request->roles) as $role) {
-            $role = Role::where('name', $role->value)->first();
-            if (!auth()->user()->can('giveRole', $role)) return abort(403);
-            if (empty($role)) return abort(400);
-            array_push($roles, $role->id);
+        if ($request->roles) {
+            foreach (JSON_decode($request->roles) as $role) {
+                $role = Role::where('name', $role->value)->first();
+                if (!auth()->user()->can('giveRole', $role)) return abort(403);
+                if (empty($role)) return abort(400);
+                array_push($roles, $role->id);
+            }
         }
 
         $user->update([
