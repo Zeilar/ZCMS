@@ -1,10 +1,11 @@
 import { mdiTrashCan, mdiSquareEditOutline, mdiCheck } from '@mdi/js';
 import React, { useState, useRef, useEffect } from 'react';
+import Tags from "@yaireo/tagify/dist/react.tagify";
 import SubmitButton from '../../SubmitButton';
 import { createUseStyles } from 'react-jss';
 import Icon from '@mdi/react';
 
-export default function User({ id, username, email, setUsers, checkboxes, setCheckboxes }) {
+export default function User({ id, username, email, roles, setUsers, checkboxes, setCheckboxes }) {
     const styles = createUseStyles({
         td: {
             'border-top': '1px solid rgb(225, 225, 225)',
@@ -36,6 +37,16 @@ export default function User({ id, username, email, setUsers, checkboxes, setChe
         input: {
             width: '100%',
         },
+        role: {
+            'text-transform': 'capitalize',
+            'margin-right': '5px',
+            '&::after': {
+                content: '","',
+            },
+            '&:last-child::after': {
+                content: 'none',
+            },
+        },
     });
     const classes = styles();
 
@@ -43,6 +54,7 @@ export default function User({ id, username, email, setUsers, checkboxes, setChe
     const [checked, setChecked] = useState(false);
     const inputUsername = useRef();
     const inputEmail = useRef();
+    const inputRoles = useRef();
 
     async function remove() {
         const answer = confirm(`Are you sure you want to delete user ${username}?`);
@@ -56,7 +68,8 @@ export default function User({ id, username, email, setUsers, checkboxes, setChe
     }
 
     async function save() {
-        await fetch(`/admin/users/${id}?username=${inputUsername.current.value}&email=${inputEmail.current.value}`, { method: 'PATCH' })
+        const roles = JSON.stringify(inputRoles.current.value);
+        await fetch(`/admin/users/${id}?username=${inputUsername.current.value}&email=${inputEmail.current.value}&roles=${roles}`, { method: 'PATCH' })
             .then(response => response.json())
             .then(({ message, type, users }) => {
                 setUsers(users);
@@ -83,11 +96,7 @@ export default function User({ id, username, email, setUsers, checkboxes, setChe
 
     useEffect(() => {
         const index = checkboxes.indexOf(id);
-        if (index === -1) {
-            setChecked(false);
-        } else {
-            setChecked(true);
-        }
+        setChecked(index === -1 ? false : true);
     }, [checkboxes, setCheckboxes, id]);
 
     return (
@@ -99,6 +108,15 @@ export default function User({ id, username, email, setUsers, checkboxes, setChe
                 <td className={classes.td}>{id}</td>
                 <td className={classes.td}>{username}</td>
                 <td className={classes.td}>{email}</td>
+                <td className={classes.td}>
+                    {
+                        roles.map(role => (
+                            <span className={classes.role} key={role.id}>
+                                {role.name}
+                            </span>
+                        ))
+                    }
+                </td>
                 <td className={`${classes.td} actions`}>
                     {
                         editing
@@ -136,6 +154,9 @@ export default function User({ id, username, email, setUsers, checkboxes, setChe
                         </td>
                         <td className={`${classes.td} edit`}>
                             <input className={classes.input} type="email" ref={inputEmail} defaultValue={email} />
+                        </td>
+                        <td className={`${classes.td} edit`}>
+                            <Tags tagifyRef={inputRoles} value={roles.map(role => role.name)} />
                         </td>
                         <td className={`${classes.td} edit`}></td>
                     </tr>

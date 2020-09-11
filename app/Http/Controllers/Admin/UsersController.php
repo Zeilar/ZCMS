@@ -85,7 +85,7 @@ class UsersController extends Controller
 
         return response()->json([
             'message' => __('status_messages.success_update', ['resource' => __('status_messages.resource.user')]),
-            'users'   => User::all(),
+            'users'   => User::with('roles')->get(),
             'type'    => 'success',
         ]);
     }
@@ -103,12 +103,12 @@ class UsersController extends Controller
         $user->deleteAll();
         $user->delete();
 
-        return response()->json(User::all());
+        return response()->json(User::with('roles')->get());
     }
 
     public function all() {
         $this->authorize('viewAny', User::class);
-        return response()->json(User::all());
+        return response()->json(User::with('roles')->get());
     }
 
     public function suspend(Request $request, User $user) {
@@ -132,6 +132,6 @@ class UsersController extends Controller
         foreach ($usersToDelete as $user) {
             $user->deleteAll()->delete();
         }
-        return response()->json(User::all());
+        return response()->json(User::with('roles')->get());
     }
 }

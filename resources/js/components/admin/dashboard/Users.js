@@ -82,6 +82,9 @@ export default function Users() {
         rolesInputWrapper: {
             padding: '5px',
         },
+        addUserSubmit: {
+            margin: '10px',
+        },
     });
     const classes = styles();
 
@@ -197,7 +200,7 @@ export default function Users() {
                                         </div>
                                     </fieldset>
                                 </div>
-                                <SubmitButton className="btnDashboard" onClick={() => addUser?.current?.submit()}>
+                                <SubmitButton className={`${classes.addUserSubmit} btnDashboard`} onClick={() => addUser?.current?.submit()}>
                                     <span>Create</span>
                                 </SubmitButton>
                             </form>
@@ -227,17 +230,18 @@ export default function Users() {
                                 <th className={`${classes.th} small`}>ID</th>
                                 <th className={classes.th}>Username</th>
                                 <th className={classes.th}>Email</th>
+                                <th className={classes.th}>Roles</th>
                                 <th className={classes.th}>Actions</th>
                             </tr>
                         </thead>
                         <tbody className={classes.tbody}>
                             {
                                 searchInput?.current?.value !== ''
-                                    ? searchResults.map(({ id, username, email }) => (
-                                        <User id={id} username={username} email={email} setUsers={setUsers} checkboxes={checkboxes} setCheckboxes={setCheckboxes} key={id} />
+                                    ? searchResults.map(({ id, username, email, roles }) => (
+                                        <User id={id} username={username} email={email} roles={roles} setUsers={setUsers} checkboxes={checkboxes} setCheckboxes={setCheckboxes} key={id} />
                                     ))
-                                    : users.map(({ id, username, email }) => (
-                                        <User id={id} username={username} email={email} setUsers={setUsers} checkboxes={checkboxes} setCheckboxes={setCheckboxes} key={id} />
+                                    : users.map(({ id, username, email, roles }) => (
+                                        <User id={id} username={username} email={email} roles={roles} setUsers={setUsers} checkboxes={checkboxes} setCheckboxes={setCheckboxes} key={id} />
                                     ))
                             }
                         </tbody>

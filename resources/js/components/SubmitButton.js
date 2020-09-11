@@ -30,7 +30,6 @@ export default function SubmitButton({ onClick, className, children, spin = true
     function startSpin() {
         if (spin) setSpinning(true);
         if (onClick != null) onClick();
-        console.log('spin');
     }
 
     return (
