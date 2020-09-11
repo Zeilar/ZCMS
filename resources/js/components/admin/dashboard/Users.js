@@ -109,7 +109,6 @@ export default function Users() {
             const roleMatches = [];
             user.roles.forEach(role => {
                 if (role.name.includes(searchInput.current.value)) {
-                    console.log('role matches');
                     roleMatches.push(user);
                 }
             });
