@@ -110,7 +110,7 @@ export default function User({ id, username, email, roles, setUsers, checkboxes,
                 <td className={classes.td}>
                     {
                         roles.map(role => (
-                            <span className={classes.role} key={role.id}>
+                            <span className={classes.role} key={Math.random()}>
                                 {role.name}
                             </span>
                         ))

@@ -106,6 +106,17 @@ export default function Users() {
 
     function search() {
         const results = users.filter(user => {
+            const roleMatches = [];
+            user.roles.forEach(role => {
+                console.log(role.name);
+                console.log(searchInput.current.value);
+                console.log('-');
+                if (role.name.includes(searchInput.current.value)) {
+                    console.log('role matches');
+                    roleMatches.push(user);
+                }
+            });
+            if (roleMatches.length > 0) return roleMatches;
             for (const property in user) {
                 if (property === 'created_at' || property === 'updated_at') break;
                 if (String(user[property]).includes(searchInput.current.value)) {
