@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Tags from "@yaireo/tagify/dist/react.tagify";
+import SubmitButton from '../../SubmitButton';
 import { createUseStyles } from 'react-jss';
 import "@yaireo/tagify/dist/tagify.css";
 import Sidebar from './Sidebar';
@@ -65,6 +66,22 @@ export default function Users() {
             'user-select': 'none',
             padding: '8px',
         },
+        addUser: {
+            border: '1px solid var(--border-primary)',
+            'margin-top': '5px',
+        },
+        addUserInput: {
+            margin: '5px',
+        },
+        formLegend: {
+            'margin-left': '5px',
+        },
+        formFieldset: {
+            margin: '10px',
+        },
+        rolesInputWrapper: {
+            padding: '5px',
+        },
     });
     const classes = styles();
 
@@ -76,6 +93,7 @@ export default function Users() {
     const [users, setUsers] = useState([]);
     const searchInput = useRef();
     const bulkSelect = useRef();
+    const addUser = useRef();
 
     async function getUsers() {
         await fetch('/admin/users/all')
@@ -121,12 +139,6 @@ export default function Users() {
         setCheckboxes(users.map(user => user.id));
     }
 
-    function roleInput(e) {
-        const values = JSON.parse(e.target.value);
-        const roles = values.map(role => role.value);
-        console.log(roles);
-    }
-
     useEffect(() => {
         if (users.length <= 0) getUsers();
     }, [users, getUsers]);
@@ -142,26 +154,52 @@ export default function Users() {
                     </button>
                     {
                         showUserForm &&
-                            <form className={classes.addUser} action="/admin/users" method="POST">
+                            <form className={classes.addUser} action="/admin/users" method="POST" ref={addUser}>
                                 <div className={classes.fieldRow}>
-                                    <input type="text" name="username" autoComplete="off" required />
+                                    <fieldset className={classes.formFieldset}>
+                                        <legend className={classes.formLegend}>
+                                            Username
+                                        </legend>
+                                        <input className={classes.addUserInput} type="text" name="username" autoComplete="off" required />
+                                    </fieldset>
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <input type="email" name="email" autoComplete="off" required />
+                                    <fieldset className={classes.formFieldset}>
+                                        <legend className={classes.formLegend}>
+                                            Email
+                                        </legend>
+                                        <input className={classes.addUserInput} type="email" name="email" autoComplete="off" required />
+                                    </fieldset>
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <input type="password" name="password" autoComplete="off" required />
+                                    <fieldset className={classes.formFieldset}>
+                                        <legend className={classes.formLegend}>
+                                            Password
+                                        </legend>
+                                        <input className={classes.addUserInput} type="password" name="password" autoComplete="off" required />
+                                    </fieldset>
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <input type="password" name="password_confirmation" autoComplete="off" required />
+                                    <fieldset className={classes.formFieldset}>
+                                        <legend className={classes.formLegend}>
+                                            Confirm Password
+                                        </legend>
+                                        <input className={classes.addUserInput} type="password" name="password_confirmation" autoComplete="off" required />
+                                    </fieldset>
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <Tags name="roles" value="user" onChange={roleInput} />
+                                    <fieldset className={classes.formFieldset}>
+                                        <legend className={classes.formLegend}>
+                                            Roles
+                                        </legend>
+                                        <div className={classes.rolesInputWrapper}>
+                                            <Tags name="roles" value="user" />
+                                        </div>
+                                    </fieldset>
                                 </div>
-                                Tags
-                                <button className="btnDashboard" type="submit">
-                                    Create
-                                </button>
+                                <SubmitButton className="btnDashboard" onClick={() => addUser?.current?.submit()}>
+                                    <span>Create</span>
+                                </SubmitButton>
                             </form>
                     }
                     <div className={classes.toolbar}>

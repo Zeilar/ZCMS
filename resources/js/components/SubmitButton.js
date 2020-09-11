@@ -29,11 +29,12 @@ export default function SubmitButton({ onClick, className, children, spin = true
 
     function startSpin() {
         if (spin) setSpinning(true);
-        onClick();
+        if (onClick != null) onClick();
+        console.log('spin');
     }
 
     return (
-        <button className={`${className} ${classes.button}`} onClick={startSpin} disabled={spinning}>
+        <button className={`${className} ${classes.button}`} onClick={startSpin} disabled={spinning} type="submit">
             {spinning && spin && <div className={`${classes.filter} centerAbsolute`}></div>}
             {children}
             {spinning && spin && <Icon className={`${classes.icon} centerAbsolute`} path={mdiLoading} spin={1} />}

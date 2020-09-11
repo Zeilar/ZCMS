@@ -40,10 +40,10 @@ class UsersController extends Controller
         }
 
         $request->validate([
-            'username'              => 'required|string|unique:users|min:5|max:15',
+            'username'              => 'required|string|unique:users',
             'email'                 => 'required|string|email|unique:users',
-            'password'              => 'required|string|confirmed|min:5|max:30',
-            'password_confirmation' => 'required|string|min:5|max:30',
+            'password'              => 'required|string|confirmed',
+            'password_confirmation' => 'required|string',
         ]);
         
         $user = User::create([
