@@ -114,6 +114,7 @@ export default function Users() {
                 }
             });
             if (roleMatches.length > 0) return roleMatches;
+            
             for (const property in user) {
                 if (property === 'created_at' || property === 'updated_at') break;
                 if (String(user[property]).includes(searchInput.current.value)) {
