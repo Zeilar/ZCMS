@@ -38,7 +38,6 @@ export default function User({ id, username, email, roles, setUsers, checkboxes,
             width: '100%',
         },
         role: {
-            'text-transform': 'capitalize',
             'margin-right': '5px',
             '&::after': {
                 content: '","',
