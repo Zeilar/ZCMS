@@ -50,6 +50,15 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                 content: 'none',
             },
         },
+        suspendInputs: {
+            'margin-right': '10px',
+        },
+        suspendInput: {
+            'margin-top': '5px',
+        },
+        suspendInputText: {
+            
+        },
     });
     const classes = styles();
 
@@ -221,10 +230,14 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                 suspending &&
                     <tr>
                         <td className={`${classes.td} suspend`}>
-                            <span>Amount of days</span>
-                            <input ref={inputDays} type="number" min={1} />
-                            <span>Reason</span>
-                            <input ref={inputMessage} type="text" />
+                            <div className={classes.suspendInputs}>
+                                <span className={classes.suspendInputText}>Amount of days</span>
+                                <input className={classes.suspendInput} ref={inputDays} type="number" min={1} />
+                            </div>
+                            <div className={classes.suspendInputs}>
+                                <span className={classes.suspendInputText}>Reason</span>
+                                <input className={classes.suspendInput} ref={inputMessage} type="text" />
+                            </div>
                         </td>
                     </tr>
             }
