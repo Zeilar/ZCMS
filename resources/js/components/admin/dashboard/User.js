@@ -175,10 +175,10 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                                 </button>
                                 {
                                     suspended
-                                        ? <button className="btnDashboard suspend" onClick={pardon}>
+                                        ? <SubmitButton className="btnDashboard suspend" onClick={pardon}>
                                             <Icon className={classes.icon} path={mdiShieldCheck} />
                                             <span>Pardon</span>
-                                        </button>
+                                        </SubmitButton>
                                         : <button className="btnDashboard suspend" onClick={() => setSuspending(true)}>
                                             <Icon className={classes.icon} path={mdiCancel} />
                                             <span>Suspend</span>

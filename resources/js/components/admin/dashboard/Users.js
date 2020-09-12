@@ -149,6 +149,7 @@ export default function Users() {
 
     useEffect(() => {
         if (users.length <= 0) getUsers();
+        console.log(users);
     }, [users, getUsers]);
 
     return (

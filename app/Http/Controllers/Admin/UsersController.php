@@ -125,7 +125,7 @@ class UsersController extends Controller
 
     public function pardon(User $user) {
         $this->authorize('pardon', $user);
-        $user->suspensions()->where('expiration', '>=', Carbon::now())->update(['expiration' => Carbon::now()]);
+        $user->suspensions()->where('expiration', '>=', Carbon::now())->update(['expiration' => Carbon::now()->subMinutes(1)]);
         return response()->json($this->getUsers());
     }
 
