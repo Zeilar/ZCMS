@@ -3,7 +3,9 @@ import Tags from "@yaireo/tagify/dist/react.tagify";
 import SubmitButton from '../../SubmitButton';
 import { createUseStyles } from 'react-jss';
 import "@yaireo/tagify/dist/tagify.css";
+import { mdiLoading } from '@mdi/js';
 import Sidebar from './Sidebar';
+import Icon from '@mdi/react';
 import User from './User';
 
 export default function Users() {
@@ -85,9 +87,25 @@ export default function Users() {
         addUserSubmit: {
             margin: '10px',
         },
+        loading: {
+            margin: 'auto',
+            'margin-top': '10px',
+            height: '50px',
+            width: '50px',
+        },
+        error: {
+            'flex-direction': 'column',
+            'align-items': 'center',
+            margin: '10px 0',
+            display: 'flex',
+        },
+        errorMessage: {
+            'margin-bottom': '10px',
+        },
     });
     const classes = styles();
 
+    const [sortType, setSortType] = useState({ column: 'id', direction: 'desc' });
     const [showUserForm, setShowUserForm] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
     const [errorContent, setErrorContent] = useState();
@@ -99,9 +117,11 @@ export default function Users() {
     const addUser = useRef();
 
     async function getUsers() {
+        setError(false);
         await fetch('/admin/users/all')
             .then(response => response.json())
-            .then(users => setUsers(users));
+            .then(users => setUsers(users))
+            .catch(error => setError(true));
     }
 
     function search() {
@@ -140,6 +160,23 @@ export default function Users() {
         }
     }
 
+    function sort(column) {
+        if (column === sortType.column) {
+            setSortType(p => ({
+                direction: p.direction === 'asc' ? 'desc' : 'asc',
+                column: column,
+            }));
+        } else {
+            setSortType(p => ({
+                direction: 'desc',
+                column: column,
+            }));
+        }
+        if (column === 'id') {
+            
+        }
+    }
+
     function checkAll(e) {
         const checked = e.target.checked;
         if (!checked) return setCheckboxes([]);
@@ -147,7 +184,8 @@ export default function Users() {
     }
 
     useEffect(() => {
-        if (users.length <= 0) getUsers();
+        if (!error && users.length <= 0) getUsers();
+        // console.log(sortType);
     }, [users, getUsers]);
 
     return (
@@ -230,11 +268,21 @@ export default function Users() {
                                 <th className={`${classes.th} small`}>
                                     <input type="checkbox" onClick={checkAll} />
                                 </th>
-                                <th className={`${classes.th} small`}>ID</th>
-                                <th className={classes.th}>Username</th>
-                                <th className={classes.th}>Email</th>
-                                <th className={classes.th}>Roles</th>
-                                <th className={classes.th}>Actions</th>
+                                <th className={`${classes.th} small`}>
+                                    <span onClick={() => sort('id')}>ID</span>
+                                </th>
+                                <th className={classes.th}>
+                                    <span onClick={() => sort('username')}>Username</span>
+                                </th>
+                                <th className={classes.th}>
+                                    <span onClick={() => sort('email')}>Email</span>
+                                </th>
+                                <th className={classes.th}>
+                                    <span>Roles</span>
+                                </th>
+                                <th className={classes.th}>
+                                    <span>Actions</span>
+                                </th>
                             </tr>
                         </thead>
                         <tbody className={classes.tbody}>
@@ -269,6 +317,21 @@ export default function Users() {
                             }
                         </tbody>
                     </table>
+                    {
+                        searchResults.length <= 0 && users.length <= 0 && !error &&
+                            <div className={classes.loading}>
+                                <Icon path={mdiLoading} spin={1} />
+                            </div>
+                    }
+                    {
+                        error &&
+                            <div className={classes.error}>
+                                <h1 className={classes.errorMessage}>Error loading users</h1>
+                                <button className="btnDashboard" onClick={getUsers}>
+                                    Try again
+                                </button>
+                            </div>
+                    }
                 </div>
             </div>
         </>
