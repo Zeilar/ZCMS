@@ -11,10 +11,6 @@ use App\User;
 
 class UsersController extends Controller
 {
-    private function getUsers() {
-        return User::all();
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -89,7 +85,7 @@ class UsersController extends Controller
 
         return response()->json([
             'message' => __('status_messages.success_update', ['resource' => __('status_messages.resource.user')]),
-            'users'   => $this->getUsers(),
+            'users'   => User::all(),
             'type'    => 'success',
         ]);
     }
@@ -107,24 +103,24 @@ class UsersController extends Controller
         $user->deleteAll();
         $user->delete();
 
-        return response()->json($this->getUsers());
+        return response()->json(User::all());
     }
 
     public function all() {
         $this->authorize('viewAny', User::class);
-        return response()->json($this->getUsers());
+        return response()->json(User::all());
     }
 
     public function suspend(Request $request, User $user) {
         $this->authorize('suspend', $user);
         $user->suspend($request->message, Carbon::now()->addDays($request->days ?? 7));
-        return response()->json($this->getUsers());
+        return response()->json(User::all());
     }
 
     public function pardon(User $user) {
         $this->authorize('pardon', $user);
         $user->suspensions()->where('expiration', '>=', Carbon::now())->update(['expiration' => Carbon::now()->subMinutes(1)]);
-        return response()->json($this->getUsers());
+        return response()->json(User::all());
     }
 
     public function bulkDelete(Request $request) {
@@ -137,6 +133,6 @@ class UsersController extends Controller
         foreach ($usersToDelete as $user) {
             $user->deleteAll()->delete();
         }
-        return response()->json($this->getUsers());
+        return response()->json(User::all());
     }
 }
