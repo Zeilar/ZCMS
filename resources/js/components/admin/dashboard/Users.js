@@ -208,7 +208,13 @@ export default function Users() {
                     return false;
                 })
                 .then(users => {
-                    if (users) setUsers(users);
+                    if (users) {
+                        setMessage({
+                            content: 'Successfully deleted users',
+                            type: 'success',
+                        });
+                        setUsers(users);
+                    }
                 })
                 .catch(error => alert(error));
         }
