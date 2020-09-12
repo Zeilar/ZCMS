@@ -1,9 +1,9 @@
+import { mdiLoading, mdiAlertCircleOutline, mdiCheckCircleOutline, mdiCloseCircle } from '@mdi/js';
 import React, { useState, useRef, useEffect } from 'react';
 import Tags from "@yaireo/tagify/dist/react.tagify";
 import SubmitButton from '../../SubmitButton';
 import { createUseStyles } from 'react-jss';
 import "@yaireo/tagify/dist/tagify.css";
-import { mdiLoading } from '@mdi/js';
 import Sidebar from './Sidebar';
 import Icon from '@mdi/react';
 import User from './User';
@@ -102,15 +102,51 @@ export default function Users() {
         errorMessage: {
             'margin-bottom': '10px',
         },
+        message: {
+            'align-items': 'center',
+            'border-radius': '5px',
+            border: '1px solid',
+            margin: '10px 0',
+            display: 'flex',
+            padding: '10px',
+            '&.error': {
+                'border-color': 'red',
+                color: 'red',
+            },
+            '&.success': {
+                'border-color': 'green',
+                color: 'green',
+            },
+        },
+        messageContent: {
+
+        },
+        messageIcon: {
+            'align-items': 'center',
+            'margin-right': '5px',
+            display: 'flex',
+            height: '20px',
+            width: '20px',
+        },
+        messageClose: {
+            'margin-left': 'auto',
+            background: 'none',
+            color: 'inherit',
+            display: 'flex',
+        },
+        messageCloseIcon: {
+            height: '20px',
+            width: '20px',
+        },
     });
     const classes = styles();
 
     const [sortType, setSortType] = useState({ column: 'id', direction: 'desc' });
     const [showUserForm, setShowUserForm] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
-    const [errorContent, setErrorContent] = useState();
     const [checkboxes, setCheckboxes] = useState([]);
     const [error, setError] = useState(false);
+    const [message, setMessage] = useState();
     const [users, setUsers] = useState([]);
     const searchInput = useRef();
     const bulkSelect = useRef();
@@ -154,8 +190,26 @@ export default function Users() {
                 body: JSON.stringify(checkboxes),
             };
             await fetch('/admin/users/bulk/delete', args)
-                .then(response => response.json())
-                .then(users => setUsers(users))
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    }
+                    let message = 'Something went wrong';
+                    if (response.status === 403) {
+                        message = 'Insufficient permissions';
+                    }
+                    if (response.status === 404) {
+                        message = 'User not found';
+                    }
+                    setMessage({
+                        content: message,
+                        type: 'error',
+                    });
+                    return false;
+                })
+                .then(users => {
+                    if (users) setUsers(users);
+                })
                 .catch(error => alert(error));
         }
     }
@@ -262,6 +316,18 @@ export default function Users() {
                             <input className={classes.searchInput} ref={searchInput} onInput={search} type="text" />
                         </div>
                     </div>
+                    {
+                        message &&
+                            <div className={`${classes.message} ${message?.type ?? ''}`}>
+                                <Icon className={classes.messageIcon} path={message?.type === 'error' ? mdiAlertCircleOutline : mdiCheckCircleOutline} />
+                                <p className={classes.messageContent}>
+                                    {message?.content}
+                                </p>
+                                <button className={classes.messageClose} onClick={() => setMessage(null)}>
+                                    <Icon className={classes.messageCloseIcon} path={mdiCloseCircle} />
+                                </button>
+                            </div>
+                    }
                     <table className={classes.table}>
                         <thead className={classes.thead}>
                             <tr className={classes.tr}>
