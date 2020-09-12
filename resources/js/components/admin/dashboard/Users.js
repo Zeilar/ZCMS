@@ -126,9 +126,6 @@ export default function Users() {
 
     async function bulk() {
         const action = bulkSelect.current.value;
-        if (action === 'edit') {
-            
-        }
         if (action === 'delete') {
             const args = {
                 method: 'DELETE',
@@ -217,7 +214,6 @@ export default function Users() {
                         <div className={classes.bulk}>
                             <select className={classes.bulkSelect} ref={bulkSelect}>
                                 <option>With selected</option>
-                                <option value="edit">Edit</option>
                                 <option value="delete">Delete</option>
                             </select>
                             <button className="btnDashboard" onClick={bulk}>
@@ -245,11 +241,31 @@ export default function Users() {
                         <tbody className={classes.tbody}>
                             {
                                 searchInput?.current?.value !== ''
-                                    ? searchResults.map(({ id, username, email, roles }) => (
-                                        <User id={id} username={username} email={email} roles={roles} setUsers={setUsers} checkboxes={checkboxes} setCheckboxes={setCheckboxes} key={id} />
+                                    ? searchResults.map(({ id, username, email, roles, suspended }) => (
+                                        <User 
+                                            key={id}
+                                            id={id}
+                                            username={username}
+                                            email={email}
+                                            roles={roles}
+                                            suspended={suspended}
+                                            setUsers={setUsers}
+                                            checkboxes={checkboxes}
+                                            setCheckboxes={setCheckboxes}
+                                        />
                                     ))
-                                    : users.map(({ id, username, email, roles }) => (
-                                        <User id={id} username={username} email={email} roles={roles} setUsers={setUsers} checkboxes={checkboxes} setCheckboxes={setCheckboxes} key={id} />
+                                    : users.map(({ id, username, email, roles, suspended }) => (
+                                        <User 
+                                            key={id}
+                                            id={id}
+                                            username={username}
+                                            email={email}
+                                            roles={roles}
+                                            suspended={suspended}
+                                            setUsers={setUsers}
+                                            checkboxes={checkboxes}
+                                            setCheckboxes={setCheckboxes}
+                                        />
                                     ))
                             }
                         </tbody>

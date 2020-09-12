@@ -1,11 +1,11 @@
-import { mdiTrashCan, mdiSquareEditOutline, mdiCheck } from '@mdi/js';
+import { mdiTrashCan, mdiSquareEditOutline, mdiCheck, mdiCancel, mdiShieldCheck } from '@mdi/js';
 import React, { useState, useRef, useEffect } from 'react';
 import Tags from "@yaireo/tagify/dist/react.tagify";
 import SubmitButton from '../../SubmitButton';
 import { createUseStyles } from 'react-jss';
 import Icon from '@mdi/react';
 
-export default function User({ id, username, email, roles, setUsers, checkboxes, setCheckboxes }) {
+export default function User({ id, username, email, roles, suspended, setUsers, checkboxes, setCheckboxes }) {
     const styles = createUseStyles({
         td: {
             'border-top': '1px solid rgb(225, 225, 225)',
@@ -13,8 +13,12 @@ export default function User({ id, username, email, roles, setUsers, checkboxes,
             '&.actions': {
                 display: 'flex',
             },
-            '&.edit': {
+            '&.edit, &.suspend': {
                 border: 0,
+            },
+            '&.suspend': {
+                'align-items': 'center',
+                display: 'flex',
             },
         },
         tr: {
@@ -49,11 +53,14 @@ export default function User({ id, username, email, roles, setUsers, checkboxes,
     });
     const classes = styles();
 
+    const [suspending, setSuspending] = useState(false);
     const [editing, setEditing] = useState(false);
     const [checked, setChecked] = useState(false);
     const inputUsername = useRef();
+    const inputMessage = useRef();
     const inputEmail = useRef();
     const inputRoles = useRef();
+    const inputDays = useRef();
 
     async function remove() {
         const answer = confirm(`Are you sure you want to delete user ${username}?`);
@@ -75,6 +82,34 @@ export default function User({ id, username, email, roles, setUsers, checkboxes,
             })
             .catch(error => alert(error));
 
+        setEditing(false);
+    }
+
+    async function suspend() {
+        const args = {
+            method: 'POST',
+            body: {
+                message: inputMessage.current.value,
+                days: inputDays.current.value,
+            }
+        }
+        await fetch(`/admin/users/${id}/suspend`, args)
+            .then(response => response.json())
+            .then(users => setUsers(users))
+            .catch(error => alert(error));
+
+        setSuspending(false);
+    }
+
+    async function pardon() {
+        await fetch(`/admin/users/${id}/pardon`, { method: 'POST' })
+            .then(response => response.json())
+            .then(users => setUsers(users))
+            .catch(error => alert(error));
+    }
+
+    function close() {
+        setSuspending(false);
         setEditing(false);
     }
 
@@ -118,26 +153,48 @@ export default function User({ id, username, email, roles, setUsers, checkboxes,
                 </td>
                 <td className={`${classes.td} actions`}>
                     {
-                        editing
-                            ? <>
-                                <SubmitButton className="btnDashboard" onClick={save}>
-                                    <Icon className={classes.icon} path={mdiCheck} />
-                                    <span>Save</span>
-                                </SubmitButton>
-                                <span className={classes.cancel} onClick={() => setEditing(false)}>
-                                    Cancel
-                                </span>
-                            </>
-                            : <>
+                        editing &&
+                            <SubmitButton className="btnDashboard" onClick={save}>
+                                <Icon className={classes.icon} path={mdiCheck} />
+                                <span>Save</span>
+                            </SubmitButton>
+                    }
+                    {
+                        suspending &&
+                            <SubmitButton className="btnDashboard" onClick={suspend}>
+                                <Icon className={classes.icon} path={mdiCheck} />
+                                <span>Suspend</span>
+                            </SubmitButton>
+                    }
+                    {
+                        !editing && !suspending &&
+                            <>
                                 <button className="btnDashboard" onClick={() => setEditing(true)}>
                                     <Icon className={classes.icon} path={mdiSquareEditOutline} />
                                     <span>Edit</span>
                                 </button>
+                                {
+                                    suspended
+                                        ? <button className="btnDashboard suspend" onClick={pardon}>
+                                            <Icon className={classes.icon} path={mdiShieldCheck} />
+                                            <span>Pardon</span>
+                                        </button>
+                                        : <button className="btnDashboard suspend" onClick={() => setSuspending(true)}>
+                                            <Icon className={classes.icon} path={mdiCancel} />
+                                            <span>Suspend</span>
+                                        </button>
+                                }
                                 <button className="btnDashboard delete" onClick={remove}>
                                     <Icon className={classes.icon} path={mdiTrashCan} />
                                     <span>Delete</span>
                                 </button>
                             </>
+                    }
+                    {
+                        (editing || suspending) &&
+                            <span className={classes.cancel} onClick={close}>
+                                Cancel
+                            </span>
                     }
                 </td>
             </tr>
@@ -158,6 +215,17 @@ export default function User({ id, username, email, roles, setUsers, checkboxes,
                             <Tags tagifyRef={inputRoles} value={roles.map(role => role.name)} />
                         </td>
                         <td className={`${classes.td} edit`}></td>
+                    </tr>
+            }
+            {
+                suspending &&
+                    <tr>
+                        <td className={`${classes.td} suspend`}>
+                            <span>Amount of days</span>
+                            <input ref={inputDays} type="number" min={1} />
+                            <span>Reason</span>
+                            <input ref={inputMessage} type="text" />
+                        </td>
                     </tr>
             }
         </>

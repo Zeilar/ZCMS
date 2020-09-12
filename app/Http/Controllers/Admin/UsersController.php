@@ -11,6 +11,12 @@ use App\User;
 
 class UsersController extends Controller
 {
+    private function getUsers() {
+        return User::with('roles')->get()->each(function($user) {
+            $user->suspended = $user->suspended();
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -85,7 +91,7 @@ class UsersController extends Controller
 
         return response()->json([
             'message' => __('status_messages.success_update', ['resource' => __('status_messages.resource.user')]),
-            'users'   => User::with('roles')->get(),
+            'users'   => $this->getUsers(),
             'type'    => 'success',
         ]);
     }
@@ -103,23 +109,24 @@ class UsersController extends Controller
         $user->deleteAll();
         $user->delete();
 
-        return response()->json(User::with('roles')->get());
+        return response()->json($this->getUsers());
     }
 
     public function all() {
         $this->authorize('viewAny', User::class);
-        return response()->json(User::with('roles')->get());
+        return response()->json($this->getUsers());
     }
 
     public function suspend(Request $request, User $user) {
         $this->authorize('suspend', $user);
-        // TODO: suspend user
+        $user->suspend($request->message, Carbon::now()->addDays($request->days ?? 7));
+        return response()->json($this->getUsers());
     }
 
     public function pardon(User $user) {
         $this->authorize('pardon', $user);
         $user->suspensions()->where('expiration', '>=', Carbon::now())->update(['expiration' => Carbon::now()]);
-        return response(true);
+        return response()->json($this->getUsers());
     }
 
     public function bulkDelete(Request $request) {
@@ -132,6 +139,6 @@ class UsersController extends Controller
         foreach ($usersToDelete as $user) {
             $user->deleteAll()->delete();
         }
-        return response()->json(User::with('roles')->get());
+        return response()->json($this->getUsers());
     }
 }

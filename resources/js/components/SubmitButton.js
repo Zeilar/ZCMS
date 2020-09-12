@@ -7,6 +7,7 @@ export default function SubmitButton({ onClick, className, children, spin = true
     const styles = createUseStyles({
         icon: {
             color: 'white !important',
+            height: '100%',
             width: '50%',
         },
         button: {

@@ -25,6 +25,7 @@ Route::middleware('CheckLocale')->group(function() {
         Route::resource('/users', 'UsersController', ['except' => ['create', 'edit', 'show']]);
         Route::delete('/users/bulk/delete', 'UsersController@bulkDelete');
         Route::get('/', 'DashboardController@index')->name('admin.index');
+        Route::post('/users/{user}/suspend', 'UsersController@suspend');
         Route::post('/users/{user}/pardon', 'UsersController@pardon');
         Route::get('/users/all', 'UsersController@all');
     });

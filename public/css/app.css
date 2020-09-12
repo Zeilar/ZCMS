@@ -186,11 +186,19 @@ input:focus {
 }
 
 .btnDashboard.delete:hover {
-  background: red;
+  background: #af0000;
+}
+
+.btnDashboard.suspend {
+  background: #ff7f00;
+}
+
+.btnDashboard.suspend:hover {
+  background: #ff6400;
 }
 
 .btnDashboard:hover {
-  background: var(--dashboard-secondary);
+  background: #050f14;
 }
 
 .scrollbar::-webkit-scrollbar {

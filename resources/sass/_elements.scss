@@ -37,12 +37,20 @@
         background: rgb(200, 0 ,0);
 
         &:hover {
-            background: red;
+            background: rgb(175, 0, 0);
+        }
+    }
+
+    &.suspend {
+        background: rgb(255, 127, 0);
+
+        &:hover {
+            background: rgb(255, 100, 0);
         }
     }
 
     &:hover{
-        background: var(--dashboard-secondary),    
+        background: rgb(5, 15, 20);
     }
 }
 
