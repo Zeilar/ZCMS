@@ -180,6 +180,7 @@ export default function Users() {
     }
 
     async function bulk() {
+        if (checkboxes.length <= 0) return;
         const action = bulkSelect.current.value;
         if (action === 'delete') {
             const args = {
