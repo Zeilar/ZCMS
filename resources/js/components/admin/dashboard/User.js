@@ -232,7 +232,7 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                         <td className={`${classes.td} suspend`}>
                             <div className={classes.suspendInputs}>
                                 <span className={classes.suspendInputText}>Amount of days</span>
-                                <input className={classes.suspendInput} ref={inputDays} type="number" min={1} />
+                                <input className={classes.suspendInput} ref={inputDays} type="number" min={1} defaultValue={7} />
                             </div>
                             <div className={classes.suspendInputs}>
                                 <span className={classes.suspendInputText}>Reason</span>

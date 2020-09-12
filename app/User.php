@@ -9,7 +9,9 @@ use \Carbon\Carbon;
 
 class User extends Authenticatable
 {
-    use Notifiable; 
+    use Notifiable;
+
+    protected $appends = ['suspended', 'roles'];
 
     /**
      * The attributes that are mass assignable.
@@ -37,6 +39,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getSuspendedAttribute() {
+        return $this->suspended();
+    }
+
+    public function getRolesAttribute() {
+        return $this->roles()->get(['name', 'clearance', 'color']);
+    }
 
     public function posts() {
         return $this->hasMany(Post::class);

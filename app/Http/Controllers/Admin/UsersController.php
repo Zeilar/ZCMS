@@ -12,9 +12,7 @@ use App\User;
 class UsersController extends Controller
 {
     private function getUsers() {
-        return User::with('roles')->get()->each(function($user) {
-            $user->suspended = $user->suspended();
-        });
+        return User::all();
     }
 
     /**
