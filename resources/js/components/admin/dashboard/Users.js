@@ -140,7 +140,6 @@ export default function Users() {
     });
     const classes = styles();
 
-    const [sortType, setSortType] = useState({ column: 'id', direction: 'desc' });
     const [showUserForm, setShowUserForm] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
     const [checkboxes, setCheckboxes] = useState([]);
@@ -227,23 +226,6 @@ export default function Users() {
         }
     }
 
-    function sort(column) {
-        if (column === sortType.column) {
-            setSortType(p => ({
-                direction: p.direction === 'asc' ? 'desc' : 'asc',
-                column: column,
-            }));
-        } else {
-            setSortType(p => ({
-                direction: 'desc',
-                column: column,
-            }));
-        }
-        if (column === 'id') {
-            
-        }
-    }
-
     function checkAll(e) {
         const checked = e.target.checked;
         if (!checked) return setCheckboxes([]);
@@ -252,7 +234,6 @@ export default function Users() {
 
     useEffect(() => {
         if (!error && users.length <= 0) getUsers();
-        // console.log(sortType);
     }, [error, users, getUsers]);
 
     return (
@@ -328,13 +309,13 @@ export default function Users() {
                                     <input type="checkbox" onClick={checkAll} />
                                 </th>
                                 <th className={`${classes.th} small`}>
-                                    <span onClick={() => sort('id')}>ID</span>
+                                    ID
                                 </th>
                                 <th className={classes.th}>
-                                    <span onClick={() => sort('username')}>Username</span>
+                                    Username
                                 </th>
                                 <th className={classes.th}>
-                                    <span onClick={() => sort('email')}>Email</span>
+                                    Email
                                 </th>
                                 <th className={classes.th}>
                                     <span>Roles</span>
