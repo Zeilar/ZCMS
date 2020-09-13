@@ -160,16 +160,21 @@ export default function Users() {
 
     function search() {
         const results = users.filter(user => {
+            const search = searchInput.current.value.toLowerCase();
+            if (user.suspended && search.includes('suspended')) {
+                return user;
+            }
+
             const roleMatches = [];
             user.roles.forEach(role => {
-                if (role.name.includes(searchInput.current.value)) {
+                if (role.name.toLowerCase().includes(search)) {
                     roleMatches.push(user);
                 }
             });
             if (roleMatches.length > 0) return roleMatches;
             
             for (const property in user) {
-                if (String(user[property]).includes(searchInput.current.value)) {
+                if (String(user[property]).toLowerCase().includes(search)) {
                     return user;
                 }
             }
