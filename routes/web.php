@@ -11,7 +11,7 @@ Route::middleware('CheckLocale')->group(function() {
     Route::view('/login', 'login')->name('login.form');
 
     // ThreadsController
-    Route::resource('threads', 'ThreadsController', ['except' => ['create']]);
+    Route::resource('threads', 'ThreadsController', ['except' => ['create', 'edit']]);
 
     // PostsController
     Route::resource('posts', 'PostsController', ['except' => ['create', 'edit']]);
@@ -38,18 +38,21 @@ Route::middleware('CheckLocale')->group(function() {
         return redirect()->back();
     });
 
-    Route::post('/api/languages', function() {
-        return response()->json(App\Language::all()->pluck('name'));
-    });
-
     Route::get('/', function() {
         return view('home', ['categories' => App\Category::all()]);
     })->name('index');
+});
 
+// API routes used for frontend
+Route::prefix('api')->group(function() {
     Route::post('/authenticate', function() {
         $user = auth()->user();
         if (empty($user)) return false;
-        $user->roles = $user->roles()->pluck('name');
         return response()->json(auth()->user());
+    });
+
+    Route::middleware('CheckLocale')->group(function() {
+        Route::get('/translations', 'LanguagesController@getTranslations');
+        Route::post('/languages', 'LanguagesController@getLanguages');
     });
 });

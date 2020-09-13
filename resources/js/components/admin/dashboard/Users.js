@@ -142,6 +142,7 @@ export default function Users() {
 
     const [showUserForm, setShowUserForm] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
+    const [translations, setTranslations] = useState();
     const [checkboxes, setCheckboxes] = useState([]);
     const [error, setError] = useState(false);
     const [message, setMessage] = useState();
@@ -158,10 +159,16 @@ export default function Users() {
             .catch(error => setError(true));
     }
 
+    async function getTranslations() {
+        await fetch('/api/translations')
+            .then(response => response.json())
+            .then(translations => setTranslations(translations));
+    }
+
     function search() {
         const results = users.filter(user => {
             const search = searchInput.current.value.toLowerCase();
-            if (user.suspended && search.includes('suspended')) {
+            if (user.suspended && search.includes(translations?.dashboard?.suspended)) {
                 return user;
             }
 
@@ -184,11 +191,10 @@ export default function Users() {
 
     async function bulk() {
         if (checkboxes.length <= 0) {
-            setMessage({
-                content: 'Please select a user first',
+            return setMessage({
+                content: translations?.dashboard?.select_user_first,
                 type: 'error',
             });
-            return;
         }
         const action = bulkSelect.current.value;
         if (action === 'delete') {
@@ -204,12 +210,12 @@ export default function Users() {
                     if (response.status === 200) {
                         return response.json();
                     }
-                    let message = 'Something went wrong';
+                    let message = translations?.dashboard?.error;
                     if (response.status === 403) {
-                        message = 'Insufficient permissions';
+                        message = translations?.dashboard?.insufficient_permissions;
                     }
                     if (response.status === 404) {
-                        message = 'User not found';
+                        message = translations?.dashboard?.user_not_found;
                     }
                     setMessage({
                         content: message,
@@ -221,7 +227,7 @@ export default function Users() {
                     if (users) {
                         setCheckboxes([]);
                         setMessage({
-                            content: 'Deleted users',
+                            content: translations?.dashboard?.deleted_users,
                             type: 'success',
                         });
                         setUsers(users);
@@ -238,8 +244,10 @@ export default function Users() {
     }
 
     useEffect(() => {
+        if (translations == null) getTranslations();
         if (!error && users.length <= 0) getUsers();
-    }, [error, users, getUsers]);
+        console.log(translations);
+    }, [translations, error, users, getUsers]);
 
     return (
         <>
@@ -248,50 +256,50 @@ export default function Users() {
                 <h1 className={classes.header}>Users</h1>
                 <div className={classes.tableWrapper}>
                     <button className="btnDashboard" onClick={() => setShowUserForm(p => !p)}>
-                        Add user
+                        {translations?.dashboard?.add_user}
                     </button>
                     {
                         showUserForm &&
                             <form className={classes.addUser} action="/admin/users" method="POST" ref={addUser}>
                                 <div className={classes.fieldRow}>
-                                    <span>Username</span>
+                                    <span>{translations?.dashboard?.username}</span>
                                     <input className={classes.addUserInput} type="text" name="username" autoComplete="off" required />
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <span>Email</span>
+                                    <span>{translations?.dashboard?.email}</span>
                                     <input className={classes.addUserInput} type="email" name="email" autoComplete="off" required />
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <span>Password</span>
+                                    <span>{translations?.dashboard?.password}</span>
                                     <input className={classes.addUserInput} type="password" name="password" autoComplete="off" required />
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <span>Confirm Password</span>
+                                    <span>{translations?.dashboard?.password_confirm}</span>
                                     <input className={classes.addUserInput} type="password" name="password_confirmation" autoComplete="off" required />
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <span>Roles</span>
+                                    <span>{translations?.dashboard?.roles}</span>
                                     <div className={classes.rolesInputWrapper}>
                                         <Tags name="roles" value="user" />
                                     </div>
                                 </div>
                                 <SubmitButton className={`${classes.addUserSubmit} btnDashboard`} onClick={() => addUser?.current?.submit()}>
-                                    <span>Create</span>
+                                    <span>{translations?.dashboard?.create}</span>
                                 </SubmitButton>
                             </form>
                     }
                     <div className={classes.toolbar}>
                         <div className={classes.bulk}>
                             <select className={classes.bulkSelect} ref={bulkSelect}>
-                                <option>With selected</option>
-                                <option value="delete">Delete</option>
+                                <option>{translations?.dashboard?.with_selected}</option>
+                                <option value="delete">{translations?.dashboard?.delete}</option>
                             </select>
                             <button className="btnDashboard" onClick={bulk}>
-                                Apply
+                                {translations?.dashboard?.apply}
                             </button>
                         </div>
                         <div className={classes.search}>
-                            <span>Search</span>
+                            <span>{translations?.dashboard?.search}</span>
                             <input className={classes.searchInput} ref={searchInput} onInput={search} type="text" />
                         </div>
                     </div>
@@ -317,16 +325,16 @@ export default function Users() {
                                     ID
                                 </th>
                                 <th className={classes.th}>
-                                    Username
+                                    {translations?.dashboard?.username}
                                 </th>
                                 <th className={classes.th}>
-                                    Email
+                                    {translations?.dashboard?.email}
                                 </th>
                                 <th className={classes.th}>
-                                    <span>Roles</span>
+                                    <span>{translations?.dashboard?.roles}</span>
                                 </th>
                                 <th className={classes.th}>
-                                    <span>Actions</span>
+                                    <span>{translations?.dashboard?.actions}</span>
                                 </th>
                             </tr>
                         </thead>
@@ -373,9 +381,11 @@ export default function Users() {
                     {
                         error &&
                             <div className={classes.error}>
-                                <h1 className={classes.errorMessage}>Error loading users</h1>
+                                <h1 className={classes.errorMessage}>
+                                    {translations?.dashboard?.error}
+                                </h1>
                                 <button className="btnDashboard" onClick={getUsers}>
-                                    Try again
+                                    {translations?.dashboard?.try_again}
                                 </button>
                             </div>
                     }

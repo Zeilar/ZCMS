@@ -64,7 +64,7 @@ export default function Chat() {
         }
         if (messages == null) getMessages();
         if (user == null) {
-            fetch('/authenticate', { method: 'POST' })
+            fetch('/api/authenticate', { method: 'POST' })
                 .then(response => response.json())
                 .then(user => setUser(user))
                 .catch(error => error);

@@ -3,4 +3,5 @@
     <span class="latestThread">
         {{ $subcategory->latestThread()->title }}
     </span>
+    {{ $subcategory->threads()->count() }}
 </div>

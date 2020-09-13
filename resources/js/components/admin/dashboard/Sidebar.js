@@ -69,7 +69,7 @@ export default function Sidebar({ active = 'dashboard' }) {
     const [user, setUser] = useState();
 
     async function getUser() {
-        await fetch('/authenticate', { method: 'POST' })
+        await fetch('/api/authenticate', { method: 'POST' })
             .then(response => response.json())
             .then(user => setUser(user));
     }
