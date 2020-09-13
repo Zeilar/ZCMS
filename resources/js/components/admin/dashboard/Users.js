@@ -246,7 +246,6 @@ export default function Users() {
     useEffect(() => {
         if (translations == null) getTranslations();
         if (!error && users.length <= 0) getUsers();
-        console.log(translations);
     }, [translations, error, users, getUsers]);
 
     return (
@@ -353,6 +352,7 @@ export default function Users() {
                                             checkboxes={checkboxes}
                                             setCheckboxes={setCheckboxes}
                                             setMessage={setMessage}
+                                            translations={translations}
                                         />
                                     ))
                                     : users.map(({ id, username, email, roles, suspended }) => (
@@ -367,6 +367,7 @@ export default function Users() {
                                             checkboxes={checkboxes}
                                             setCheckboxes={setCheckboxes}
                                             setMessage={setMessage}
+                                            translations={translations}
                                         />
                                     ))
                             }

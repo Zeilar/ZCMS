@@ -5,12 +5,13 @@ import SubmitButton from '../../SubmitButton';
 import { createUseStyles } from 'react-jss';
 import Icon from '@mdi/react';
 
-export default function User({ id, username, email, roles, suspended, setUsers, checkboxes, setCheckboxes, setMessage }) {
+export default function User({ id, username, email, roles, suspended, setUsers, checkboxes, setCheckboxes, setMessage, translations }) {
     const styles = createUseStyles({
         td: {
             'border-top': '1px solid rgb(225, 225, 225)',
             padding: '8px 15px',
             '&.actions': {
+                'flex-wrap': 'wrap',
                 display: 'flex',
             },
             '&.edit, &.suspend': {
@@ -72,7 +73,7 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
     const inputDays = useRef();
 
     async function remove() {
-        const answer = confirm(`Are you sure you want to delete user ${username}?`);
+        const answer = confirm(`${translations?.dashboard?.delete_user_confirm} ${username}?`);
 
         if (answer) {
             await fetch(`/admin/users/${id}`, { method: 'DELETE' })
@@ -80,12 +81,12 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                     if (response.status === 200) {
                         return response.json();
                     }
-                    let message = 'Something went wrong';
+                    let message = translations?.dashboard?.error;
                     if (response.status === 403) {
-                        message = 'Insufficient permissions';
+                        message = translations?.dashboard?.insufficient_permissions;
                     }
                     if (response.status === 404) {
-                        message = 'User not found';
+                        message = translations?.dashboard?.user_not_found;
                     }
                     setMessage({
                         content: message,
@@ -97,7 +98,7 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                     if (users) {
                         setCheckboxes([]);
                         setMessage({
-                            content: `Deleted ${username}`,
+                            content: `${translations?.dashboard?.deleted} ${username}`,
                             type: 'success',
                         });
                         setUsers(users);
@@ -114,12 +115,12 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                     if (response.status === 200) {
                         return response.json();
                     }
-                    let message = 'Something went wrong';
+                    let message = translations?.dashboard?.error;
                     if (response.status === 403) {
-                        message = 'Insufficient permissions';
+                        message = translations?.dashboard?.insufficient_permissions;
                     }
                     if (response.status === 404) {
-                        message = 'User not found';
+                        message = translations?.dashboard?.user_not_found;
                     }
                     setMessage({
                         content: message,
@@ -131,7 +132,7 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                     if (users) {
                         setCheckboxes([]);
                         setMessage({
-                            content: `Updated ${username}`,
+                            content: `${translations?.dashboard?.updated} ${username}`,
                             type: 'success',
                         });
                         setUsers(users);
@@ -155,12 +156,12 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                     if (response.status === 200) {
                         return response.json();
                     }
-                    let message = 'Something went wrong';
+                    let message = translations?.dashboard?.error;
                     if (response.status === 403) {
-                        message = 'Insufficient permissions';
+                        message = translations?.dashboard?.insufficient_permissions;
                     }
                     if (response.status === 404) {
-                        message = 'User not found';
+                        message = translations?.dashboard?.user_not_found;
                     }
                     setMessage({
                         content: message,
@@ -172,7 +173,7 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                     if (users) {
                         setCheckboxes([]);
                         setMessage({
-                            content: `Suspended ${username}`,
+                            content: `${translations?.dashboard?.suspended} ${username}`,
                             type: 'success',
                         });
                         setUsers(users);
@@ -189,12 +190,12 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                     if (response.status === 200) {
                         return response.json();
                     }
-                    let message = 'Something went wrong';
+                    let message = translations?.dashboard?.error;
                     if (response.status === 403) {
-                        message = 'Insufficient permissions';
+                        message = translations?.dashboard?.insufficient_permissions;
                     }
                     if (response.status === 404) {
-                        message = 'User not found';
+                        message = translations?.dashboard?.user_not_found;
                     }
                     setMessage({
                         content: message,
@@ -206,7 +207,7 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                     if (users) {
                         setCheckboxes([]);
                         setMessage({
-                            content: `Pardoned ${username}`,
+                            content: `${translations?.dashboard?.pardoned} ${username}`,
                             type: 'success',
                         });
                         setUsers(users);
@@ -263,14 +264,14 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                         editing &&
                             <SubmitButton className="btnDashboard" onClick={save}>
                                 <Icon className={classes.icon} path={mdiCheck} />
-                                <span>Save</span>
+                                <span>{translations?.dashboard?.save}</span>
                             </SubmitButton>
                     }
                     {
                         suspending &&
                             <SubmitButton className="btnDashboard" onClick={suspend}>
                                 <Icon className={classes.icon} path={mdiCheck} />
-                                <span>Suspend</span>
+                                <span>{translations?.dashboard?.suspend}</span>
                             </SubmitButton>
                     }
                     {
@@ -278,29 +279,29 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                             <>
                                 <button className="btnDashboard" onClick={() => setEditing(true)}>
                                     <Icon className={classes.icon} path={mdiSquareEditOutline} />
-                                    <span>Edit</span>
+                                    <span>{translations?.dashboard?.edit}</span>
                                 </button>
                                 {
                                     suspended
                                         ? <SubmitButton className="btnDashboard suspend" onClick={pardon}>
                                             <Icon className={classes.icon} path={mdiShieldCheck} />
-                                            <span>Pardon</span>
+                                            <span>{translations?.dashboard?.pardon}</span>
                                         </SubmitButton>
                                         : <button className="btnDashboard suspend" onClick={() => setSuspending(true)}>
                                             <Icon className={classes.icon} path={mdiCancel} />
-                                            <span>Suspend</span>
+                                            <span>{translations?.dashboard?.suspend}</span>
                                         </button>
                                 }
                                 <button className="btnDashboard delete" onClick={remove}>
                                     <Icon className={classes.icon} path={mdiTrashCan} />
-                                    <span>Delete</span>
+                                    <span>{translations?.dashboard?.delete}</span>
                                 </button>
                             </>
                     }
                     {
                         (editing || suspending) &&
                             <span className={classes.cancel} onClick={close}>
-                                Cancel
+                                {translations?.dashboard?.cancel}
                             </span>
                     }
                 </td>
@@ -329,11 +330,15 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
                     <tr>
                         <td className={`${classes.td} suspend`}>
                             <div className={classes.suspendInputs}>
-                                <span className={classes.suspendInputText}>Amount of days</span>
+                                <span className={classes.suspendInputText}>
+                                    {translations?.dashboard?.amount_of_days}
+                                </span>
                                 <input className={classes.suspendInput} ref={inputDays} type="number" min={1} defaultValue={7} />
                             </div>
                             <div className={classes.suspendInputs}>
-                                <span className={classes.suspendInputText}>Reason</span>
+                                <span className={classes.suspendInputText}>
+                                    {translations?.dashboard?.reason}
+                                </span>
                                 <input className={classes.suspendInput} ref={inputMessage} type="text" />
                             </div>
                         </td>
