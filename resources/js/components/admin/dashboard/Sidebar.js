@@ -66,6 +66,7 @@ export default function Sidebar({ active = 'dashboard' }) {
     });
     const classes = styles();
 
+    const [translations, setTranslations] = useState();
     const [user, setUser] = useState();
 
     async function getUser() {
@@ -74,18 +75,25 @@ export default function Sidebar({ active = 'dashboard' }) {
             .then(user => setUser(user));
     }
 
+    async function getTranslations() {
+        await fetch('/api/translations')
+            .then(response => response.json())
+            .then(translations => setTranslations(translations));
+    }
+
     useEffect(() => {
+        if (translations == null) getTranslations();
         if (user == null) getUser();
     }, [user, getUser]);
 
     return (
         <div className={classes.sidebar}>
             <a className={classes.logo} href="/">
-                ZCMS
+                {translations?.partials?.site_title}
             </a>
 
             <div className={classes.user}>
-                <img className={classes.avatar} src={user?.avatar} alt="User avatar" />
+                <img className={classes.avatar} src={user?.avatar} alt={translations?.dashboard?.user_avatar} />
                 <span className={classes.username}>
                     {user?.username}
                 </span>
@@ -95,13 +103,13 @@ export default function Sidebar({ active = 'dashboard' }) {
                 <a className={`${classes.item}${active === 'dashboard' ? ' active' : ''}`} href="/admin">
                     <Icon className={classes.icon} path={mdiGauge} />
                     <span className={classes.link}>
-                        Dashboard
+                        {translations?.dashboard?.dashboard}
                     </span>
                 </a>
                 <a className={`${classes.item}${active === 'users' ? ' active' : ''}`} href="/admin/users">
                     <Icon className={classes.icon} path={mdiAccountGroup} />
                     <span className={classes.link}>
-                        Users
+                        {translations?.dashboard?.users}
                     </span>
                 </a>
             </ul>

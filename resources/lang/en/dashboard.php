@@ -38,4 +38,5 @@ return [
     'pardoned' => 'Pardoned',
     'amount_of_days' => 'Amount of days',
     'reason' => 'Reason',
+    'user_avatar' => 'User avatar',
 ];

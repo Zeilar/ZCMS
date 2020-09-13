@@ -15,7 +15,7 @@ return [
     'roles' => 'Roller',
     'actions' => 'Handlingar',
     'edit' => 'Ändra',
-    'suspend' => 'Avstängning',
+    'suspend' => 'Stäng av',
     'pardon' => 'Benåda',
     'delete' => 'Radera',
     'save' => 'Spara',
@@ -38,4 +38,5 @@ return [
     'pardoned' => 'Benådade',
     'amount_of_days' => 'Antal dagar',
     'reason' => 'Anledning',
+    'user_avatar' => 'Användarprofilbild',
 ];

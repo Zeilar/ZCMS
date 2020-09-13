@@ -9,6 +9,7 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
     const styles = createUseStyles({
         td: {
             'border-top': '1px solid rgb(225, 225, 225)',
+            'word-break': 'break-word',
             padding: '8px 15px',
             '&.actions': {
                 'flex-wrap': 'wrap',
