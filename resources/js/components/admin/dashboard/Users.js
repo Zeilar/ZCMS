@@ -73,13 +73,12 @@ export default function Users() {
             'margin-top': '5px',
         },
         addUserInput: {
+            margin: '5px 0',
+        },
+        fieldRow: {
+            'flex-direction': 'column',
+            display: 'flex',
             margin: '5px',
-        },
-        formLegend: {
-            'margin-left': '5px',
-        },
-        formFieldset: {
-            margin: '10px',
         },
         rolesInputWrapper: {
             padding: '5px',
@@ -180,7 +179,13 @@ export default function Users() {
     }
 
     async function bulk() {
-        if (checkboxes.length <= 0) return;
+        if (checkboxes.length <= 0) {
+            setMessage({
+                content: 'Please select a user first',
+                type: 'error',
+            });
+            return;
+        }
         const action = bulkSelect.current.value;
         if (action === 'delete') {
             const args = {
@@ -210,8 +215,9 @@ export default function Users() {
                 })
                 .then(users => {
                     if (users) {
+                        setCheckboxes([]);
                         setMessage({
-                            content: 'Successfully deleted users',
+                            content: 'Deleted users',
                             type: 'success',
                         });
                         setUsers(users);
@@ -262,46 +268,26 @@ export default function Users() {
                         showUserForm &&
                             <form className={classes.addUser} action="/admin/users" method="POST" ref={addUser}>
                                 <div className={classes.fieldRow}>
-                                    <fieldset className={classes.formFieldset}>
-                                        <legend className={classes.formLegend}>
-                                            Username
-                                        </legend>
-                                        <input className={classes.addUserInput} type="text" name="username" autoComplete="off" required />
-                                    </fieldset>
+                                    <span>Username</span>
+                                    <input className={classes.addUserInput} type="text" name="username" autoComplete="off" required />
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <fieldset className={classes.formFieldset}>
-                                        <legend className={classes.formLegend}>
-                                            Email
-                                        </legend>
-                                        <input className={classes.addUserInput} type="email" name="email" autoComplete="off" required />
-                                    </fieldset>
+                                    <span>Email</span>
+                                    <input className={classes.addUserInput} type="email" name="email" autoComplete="off" required />
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <fieldset className={classes.formFieldset}>
-                                        <legend className={classes.formLegend}>
-                                            Password
-                                        </legend>
-                                        <input className={classes.addUserInput} type="password" name="password" autoComplete="off" required />
-                                    </fieldset>
+                                    <span>Password</span>
+                                    <input className={classes.addUserInput} type="password" name="password" autoComplete="off" required />
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <fieldset className={classes.formFieldset}>
-                                        <legend className={classes.formLegend}>
-                                            Confirm Password
-                                        </legend>
-                                        <input className={classes.addUserInput} type="password" name="password_confirmation" autoComplete="off" required />
-                                    </fieldset>
+                                    <span>Confirm Password</span>
+                                    <input className={classes.addUserInput} type="password" name="password_confirmation" autoComplete="off" required />
                                 </div>
                                 <div className={classes.fieldRow}>
-                                    <fieldset className={classes.formFieldset}>
-                                        <legend className={classes.formLegend}>
-                                            Roles
-                                        </legend>
-                                        <div className={classes.rolesInputWrapper}>
-                                            <Tags name="roles" value="user" />
-                                        </div>
-                                    </fieldset>
+                                    <span>Roles</span>
+                                    <div className={classes.rolesInputWrapper}>
+                                        <Tags name="roles" value="user" />
+                                    </div>
                                 </div>
                                 <SubmitButton className={`${classes.addUserSubmit} btnDashboard`} onClick={() => addUser?.current?.submit()}>
                                     <span>Create</span>
@@ -372,6 +358,7 @@ export default function Users() {
                                             setUsers={setUsers}
                                             checkboxes={checkboxes}
                                             setCheckboxes={setCheckboxes}
+                                            setMessage={setMessage}
                                         />
                                     ))
                                     : users.map(({ id, username, email, roles, suspended }) => (
@@ -385,6 +372,7 @@ export default function Users() {
                                             setUsers={setUsers}
                                             checkboxes={checkboxes}
                                             setCheckboxes={setCheckboxes}
+                                            setMessage={setMessage}
                                         />
                                     ))
                             }

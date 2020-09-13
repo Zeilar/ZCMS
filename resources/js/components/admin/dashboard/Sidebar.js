@@ -52,6 +52,17 @@ export default function Sidebar({ active = 'dashboard' }) {
             height: '30px',
             width: '30px',
         },
+        logo: {
+            background: 'var(--color-main-gradient)',
+            '-webkit-text-fill-color': 'transparent',
+            '-webkit-background-clip': 'text',
+            'background-clip': 'text',
+            'text-align': 'center',
+            'font-weight': 'bold',
+            'user-select': 'none',
+            'font-size': '2rem',
+            padding: '20px',
+        },
     });
     const classes = styles();
 
@@ -69,6 +80,10 @@ export default function Sidebar({ active = 'dashboard' }) {
 
     return (
         <div className={classes.sidebar}>
+            <a className={classes.logo} href="/">
+                ZCMS
+            </a>
+
             <div className={classes.user}>
                 <img className={classes.avatar} src={user?.avatar} alt="User avatar" />
                 <span className={classes.username}>

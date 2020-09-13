@@ -83,11 +83,7 @@ class UsersController extends Controller
         ]);
         if (count($roles) > 0) $user->roles()->sync($roles);
 
-        return response()->json([
-            'message' => __('status_messages.success_update', ['resource' => __('status_messages.resource.user')]),
-            'users'   => User::all(),
-            'type'    => 'success',
-        ]);
+        return response()->json(User::all());
     }
 
     /**

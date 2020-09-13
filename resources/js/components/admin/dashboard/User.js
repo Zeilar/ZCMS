@@ -5,7 +5,7 @@ import SubmitButton from '../../SubmitButton';
 import { createUseStyles } from 'react-jss';
 import Icon from '@mdi/react';
 
-export default function User({ id, username, email, roles, suspended, setUsers, checkboxes, setCheckboxes }) {
+export default function User({ id, username, email, roles, suspended, setUsers, checkboxes, setCheckboxes, setMessage }) {
     const styles = createUseStyles({
         td: {
             'border-top': '1px solid rgb(225, 225, 225)',
@@ -76,8 +76,33 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
 
         if (answer) {
             await fetch(`/admin/users/${id}`, { method: 'DELETE' })
-                .then(response => response.json())
-                .then(users => setUsers(users))
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    }
+                    let message = 'Something went wrong';
+                    if (response.status === 403) {
+                        message = 'Insufficient permissions';
+                    }
+                    if (response.status === 404) {
+                        message = 'User not found';
+                    }
+                    setMessage({
+                        content: message,
+                        type: 'error',
+                    });
+                    return false;
+                })
+                .then(users => {
+                    if (users) {
+                        setCheckboxes([]);
+                        setMessage({
+                            content: `Deleted ${username}`,
+                            type: 'success',
+                        });
+                        setUsers(users);
+                    }
+                })
                 .catch(error => alert(error));
         }
     }
@@ -85,11 +110,34 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
     async function save() {
         const roles = JSON.stringify(inputRoles.current.value);
         await fetch(`/admin/users/${id}?username=${inputUsername.current.value}&email=${inputEmail.current.value}&roles=${roles}`, { method: 'PATCH' })
-            .then(response => response.json())
-            .then(({ message, type, users }) => {
-                setUsers(users);
-            })
-            .catch(error => alert(error));
+            .then(response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    }
+                    let message = 'Something went wrong';
+                    if (response.status === 403) {
+                        message = 'Insufficient permissions';
+                    }
+                    if (response.status === 404) {
+                        message = 'User not found';
+                    }
+                    setMessage({
+                        content: message,
+                        type: 'error',
+                    });
+                    return false;
+                })
+                .then(users => {
+                    if (users) {
+                        setCheckboxes([]);
+                        setMessage({
+                            content: `Updated ${username}`,
+                            type: 'success',
+                        });
+                        setUsers(users);
+                    }
+                })
+                .catch(error => alert(error));
 
         setEditing(false);
     }
@@ -103,18 +151,68 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
             }
         }
         await fetch(`/admin/users/${id}/suspend`, args)
-            .then(response => response.json())
-            .then(users => setUsers(users))
-            .catch(error => alert(error));
+            .then(response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    }
+                    let message = 'Something went wrong';
+                    if (response.status === 403) {
+                        message = 'Insufficient permissions';
+                    }
+                    if (response.status === 404) {
+                        message = 'User not found';
+                    }
+                    setMessage({
+                        content: message,
+                        type: 'error',
+                    });
+                    return false;
+                })
+                .then(users => {
+                    if (users) {
+                        setCheckboxes([]);
+                        setMessage({
+                            content: `Suspended ${username}`,
+                            type: 'success',
+                        });
+                        setUsers(users);
+                    }
+                })
+                .catch(error => alert(error));
 
         setSuspending(false);
     }
 
     async function pardon() {
         await fetch(`/admin/users/${id}/pardon`, { method: 'POST' })
-            .then(response => response.json())
-            .then(users => setUsers(users))
-            .catch(error => alert(error));
+            .then(response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    }
+                    let message = 'Something went wrong';
+                    if (response.status === 403) {
+                        message = 'Insufficient permissions';
+                    }
+                    if (response.status === 404) {
+                        message = 'User not found';
+                    }
+                    setMessage({
+                        content: message,
+                        type: 'error',
+                    });
+                    return false;
+                })
+                .then(users => {
+                    if (users) {
+                        setCheckboxes([]);
+                        setMessage({
+                            content: `Pardoned ${username}`,
+                            type: 'success',
+                        });
+                        setUsers(users);
+                    }
+                })
+                .catch(error => alert(error));
     }
 
     function close() {
