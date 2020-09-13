@@ -253,7 +253,7 @@ export default function Users() {
     useEffect(() => {
         if (!error && users.length <= 0) getUsers();
         // console.log(sortType);
-    }, [users, getUsers]);
+    }, [error, users, getUsers]);
 
     return (
         <>
