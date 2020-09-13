@@ -11,6 +11,7 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
             'border-top': '1px solid rgb(225, 225, 225)',
             'word-break': 'break-word',
             padding: '8px 15px',
+            gap: '5px 0',
             '&.actions': {
                 'flex-wrap': 'wrap',
                 display: 'flex',
