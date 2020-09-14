@@ -32,6 +32,7 @@ return [
     'user_not_found' => 'Användaren hittades ej',
     'deleted_users' => 'Raderade användare',
     'delete_user_confirm' => 'Är du säker att du vill radera användare',
+    'delete_users_confirm' => 'Är du säker att du vill radera dessa användare?',
     'deleted' => 'Raderade',
     'updated' => 'Uppdaterade',
     'suspended' => 'Stängde av',

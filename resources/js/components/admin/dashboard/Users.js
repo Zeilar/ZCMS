@@ -198,42 +198,45 @@ export default function Users() {
         }
         const action = bulkSelect.current.value;
         if (action === 'delete') {
-            const args = {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(checkboxes),
-            };
-            await fetch('/admin/users/bulk/delete', args)
-                .then(response => {
-                    if (response.status === 200) {
-                        return response.json();
-                    }
-                    let message = translations?.dashboard?.error;
-                    if (response.status === 403) {
-                        message = translations?.dashboard?.insufficient_permissions;
-                    }
-                    if (response.status === 404) {
-                        message = translations?.dashboard?.user_not_found;
-                    }
-                    setMessage({
-                        content: message,
-                        type: 'error',
-                    });
-                    return false;
-                })
-                .then(users => {
-                    if (users) {
-                        setCheckboxes([]);
+            const answer = confirm(translations?.dashboard?.delete_users_confirm);
+            if (answer) {
+                const args = {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(checkboxes),
+                };
+                await fetch('/admin/users/bulk/delete', args)
+                    .then(response => {
+                        if (response.status === 200) {
+                            return response.json();
+                        }
+                        let message = translations?.dashboard?.error;
+                        if (response.status === 403) {
+                            message = translations?.dashboard?.insufficient_permissions;
+                        }
+                        if (response.status === 404) {
+                            message = translations?.dashboard?.user_not_found;
+                        }
                         setMessage({
-                            content: translations?.dashboard?.deleted_users,
-                            type: 'success',
+                            content: message,
+                            type: 'error',
                         });
-                        setUsers(users);
-                    }
-                })
-                .catch(error => alert(error));
+                        return false;
+                    })
+                    .then(users => {
+                        if (users) {
+                            setCheckboxes([]);
+                            setMessage({
+                                content: translations?.dashboard?.deleted_users,
+                                type: 'success',
+                            });
+                            setUsers(users);
+                        }
+                    })
+                    .catch(error => alert(error));
+            }
         }
     }
 

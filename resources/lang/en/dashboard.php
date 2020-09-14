@@ -32,6 +32,7 @@ return [
     'user_not_found' => 'User not found',
     'deleted_users' => 'Deleted users',
     'delete_user_confirm' => 'Are you sure you want to delete user',
+    'delete_users_confirm' => 'Are you sure you want to delete these users?',
     'deleted' => 'Deleted',
     'updated' => 'Updated',
     'suspended' => 'Suspended',
