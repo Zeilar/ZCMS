@@ -46,6 +46,7 @@ export default function User({ id, username, email, roles, suspended, setUsers, 
         },
         role: {
             'margin-right': '5px',
+            'white-space': 'pre',
             '&::after': {
                 content: '","',
             },
