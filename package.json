@@ -1,49 +1,23 @@
 {
     "private": true,
     "scripts": {
-        "clear": "php artisan cache:clear && php artisan route:clear && php artisan view:clear && php artisan config:clear",
-        "seed": "php artisan migrate:fresh --seed",
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "deploy": "php artisan cache:clear && php artisan route:clear && php artisan view:clear && php artisan config:clear && npm run prod",
-        "prod": "cross-env NODE_ENV=production ENV_FILE=./.env.production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "@babel/preset-react": "^7.0.0",
         "axios": "^0.19",
         "cross-env": "^7.0",
-        "jquery": "^3.2",
-        "laravel-mix": "^5.0.5",
-        "lodash": "^4.17.20",
-        "popper.js": "^1.12",
-        "react": "^16.2.0",
-        "react-dom": "^16.2.0",
-        "resolve-url-loader": "^3.1.0",
-        "sass": "^1.26.10",
-        "sass-loader": "^8.0.0"
+        "laravel-mix": "^5.0.1",
+        "lodash": "^4.17.19",
+        "resolve-url-loader": "^3.1.0"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^1.2.30",
-        "@fortawesome/free-brands-svg-icons": "^5.14.0",
-        "@fortawesome/free-regular-svg-icons": "^5.14.0",
-        "@fortawesome/free-solid-svg-icons": "^5.14.0",
-        "@fortawesome/react-fontawesome": "^0.1.11",
-        "@mdi/js": "^5.5.55",
-        "@mdi/react": "^1.4.0",
-        "@yaireo/tagify": "^3.18.0",
-        "cookie-cutter-helpers": "^1.0.6",
-        "js-cookie": "^2.2.1",
-        "laravel-echo": "^1.8.1",
-        "mix-env-file": "^0.1.0",
-        "moment": "^2.27.0",
-        "pusher-js": "^7.0.0",
-        "react-cool-onclickoutside": "^1.5.5",
-        "react-jss": "^10.4.0",
-        "react-router-dom": "^5.2.0",
-        "react-router-last-location": "^2.0.1"
+        "laravel-mix-env": "0.0.1",
+        "mix-env-file": "^0.1.0"
     }
 }

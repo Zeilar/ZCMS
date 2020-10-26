@@ -1,14 +1,30 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use Faker\Generator as Faker;
-use App\Chatmessage;
-use App\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Chatmessage;
+use App\Models\User;
 
-$factory->define(Chatmessage::class, function (Faker $faker) {
-    return [
-        'content' => $faker->sentence(10),
-        'user_id' => User::inRandomOrder()->limit(1)->first()->id,
-    ];
-});
+class ChatmessageFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Chatmessage::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'content' => $this->faker->sentence(10),
+            'user_id' => User::inRandomOrder()->limit(1)->first()->id,
+        ];
+    }
+}

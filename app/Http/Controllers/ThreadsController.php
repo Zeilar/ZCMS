@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Thread;
 use Illuminate\Http\Request;
+use App\Models\Thread;
 
 class ThreadsController extends Controller
 {

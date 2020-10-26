@@ -1,16 +1,31 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use \Illuminate\Support\Facades\Hash;
-use Faker\Generator as Faker;
-use App\User;
-use App\Role;
+use App\Models\User;
 
-$factory->define(User::class, function (Faker $faker) {
-    return [
-        'username' => $faker->firstName() . $faker->lastName(),
-        'email'    => $faker->safeEmail,
-        'password' => Hash::make('123'),
-    ];
-});
+class UserFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = User::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'username' => $this->faker->firstName() . $this->faker->lastName(),
+            'email'    => $this->faker->safeEmail,
+            'password' => Hash::make('123'),
+        ];
+    }
+}

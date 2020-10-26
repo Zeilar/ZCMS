@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\NewChatmessage;
 use Illuminate\Http\Request;
-use App\Chatmessage;
+use App\Models\Chatmessage;
 use Auth;
 
 class ChatmessagesController extends Controller

@@ -1,15 +1,32 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\PostLike;
-use App\Post;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Postlike;
+use App\Models\Post;
 
-$factory->define(PostLike::class, function (Faker $faker) {
-    $post = Post::inRandomOrder()->limit(1)->first();
-    return [
-        'post_id' => $post->id,
-        'user_id' => $post->user->id,
-    ];
-});
+class PostlikeFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Postlike::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $post = Post::inRandomOrder()->limit(1)->first();
+        
+        return [
+            'post_id' => $post->id,
+            'user_id' => $post->user->id,
+        ];
+    }
+}

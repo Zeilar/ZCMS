@@ -1,17 +1,33 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use Faker\Generator as Faker;
-use App\Subcategory;
-use App\Category;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Subcategory;
+use App\Models\Category;
 
-$factory->define(Subcategory::class, function (Faker $faker) {
-    $name = ucfirst($faker->word);
+class SubcategoryFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Subcategory::class;
 
-    return [
-        'name'        => $name,
-        'slug'        => str_replace(' ', '-', $name),
-        'category_id' => Category::inRandomOrder()->limit(1)->first()->id,
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $name = ucfirst($this->faker->word);
+
+        return [
+            'name'        => $name,
+            'slug'        => str_replace(' ', '-', $name),
+            'category_id' => Category::inRandomOrder()->limit(1)->first()->id,
+        ];
+    }
+}

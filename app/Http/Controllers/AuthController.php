@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use App\User;
-use App\Role;
+use App\Models\User;
+use App\Models\Role;
 use Auth;
 
 class AuthController extends Controller
@@ -58,7 +58,7 @@ class AuthController extends Controller
         $user->roles()->attach(Role::where('name', 'user')->first());
 
         if (!Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-            return abort(500);
+            return abort(400);
         }
 
         return redirect(route('index'));
