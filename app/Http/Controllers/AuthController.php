@@ -61,12 +61,12 @@ class AuthController extends Controller
             return abort(400);
         }
 
-        return redirect(route('index'));
+        return response($user);
     }
 
     public function logout() {
         if (!Auth::check()) return abort(405);
         Auth::logout();
-        return redirect(route('index'));
+        return response(true);
     }
 }

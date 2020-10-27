@@ -1,0 +1,8 @@
+@import url('https://cdn.angelin.dev/css/v1.0/app.css');
+@import './variables';
+@import './fonts';
+
+body {
+    background-color: var(--body-bg);
+    font-family: Roboto;
+}
