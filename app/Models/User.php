@@ -129,13 +129,4 @@ class User extends Authenticatable
         // The lower clearance number, the higher the rank. Lowest possible is 1.
         return $this->hasRole('superadmin') || $this->highestRole()->clearance < $user->highestRole()->clearance;
     }
-
-    public function deleteAll() {
-        $this->chatmessages()->delete();
-        $this->postLikes()->delete();
-        $this->threads()->delete();
-        $this->roles()->detach();
-        $this->posts()->delete();
-        return $this;
-    }
 }

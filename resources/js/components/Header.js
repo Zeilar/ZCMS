@@ -77,11 +77,11 @@ export default function Header() {
     });
     const classes = styles();
     
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     async function logout() {
         const success = await Http.post('logout');
-        if (success) location.reload();
+        if (success) setUser(false);
     }
 
     const navItems = () => {

@@ -18,6 +18,7 @@ class CreateSuspensionsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('message')->nullable();
             $table->timestamp('expiration');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

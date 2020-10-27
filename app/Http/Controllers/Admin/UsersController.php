@@ -97,7 +97,7 @@ class UsersController extends Controller
         $this->authorize('delete', $user);
 
         $deletedUser = $user;
-        $user->deleteAll()->delete();
+        $user->delete();
 
         return response($deletedUser);
     }
@@ -122,7 +122,7 @@ class UsersController extends Controller
             array_push($usersToDelete, $user);
         }
         foreach ($usersToDelete as $user) {
-            $user->deleteAll()->delete();
+            $user->delete();
         }
         return response($usersToDelete);
     }
