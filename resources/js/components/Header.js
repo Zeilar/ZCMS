@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { UserContext } from '../contexts/userContext';
+import { UserContext } from '../contexts/UserContext';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import Http from '../classes/Http';
@@ -79,7 +79,7 @@ export default function Header() {
         },
     });
     const classes = styles();
-    
+
     const { user, setUser } = useContext(UserContext);
 
     async function logout() {

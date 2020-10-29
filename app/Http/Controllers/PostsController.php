@@ -5,19 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Postlike;
 use App\Models\Post;
-use Auth;
 
 class PostsController extends Controller
 {
     public function index()
     {
-        $this->authorize('viewAny', Chatmessage::class);
+        $this->authorize('viewAny', Post::class);
         return response()->json(Post::all());
     }
 
     public function store(Request $request)
     {
-        $this->authorize('create', Chatmessage::class);
+        $this->authorize('create', Post::class);
 
         $request->validate([
             'title'   => 'required|string|min:3|max:100',

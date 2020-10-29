@@ -1,4 +1,4 @@
-import { UserContext } from '../../contexts/userContext';
+import { UserContext } from '../../contexts/UserContext';
 import React, { useContext } from 'react';
 import Forbidden from '../http/Forbidden';
 import { Route } from 'react-router-dom';
