@@ -96,12 +96,8 @@ class UserPolicy
         return $user->hasRole('admin') && $user->higherClearance($model);
     }
 
-    public function suspend(User $user, User $model) {
-        if ($user->suspended()) return false;
-        return $user->hasRole('moderator') && $user->higherClearance($model);
-    }
-
-    public function pardon(User $user, User $model) {
+    public function toggleSuspension(User $user, User $model)
+    {
         if ($user->suspended()) return false;
         return $user->hasRole('moderator') && $user->higherClearance($model);
     }

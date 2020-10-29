@@ -69,10 +69,10 @@ class UsersController extends Controller
 
         $roles = [];
         if ($request->roles) {
-            foreach (JSON_decode($request->roles) as $role) {
+            foreach (json_decode($request->roles) as $role) {
                 $role = Role::where('name', $role->value)->first();
+                if (empty($role)) break;
                 $this->authorize('giveRole', $role);
-                if (empty($role)) return abort(400);
                 array_push($roles, $role->id);
             }
         }
@@ -82,8 +82,8 @@ class UsersController extends Controller
             'email'    => $request->email ?? $user->email,
         ]);
         if (count($roles) > 0) $user->roles()->sync($roles);
-
-        return response($user);
+        
+        return response($roles);
     }
 
     /**
@@ -95,23 +95,17 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         $this->authorize('delete', $user);
-
-        $deletedUser = $user;
         $user->delete();
-
-        return response($deletedUser);
     }
 
     public function suspend(Request $request, User $user) {
-        $this->authorize('suspend', $user);
+        $this->authorize('toggleSuspension', $user);
         $user->suspend($request->message, Carbon::now()->addDays($request->days ?? 7));
-        return response($user);
     }
 
     public function pardon(User $user) {
-        $this->authorize('pardon', $user);
+        $this->authorize('toggleSuspension', $user);
         $user->suspensions()->where('expiration', '>=', Carbon::now())->update(['expiration' => Carbon::now()->subMinutes(1)]);
-        return response($user);
     }
 
     public function bulkDelete(Request $request) {
@@ -119,9 +113,7 @@ class UsersController extends Controller
         foreach (json_decode($request->users) as $user) {
             $user = User::findOrFail($user);
             $this->authorize('delete', $user);
-            array_push($usersToDelete, $user);
-        }
-        foreach ($usersToDelete as $user) {
+            array_push($usersToDelete, $user->id);
             $user->delete();
         }
         return response($usersToDelete);

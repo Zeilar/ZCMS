@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\{ Subcategory, Chatmessage, Postlike, Category, Thread, Role, User, Post };
+use App\Models\{ Chatmessage, Postlike, Category, Thread, Role, User, Post };
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
@@ -27,8 +27,8 @@ class DatabaseSeeder extends Seeder
 
         $admin = User::create([
             'username' => 'Philip',
-            'email' => 'philip@example.com',
-            'password' => Hash::make('123'),
+            'email' => 'philip@angelin.com',
+            'password' => Hash::make(env('ADMIN_PASSWORD')),
         ]);
         $admin->roles()->sync([$superadminRole->id, $adminRole->id, $moderatorRole->id, $userRole->id]);
         
@@ -58,8 +58,7 @@ class DatabaseSeeder extends Seeder
         });
 
         Category::factory()->count(3)->create();
-        Subcategory::factory()->count(Category::count() * 5)->create();
-        Thread::factory()->count(Subcategory::count() * 5)->create();
+        Thread::factory()->count(Category::count() * 5)->create();
         Post::factory()->count(Thread::count() * 10)->create();
         Postlike::factory()->count(Post::count() * 5)->create();
         Chatmessage::factory()->count(50)->create();

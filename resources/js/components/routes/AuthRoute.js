@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { createUseStyles } from 'react-jss';
+import Unauthorized from '../http/Unauthorized';
+import React, { useContext } from 'react';
 import { Route } from 'react-router-dom';
 
 export default function AuthRoute(props) {
@@ -14,9 +14,6 @@ export default function AuthRoute(props) {
             </Route>
         );
     } else {
-        return <Redirect to={{
-            pathname: '/',
-            state: { status: 401 },
-        }} />;
+        return <Unauthorized />
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Auth;
 
 class Authorize
 {
@@ -16,7 +15,7 @@ class Authorize
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check()) return abort(401);
+        if (auth()->user()) return abort(401);
         return $next($request);
     }
 }

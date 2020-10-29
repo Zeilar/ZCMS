@@ -16,7 +16,6 @@ class ChatmessagesController extends Controller
      */
     public function index()
     {
-        // $this->authorize('viewAny', Chatmessage::class);
         return Chatmessage::orderByDesc('id')->limit(Chatmessage::$MAX_PER_PAGE)->with('user.roles')->get();
     }
 
@@ -39,18 +38,6 @@ class ChatmessagesController extends Controller
         broadcast(new NewChatmessage($message));
 
         return response()->json($message);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Chatmessage  $chatmessage
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Chatmessage $chatmessage)
-    {
-        $this->authorize('update', $chatmessage);
     }
 
     /**

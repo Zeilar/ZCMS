@@ -2,6 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
+        "seed": "php artisan migrate:fresh --seed",
         "clear": "php artisan clear && php artisan config:clear && php artisan view:clear && php artisan route:clear && php artisan cache:clear && php artisan event:clear",
         "deploy": "npm run clear && npm run prod",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",

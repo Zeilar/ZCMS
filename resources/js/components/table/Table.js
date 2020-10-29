@@ -1,21 +1,18 @@
 import { createUseStyles } from 'react-jss';
 import React from 'react';
 
-export default function Table({ attributes, children, width }) {
+export default function Table({ className = '', attributes, children, width }) {
     const styles = createUseStyles({
         table: {
-            'flex-direction': 'column',
-            height: 'fit-content',
+            flexDirection: 'column',
             width: width ?? '',
             display: 'flex',
-
-            background: 'red',
         },
     });
     const classes = styles();
 
     return (
-        <div className={classes.table} {...attributes}>
+        <div className={`${classes.table} ${className}`} {...attributes}>
             {children}
         </div>
     );

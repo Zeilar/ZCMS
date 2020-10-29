@@ -1,3 +1,29 @@
 .adminBtn {
-    
+    background-color: rgb(15, 15, 15);
+
+    &:hover {
+        background-color: rgb(20, 20, 20);
+    }
+}
+
+.btn {
+    background-color: var(--color-main);
+    transition: all 0.1s linear;
+
+    &:hover {
+        background-color: var(--color-main-dark);
+    }
+}
+
+.loadingWheel {
+    width: 25px;
+}
+.loadingWheel-2 {
+    width: 50px;
+}
+.loadingWheel-3 {
+    width: 75px;
+}
+.loadingWheel-4 {
+    width: 100px;
 }

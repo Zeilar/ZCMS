@@ -6,7 +6,7 @@ import AdminRoute from './routes/AdminRoute';
 import NotFound from './NotFound';
 import Index from './Index';
 
-export default function Pages() {
+export default function RouterPages() {
     return (
         <Switch>
             <Route component={Index} path="/" exact />

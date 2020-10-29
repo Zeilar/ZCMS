@@ -1,10 +1,13 @@
 <?php
 
-use App\Http\Controllers\ChatmessagesController;
+use App\Http\Controllers\{
+    ChatmessagesController,
+    CategoriesController,
+    ThreadsController,
+    PostsController,
+    AuthController,
+};
 use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\ThreadsController;
-use App\Http\Controllers\PostsController;
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -16,8 +19,11 @@ Route::post('/login', [AuthController::class, 'login']);
 // ThreadsController
 Route::resource('threads', ThreadsController::class, ['except' => ['create', 'edit']]);
 
+// CategoriesController
+Route::get('categories', [CategoriesController::class, 'index']);
+
 // PostsController
-Route::post('/Posts/{comment}/like', [PostsController::class, 'like']);
+Route::post('/posts/{comment}/like', [PostsController::class, 'like']);
 Route::resource('posts', PostsController::class, ['except' => ['create', 'edit']]);
 
 // ChatmessagesController
@@ -25,11 +31,12 @@ Route::resource('chatmessages', ChatmessagesController::class, ['except' => ['cr
 
 // Admin -> UsersController
 Route::prefix('admin')->group(function() {
-    Route::resource('/users', UsersController::class, ['except' => ['create', 'edit', 'show']]);
-    Route::delete('/users/bulk/delete', [UsersController::class, 'bulkDelete']);
-    Route::post('/users/{user}/suspend', [UsersController::class, 'suspend']);
-    Route::post('/users/{user}/pardon', [UsersController::class, 'pardon']);
-    Route::get('/users', [UsersController::class, 'index']);
+    Route::prefix('users')->group(function() {
+        Route::resource('/', UsersController::class, ['except' => ['create', 'edit', 'show']])->parameters(['' => 'user']);
+        Route::delete('/', [UsersController::class, 'bulkDelete']);
+        Route::post('{user}/suspend', [UsersController::class, 'suspend']);
+        Route::post('{user}/pardon', [UsersController::class, 'pardon']);
+    });
 });
 
 Route::get('authenticate', function() {

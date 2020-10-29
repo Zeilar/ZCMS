@@ -1,8 +1,19 @@
 @import url('https://cdn.angelin.dev/css/v1.0/app.css');
 @import './variables';
+@import './elements';
 @import './fonts';
 
 body {
     background-color: var(--body-bg);
+    color: var(--text-primary);
     font-family: Roboto;
+}
+
+#app {
+    min-height: 100vh;
+}
+
+svg {
+    color: var(--text-primary);
+    width: 20px;
 }

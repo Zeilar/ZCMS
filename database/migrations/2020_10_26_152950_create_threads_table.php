@@ -13,14 +13,14 @@ class CreateThreadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('threads', function (Blueprint $table) {
+        Schema::create('threads', function(Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->unsignedBigInteger('subcategory_id');
+            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('views')->default(0);
-            $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->boolean('locked')->default(false);
             $table->timestamps();

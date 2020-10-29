@@ -24,6 +24,10 @@ export default class Http {
         return await Http.request('put', url, args);
     }
 
+    static async patch(url, args) {
+        return await Http.request('patch', url, args);
+    }
+
     static async delete(url, args) {
         return await Http.request('delete', url, args);
     }

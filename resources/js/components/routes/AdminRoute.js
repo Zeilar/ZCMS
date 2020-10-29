@@ -1,12 +1,13 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
 import { UserContext } from '../../contexts/userContext';
-import { Route, Redirect } from 'react-router-dom';
+import React, { useContext } from 'react';
+import Forbidden from '../http/Forbidden';
+import { Route } from 'react-router-dom';
 
 export default function AdminRoute(props) {
     const { user } = useContext(UserContext);
 
     let isAdmin = false;
-    user?.roles.forEach(({ name }) => {
+    user?.roles?.forEach(({ name }) => {
         if (name.toLowerCase() === 'admin') isAdmin = true;
     });
 
@@ -19,9 +20,6 @@ export default function AdminRoute(props) {
             </Route>
         );
     } else {
-        return <Redirect to={{
-            pathname: '/',
-            state: { status: 403 },
-        }} />;
+        return <Forbidden />;
     }
 }

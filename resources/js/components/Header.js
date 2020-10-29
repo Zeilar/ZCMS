@@ -26,6 +26,9 @@ export default function Header() {
         navbar: {
             margin: [40, 25],
         },
+        navlist: {
+
+        },
         navitem: {
             margin: [0, 20],
         },
@@ -40,7 +43,7 @@ export default function Header() {
             color: 'white',
             padding: 10,
             '&::after': {
-                backgroundColor: 'var(--color-link)',
+                backgroundColor: 'var(--color-main)',
                 transition: 'width 0.25s ease-out',
                 position: 'absolute',
                 borderRadius: 10,
@@ -51,7 +54,7 @@ export default function Header() {
                 left: 0,
             },
             '&:hover, &.active': {
-                color: 'var(--color-link)',
+                color: 'var(--color-main)',
                 '&::after': {
                     width: '100%',
                 },
@@ -120,7 +123,7 @@ export default function Header() {
             <div className={`${classes.hero} col center-children text-center mb-0 overflow-hidden`}>
                 <h1 className={`${classes.siteHeader} pt-2 pb-2`}>
                     <NavLink className={`${classes.siteHeaderLink} no-select`} to="/">
-                        ZCMS
+                        TPH
                     </NavLink>
                 </h1>
                 <p className={`${classes.siteSlogan}`}>

@@ -9,7 +9,11 @@ class ThreadsController extends Controller
 {
     public function index()
     {
-        return Thread::all();
+        $threads = Thread::all();
+        if (request()->query('tableData')) {
+            $threads->load('threads.posts');
+        }
+        return response($threads);
     }
 
     public function create()

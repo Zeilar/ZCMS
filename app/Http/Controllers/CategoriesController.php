@@ -14,17 +14,15 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        return response(Category::all());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $categories = Category::all();
+        if (request()->query('tableData')) {
+            $categories->load('threads.posts');
+            $categories->each(function($category) {
+                $category->latestThread = $category->latestThread();
+                $category->latestPost = $category->latestThread->latestPost();
+            });
+        }
+        return response($categories);
     }
 
     /**
@@ -34,28 +32,6 @@ class CategoriesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
     {
         //
     }
