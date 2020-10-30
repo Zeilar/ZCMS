@@ -30,7 +30,7 @@ Route::resource('posts', PostsController::class, ['except' => ['create', 'edit']
 Route::resource('chatmessages', ChatmessagesController::class, ['except' => ['create', 'edit', 'show']]);
 
 // Admin -> UsersController
-Route::prefix('admin')->group(function() {
+Route::prefix('admin')->middleware('isAdmin')->group(function() {
     Route::prefix('users')->group(function() {
         Route::resource('/', UsersController::class, ['except' => ['create', 'edit', 'show']])->parameters(['' => 'user']);
         Route::delete('/', [UsersController::class, 'bulkDelete']);

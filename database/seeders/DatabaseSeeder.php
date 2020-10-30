@@ -57,8 +57,10 @@ class DatabaseSeeder extends Seeder
             $user->roles()->attach($userRole);
         });
 
-        Category::factory()->count(3)->create();
-        Thread::factory()->count(Category::count() * 5)->create();
+        Category::create(['name' => 'Gaming', 'icon' => 'controller']);
+        Category::create(['name' => 'Astronomy', 'icon' => 'telescope']);
+        Category::create(['name' => 'General', 'icon' => 'chat']);
+        Thread::factory()->count(Category::count() * 30)->create();
         Post::factory()->count(Thread::count() * 10)->create();
         Postlike::factory()->count(Post::count() * 5)->create();
         Chatmessage::factory()->count(50)->create();

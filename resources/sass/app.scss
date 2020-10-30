@@ -13,6 +13,11 @@ body {
     min-height: 100vh;
 }
 
+img,
+svg {
+    user-select: none;
+}
+
 svg {
     width: 20px;
 }
