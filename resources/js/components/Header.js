@@ -8,23 +8,13 @@ export default function Header() {
     const styles = createUseStyles({
         header: {
             backgroundColor: 'var(--color-darkGray)',
-            padding: '0 var(--container-margin)',
-            transition: 'all 0.25s ease-in',
-            transform: 'translateY(0)',
-            top: 0,
-            '&.hide': {
-                boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.25)',
-                transitionTimingFunction: 'ease-out',
-                backgroundColor: 'var(--body-bg)',
-                transform: 'translateY(-130px)',
-            },
+            padding: [0, 'var(--container-margin)'],
         },
         hero: {
-            margin: [40, 25],
-            height: 90,
+            
         },
         navbar: {
-            margin: [40, 25],
+            
         },
         navlist: {
 
@@ -80,6 +70,25 @@ export default function Header() {
     });
     const classes = styles();
 
+    const header = useRef();
+    const navbar = useRef();
+
+    function checkNavbarPosition() {
+        if (header.current == null) return;
+        const threshold = header.current.getBoundingClientRect().height;
+        if (window.scrollY >= threshold) {
+            header.current.classList.add('hide');
+        } else {
+            header.current.classList.remove('hide');
+        }
+    }
+
+    useEffect(() => {
+        checkNavbarPosition();
+        document.addEventListener('scroll', checkNavbarPosition);
+    });
+
+
     const { user, setUser } = useContext(UserContext);
 
     async function logout() {
@@ -119,9 +128,9 @@ export default function Header() {
     }
 
     return (
-        <header className={`${classes.header} center-children sticky col`}>
-            <div className={`${classes.hero} col center-children text-center mb-0 overflow-hidden`}>
-                <h1 className={`${classes.siteHeader} pt-2 pb-2`}>
+        <header className={`${classes.header} center-children sticky col`} ref={header}>
+            <div className={`${classes.hero} col center-children my-4 mb-0 text-center overflow-hidden`}>
+                <h1 className={`${classes.siteHeader} py-2`}>
                     <NavLink className={`${classes.siteHeaderLink} no-select`} to="/">
                         TPH
                     </NavLink>
@@ -130,7 +139,7 @@ export default function Header() {
                     The pioneer hangout
                 </p>
             </div>
-            <nav className={`${classes.navbar} row m-3`}>
+            <nav className={`${classes.navbar} row my-4`} ref={navbar}>
                 <ul className={`${classes.navlist} row`}>
                     {navItems()}
                 </ul>

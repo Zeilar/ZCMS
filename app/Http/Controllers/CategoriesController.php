@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class CategoriesController extends Controller
 {
@@ -14,15 +14,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        if (request()->query('tableData')) {
-            $categories->load('threads.posts');
-            $categories->each(function($category) {
-                $category->latestThread = $category->latestThread();
-                $category->latestPost = $category->latestThread->latestPost();
-            });
-        }
-        return response($categories);
+        return response(Category::all());
     }
 
     /**

@@ -2,6 +2,8 @@ import { UserContext } from '../../contexts/UserContext';
 import React, { useContext } from 'react';
 import Forbidden from '../http/Forbidden';
 import { Route } from 'react-router-dom';
+import { mdiLoading } from '@mdi/js';
+import Icon from '@mdi/react';
 
 export default function AdminRoute(props) {
     const { user } = useContext(UserContext);
@@ -11,7 +13,7 @@ export default function AdminRoute(props) {
         if (name.toLowerCase() === 'admin') isAdmin = true;
     });
 
-    if (user == null) return 'Loading';
+    if (user == null) return <Icon className="loadingWheel-4" path={mdiLoading} spin={1} />;
 
     if (isAdmin) {
         return (

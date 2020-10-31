@@ -10,14 +10,14 @@ class ThreadsController extends Controller
 {
     public function index()
     {
-        $threads = Thread::all();
-        if (request()->query('tableData')) {
-            $threads->load('threads.posts');
-        }
         if ($id = request()->query('category', false)) {
-            return response(Category::find($id)->threads);
+            $threads = Category::find($id)->threads;
+            foreach ($threads as $thread) {
+                $thread->posts = $thread->posts()->count();
+                $thread->latestPost = $thread->latestPost()->load('user');
+            }
         }
-        return response($threads);
+        return response($threads ?? Thread::all());
     }
 
     public function store(Request $request)

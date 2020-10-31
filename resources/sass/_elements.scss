@@ -9,21 +9,46 @@
 .btn {
     background-color: var(--color-main);
     transition: all 0.1s linear;
+    text-decoration: none;
+    user-select: none;
+    color: white;
+    padding: 5px;
 
     &:hover {
         background-color: var(--color-main-dark);
     }
 }
 
+.btn-outline {
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-main);
+    transition: all 0.1s linear;
+    color: var(--color-main);
+    text-decoration: none;
+    border-radius: 3px;
+    width: fit-content;
+    user-select: none;
+    padding: 8px 12px;
+
+    &:hover {
+        background-color: var(--color-main);
+        color: var(--color-primary);
+    }
+}
+
 .loadingWheel {
+    color: var(--color-main);
     width: 25px;
 }
 .loadingWheel-2 {
+    color: var(--color-main);
     width: 50px;
 }
 .loadingWheel-3 {
+    color: var(--color-main);
     width: 75px;
 }
 .loadingWheel-4 {
+    color: var(--color-main);
     width: 100px;
 }

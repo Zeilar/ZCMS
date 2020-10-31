@@ -33,6 +33,6 @@ class Thread extends Model
     }
 
     public function latestPost() {
-        return $this->latset()->limit(1)->first() ?? false;
+        return $this->posts()->latest()->limit(1)->first() ?? false;
     }
 }

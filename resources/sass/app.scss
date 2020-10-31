@@ -13,6 +13,20 @@ body {
     min-height: 100vh;
 }
 
+::selection {
+    background-color: var(--color-main);
+    color: white;
+}
+
+a {
+    color: var(--color-link);
+    user-select: none;
+
+    &:hover {
+        color: var(--color-main);
+    }
+}
+
 img,
 svg {
     user-select: none;
