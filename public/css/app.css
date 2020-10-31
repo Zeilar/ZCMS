@@ -10,7 +10,7 @@
   --color-primary: white;
   --color-secondary: rgb(245, 245, 245);
   --color-darkGray: rgb(20, 20, 20);
-  --color-link: rgb(0, 127, 255);
+  --color-link: rgb(0, 100, 255);
   --color-main: rgb(0, 215, 140);
   --color-main-dark: rgb(0, 175, 100);
   --border-primary: rgb(200, 200, 200);
@@ -119,18 +119,16 @@ body {
 
 a {
   color: var(--color-link);
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  text-decoration: none;
 }
 
 a:hover {
-  color: var(--color-main);
+  text-decoration: underline;
 }
 
 img,
-svg {
+svg,
+button {
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;

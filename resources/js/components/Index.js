@@ -1,4 +1,4 @@
-import { mdiForum, mdiEye, mdiLoading, mdiArrowRight } from '@mdi/js';
+import { mdiForum, mdiEye, mdiLoading } from '@mdi/js';
 import { NavLink, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
@@ -21,13 +21,13 @@ export default function Index() {
             backgroundColor: 'var(--color-primary)',
             transition: 'all 0.1s linear',
             color: 'var(--text-primary)',
-            textDecoration: 'none',
             margin: 0,
             '&:hover, &.active': {
                 transform: 'scale(1.02)',
             },
             '&:hover': {
                 color: 'var(--text-primary)',
+                textDecoration: 'none',
             },
             '&.active': {
                 backgroundColor: 'var(--color-main)',
@@ -48,9 +48,7 @@ export default function Index() {
             padding: 15,
         },
         title: {
-            color: 'var(--text-primary)',
-            textDecoration: 'none',
-            width: '60%',
+            width: '50%',
         },
         posts: {
             
@@ -60,19 +58,10 @@ export default function Index() {
         },
         latest: {
             position: 'relative',
-            '&:hover': {
-                '& svg': {
-                    right: 8,
-                },
-            },
+            width: '20%',
         },
-        latestText: {
-
-        },
-        latestIcon: {
-            transition: 'inherit',
-            position: 'absolute',
-            right: 12,
+        latestLink: {
+            
         },
     });
     const classes = styles();
@@ -139,9 +128,11 @@ export default function Index() {
             } else {
                 return threads.map(thread => (
                     <div className={`${classes.thread} rounded row mb-3`} key={thread.id}>
-                        <NavLink className={classes.title} to={`/thread/${thread.slug}`}>
-                            {thread.title}
-                        </NavLink>
+                        <p className={classes.title}>
+                            <NavLink to={`/thread/${thread.slug}`}>
+                                {thread.title}
+                            </NavLink>
+                        </p>
                         <Tooltip tagName="div" className={`${classes.posts} ml-auto col center-children`} title="Posts">
                             <Icon path={mdiForum} />
                             <span>{thread.posts}</span>
@@ -150,14 +141,14 @@ export default function Index() {
                             <Icon path={mdiEye} />
                             <span>{thread.views}</span>
                         </Tooltip>
-                        <NavLink
-                            className={`${classes.latest} center-children btn-outline`}
-                            to={`/thread/${thread.slug}/#${thread.latestPost.id}`}
-                            title="Latest post"
-                        >
-                            <span className={`${classes.latestText} mr-3`}>Latest</span>
-                            <Icon className={`${classes.latestIcon}`} path={mdiArrowRight} />
-                        </NavLink>
+                        <div className={`${classes.latest} col`} title="Latest post">
+                            <span className={`${classes.latestDate} ml-auto`}>
+                                Some date
+                            </span>
+                            <NavLink className={`${classes.latestLink} ml-auto`} to={`/thread/${thread.slug}/#${thread.latestPost.id}`}>
+                                By {thread.latestPost.user.username}
+                            </NavLink>
+                        </div>
                     </div>
                 ));
             }

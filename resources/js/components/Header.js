@@ -26,7 +26,6 @@ export default function Header() {
             transition: 'color 0.25s ease-out',
             color: 'var(--text-secondary)',
             textTransform: 'uppercase',
-            textDecoration: 'none',
             position: 'relative',
             letterSpacing: 1,
             fontWeight: 600,
@@ -42,6 +41,9 @@ export default function Header() {
                 bottom: 0,
                 width: 0,
                 left: 0,
+            },
+            '&:hover': {
+                textDecoration: 'none',
             },
             '&:hover, &.active': {
                 color: 'var(--color-main)',
@@ -59,7 +61,6 @@ export default function Header() {
             '-webkit-background-clip': 'text',
             color: 'var(--color-main)',
             'background-clip': 'text',
-            textDecoration: 'none',
             fontSize: '3rem',
             lineHeight: 0.7,
         },

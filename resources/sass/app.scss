@@ -20,15 +20,16 @@ body {
 
 a {
     color: var(--color-link);
-    user-select: none;
+    text-decoration: none;
 
     &:hover {
-        color: var(--color-main);
+        text-decoration: underline;
     }
 }
 
 img,
-svg {
+svg,
+button {
     user-select: none;
 }
 
