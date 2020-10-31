@@ -114,7 +114,7 @@ export default function Header() {
         } else {
             return <>
                 <li className={`${classes.navitem}`}>
-                    <NavLink className={`${classes.navlink}`} to="login">
+                    <NavLink className={`${classes.navlink}`} to="/login">
                         Login
                     </NavLink>
                 </li>

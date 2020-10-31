@@ -1,10 +1,12 @@
-import { mdiChat, mdiEye, mdiLoading } from '@mdi/js';
+import { mdiForum, mdiEye, mdiLoading, mdiArrowRight } from '@mdi/js';
 import { NavLink, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import Http from '../classes/Http';
 import Header from './Header';
 import Icon from '@mdi/react';
+
+import Tooltip from './misc/Tooltip';
 
 export default function Index() {
     const styles = createUseStyles({
@@ -43,17 +45,34 @@ export default function Index() {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
             backgroundColor: 'var(--color-primary)',
             alignItems: 'center',
+            padding: 15,
         },
         title: {
             color: 'var(--text-primary)',
             textDecoration: 'none',
             width: '60%',
         },
-        stats: {
-            width: '7.5%',
+        posts: {
+            
+        },
+        views: {
+            marginLeft: '7.5%',
         },
         latest: {
-            width: '10%',
+            position: 'relative',
+            '&:hover': {
+                '& svg': {
+                    right: 8,
+                },
+            },
+        },
+        latestText: {
+
+        },
+        latestIcon: {
+            transition: 'inherit',
+            position: 'absolute',
+            right: 12,
         },
     });
     const classes = styles();
@@ -119,23 +138,26 @@ export default function Index() {
                 return <p className="text-center">No threads were found, be the first to create one!</p>;
             } else {
                 return threads.map(thread => (
-                    <div className={`${classes.thread} rounded row p-3 mb-3`} key={thread.id}>
+                    <div className={`${classes.thread} rounded row mb-3`} key={thread.id}>
                         <NavLink className={classes.title} to={`/thread/${thread.slug}`}>
                             {thread.title}
                         </NavLink>
-                        <div className={`${classes.stats} ml-auto mr-3 row`}>
-                            <Icon className="mr-1" path={mdiChat} />
+                        <Tooltip tagName="div" className={`${classes.posts} ml-auto col center-children`} title="Posts">
+                            <Icon path={mdiForum} />
                             <span>{thread.posts}</span>
-                        </div>
-                        <div className={`${classes.stats} mr-auto ml-3 row`}>
-                            <Icon className="mr-1" path={mdiEye} />
+                        </Tooltip>
+                        <Tooltip tagName="div" className={`${classes.views} mr-auto col center-children`} title="Views">
+                            <Icon path={mdiEye} />
                             <span>{thread.views}</span>
-                        </div>
-                        <div className={`${classes.latest} d-flex`}>
-                            <NavLink className="ml-auto btn-outline" to={`/thread/${thread.slug}/#${thread.latestPost.id}`}>
-                                Latest
-                            </NavLink>
-                        </div>
+                        </Tooltip>
+                        <NavLink
+                            className={`${classes.latest} center-children btn-outline`}
+                            to={`/thread/${thread.slug}/#${thread.latestPost.id}`}
+                            title="Latest post"
+                        >
+                            <span className={`${classes.latestText} mr-3`}>Latest</span>
+                            <Icon className={`${classes.latestIcon}`} path={mdiArrowRight} />
+                        </NavLink>
                     </div>
                 ));
             }
@@ -145,7 +167,7 @@ export default function Index() {
     return (
         <>
             <Header />
-            <div className={`${classes.categories} no-select m-4`}>
+            <div className={`${classes.categories} no-select`}>
                 {categoriesRender()}
             </div>
             <div className={`${classes.threads} col relative`}>
