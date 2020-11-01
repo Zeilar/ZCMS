@@ -14,7 +14,7 @@ class AuthController extends Controller
     {
         if (Auth::check()) return abort(405);
 
-        $id = request('id'); // Email or username - we don't know yet
+        $id = $request->id; // Email or username - we don't know yet
 
         // Determine whether $id is an email or username and change it accordingly
         $fieldType = filter_var($id, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
@@ -22,20 +22,20 @@ class AuthController extends Controller
 
         // Attempt to log in
         if (Auth::attempt([$fieldType => $id, 'password' => $request->password], $request->remember ? true : false)) {
-            return redirect(route('index'));
+            return response()->json(null, 200);
         }
 
         // Check if user exists
         if (empty(User::where($fieldType, $id)->first())) {
-            return redirect()->back()->withErrors(['id' => __('validation.user_does_not_exist')])->withInput(['id' => $id]);
+            return response(['id' => 'User does not exist.'], 422);
         }
 
         // If the user does exist, it means the password was incorrect
         if (User::where($fieldType, $id)->count()) {
-            return redirect()->back()->withErrors(['password' => __('validation.password')]);
+            return response(['password' => 'Incorrect password.'], 422);
         }
 
-        // If none of the above executes, something has gone wrong
+        // If none of the above executes, the user has done something strange
         return abort(400);
     }
 

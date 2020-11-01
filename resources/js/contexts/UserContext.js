@@ -7,7 +7,8 @@ export default function UserContextProvider({ children }) {
     const [user, setUser] = useState();
 
     useEffect(async () => {
-        setUser(await Http.get('authenticate'));
+        const response = await Http.get('authenticate');
+        setUser(response.code === 200 ? response.data : false);
     }, []);
 
     return (

@@ -7,12 +7,12 @@ export default function ErrorModalContextProvider({ children }) {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setError(null);
+            setError(undefined);
         }, 2250);
         return () => {
             clearTimeout(timeout);
         }
-    }, []);
+    });
 
     return (
         <ErrorModalContext.Provider value={{ error, setError }}>

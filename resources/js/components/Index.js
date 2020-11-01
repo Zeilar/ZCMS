@@ -1,6 +1,7 @@
+import { ErrorModalContext } from '../contexts/ErrorModalContext';
+import React, { useState, useEffect, useContext } from 'react';
 import { mdiForum, mdiEye, mdiLoading } from '@mdi/js';
 import { NavLink, useParams } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import Http from '../classes/Http';
 import Header from './Header';
@@ -8,7 +9,7 @@ import Icon from '@mdi/react';
 
 import Tooltip from './misc/Tooltip';
 
-export default function Index() {
+export default function Index(props) {
     const styles = createUseStyles({
         categories: {
             margin: [50, 'var(--container-margin)'],
@@ -69,12 +70,14 @@ export default function Index() {
     const [loadingCategories, setLoadingCategories] = useState(true);
     const [loadingThreads, setLoadingThreads] = useState(false);
     const [activeCategory, setActiveCategory] = useState(false);
+    const { setError } = useContext(ErrorModalContext);
     const [categories, setCategories] = useState([]);
     const [threads, setThreads] = useState();
     const { category } = useParams();
 
     useEffect(async () => {
-        setCategories(await Http.get('categories'));
+        const response = await Http.get('categories');
+        if (response.code === 200) setCategories(response.data);
         setLoadingCategories(false);
     }, []);
 
@@ -84,12 +87,18 @@ export default function Index() {
                 if (element.name.toLowerCase() === category.toLowerCase()) {
                     setActiveCategory(element.id);
                     setLoadingThreads(true);
-                    setThreads(await Http.get(`threads?category=${element.id}`));
+                    const response = await Http.get(`threads?category=${element.id}`);
+                    if (response.code === 200) setThreads(response.data);
                     setLoadingThreads(false);
                 }
             });
         }
     }, [loadingCategories, category]);
+
+    useEffect(() => {
+        const error = props.location.state?.error;
+        if (error) setError(error);
+    }, [props.location.state]);
 
     const categoriesRender = () => {
         if (loadingCategories) {

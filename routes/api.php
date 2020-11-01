@@ -41,5 +41,5 @@ Route::prefix('admin')->middleware('isAdmin')->group(function() {
 
 Route::get('authenticate', function() {
     $user = auth()->user();
-    return response($user, $user ? 200 : 401);
+    return response()->json($user, $user ? 200 : 401);
 });

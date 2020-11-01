@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import { ErrorModalContext } from '../contexts/ErrorModalContext';
+import React, { useRef, useEffect, useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
@@ -71,6 +72,8 @@ export default function Header() {
     });
     const classes = styles();
 
+    const { setError } = useContext(ErrorModalContext);
+    const { user, setUser } = useContext(UserContext);
     const header = useRef();
     const navbar = useRef();
 
@@ -87,14 +90,16 @@ export default function Header() {
     useEffect(() => {
         checkNavbarPosition();
         document.addEventListener('scroll', checkNavbarPosition);
-    });
+    }, []);
 
-
-    const { user, setUser } = useContext(UserContext);
 
     async function logout() {
-        const success = await Http.post('logout');
-        if (success) setUser(false);
+        const response = await Http.post('logout');
+        if (response.code === 200) {
+            return setUser(false);
+        } else {
+            return setError('Something went wrong');
+        }
     }
 
     const navItems = () => {
