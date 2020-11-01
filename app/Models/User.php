@@ -72,6 +72,10 @@ class User extends Authenticatable
         return $this->id === $thread->user->id;
     }
 
+    public function getClearance(): int {
+        return $this->roles()->orderBy('clearance')->first()->clearance;
+    }
+
     public function hasRole(string ...$roles): bool {
         return $this->roles()->whereIn('name', $roles)->first() ? true : false;
     }
@@ -90,14 +94,6 @@ class User extends Authenticatable
             return true;
         }
         return false;
-    }
-
-    public function publicData(): array {
-        return [
-            'username' => $this->username,
-            'email'    => $this->email,
-            'roles'    => $this->roles()->pluck('name'),
-        ];
     }
 
     public function chatmessages() {

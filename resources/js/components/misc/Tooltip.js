@@ -15,6 +15,7 @@ export default function Tooltip({ tagName, title, children, ...props }) {
                 transition: 'all 0.05s linear',
                 pointerEvents: 'none',
                 position: 'absolute',
+                fontSize: '1rem',
                 left: '50%',
                 opacity: 0,
                 '@media (max-width: 1200px)': {
@@ -34,7 +35,7 @@ export default function Tooltip({ tagName, title, children, ...props }) {
             '&::after': {
                 backgroundColor: 'var(--color-darkGray)',
                 color: 'var(--color-primary)',
-                content: `"${title}"`,
+                content: 'attr(data-title)',
                 whiteSpace: 'nowrap',
                 padding: [8, 12],
                 borderRadius: 3,
@@ -44,5 +45,5 @@ export default function Tooltip({ tagName, title, children, ...props }) {
     });
     const classes = styles();
 
-    return React.createElement(tagName ?? 'div', { ...props, className: `${props.className} ${classes.element}`}, children);
+    return React.createElement(tagName ?? 'div', { ...props, className: `${props.className} ${title ? classes.element : ''}`, 'data-title': title }, children);
 }

@@ -7,11 +7,14 @@
 }
 
 .btn {
+    background-image: var(--color-main-gradient);
     background-color: var(--color-main);
     transition: all 0.1s linear;
     color: var(--color-primary);
+    border-radius: 3px;
+    width: fit-content;
     user-select: none;
-    padding: 5px;
+    padding: 8px 12px;
 
     &:hover,
     &[disabled] {
@@ -19,7 +22,7 @@
     }
 
     &[disabled] {
-        pointer-events: none;
+        cursor: default;
     }
 }
 
@@ -29,9 +32,6 @@
     background-color: var(--color-primary);
     border: 2px solid var(--color-main);
     color: var(--color-main);
-    border-radius: 3px;
-    width: fit-content;
-    padding: 8px 12px;
 
     &:hover {
         background-color: var(--color-main);

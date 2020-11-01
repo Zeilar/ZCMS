@@ -13,7 +13,7 @@ class ThreadsController extends Controller
         if ($id = request()->query('category', false)) {
             $threads = Category::find($id)->threads;
             foreach ($threads as $thread) {
-                $thread->posts = $thread->posts()->count();
+                $thread->postsAmount = $thread->posts()->count();
                 $thread->latestPost = $thread->latestPost()->load('user');
             }
         }

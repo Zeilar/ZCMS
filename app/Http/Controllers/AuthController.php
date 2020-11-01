@@ -14,24 +14,23 @@ class AuthController extends Controller
     {
         if (Auth::check()) return abort(405);
 
-        $id = $request->id; // Email or username - we don't know yet
+        $id = $request->id; // Email or username - we don't know what the user chose yet
 
-        // Determine whether $id is an email or username and change it accordingly
+        // Determine whether $id is an email or username
         $fieldType = filter_var($id, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         request()->merge([$fieldType => $id]);
 
+        $user = User::where($fieldType, $id)->first();
+
         // Attempt to log in
         if (Auth::attempt([$fieldType => $id, 'password' => $request->password], $request->remember ? true : false)) {
-            return response()->json(null, 200);
+            return response($user);
         }
 
         // Check if user exists
-        if (empty(User::where($fieldType, $id)->first())) {
+        if (empty($user)) {
             return response(['id' => 'User does not exist.'], 422);
-        }
-
-        // If the user does exist, it means the password was incorrect
-        if (User::where($fieldType, $id)->count()) {
+        } else {
             return response(['password' => 'Incorrect password.'], 422);
         }
 
@@ -54,14 +53,11 @@ class AuthController extends Controller
             'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        if (!$user) return abort(400);
         $user->roles()->attach(Role::where('name', 'user')->first());
 
-        if (!Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-            return abort(400);
-        }
+        Auth::login($user);
 
-        return response($user);
+        return response([]);
     }
 
     public function logout() {

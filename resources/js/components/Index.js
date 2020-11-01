@@ -22,7 +22,6 @@ export default function Index(props) {
             backgroundColor: 'var(--color-primary)',
             transition: 'all 0.1s linear',
             color: 'var(--text-primary)',
-            margin: 0,
             '&:hover, &.active': {
                 transform: 'scale(1.02)',
             },
@@ -92,6 +91,9 @@ export default function Index(props) {
                     setLoadingThreads(false);
                 }
             });
+        } else {
+            setActiveCategory(null);
+            setThreads(null);
         }
     }, [loadingCategories, category]);
 
@@ -107,14 +109,13 @@ export default function Index(props) {
             if (categories.length > 0) {
                 return categories.map(category => (
                     <NavLink
-                        className={`${classes.category} rounded p-4 my-4 mx-auto center-children pointer col ${activeCategory === category.id ? 'active' : ''}`}
+                        className={`${classes.category} rounded p-4 center-children pointer col ${activeCategory === category.id ? 'active' : ''}`}
                         to={`/category/${category.name.toLowerCase()}`}
                         key={category.id}
                     >
                         <img
-                            className={`${classes.icon} mb-3`}
                             src={`${location.origin}/storage/category-icons/${category.icon}${activeCategory === category.id ? '-white' : ''}.svg`}
-                            alt={category.name}
+                            className={`${classes.icon} mb-3`} alt={category.name}
                         />
                         <h2 className={classes.name}>
                             {category.name}
@@ -144,7 +145,7 @@ export default function Index(props) {
                         </p>
                         <Tooltip tagName="div" className={`${classes.posts} ml-auto col center-children`} title="Posts">
                             <Icon path={mdiForum} />
-                            <span>{thread.posts}</span>
+                            <span>{thread.postsAmount}</span>
                         </Tooltip>
                         <Tooltip tagName="div" className={`${classes.views} mr-auto col center-children`} title="Views">
                             <Icon path={mdiEye} />

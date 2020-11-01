@@ -5,20 +5,24 @@ import { Route } from 'react-router-dom';
 import { mdiLoading } from '@mdi/js';
 import Icon from '@mdi/react';
 
-export default function AdminRoute(props) {
+export default function AdminRoute({ children, ...props }) {
     const { user } = useContext(UserContext);
 
-    let isAdmin = false;
-    user?.roles?.forEach(({ name }) => {
-        if (name.toLowerCase() === 'admin') isAdmin = true;
-    });
+    if (user == null) return <Icon className=" center-self loadingWheel-4" path={mdiLoading} spin={1} />;
 
-    if (user == null) return <Icon className="loadingWheel-4" path={mdiLoading} spin={1} />;
+    const isAdmin = () => {
+        for (let i = 0; i < user.roles.length; i++) {
+            if (user.roles[i].name.toLowerCase() === 'admin') {
+                return true;
+            }
+        }
+        return false;
+    }
 
-    if (isAdmin) {
+    if (isAdmin()) {
         return (
             <Route {...props}>
-                {props.children}
+                {children}
             </Route>
         );
     } else {
