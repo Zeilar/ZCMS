@@ -11,9 +11,12 @@ class ThreadsController extends Controller
     public function index()
     {
         if ($id = request()->query('category', false)) {
-            $threads = Category::find($id)->threads;
+            $threads = Category::where('name', $id)->first()->threads;
             foreach ($threads as $thread) {
                 $thread->postsAmount = $thread->posts()->count();
+                if (!$thread->latestPost()) {
+                    dd($thread->posts);
+                }
                 $thread->latestPost = $thread->latestPost()->load('user');
             }
         }

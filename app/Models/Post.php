@@ -19,7 +19,7 @@ class Post extends Model
         return $this->belongsTo(Thread::class);
     }
 
-    public function likes() {
-        return $this->hasMany(PostLike::class);
+    public function postlikes() {
+        return $this->hasMany(Postlike::class);
     }
 }

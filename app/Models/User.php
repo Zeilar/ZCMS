@@ -121,8 +121,8 @@ class User extends Authenticatable
         return $this->roles()->orderBy('clearance')->first();
     }
 
-    public function higherClearance(User $user): bool {
+    public function lowerClearance(User $user): bool {
         // The lower clearance number, the higher the rank. Lowest possible is 1.
-        return $this->hasRole('superadmin') || $this->highestRole()->clearance < $user->highestRole()->clearance;
+        return $this->getClearance() <= 1 || $this->highestRole()->clearance < $user->highestRole()->clearance;
     }
 }

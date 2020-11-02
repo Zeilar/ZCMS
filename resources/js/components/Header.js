@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import Http from '../classes/Http';
 
-export default function Header() {
+export default function Header({ forwardRef }) {
     const styles = createUseStyles({
         header: {
             backgroundColor: 'var(--color-darkGray)',
@@ -74,31 +74,14 @@ export default function Header() {
 
     const { setError } = useContext(ErrorModalContext);
     const { user, setUser } = useContext(UserContext);
-    const header = useRef();
     const navbar = useRef();
-
-    function checkNavbarPosition() {
-        if (header.current == null) return;
-        const threshold = header.current.getBoundingClientRect().height;
-        if (window.scrollY >= threshold) {
-            header.current.classList.add('hide');
-        } else {
-            header.current.classList.remove('hide');
-        }
-    }
-
-    useEffect(() => {
-        checkNavbarPosition();
-        document.addEventListener('scroll', checkNavbarPosition);
-    }, []);
-
 
     async function logout() {
         const response = await Http.post('logout');
         if (response.code === 200) {
             return setUser(false);
         } else {
-            return setError('Something went wrong');
+            return setError('Something went wrong, try refreshing the page');
         }
     }
 
@@ -134,16 +117,12 @@ export default function Header() {
     }
 
     return (
-        <header className={`${classes.header} center-children sticky col`} ref={header}>
+        <header className={`${classes.header} center-children sticky col`} ref={forwardRef}>
             <div className={`${classes.hero} col center-children my-4 mb-0 text-center overflow-hidden`}>
                 <h1 className={`${classes.siteHeader} py-2`}>
-                    <NavLink className={`${classes.siteHeaderLink} no-select`} to="/">
-                        TPH
-                    </NavLink>
+                    <NavLink className={`${classes.siteHeaderLink} no-select`} to="/">TPH</NavLink>
                 </h1>
-                <p className={`${classes.siteSlogan}`}>
-                    The pioneer hangout
-                </p>
+                <p className={`${classes.siteSlogan}`}>The pioneer hangout</p>
             </div>
             <nav className={`${classes.navbar} row my-4`} ref={navbar}>
                 <ul className={`${classes.navlist} row`}>

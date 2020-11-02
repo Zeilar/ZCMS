@@ -29,7 +29,7 @@ class ThreadPolicy
     public function update(User $user, Thread $thread)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('moderator') || $user->isOp($thread);
+        return $user->getClearance() <= 3 || $user->isOp($thread);
     }
 
     /**
@@ -42,7 +42,7 @@ class ThreadPolicy
     public function delete(User $user, Thread $thread)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->getClearance() <= 2;
     }
 
     /**
@@ -55,7 +55,7 @@ class ThreadPolicy
     public function restore(User $user, Thread $thread)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->getClearance() <= 2;
     }
 
     /**
@@ -68,12 +68,12 @@ class ThreadPolicy
     public function forceDelete(User $user, Thread $thread)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->getClearance() <= 2;
     }
 
     public function toggleLock(User $user, Thread $thread)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('moderator');
+        return $user->getClearance() <= 3;
     }
 }

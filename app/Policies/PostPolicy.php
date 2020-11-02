@@ -68,6 +68,6 @@ class Rolepolicy
     }
 
     public function giveRole(User $user, Role $role) {
-        return $user->hasRole('superadmin') || $user->highestRole()->clearance < $role->clearance;
+        return $user->getClearance() <= 1 || $user->highestRole()->clearance < $role->clearance;
     }
 }

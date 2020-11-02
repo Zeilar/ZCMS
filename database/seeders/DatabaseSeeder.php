@@ -57,19 +57,26 @@ class DatabaseSeeder extends Seeder
             $user->roles()->attach($userRole);
         });
 
-        Category::create(['name' => 'General', 'icon' => 'chat']);
-        Category::create(['name' => 'Gaming', 'icon' => 'controller']);
-        Category::create(['name' => 'Astronomy', 'icon' => 'telescope']);
-        Category::create(['name' => 'Sciene', 'icon' => 'science']);
-        Category::create(['name' => 'Hobby', 'icon' => 'hobby']);
-        Category::create(['name' => 'Movies', 'icon' => 'movies']);
-        Category::create(['name' => 'Food', 'icon' => 'food']);
-        Category::create(['name' => 'Sport', 'icon' => 'sport']);
-        Category::create(['name' => 'Politics', 'icon' => 'politics']);
-        Category::create(['name' => 'Random', 'icon' => 'random']);
-        Thread::factory()->count(Category::count() * 30)->create();
-        Post::factory()->count(Thread::count() * 10)->create();
-        Postlike::factory()->count(Post::count() * 5)->create();
+        function createCategory(string $name, string $icon): void {
+            Category::factory(['name' => $name, 'icon' => $icon])
+                ->has(Thread::factory()->count(rand(15, 30))
+                    ->has(Post::factory()->count(rand(15, 30))
+                        ->has(Postlike::factory()->count(rand(1, 3)))
+                    )
+                )
+            ->count(1)
+            ->create();
+        }
+
+        createCategory('General', 'general');
+        createCategory('Gaming', 'gaming');
+        createCategory('Astronomy', 'astronomy');
+        createCategory('Sciene', 'science');
+        createCategory('Hobby', 'hobby');
+        createCategory('Entertainment', 'entertainment');
+        createCategory('Food', 'food');
+        createCategory('Sport', 'sport');
+        createCategory('Politics', 'politics');
         Chatmessage::factory()->count(50)->create();
     }
 }

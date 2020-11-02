@@ -20,12 +20,9 @@ class CategoryFactory extends Factory
      * @return array
      */
     public function definition()
-    {
-        $name = ucfirst($this->faker->word);
-        
+    {        
         return [
-            'name' => $name,
-            'slug' => str_replace(' ', '-', $name),
+            'name' => ucfirst($this->faker->word),
         ];
     }
 }

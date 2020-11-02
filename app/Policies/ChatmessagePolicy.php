@@ -46,7 +46,7 @@ class PostPolicy
     public function delete(User $user, Post $post)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->getClearance() <= 2;
     }
 
     /**
@@ -59,7 +59,7 @@ class PostPolicy
     public function restore(User $user, Post $post)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->getClearance() <= 2;
     }
 
     /**
@@ -72,7 +72,7 @@ class PostPolicy
     public function forceDelete(User $user, Post $post)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->getClearance() <= 2;
     }
 
     public function like(User $user, Post $post)

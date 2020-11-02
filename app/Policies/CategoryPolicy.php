@@ -17,7 +17,7 @@ class CategoryPolicy
     public function create(User $user)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->getClearance() <= 2;
     }
 
     /**
@@ -30,7 +30,7 @@ class CategoryPolicy
     public function update(User $user, Category $category)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->getClearance() <= 2;
     }
 
     /**
@@ -43,7 +43,7 @@ class CategoryPolicy
     public function delete(User $user, Category $category)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->getClearance() <= 2;
     }
 
     /**
@@ -56,7 +56,7 @@ class CategoryPolicy
     public function restore(User $user, Category $category)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->getClearance() <= 2;
     }
 
     /**
@@ -69,6 +69,6 @@ class CategoryPolicy
     public function forceDelete(User $user, Category $category)
     {
         if ($user->suspended()) return false;
-        return $user->hasRole('admin');
+        return $user->getClearance() <= 2;
     }
 }
