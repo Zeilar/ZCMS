@@ -92,6 +92,7 @@ export default function Login() {
         const formData = new FormData();
         formData.append('id', id);
         formData.append('password', password);
+        formData.append('remember', remember.current.checked);
 
         setSubmitting(true);
         const response = await Http.post('login', { body: formData }, true);
