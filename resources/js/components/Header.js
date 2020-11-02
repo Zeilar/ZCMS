@@ -26,11 +26,11 @@ export default function Header({ forwardRef }) {
         navlink: {
             transition: 'color 0.25s ease-out',
             color: 'var(--text-secondary)',
+            color: 'var(--color-primary)',
             textTransform: 'uppercase',
             position: 'relative',
             letterSpacing: 1,
             fontWeight: 600,
-            color: 'white',
             padding: 10,
             '&::after': {
                 backgroundColor: 'var(--color-main)',
@@ -66,8 +66,8 @@ export default function Header({ forwardRef }) {
             lineHeight: 0.7,
         },
         siteSlogan: {
+            color: 'var(--color-primary)',
             fontFamily: 'Raleway',
-            color: 'white',
         },
     });
     const classes = styles();

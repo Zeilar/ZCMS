@@ -21,6 +21,7 @@ export default function Threads() {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.25)'],
             backgroundImage: 'var(--color-main-gradient)',
             color: 'var(--color-primary)',
+            alignItems: 'center',
             padding: 15,
         },
         back: {
@@ -34,6 +35,7 @@ export default function Threads() {
         },
         categoryIcon: {
             filter: 'brightness(0) invert(1)',
+            height: 25,
             width: 25,
         },
         threads: {
