@@ -1,5 +1,5 @@
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { ErrorModalContext } from '../../contexts/ErrorModalContext';
-import React, { useState, useRef, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { Redirect, useHistory } from 'react-router';
 import { createUseStyles } from 'react-jss';
@@ -25,7 +25,7 @@ export default function Login() {
             border: '1px solid var(--border-primary)',
             backgroundColor: 'var(--color-primary)',
             borderRadius: 3,
-            width: '20%',
+            width: '22.5%',
         },
         input: {
             border: '1px solid var(--border-secondary)',
@@ -62,24 +62,38 @@ export default function Login() {
         submitText: {
             height: 25,
         },
+        errors: {
+            padding: 35,
+        },
+        error: {
+            backgroundColor: 'rgba(200, 0, 50, 0.05)',
+            color: 'var(--text-secondary)',
+            borderLeft: '3px solid red',
+            borderBottomRightRadius: 2,
+            borderTopRightRadius: 2,
+            marginBottom: 10,
+            '&:last-child': {
+                marginBottom: 0,
+            },
+        },
     });
     const classes = styles();
 
+    const [errors, setErrors] = useState({ id: false, password: false });
     const [submitting, setSubmitting] = useState(false);
     const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState([]);
     const [id, setId] = useState('');
     const history = useHistory();
     const remember = useRef();
 
     async function login(e) {
         e.preventDefault();
-        setSubmitting(true);
 
         const formData = new FormData();
         formData.append('id', id);
         formData.append('password', password);
 
+        setSubmitting(true);
         const response = await Http.post('login', { body: formData }, true);
         setSubmitting(false);
 
@@ -89,18 +103,33 @@ export default function Login() {
         } else if (response.code === 422) {
             setErrors(response.data);
         } else {
-            alert('Error');
+            setError('Something went wrong');
         }
     }
+
+    useEffect(() => {
+        errors.id = false;
+    }, [id]);
+
+    useEffect(() => {
+        errors.password = false;
+    }, [password]);
 
     return (
         <>
             <Header />
             <h2 className={classes.header}>Login</h2>
-            <form className={`${classes.login} mx-auto mt-5`} onSubmit={login}>
+            <form className={`${classes.login} mx-auto mt-4`} onSubmit={login}>
+                {
+                    (errors.id || errors.password) &&
+                        <div className={`${classes.errors} col pb-0`}>
+                            {errors.id && <p className={`${classes.error} p-2`}>{errors.id}</p>}
+                            {errors.password && <p className={`${classes.error} p-2`}>{errors.password}</p>}
+                        </div>
+                }
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Username or Email</label>
-                    <input className={`${classes.input} mt-1`} value={id} onChange={e => setId(e.target.value)} id="id" />
+                    <input className={`${classes.input} mt-2`} value={id} onChange={e => setId(e.target.value)} />
                 </div>
                 <div className={`${classes.row} col`}>
                     <div className="row">
@@ -108,16 +137,15 @@ export default function Login() {
                         <NavLink className="ml-auto" to="/forgot-password">Forgot password?</NavLink>
                     </div>
                     <input
-                        className={`${classes.input} mt-1`} id="password" type="password"
+                        className={`${classes.input} mt-2`} id="password" type="password"
                         onChange={e => setPassword(e.target.value)} value={password} 
                     />
                 </div>
-                <div className={`${classes.row} row center-children`}>
+                <div className={`${classes.row} pt-0 row center-children`}>
                     <Checkbox forwardRef={remember} className="mr-2" id="remember" />
                     <label className={`${classes.label} mr-auto pointer no-select`} htmlFor="remember">
                         Remember me
                     </label>
-
                     <NavLink className="ml-auto" to="/register">Register</NavLink>
                 </div>
                 <div className={`${classes.footer}`}>
