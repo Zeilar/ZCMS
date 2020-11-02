@@ -17,6 +17,11 @@ class CategoriesController extends Controller
         return response(Category::all());
     }
 
+    public function single(Category $category)
+    {
+        return response($category);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

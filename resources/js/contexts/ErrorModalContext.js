@@ -12,7 +12,7 @@ export default function ErrorModalContextProvider({ children }) {
         return () => {
             clearTimeout(timeout);
         }
-    });
+    }, [error]);
 
     return (
         <ErrorModalContext.Provider value={{ error, setError }}>

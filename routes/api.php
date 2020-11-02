@@ -10,6 +10,7 @@ use App\Http\Controllers\{
 use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 // AuthController
 Route::post('/register', [AuthController::class, 'register']);
@@ -20,6 +21,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::resource('threads', ThreadsController::class, ['except' => ['create', 'edit']]);
 
 // CategoriesController
+Route::bind('category', fn($value) => Category::where('id', $value)->orWhere('name', $value)->firstOrFail());
+Route::get('categories/{category}', [CategoriesController::class, 'single']);
 Route::get('categories', [CategoriesController::class, 'index']);
 
 // PostsController

@@ -14,13 +14,13 @@ class ThreadsController extends Controller
             $threads = Category::where('name', $id)->first()->threads;
             foreach ($threads as $thread) {
                 $thread->postsAmount = $thread->posts()->count();
-                if (!$thread->latestPost()) {
-                    dd($thread->posts);
-                }
                 $thread->latestPost = $thread->latestPost()->load('user');
+                $thread->op = $thread->op();
             }
+        } else {
+            $threads = Thread::all();
         }
-        return response($threads ?? Thread::all());
+        return response($threads);
     }
 
     public function store(Request $request)

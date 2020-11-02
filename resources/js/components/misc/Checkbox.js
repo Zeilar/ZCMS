@@ -1,60 +1,43 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import React, { useState, useRef, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
+import { mdiCheck } from '@mdi/js';
+import Icon from '@mdi/react';
 
-export default function Checkbox() {
+export default function Checkbox({ forwardRef, className, id, ...props }) {
     const styles = createUseStyles({
-        wrapper: {
-
-        },
         box: {
             border: '1px solid var(--border-primary)',
-            'justify-content': 'center',
-            'align-items': 'center',
-            'border-radius': '4px',
+            backgroundColor: 'var(--body-bg)',
+            justifyContent: 'center',
+            alignItems: 'center',
             cursor: 'pointer',
+            borderRadius: 3,
             display: 'flex',
-            height: '25px',
-            width: '25px',
+            height: 25,
+            width: 25,
             '&.checked': {
-                'background': 'var(--color-main-gradient)',
-                'border-color': 'var(--color-main)',
+                backgroundImage: 'var(--color-main-gradient)',
+                borderColor: 'var(--color-main)',
+                '& svg': {
+                    display: 'inline-block',
+                },
             },
         },
-        check: {
-            color: 'black',
+        icon: {
+            color: 'var(--color-primary)',
             display: 'none',
-            '&.show': {
-                display: 'inline-block',
-            },
         },
     });
     const classes = styles();
 
     const [checked, setChecked] = useState(false);
-    const [htmlId, setHtmlId] = useState();
-    const [name, setName] = useState();
-    const checkbox = useRef();
-    const wrapper = useRef();
-
-    function toggleChecked() {
-        setChecked(p => !p);
-    }
-
-    useEffect(() => {
-        const parent = wrapper.current.parentNode;
-        setHtmlId(parent.getAttribute('data-id'));
-        setName(parent.getAttribute('data-name'));
-        setChecked(checkbox.current.checked);
-    }, [setHtmlId, setName, setChecked, wrapper]);
 
     return (
-        <div className={classes.wrapper} ref={wrapper}>
-            <input ref={checkbox} checked={checked} onChange={toggleChecked} hidden type="checkbox" name={name} id={htmlId} />
-            <div className={`${classes.box}${checked ? ' checked' : ''}`} onClick={toggleChecked}>
-                <FontAwesomeIcon className={`${classes.check}${checked ? ' show' : ''}`} icon={faCheck} />
-            </div>
-        </div>
+        <>
+            <input ref={forwardRef} checked={checked} onChange={e => setChecked(e.target.checked)} hidden type="checkbox" id={id} />
+            <button type="button" className={`${classes.box} ${checked ? 'checked' : ''} ${className}`} onClick={() => setChecked(p => !p)} {...props}>
+                <Icon className={classes.icon} path={mdiCheck} />
+            </button>
+        </>
     );
 }

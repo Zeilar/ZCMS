@@ -1,5 +1,4 @@
-import { ErrorModalContext } from '../contexts/ErrorModalContext';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import { mdiLoading } from '@mdi/js';
@@ -7,7 +6,7 @@ import Http from '../classes/Http';
 import Header from './Header';
 import Icon from '@mdi/react';
 
-export default function Index(props) {
+export default function Index() {
     const styles = createUseStyles({
         categories: {
             margin: [50, 'var(--container-margin)'],
@@ -42,7 +41,6 @@ export default function Index(props) {
     const classes = styles();
 
     const [loadingCategories, setLoadingCategories] = useState(true);
-    const { setError } = useContext(ErrorModalContext);
     const [categories, setCategories] = useState([]);
 
     useEffect(async () => {
@@ -50,11 +48,6 @@ export default function Index(props) {
         if (response.code === 200) setCategories(response.data);
         setLoadingCategories(false);
     }, []);
-
-    useEffect(() => {
-        const error = props.location.state?.error;
-        if (error) setError(error);
-    }, [props.location.state]);
 
     const categoriesRender = () => {
         if (loadingCategories) {

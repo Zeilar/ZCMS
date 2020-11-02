@@ -25,14 +25,14 @@ class Thread extends Model
     }
 
     public function opPost() {
-        return $this->posts()->limit(1)->first() ?? false;
+        return $this->posts()->limit(1)->first();
     }
 
     public function op() {
-        return $this->opPost()->user ?? false;
+        return $this->opPost()->user;
     }
 
     public function latestPost() {
-        return $this->posts()->latest()->limit(1)->first() ?? false;
+        return $this->posts()->latest()->limit(1)->first();
     }
 }

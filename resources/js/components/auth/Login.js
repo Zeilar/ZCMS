@@ -1,7 +1,10 @@
+import { ErrorModalContext } from '../../contexts/ErrorModalContext';
+import React, { useState, useRef, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { Redirect, useHistory } from 'react-router';
-import React, { useState, useContext } from 'react';
 import { createUseStyles } from 'react-jss';
+import { NavLink } from 'react-router-dom';
+import Checkbox from '../misc/Checkbox';
 import Tooltip from '../misc/Tooltip';
 import Http from '../../classes/Http';
 import { mdiLoading } from '@mdi/js';
@@ -9,8 +12,12 @@ import Header from '../Header';
 import Icon from '@mdi/react';
 
 export default function Login() {
+    const { setError } = useContext(ErrorModalContext);
     const { user, setUser } = useContext(UserContext);
-    if (user) return <Redirect to={{ pathname: '/', state: { error: 'You are already logged in' } }} />
+    if (user) {
+        setError('You are already logged in');
+        return <Redirect to="/" />
+    }
 
     const styles = createUseStyles({
         login: {
@@ -61,6 +68,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [id, setId] = useState('');
     const history = useHistory();
+    const remember = useRef();
 
     async function login(e) {
         e.preventDefault();
@@ -72,6 +80,7 @@ export default function Login() {
 
         const response = await Http.post('login', { body: formData }, true);
         setSubmitting(false);
+
         if (response.code === 200) {
             history.push('/');
             setUser(response.data);
@@ -95,6 +104,14 @@ export default function Login() {
                         className={`${classes.input} mt-1`} id="password" type="password"
                         onChange={(e) => setPassword(e.target.value)} value={password} 
                     />
+                </div>
+                <div className={`${classes.row} row center-children`}>
+                    <label className={`${classes.label} mr-1 pointer no-select`} htmlFor="remember">
+                        Remember me
+                    </label>
+                    <Checkbox forwardRef={remember} className="mr-auto" id="remember" />
+
+                    <NavLink className="ml-auto" to="/forgot-password">Register</NavLink>
                 </div>
                 <div className={`${classes.footer}`}>
                     <Tooltip
