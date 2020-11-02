@@ -18,14 +18,14 @@ export default function Threads() {
             borderRadius: 2,
         },
         headerText: {
-            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.25)'],
+            boxShadow: [0, 0, 10, 0, 'rgba(0, 0, 0, 0.25)'],
             backgroundImage: 'var(--color-main-gradient)',
             color: 'var(--color-primary)',
             alignItems: 'center',
             padding: 15,
         },
         back: {
-            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.25)'],
+            boxShadow: [0, 0, 10, 0, 'rgba(0, 0, 0, 0.25)'],
             backgroundImage: 'var(--color-main-gradient)',
             color: 'var(--color-primary)',
             padding: 15,
@@ -39,7 +39,7 @@ export default function Threads() {
             width: 25,
         },
         threads: {
-            minHeight: 50,
+            minHeight: 100,
         },
         thread: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
@@ -54,9 +54,19 @@ export default function Threads() {
         },
         title: {
             width: '50%',
-            '& a': {
-                color: 'var(--text-primary)',
-                fontWeight: 'bold',
+        },
+        titleText: {
+            color: 'var(--text-primary)',
+            textDecoration: 'none',
+            fontWeight: 'bold',
+            '&:hover': {
+                textDecoration: 'none',
+            },
+        },
+        op: {
+            color: 'var(--text-secondary)',
+            '&:hover': {
+                textDecoration: 'none',
             },
         },
         posts: {
@@ -69,7 +79,12 @@ export default function Threads() {
             width: '15%',
         },
         latestLink: {
+            color: 'var(--text-primary)',
             fontWeight: 'bold',
+            '&:hover': {
+                color: 'var(--color-link)',
+                textDecoration: 'none',
+            },
         },
         latestDate: {
             fontSize: '0.85rem',
@@ -108,10 +123,13 @@ export default function Threads() {
                 return threads.map(thread => (
                     <div className={`${classes.thread} row mt-1`} key={thread.id}>
                         <div className={`${classes.title} col`}>
-                            <NavLink to={`/thread/${thread.slug}`}>
+                            <NavLink className={classes.titleText} to={`/thread/${thread.slug}`}>
                                 {thread.title}
                             </NavLink>
-                            <NavLink className="bold mt-2 mr-auto" to={`/user/${thread.op.username}`}>
+                            <NavLink
+                                className={`${classes.op} color-${thread.latestPost.user.roles[0].clearance} bold mt-2 mr-auto`}
+                                to={`/user/${thread.op.username}`}
+                            >
                                 {thread.op.username}
                             </NavLink>
                         </div>
@@ -127,7 +145,10 @@ export default function Threads() {
                             <span className={`${classes.latestDate} ml-auto`}>
                                 Some date
                             </span>
-                            <NavLink className={`${classes.latestLink} ml-auto mt-2`} to={`/thread/${thread.slug}/#${thread.latestPost.id}`}>
+                            <NavLink
+                                className={`${classes.latestLink} color-${thread.latestPost.user.roles[0].clearance} ml-auto mt-2`}
+                                to={`/thread/${thread.slug}/#${thread.latestPost.id}`}
+                            >
                                 {thread.latestPost.user.username}
                             </NavLink>
                         </div>

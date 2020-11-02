@@ -90,12 +90,12 @@ export default function Header({ forwardRef }) {
         if (user) {
             return <>
                 <li className={`${classes.navitem}`}>
-                    <NavLink className={`${classes.navlink}`} to="/admin">
+                    <NavLink className={`${classes.navlink} no-select`} to="/admin">
                         Admin
                     </NavLink>
                 </li>
                 <li className={`${classes.navitem}`}>
-                    <a className={`${classes.navlink} pointer`} onClick={logout}>
+                    <a className={`${classes.navlink} no-select`} onClick={logout}>
                         Logout
                     </a>
                 </li>

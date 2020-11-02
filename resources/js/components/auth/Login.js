@@ -14,6 +14,7 @@ import Icon from '@mdi/react';
 export default function Login() {
     const { setError } = useContext(ErrorModalContext);
     const { user, setUser } = useContext(UserContext);
+
     if (user) {
         setError('You are already logged in');
         return <Redirect to="/" />
@@ -42,7 +43,7 @@ export default function Login() {
             padding: 35,
         },
         label: {
-            color: 'var(--border-secondary)',
+            color: 'var(--text-secondary)',
         },
         footer: {
             borderTop: '1px solid var(--border-primary)',
@@ -66,6 +67,7 @@ export default function Login() {
 
     const [submitting, setSubmitting] = useState(false);
     const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState([]);
     const [id, setId] = useState('');
     const history = useHistory();
     const remember = useRef();
@@ -84,6 +86,8 @@ export default function Login() {
         if (response.code === 200) {
             history.push('/');
             setUser(response.data);
+        } else if (response.code === 422) {
+            setErrors(response.data);
         } else {
             alert('Error');
         }
@@ -96,22 +100,25 @@ export default function Login() {
             <form className={`${classes.login} mx-auto mt-5`} onSubmit={login}>
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Username or Email</label>
-                    <input className={`${classes.input} mt-1`} value={id} onChange={(e) => setId(e.target.value)} id="id" />
+                    <input className={`${classes.input} mt-1`} value={id} onChange={e => setId(e.target.value)} id="id" />
                 </div>
                 <div className={`${classes.row} col`}>
-                    <label className={classes.label}>Password</label>
+                    <div className="row">
+                        <label className={classes.label}>Password</label>
+                        <NavLink className="ml-auto" to="/forgot-password">Forgot password?</NavLink>
+                    </div>
                     <input
                         className={`${classes.input} mt-1`} id="password" type="password"
-                        onChange={(e) => setPassword(e.target.value)} value={password} 
+                        onChange={e => setPassword(e.target.value)} value={password} 
                     />
                 </div>
                 <div className={`${classes.row} row center-children`}>
-                    <label className={`${classes.label} mr-1 pointer no-select`} htmlFor="remember">
+                    <Checkbox forwardRef={remember} className="mr-2" id="remember" />
+                    <label className={`${classes.label} mr-auto pointer no-select`} htmlFor="remember">
                         Remember me
                     </label>
-                    <Checkbox forwardRef={remember} className="mr-auto" id="remember" />
 
-                    <NavLink className="ml-auto" to="/forgot-password">Register</NavLink>
+                    <NavLink className="ml-auto" to="/register">Register</NavLink>
                 </div>
                 <div className={`${classes.footer}`}>
                     <Tooltip

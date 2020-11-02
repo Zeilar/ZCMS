@@ -16,9 +16,12 @@
   --border-primary: rgb(200, 200, 200);
   --border-secondary: rgb(150, 150, 150);
   --text-primary: black;
-  --text-secondary: rgb(30, 30, 30);
+  --text-secondary: rgb(100, 100, 100);
   --container-margin: 15vw;
   --body-bg: rgb(250, 250, 250);
+  --color-1: var(--color-main);
+  --color-2: rgb(200, 0, 0);
+  --color-3: rgb(200, 100, 0);
 }
 
 .adminBtn {
@@ -89,6 +92,18 @@
   width: 100px;
 }
 
+a.color-1 {
+  color: var(--color-1);
+}
+
+a.color-2 {
+  color: var(--color-2);
+}
+
+a.color-3 {
+  color: var(--color-3);
+}
+
 @font-face {
   src: url("/storage/fonts/Roboto-Regular.ttf");
   font-family: "Roboto";
@@ -131,6 +146,7 @@ button {
 }
 
 a {
+  transition: all 0.1s linear;
   color: var(--color-link);
   text-decoration: none;
 }
@@ -151,5 +167,12 @@ button {
 
 svg {
   width: 25px;
+}
+
+label {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: text;
 }
 

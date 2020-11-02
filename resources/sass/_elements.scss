@@ -39,6 +39,7 @@
     }
 }
 
+// Loading wheel
 .loadingWheel {
     color: var(--color-main);
     width: 25px;
@@ -54,4 +55,17 @@
 .loadingWheel-4 {
     color: var(--color-main);
     width: 100px;
+}
+
+a {
+    // Clearance colors
+    &.color-1 {
+        color: var(--color-1);
+    }
+    &.color-2 {
+        color: var(--color-2);
+    }
+    &.color-3 {
+        color: var(--color-3);
+    }
 }

@@ -30,6 +30,7 @@ button {
 }
 
 a {
+    transition: all 0.1s linear;
     color: var(--color-link);
     text-decoration: none;
 
@@ -47,4 +48,9 @@ button {
 
 svg {
     width: 25px;
+}
+
+label {
+    width: fit-content;
+    cursor: text;
 }
