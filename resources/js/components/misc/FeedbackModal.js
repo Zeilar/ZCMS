@@ -25,17 +25,17 @@ export default function FeedbackModal({ message, type }) {
     const styles = createUseStyles({
         '@keyframes fadeIn': {
             from: {
-                top: '18vh',
+                top: '23vh',
                 opacity: 0,
             },
             to: {
-                top: '20vh',
+                top: '25vh',
                 opacity: 1,
             },
         },
         '@keyframes fadeOut': {
             to: {
-                top: '18vh',
+                top: '23vh',
                 opacity: 0,
             },
         },
