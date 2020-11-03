@@ -50,7 +50,7 @@ export default function FeedbackModal({ message, type }) {
             left: '50%',
         },
         text: {
-
+            
         },
     });
     const classes = styles();
