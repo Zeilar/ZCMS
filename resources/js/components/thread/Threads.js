@@ -162,7 +162,7 @@ export default function Threads() {
         <>
             <Header forwardRef={header} />
             <div className={`${classes.container} pt-4`}>
-                <h2 className={`${classes.header} no-select row mb-2`}>
+                <h2 className={`${classes.header} row mb-2`}>
                     <NavLink className={`${classes.back} d-flex mr-2`} to="/">
                         <Icon path={mdiArrowLeft} />
                     </NavLink>

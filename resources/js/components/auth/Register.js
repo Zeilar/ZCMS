@@ -1,6 +1,7 @@
 import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
-import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
+import { Knockout } from '../styled-components/index';
+import React, { useState, useContext } from 'react';
 import { Redirect, useHistory } from 'react-router';
 import Validator from '../../classes/Validator';
 import { createUseStyles } from 'react-jss';
@@ -9,7 +10,6 @@ import Http from '../../classes/Http';
 import { mdiLoading } from '@mdi/js';
 import Header from '../Header';
 import Icon from '@mdi/react';
-
 
 export default function Register() {
     const { setMessage, setType } = useContext(FeedbackModalContext);
@@ -26,6 +26,9 @@ export default function Register() {
             backgroundColor: 'var(--color-primary)',
             borderRadius: 3,
             width: '22.5%',
+        },
+        header: {
+            fontSize: '2rem',
         },
         input: {
             border: '1px solid var(--border-secondary)',
@@ -206,8 +209,8 @@ export default function Register() {
     return (
         <>
             <Header />
-            <h2 className={classes.header}>Register</h2>
-            <form className={`${classes.register} mx-auto mt-4`} onSubmit={register}>
+            <Knockout className={`${classes.header} text-center mt-4`} as="h2">Register</Knockout>
+            <form className={`${classes.register} mx-auto mt-2`} onSubmit={register}>
                 {renderErrors()}
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Username</label>
@@ -220,8 +223,8 @@ export default function Register() {
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Password</label>
                     <input
-                        onChange={e => setPassword(e.target.value)} onBlur={passwordBlur}
                         className={`${classes.input} mt-2`} type="password" value={password}
+                        onChange={e => setPassword(e.target.value)} onBlur={passwordBlur}
                     />
                 </div>
                 <div className={`${classes.row} col`}>

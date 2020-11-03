@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
 import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
+import React, { useState, useRef, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
+import { Knockout } from '../styled-components/index';
 import { Redirect, useHistory } from 'react-router';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import Checkbox from '../misc/Checkbox';
-import Tooltip from '../misc/Tooltip';
 import Http from '../../classes/Http';
 import { mdiLoading } from '@mdi/js';
 import Header from '../Header';
@@ -26,6 +26,9 @@ export default function Login() {
             backgroundColor: 'var(--color-primary)',
             borderRadius: 3,
             width: '22.5%',
+        },
+        header: {
+            fontSize: '2rem',
         },
         input: {
             border: '1px solid var(--border-secondary)',
@@ -113,8 +116,8 @@ export default function Login() {
     return (
         <>
             <Header />
-            <h2 className={classes.header}>Login</h2>
-            <form className={`${classes.login} mx-auto mt-4`} onSubmit={login}>
+            <Knockout className={`${classes.header} text-center mt-4`} as="h2">Login</Knockout>
+            <form className={`${classes.login} mx-auto mt-2`} onSubmit={login}>
                 {
                     (errors.id || errors.password) &&
                         <div className={`${classes.errors} col pb-0`}>
