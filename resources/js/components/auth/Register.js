@@ -173,7 +173,7 @@ export default function Register() {
     }
 
     function validatePasswordConfirm() {
-        const input = new Validator(passwordConfirm, 'Password confirmation');
+        const input = new Validator(passwordConfirm, 'Confirm Password');
         const results = input.required().min(5).max(30);
         setErrors(p => ({...p, password_confirmation: results.errors }));
         return results.errors;
