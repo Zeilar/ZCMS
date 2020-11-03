@@ -28,7 +28,7 @@ export default class Validator {
 
     equalWith(subject) {
         if (this.input !== subject) {
-            this.errors.push(`<b>${this.field}</b>s must match`);
+            this.errors.push(`<b>${this.field}s</b> must match`);
         }
         return this;
     }
