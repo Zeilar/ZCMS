@@ -117,7 +117,7 @@ export default function Login() {
         <>
             <Header />
             <Knockout className={`${classes.header} text-center mt-4`} as="h2">Login</Knockout>
-            <form className={`${classes.login} mx-auto mt-2`} onSubmit={login}>
+            <form className={`${classes.login} mx-auto mt-3`} onSubmit={login}>
                 {
                     (errors.id || errors.password) &&
                         <div className={`${classes.errors} col pb-0`}>

@@ -1,24 +1,25 @@
 import { FeedbackModalContext } from '../contexts/FeedbackModalContext';
-import React, { useRef, useEffect, useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import { Knockout } from './styled-components/index';
+import React, { useRef, useContext } from 'react';
 import { createUseStyles } from 'react-jss';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Http from '../classes/Http';
 
 export default function Header({ forwardRef }) {
     const styles = createUseStyles({
         header: {
             backgroundColor: 'var(--color-darkGray)',
-            padding: [0, 'var(--container-margin)'],
+            padding: [0, '25%'],
         },
-        hero: {
+        brand: {
             
         },
         navbar: {
-            
+
         },
         navlist: {
-
+            alignItems: 'center',
         },
         navitem: {
             margin: [0, 20],
@@ -124,14 +125,16 @@ export default function Header({ forwardRef }) {
 
     return (
         <header className={`${classes.header} center-children sticky col`} ref={forwardRef}>
-            <div className={`${classes.hero} col center-children my-4 mb-0 text-center overflow-hidden`}>
-                <h1 className={`${classes.siteHeader} py-2`}>
-                    <NavLink className={`${classes.siteHeaderLink} no-select`} to="/">TPH</NavLink>
-                </h1>
-                <p className={`${classes.siteSlogan}`}>The pioneer hangout</p>
-            </div>
-            <nav className={`${classes.navbar} row my-4`} ref={navbar}>
-                <ul className={`${classes.navlist} row`}>
+            <nav className={`${classes.navbar} w-100 row my-3`} ref={navbar}>
+                <ul className={`${classes.navlist} flex row`}>
+                    <div className={`${classes.brand} mr-auto col center-children`}>
+                        <h1 className={`${classes.siteHeader} py-2`}>
+                            <NavLink className={`${classes.siteHeaderLink}`} to="/">
+                                <Knockout>TPH</Knockout>
+                            </NavLink>
+                        </h1>
+                        <p className={`${classes.siteSlogan}`}>The pioneer hangout</p>
+                    </div>
                     {navItems()}
                 </ul>
             </nav>

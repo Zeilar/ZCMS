@@ -210,7 +210,7 @@ export default function Register() {
         <>
             <Header />
             <Knockout className={`${classes.header} text-center mt-4`} as="h2">Register</Knockout>
-            <form className={`${classes.register} mx-auto mt-2`} onSubmit={register}>
+            <form className={`${classes.register} mx-auto mt-3`} onSubmit={register}>
                 {renderErrors()}
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Username</label>
