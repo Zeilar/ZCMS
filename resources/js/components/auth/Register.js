@@ -1,4 +1,4 @@
-import { ErrorModalContext } from '../../contexts/ErrorModalContext';
+import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { Redirect, useHistory } from 'react-router';
@@ -12,11 +12,11 @@ import Icon from '@mdi/react';
 
 
 export default function Register() {
-    const { setError } = useContext(ErrorModalContext);
+    const { setMessage } = useContext(FeedbackModalContext);
     const { user, setUser } = useContext(UserContext);
 
     if (user) {
-        setError('You are already logged in');
+        setMessage('You are already logged in');
         return <Redirect to="/" />
     }
 
@@ -79,7 +79,7 @@ export default function Register() {
     });
     const classes = styles();
 
-    const [errors, setErrors] = useState({ username: [], email: [], password: [], passwordConfirm: [] });
+    const [errors, setErrors] = useState({ username: [], email: [], password: [], password_confirmation: [] });
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [submitting, setSubmitting] = useState(false);
     const [password, setPassword] = useState('');
@@ -115,9 +115,9 @@ export default function Register() {
             history.push('/');
             setUser(response.data);
         } else if (response.code === 422) {
-            setErrors(response.data);
+            setErrors(response.data.errors);
         } else {
-            setError('Something went wrong');
+            setMessage('Something went wrong');
         }
     }
     
@@ -165,7 +165,7 @@ export default function Register() {
 
     function passwordConfirmBlur() {
         if (passwordConfirm === '') {
-            return setErrors(p => ({...p, passwordConfirm: [] }));
+            return setErrors(p => ({...p, password_confirmation: [] }));
         }
         validatePasswordConfirm();
     }
@@ -173,7 +173,7 @@ export default function Register() {
     function validatePasswordConfirm() {
         const input = new Validator(passwordConfirm, 'Password confirmation');
         const results = input.required().min(5).max(30);
-        setErrors(p => ({...p, passwordConfirm: results.errors }));
+        setErrors(p => ({...p, password_confirmation: results.errors }));
         return results.errors;
     }
 

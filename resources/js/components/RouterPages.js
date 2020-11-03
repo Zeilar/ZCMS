@@ -1,8 +1,8 @@
-import { ErrorModalContext } from '../contexts/ErrorModalContext';
+import { FeedbackModalContext } from '../contexts/FeedbackModalContext';
 import AdminDashboard from './admin/dashboard/Index';
 import { Route, Switch } from 'react-router';
 import AdminRoute from './routes/AdminRoute';
-import ErrorModal from './misc/ErrorModal';
+import FeedbackModal from './misc/FeedbackModal';
 import React, { useContext } from 'react';
 import Register from './auth/Register';
 import Threads from './thread/Threads';
@@ -12,7 +12,7 @@ import Login from './auth/Login';
 import Index from './Index';
 
 export default function RouterPages() {
-    const { error } = useContext(ErrorModalContext);
+    const { type, message } = useContext(FeedbackModalContext);
 
     return (
         <>
@@ -25,7 +25,7 @@ export default function RouterPages() {
                 <AdminRoute component={AdminDashboard} path="/admin" />
                 <Route component={NotFound} />
             </Switch>
-            {error && <ErrorModal error={error} />}
+            {(message) && <FeedbackModal message={message} type={type} />}
         </>
     );
 }

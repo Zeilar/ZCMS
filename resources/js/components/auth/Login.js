@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { ErrorModalContext } from '../../contexts/ErrorModalContext';
+import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import { UserContext } from '../../contexts/UserContext';
 import { Redirect, useHistory } from 'react-router';
 import { createUseStyles } from 'react-jss';
@@ -12,11 +12,11 @@ import Header from '../Header';
 import Icon from '@mdi/react';
 
 export default function Login() {
-    const { setError } = useContext(ErrorModalContext);
+    const { setMessage, setType } = useContext(FeedbackModalContext);
     const { user, setUser } = useContext(UserContext);
 
     if (user) {
-        setError('You are already logged in');
+        setMessage('You are already logged in');
         return <Redirect to="/" />
     }
 
@@ -101,10 +101,12 @@ export default function Login() {
         if (response.code === 200) {
             history.push('/');
             setUser(response.data);
+            setType('success');
+            setMessage('Successfully logged in');
         } else if (response.code === 422) {
             setErrors(response.data);
         } else {
-            setError('Something went wrong');
+            setMessage('Something went wrong');
         }
     }
 

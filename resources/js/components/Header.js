@@ -1,4 +1,4 @@
-import { ErrorModalContext } from '../contexts/ErrorModalContext';
+import { FeedbackModalContext } from '../contexts/FeedbackModalContext';
 import React, { useRef, useEffect, useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { createUseStyles } from 'react-jss';
@@ -72,16 +72,18 @@ export default function Header({ forwardRef }) {
     });
     const classes = styles();
 
-    const { setError } = useContext(ErrorModalContext);
+    const { setMessage, setType } = useContext(FeedbackModalContext);
     const { user, setUser } = useContext(UserContext);
     const navbar = useRef();
 
     async function logout() {
         const response = await Http.post('logout');
         if (response.code === 200) {
+            setType('success');
+            setMessage('Successfully logged out');
             return setUser(false);
         } else {
-            return setError('Something went wrong, try refreshing the page');
+            return setMessage('Something went wrong, try refreshing the page');
         }
     }
 
