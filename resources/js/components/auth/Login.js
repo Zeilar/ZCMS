@@ -95,7 +95,7 @@ export default function Login() {
         formData.append('remember', remember.current.checked);
 
         setSubmitting(true);
-        const response = await Http.post('login', { body: formData }, true);
+        const response = await Http.post('login', { body: formData });
         setSubmitting(false);
 
         if (response.code === 200) {
