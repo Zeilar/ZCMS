@@ -110,14 +110,6 @@ export default function Login() {
         }
     }
 
-    useEffect(() => {
-        errors.id = false;
-    }, [id]);
-
-    useEffect(() => {
-        errors.password = false;
-    }, [password]);
-
     return (
         <>
             <Header />
@@ -152,16 +144,13 @@ export default function Login() {
                     <NavLink className="ml-auto" to="/register">Register</NavLink>
                 </div>
                 <div className={`${classes.footer}`}>
-                    <Tooltip
-                        disabled={submitting || !id || !password} title={!id || !password ? 'Please fill all the fields' : null} tagName="button"
-                        className={`${classes.submit} d-flex center-children py-2 btn w-100 border-0`}
-                    >
+                    <button className={`${classes.submit} d-flex center-children py-2 btn w-100 border-0`} disabled={submitting}>
                         {
                             !submitting
                                 ? <span className={classes.submitText}>Login</span>
                                 : <Icon className={`${classes.submitIcon}`} path={mdiLoading} spin={1} />
                         }
-                    </Tooltip>
+                    </button>
                 </div>
             </form>
         </>
