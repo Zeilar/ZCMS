@@ -12,7 +12,7 @@ import Icon from '@mdi/react';
 
 
 export default function Register() {
-    const { setMessage } = useContext(FeedbackModalContext);
+    const { setMessage, setType } = useContext(FeedbackModalContext);
     const { user, setUser } = useContext(UserContext);
 
     if (user) {
@@ -114,6 +114,8 @@ export default function Register() {
         if (response.code === 200) {
             history.push('/');
             setUser(response.data);
+            setType('success');
+            setMessage('Successfully created account!');
         } else if (response.code === 422) {
             setErrors(response.data.errors);
         } else {

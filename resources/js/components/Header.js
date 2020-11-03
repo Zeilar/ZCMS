@@ -2,7 +2,7 @@ import { FeedbackModalContext } from '../contexts/FeedbackModalContext';
 import React, { useRef, useEffect, useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { createUseStyles } from 'react-jss';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import Http from '../classes/Http';
 
 export default function Header({ forwardRef }) {
@@ -91,11 +91,14 @@ export default function Header({ forwardRef }) {
         if (user == null) return;
         if (user) {
             return <>
-                <li className={`${classes.navitem}`}>
-                    <NavLink className={`${classes.navlink} no-select`} to="/admin">
-                        Admin
-                    </NavLink>
-                </li>
+                {
+                    user.roles[0].clearance <= 2 &&
+                        <li className={`${classes.navitem}`}>
+                            <NavLink className={`${classes.navlink} no-select`} to="/admin">
+                                Admin
+                            </NavLink>
+                        </li>
+                }
                 <li className={`${classes.navitem}`}>
                     <a className={`${classes.navlink} no-select`} onClick={logout}>
                         Logout
