@@ -1,18 +1,21 @@
+import { mdiAlertCircle, mdiCheckCircle, mdiAlert } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
-import { mdiAlertCircle } from '@mdi/js';
 import Icon from '@mdi/react';
 import React from 'react';
 
 export default function FeedbackModal({ message, type }) {
     let backgroundColor = 'rgb(200, 0, 0)';
     let color = 'var(--color-primary)';
+    let icon = mdiAlertCircle;
     switch (type) {
         case 'success':
             backgroundColor = 'rgb(0, 200, 0)';
+            icon = mdiCheckCircle;
             break;
         case 'warning':
             backgroundColor = 'rgb(255, 255, 0)';
             color = 'var(--text-primary)';
+            icon = mdiAlert;
             break;
         case 'error':
             backgroundColor = 'rgb(200, 0, 0)';
@@ -54,7 +57,7 @@ export default function FeedbackModal({ message, type }) {
 
     return (
         <div className={`${classes.modal} absolute center-children bold p-2 row no-select`}>
-            <Icon path={mdiAlertCircle} />
+            <Icon path={icon} />
             <span className={`${classes.text} ml-1`}>
                 {message}
             </span>

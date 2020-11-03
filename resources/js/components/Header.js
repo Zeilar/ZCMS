@@ -81,7 +81,8 @@ export default function Header({ forwardRef }) {
         if (response.code === 200) {
             setType('success');
             setMessage('Successfully logged out');
-            return setUser(false);
+            setUser(false);
+            return;
         } else {
             return setMessage('Something went wrong, try refreshing the page');
         }
