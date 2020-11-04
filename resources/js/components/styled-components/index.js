@@ -6,6 +6,7 @@ const Knockout = styled.p`
     -webkit-background-clip: text;
     color: var(--color-main);
     background-clip: text;
+    font-family: Raleway;
     user-select: none;
 `;
 

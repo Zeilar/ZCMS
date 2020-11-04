@@ -3,6 +3,8 @@ import React, { useState, useRef, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { Knockout } from '../styled-components/index';
 import { Redirect, useHistory } from 'react-router';
+import PasswordField from '../misc/PasswordField';
+import Validator from '../../classes/Validator';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import Checkbox from '../misc/Checkbox';
@@ -82,14 +84,22 @@ export default function Login() {
     });
     const classes = styles();
 
-    const [errors, setErrors] = useState({ id: false, password: false });
+    const [errors, setErrors] = useState({ id: [], password: [] });
     const [submitting, setSubmitting] = useState(false);
     const [password, setPassword] = useState('');
     const [id, setId] = useState('');
     const history = useHistory();
     const remember = useRef();
 
-    async function login(e) {
+    function login(e) {
+        e.preventDefault();
+
+        const errors = [...validateId(), ...validatePassword()];
+
+        if (errors.length <= 0) submit();
+    }
+
+    async function submit() {
         e.preventDefault();
 
         const formData = new FormData();
@@ -107,10 +117,62 @@ export default function Login() {
             setType('success');
             setMessage('Successfully logged in');
         } else if (response.code === 422) {
-            setErrors(response.data);
+            setErrors(response.data.errors);
         } else {
             setMessage('Something went wrong');
         }
+    }
+
+    function idBlur() {
+        if (id === '') {
+            return setErrors(p => ({...p, id: [] }));
+        }
+        validateId();
+    }
+
+    function validateId() {
+        const input = new Validator(id, 'Username or Email');
+        const results = input.required();
+        setErrors(p => ({...p, id: results.errors }));
+        return results.errors;
+    }
+
+    function passwordBlur() {
+        if (password === '') {
+            return setErrors(p => ({...p, password: [] }));
+        }
+        validatePassword();
+    }
+
+    function validatePassword() {
+        const input = new Validator(password, 'Password');
+        const results = input.required();
+        setErrors(p => ({...p, password: results.errors }));
+        return results.errors;
+    }
+
+    function anyErrors() {
+        for (const property in errors) {
+            if (errors[property].length > 0) return true;
+        }
+        return false;
+    }
+
+    const renderErrors = () => {
+        if (!anyErrors()) return;
+
+        const errorsJsx = [];
+        for (const property in errors) {
+            if (errors[property][0]) {
+                errorsJsx.push(<p className={`${classes.error} p-2`} key={Math.random()} dangerouslySetInnerHTML={{ __html: errors[property][0] }} />);
+            }
+        }
+
+        return (
+            <div className={`${classes.errors} col pb-0`}>
+                {errorsJsx}
+            </div>
+        );
     }
 
     return (
@@ -118,25 +180,19 @@ export default function Login() {
             <Header />
             <Knockout className={`${classes.header} text-center mt-4`} as="h2">Login</Knockout>
             <form className={`${classes.login} mx-auto mt-3`} onSubmit={login}>
-                {
-                    (errors.id || errors.password) &&
-                        <div className={`${classes.errors} col pb-0`}>
-                            {errors.id && <p className={`${classes.error} p-2`}>{errors.id}</p>}
-                            {errors.password && <p className={`${classes.error} p-2`}>{errors.password}</p>}
-                        </div>
-                }
+                {renderErrors()}
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Username or Email</label>
-                    <input className={`${classes.input} mt-2`} value={id} onChange={e => setId(e.target.value)} />
+                    <input className={`${classes.input} mt-2`} value={id} onChange={e => setId(e.target.value)} onBlur={idBlur} />
                 </div>
                 <div className={`${classes.row} col`}>
                     <div className="row">
                         <label className={classes.label}>Password</label>
                         <NavLink className="ml-auto" to="/forgot-password">Forgot password?</NavLink>
                     </div>
-                    <input
-                        className={`${classes.input} mt-2`} id="password" type="password"
-                        onChange={e => setPassword(e.target.value)} value={password} 
+                    <PasswordField
+                        onChange={e => setPassword(e.target.value)} containerClass="mt-2"
+                        className={classes.input} onBlur={passwordBlur} value={password} 
                     />
                 </div>
                 <div className={`${classes.row} pt-0 row center-children`}>

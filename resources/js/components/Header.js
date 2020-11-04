@@ -63,7 +63,7 @@ export default function Header({ forwardRef }) {
             '-webkit-background-clip': 'text',
             color: 'var(--color-main)',
             'background-clip': 'text',
-            fontSize: '3rem',
+            fontSize: '2rem',
             lineHeight: 0.7,
         },
         siteSlogan: {
@@ -128,11 +128,9 @@ export default function Header({ forwardRef }) {
             <nav className={`${classes.navbar} w-100 row my-3`} ref={navbar}>
                 <ul className={`${classes.navlist} flex row`}>
                     <div className={`${classes.brand} mr-auto col center-children`}>
-                        <h1 className={`${classes.siteHeader} py-2`}>
-                            <NavLink className={`${classes.siteHeaderLink}`} to="/">
-                                <Knockout>TPH</Knockout>
-                            </NavLink>
-                        </h1>
+                        <NavLink className={`${classes.siteHeaderLink}`} to="/">
+                            <Knockout className={`${classes.siteHeader} py-2`} as="h1">TPH</Knockout>
+                        </NavLink>
                         <p className={`${classes.siteSlogan}`}>The pioneer hangout</p>
                     </div>
                     {navItems()}

@@ -3,6 +3,7 @@ import { UserContext } from '../../contexts/UserContext';
 import { Knockout } from '../styled-components/index';
 import React, { useState, useContext } from 'react';
 import { Redirect, useHistory } from 'react-router';
+import PasswordField from '../misc/PasswordField';
 import Validator from '../../classes/Validator';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
@@ -222,16 +223,16 @@ export default function Register() {
                 </div>
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Password</label>
-                    <input
-                        className={`${classes.input} mt-2`} type="password" value={password}
-                        onChange={e => setPassword(e.target.value)} onBlur={passwordBlur}
+                    <PasswordField
+                        onChange={e => setPassword(e.target.value)} containerClass="mt-2"
+                        className={classes.input} value={password} onBlur={passwordBlur}
                     />
                 </div>
                 <div className={`${classes.row} col`}>
                     <label className={classes.label}>Confirm Password</label>
-                    <input
+                    <PasswordField
                         onChange={e => setPasswordConfirm(e.target.value)} onBlur={passwordConfirmBlur}
-                        className={`${classes.input} mt-2`} value={passwordConfirm} type="password"
+                        className={classes.input} value={passwordConfirm} containerClass="mt-2"
                     />
                 </div>
                 <div className={`${classes.row} pt-0 row center-children`}>
