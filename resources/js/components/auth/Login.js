@@ -100,8 +100,6 @@ export default function Login() {
     }
 
     async function submit() {
-        e.preventDefault();
-
         const formData = new FormData();
         formData.append('id', id);
         formData.append('password', password);
