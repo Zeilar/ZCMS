@@ -126,26 +126,13 @@ export default function Register() {
             setMessage('Something went wrong');
         }
     }
-    
-    function usernameBlur() {
-        if (username === '') {
-            return setErrors(p => ({...p, username: [] }));
-        }
-        validateUsername();
-    }
+
 
     function validateUsername() {
         const input = new Validator(username, 'Username');
         const results = input.required().min(5).max(15);
         setErrors(p => ({...p, username: results.errors }));
         return results.errors;
-    }
-
-    function emailBlur() {
-        if (email === '') {
-            return setErrors(p => ({...p, email: [] }));
-        }
-        validateEmail();
     }
 
     function validateEmail() {
@@ -155,25 +142,11 @@ export default function Register() {
         return results.errors;
     }
 
-    function passwordBlur() {
-        if (password === '') {
-            return setErrors(p => ({...p, password: [] }));
-        }
-        validatePassword();
-    }
-
     function validatePassword() {
         const input = new Validator(password, 'Password');
         const results = input.required().min(5).max(30).equalWith(passwordConfirm);
         setErrors(p => ({...p, password: results.errors }));
         return results.errors;
-    }
-
-    function passwordConfirmBlur() {
-        if (passwordConfirm === '') {
-            return setErrors(p => ({...p, password_confirmation: [] }));
-        }
-        validatePasswordConfirm();
     }
 
     function validatePasswordConfirm() {
@@ -215,23 +188,20 @@ export default function Register() {
                 {renderErrors()}
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Username</label>
-                    <input className={`${classes.input} mt-2`} value={username} onChange={e => setUsername(e.target.value)} onBlur={usernameBlur} />
+                    <input className={`${classes.input} mt-2`} value={username} onChange={e => setUsername(e.target.value)} />
                 </div>
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Email</label>
-                    <input className={`${classes.input} mt-2`} value={email} onChange={e => setEmail(e.target.value)} onBlur={emailBlur} />
+                    <input className={`${classes.input} mt-2`} value={email} onChange={e => setEmail(e.target.value)} />
                 </div>
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Password</label>
-                    <PasswordField
-                        onChange={e => setPassword(e.target.value)} containerClass="mt-2"
-                        className={classes.input} value={password} onBlur={passwordBlur}
-                    />
+                    <PasswordField onChange={e => setPassword(e.target.value)} containerClass="mt-2" className={classes.input} value={password} />
                 </div>
                 <div className={`${classes.row} col`}>
                     <label className={classes.label}>Confirm Password</label>
                     <PasswordField
-                        onChange={e => setPasswordConfirm(e.target.value)} onBlur={passwordConfirmBlur}
+                        onChange={e => setPasswordConfirm(e.target.value)}
                         className={classes.input} value={passwordConfirm} containerClass="mt-2"
                     />
                 </div>

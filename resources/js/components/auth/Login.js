@@ -123,25 +123,11 @@ export default function Login() {
         }
     }
 
-    function idBlur() {
-        if (id === '') {
-            return setErrors(p => ({...p, id: [] }));
-        }
-        validateId();
-    }
-
     function validateId() {
         const input = new Validator(id, 'Username or Email');
         const results = input.required();
         setErrors(p => ({...p, id: results.errors }));
         return results.errors;
-    }
-
-    function passwordBlur() {
-        if (password === '') {
-            return setErrors(p => ({...p, password: [] }));
-        }
-        validatePassword();
     }
 
     function validatePassword() {
@@ -183,17 +169,14 @@ export default function Login() {
                 {renderErrors()}
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Username or Email</label>
-                    <input className={`${classes.input} mt-2`} value={id} onChange={e => setId(e.target.value)} onBlur={idBlur} />
+                    <input className={`${classes.input} mt-2`} value={id} onChange={e => setId(e.target.value)} />
                 </div>
                 <div className={`${classes.row} col`}>
                     <div className="row">
                         <label className={classes.label}>Password</label>
                         <NavLink className="ml-auto" to="/forgot-password">Forgot password?</NavLink>
                     </div>
-                    <PasswordField
-                        onChange={e => setPassword(e.target.value)} containerClass="mt-2"
-                        className={classes.input} onBlur={passwordBlur} value={password} 
-                    />
+                    <PasswordField onChange={e => setPassword(e.target.value)} containerClass="mt-2" className={classes.input} value={password} />
                 </div>
                 <div className={`${classes.row} pt-0 row center-children`}>
                     <Checkbox forwardRef={remember} className="mr-2" id="remember" />
