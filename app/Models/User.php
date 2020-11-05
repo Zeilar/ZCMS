@@ -45,7 +45,7 @@ class User extends Authenticatable
     }
 
     public function getRolesAttribute() {
-        return $this->roles()->get(['name', 'clearance', 'color']);
+        return $this->roles()->get(['name', 'clearance']);
     }
 
     public function posts() {

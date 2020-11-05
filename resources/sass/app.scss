@@ -9,6 +9,10 @@
     outline: 0;
 }
 
+:root {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--body-bg);
     color: var(--text-primary);
@@ -30,7 +34,7 @@ button {
 }
 
 a {
-    transition: all 0.1s linear;
+    transition: all 0.05s linear;
     color: var(--color-link);
     text-decoration: none;
 

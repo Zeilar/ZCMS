@@ -93,9 +93,7 @@ export default function Login() {
 
     function login(e) {
         e.preventDefault();
-
         const errors = [...validateId(), ...validatePassword()];
-
         if (errors.length <= 0) submit();
     }
 

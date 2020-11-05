@@ -9,7 +9,7 @@ class Thread extends Model
 {
     use HasFactory;
 
-    public static $MAX_PER_PAGE = 30;
+    public static $MAX_PER_PAGE = 20;
     protected $guarded = [];
 
     public function user() {

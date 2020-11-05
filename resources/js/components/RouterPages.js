@@ -1,8 +1,8 @@
 import { FeedbackModalContext } from '../contexts/FeedbackModalContext';
 import AdminDashboard from './admin/dashboard/Index';
+import FeedbackModal from './misc/FeedbackModal';
 import { Route, Switch } from 'react-router';
 import AdminRoute from './routes/AdminRoute';
-import FeedbackModal from './misc/FeedbackModal';
 import React, { useContext } from 'react';
 import Register from './auth/Register';
 import Threads from './thread/Threads';
@@ -18,14 +18,14 @@ export default function RouterPages() {
         <>
             <Switch>
                 <Route component={Index} path="/" exact />
-                <Route component={Threads} path="/category/:category" exact />
-                <Route component={Thread} path="/thread/:category" exact />
+                <Route component={Threads} path="/category/:category/:page?" exact />
+                <Route component={Thread} path="/thread/:thread/" exact />
                 <Route component={Login} path="/login" exact />
                 <Route component={Register} path="/register" exact />
                 <AdminRoute component={AdminDashboard} path="/admin" />
                 <Route component={NotFound} />
             </Switch>
-            {(message) && <FeedbackModal message={message} type={type} />}
+            {message && <FeedbackModal message={message} type={type} />}
         </>
     );
 }

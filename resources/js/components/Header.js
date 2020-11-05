@@ -13,7 +13,9 @@ export default function Header({ forwardRef }) {
             padding: [0, '25%'],
         },
         brand: {
-            
+            '&:hover': {
+                textDecoration: 'none',
+            },
         },
         navbar: {
 
@@ -55,15 +57,8 @@ export default function Header({ forwardRef }) {
             },
         },
         siteHeader: {
+            fontSize: '2.5rem',
             letterSpacing: 2,
-        },
-        siteHeaderLink: {
-            backgroundImage: 'var(--color-main-gradient)',
-            '-webkit-text-fill-color': 'transparent',
-            '-webkit-background-clip': 'text',
-            color: 'var(--color-main)',
-            'background-clip': 'text',
-            fontSize: '2rem',
             lineHeight: 0.7,
         },
         siteSlogan: {
@@ -127,12 +122,10 @@ export default function Header({ forwardRef }) {
         <header className={`${classes.header} center-children sticky col`} ref={forwardRef}>
             <nav className={`${classes.navbar} w-100 row my-3`} ref={navbar}>
                 <ul className={`${classes.navlist} flex row`}>
-                    <div className={`${classes.brand} mr-auto col center-children`}>
-                        <NavLink className={`${classes.siteHeaderLink}`} to="/">
-                            <Knockout className={`${classes.siteHeader} py-2`} as="h1">TPH</Knockout>
-                        </NavLink>
+                    <NavLink className={`${classes.brand} mr-auto col center-children`} to="/">
+                        <Knockout className={`${classes.siteHeader} py-2`} as="h1">TPH</Knockout>
                         <p className={`${classes.siteSlogan}`}>The pioneer hangout</p>
-                    </div>
+                    </NavLink>
                     {navItems()}
                 </ul>
             </nav>
