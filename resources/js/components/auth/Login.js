@@ -112,8 +112,6 @@ export default function Login() {
 
         if (response.code === 200) {
             history.push('/');
-            setType('success');
-            setMessage('Successfully logged in');
             setUser(response.data);
         } else if (response.code === 422) {
             setErrors({ ...response.data });
@@ -175,7 +173,7 @@ export default function Login() {
                 <div className={`${classes.row} col`}>
                     <div className="row">
                         <label className={classes.label}>Password</label>
-                        <NavLink className="ml-auto" to="/forgot-password">Forgot password?</NavLink>
+                        <NavLink className="ml-auto" to="/forgot-password" tabIndex={-1}>Forgot password?</NavLink>
                     </div>
                     <PasswordField onChange={e => setPassword(e.target.value)} containerClass="mt-2" className={classes.input} value={password} />
                 </div>

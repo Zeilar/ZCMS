@@ -44,23 +44,19 @@ export default function FeedbackModal({ message, type }) {
             animation: '$fadeIn 0.25s linear forwards, $fadeOut 0.25s 2s linear forwards',
             backgroundColor: backgroundColor,
             transform: 'translateX(-50%)',
+            fontSize: '1.5rem',
             letterSpacing: 1,
             borderRadius: 3,
             color: color,
             left: '50%',
         },
-        text: {
-            
-        },
     });
     const classes = styles();
 
     return (
-        <div className={`${classes.modal} no-pointer absolute center-children bold p-2 row no-select`}>
+        <div className={`${classes.modal} absolute center-children bold p-3 row no-select`}>
             <Icon path={icon} />
-            <span className={`${classes.text} ml-1`}>
-                {message}
-            </span>
+            <span className="ml-1">{message}</span>
         </div>
     );
 }

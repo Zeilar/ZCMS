@@ -119,8 +119,6 @@ export default function Register() {
 
         if (response.code === 200) {
             history.push('/');
-            setType('success');
-            setMessage('Successfully created account!');
             setUser(response.data);
         } else if (response.code === 422) {
             setErrors({ ...response.data.errors });
@@ -221,7 +219,7 @@ export default function Register() {
                         {
                             !submitting
                                 ? <span className={classes.submitText}>Register</span>
-                                : <Icon className={`${classes.submitIcon}`} path={mdiLoading} spin={1} />
+                                : <Icon className={classes.submitIcon} path={mdiLoading} spin={1} />
                         }
                     </button>
                 </div>
