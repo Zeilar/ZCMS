@@ -119,9 +119,9 @@ export default function Register() {
 
         if (response.code === 200) {
             history.push('/');
-            setUser(response.data);
             setType('success');
             setMessage('Successfully created account!');
+            setUser(response.data);
         } else if (response.code === 422) {
             setErrors({ ...response.data.errors });
         } else {
