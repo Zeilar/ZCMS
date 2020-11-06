@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import { mdiLoading } from '@mdi/js';
 import Http from '../classes/Http';
 import Header from './Header';
@@ -39,39 +40,35 @@ export default function Index() {
         },
     });
     const classes = styles();
-
-    const [loadingCategories, setLoadingCategories] = useState(true);
-    const [categories, setCategories] = useState([]);
-
-    useEffect(async () => {
+    
+    const { data, status } = useQuery('categories', async () => {
         const response = await Http.get('categories');
-        if (response.code === 200) setCategories(response.data);
-        setLoadingCategories(false);
-    }, []);
+        return response.data;
+    });
 
     const categoriesRender = () => {
-        if (loadingCategories) {
+        if (status === 'loading') {
             return <Icon className="center-self loadingWheel-2" path={mdiLoading} spin={1} />;
-        } else {
-            if (categories.length > 0) {
-                return categories.map(category => (
-                    <NavLink
-                        className={`${classes.category} rounded p-4 center-children pointer col`}
-                        to={`/category/${category.name.toLowerCase()}`}
-                        key={category.id}
-                    >
-                        <img
-                            src={`${location.origin}/storage/category-icons/${category.icon}.svg`}
-                            className={`${classes.icon} mb-3`} alt={category.name}
-                        />
-                        <h2 className={classes.name}>
-                            {category.name}
-                        </h2>
-                    </NavLink>
-                ));
-            } else {
-                return <p className="text-center">No categories were found, please contact the webmaster!</p>;
-            }
+        }
+        if (status === 'success') {
+            return data.map(category => (
+                <NavLink
+                    className={`${classes.category} rounded p-4 center-children pointer col`}
+                    to={`/category/${category.name.toLowerCase()}`}
+                    key={category.id}
+                >
+                    <img
+                        src={`${location.origin}/storage/category-icons/${category.icon}.svg`}
+                        className={`${classes.icon} mb-3`} alt={category.name}
+                    />
+                    <h2 className={classes.name}>
+                        {category.name}
+                    </h2>
+                </NavLink>
+            ));
+        }
+        if (status === 'error') {
+            return <p className="text-center">No categories were found, please contact the webmaster!</p>;
         }
     }
 

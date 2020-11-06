@@ -4,6 +4,8 @@ import { createUseStyles } from 'react-jss';
 import classnames from 'classnames';
 
 export default function Pagination({ pagination, containerClassname = '', ref, ...props }) {
+    if (pagination.total <= pagination.perPage) return null;
+
     const [active, setActive] = useState(1);
     const [url, setUrl] = useState('');
     const route = useRouteMatch();
