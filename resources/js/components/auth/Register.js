@@ -83,7 +83,7 @@ export default function Register() {
     });
     const classes = styles();
 
-    const [errors, setErrors] = useState({ username: [], email: [], password: [], password_confirmation: [] });
+    const [errors, setErrors] = useState({ username: null, email: null, password: null, password_confirmation: null });
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [submitting, setSubmitting] = useState(false);
     const [password, setPassword] = useState('');
@@ -95,13 +95,15 @@ export default function Register() {
         e.preventDefault();
 
         const errors = [
-            ...validateUsername(),
-            ...validateEmail(),
-            ...validatePassword(),
-            ...validatePasswordConfirm(),
+            validateUsername(),
+            validateEmail(),
+            validatePassword(),
+            validatePasswordConfirm(),
         ];
-
-        if (errors.length <= 0) submit();
+        if (errors.find(element => element !== undefined)) {
+            return;
+        }
+        submit();
     }
 
     async function submit() {
@@ -121,44 +123,47 @@ export default function Register() {
             setType('success');
             setMessage('Successfully created account!');
         } else if (response.code === 422) {
-            setErrors(response.data.errors);
+            setErrors({ ...response.data.errors });
         } else {
             setMessage('Something went wrong');
         }
     }
 
-
     function validateUsername() {
         const input = new Validator(username, 'Username');
         const results = input.required().min(5).max(15);
-        setErrors(p => ({...p, username: results.errors }));
-        return results.errors;
+        const error = results.errors[0];
+        setErrors(p => ({...p, username: error }));
+        return error;
     }
 
     function validateEmail() {
         const input = new Validator(email, 'Email');
         const results = input.required();
-        setErrors(p => ({...p, email: results.errors }));
-        return results.errors;
+        const error = results.errors[0];
+        setErrors(p => ({...p, email: error }));
+        return error;
     }
 
     function validatePassword() {
         const input = new Validator(password, 'Password');
         const results = input.required().min(5).max(30).equalWith(passwordConfirm);
-        setErrors(p => ({...p, password: results.errors }));
-        return results.errors;
+        const error = results.errors[0];
+        setErrors(p => ({...p, password: error }));
+        return error;
     }
 
     function validatePasswordConfirm() {
         const input = new Validator(passwordConfirm, 'Confirm Password');
         const results = input.required().min(5).max(30);
-        setErrors(p => ({...p, password_confirmation: results.errors }));
-        return results.errors;
+        const error = results.errors[0];
+        setErrors(p => ({...p, password_confirmation: error }));
+        return error;
     }
 
     function anyErrors() {
         for (const property in errors) {
-            if (errors[property].length > 0) return true;
+            if (errors[property]) return true;
         }
         return false;
     }
@@ -168,8 +173,8 @@ export default function Register() {
 
         const errorsJsx = [];
         for (const property in errors) {
-            if (errors[property][0]) {
-                errorsJsx.push(<p className={`${classes.error} p-2`} key={Math.random()} dangerouslySetInnerHTML={{ __html: errors[property][0] }} />);
+            if (errors[property]) {
+                errorsJsx.push(<p className={`${classes.error} p-2`} key={Math.random()} dangerouslySetInnerHTML={{ __html: errors[property] }} />);
             }
         }
 

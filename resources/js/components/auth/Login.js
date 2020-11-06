@@ -84,7 +84,7 @@ export default function Login() {
     });
     const classes = styles();
 
-    const [errors, setErrors] = useState({ id: [], password: [] });
+    const [errors, setErrors] = useState({ id: null, password: null });
     const [submitting, setSubmitting] = useState(false);
     const [password, setPassword] = useState('');
     const [id, setId] = useState('');
@@ -93,8 +93,11 @@ export default function Login() {
 
     function login(e) {
         e.preventDefault();
-        const errors = [...validateId(), ...validatePassword()];
-        if (errors.length <= 0) submit();
+        const errors = [validateId(), validatePassword()];
+        if (errors.find(element => element !== undefined)) {
+            return;
+        }
+        submit();
     }
 
     async function submit() {
@@ -113,7 +116,7 @@ export default function Login() {
             setType('success');
             setMessage('Successfully logged in');
         } else if (response.code === 422) {
-            setErrors(response.data.errors);
+            setErrors({ ...response.data });
         } else {
             setMessage('Something went wrong');
         }
@@ -122,20 +125,22 @@ export default function Login() {
     function validateId() {
         const input = new Validator(id, 'Username or Email');
         const results = input.required();
-        setErrors(p => ({...p, id: results.errors }));
-        return results.errors;
+        const error = results.errors[0];
+        setErrors(p => ({...p, id: error }));
+        return error;
     }
 
     function validatePassword() {
         const input = new Validator(password, 'Password');
         const results = input.required();
-        setErrors(p => ({...p, password: results.errors }));
-        return results.errors;
+        const error = results.errors[0];
+        setErrors(p => ({...p, password: error }));
+        return error;
     }
 
     function anyErrors() {
         for (const property in errors) {
-            if (errors[property].length > 0) return true;
+            if (errors[property]) return true;
         }
         return false;
     }
@@ -145,8 +150,8 @@ export default function Login() {
 
         const errorsJsx = [];
         for (const property in errors) {
-            if (errors[property][0]) {
-                errorsJsx.push(<p className={`${classes.error} p-2`} key={Math.random()} dangerouslySetInnerHTML={{ __html: errors[property][0] }} />);
+            if (errors[property]) {
+                errorsJsx.push(<p className={`${classes.error} p-2`} key={Math.random()} dangerouslySetInnerHTML={{ __html: errors[property] }} />);
             }
         }
 

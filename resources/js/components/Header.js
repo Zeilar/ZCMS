@@ -10,7 +10,7 @@ export default function Header({ forwardRef }) {
     const styles = createUseStyles({
         header: {
             backgroundColor: 'var(--color-darkGray)',
-            padding: [0, '25%'],
+            padding: [0, 'var(--container-margin)'],
         },
         brand: {
             '&:hover': {

@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
 
         $admin = User::create([
             'username' => 'Philip',
-            'email' => 'philip@angelin.com',
+            'email' => 'philip@angelin.dev',
             'password' => Hash::make(env('ADMIN_PASSWORD')),
         ]);
         $admin->roles()->sync([$superadminRole->id, $adminRole->id, $moderatorRole->id, $userRole->id]);
