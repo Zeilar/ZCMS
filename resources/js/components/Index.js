@@ -46,12 +46,6 @@ export default function Index() {
         return response.data;
     });
 
-    async function test () {
-        const response = await Http.get('authenticate');
-        console.log(response);
-    };
-    test();
-
     const categoriesRender = () => {
         if (status === 'loading') {
             return <Icon className="center-self loadingWheel-2" path={mdiLoading} spin={1} />;
