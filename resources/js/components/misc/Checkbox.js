@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
+import React, { useState } from 'react';
+import classnames from 'classnames';
 import { mdiCheck } from '@mdi/js';
 import Icon from '@mdi/react';
 
@@ -15,6 +16,9 @@ export default function Checkbox({ forwardRef, className, id, ...props }) {
             display: 'flex',
             height: 25,
             width: 25,
+            '&:focus': {
+                boxShadow: [0, 0, 0, 1, 'var(--color-main-dark)'],
+            },
             '&.checked': {
                 backgroundImage: 'var(--color-main-gradient)',
                 borderColor: 'var(--color-main)',
@@ -35,8 +39,13 @@ export default function Checkbox({ forwardRef, className, id, ...props }) {
     return (
         <>
             <input ref={forwardRef} checked={checked} onChange={e => setChecked(e.target.checked)} hidden type="checkbox" id={id} />
-            <button type="button" className={`${classes.box} ${checked ? 'checked' : ''} ${className}`} onClick={() => setChecked(p => !p)} {...props}>
-                <Icon className={classes.icon} path={mdiCheck} />
+            <button
+                className={classnames(classes.box, { checked: checked ? 'checked' : '' }, className)}
+                onClick={() => setChecked(p => !p)}
+                type="button"
+                {...props}
+            >
+                <Icon className={classnames(classes.icon)} path={mdiCheck} />
             </button>
         </>
     );

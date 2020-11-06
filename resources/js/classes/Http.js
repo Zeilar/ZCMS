@@ -1,6 +1,6 @@
 export default class Http {
     static async request(method = 'get', url = '', args = null) {
-        url = `${location.origin}/api/${url}`;
+        url = `/api/${url}`;
         const standard = {
             method: method,
             headers: {

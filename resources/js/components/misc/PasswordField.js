@@ -1,13 +1,11 @@
 import { mdiEye, mdiEyeOff } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import React, { useState } from 'react';
+import classnames from 'classnames';
 import Icon from '@mdi/react';
 
 export default function PasswordField({ children, className, containerClass, iconProps, ...props }) {
     const styles = createUseStyles({
-        row: {
-
-        },
         input: {
             paddingRight: 40,  
         },
@@ -25,10 +23,10 @@ export default function PasswordField({ children, className, containerClass, ico
     const [visible, setVisible] = useState(false);
 
     return (
-        <div className={`${classes.row} ${containerClass ?? ''} relative row`}>
-            <input {...props} className={`${classes.input} ${className ?? ''}`} type={visible ? 'text' : 'password'} />
+        <div className={classnames(containerClass, 'relative row')}>
+            <input {...props} className={classnames(classes.input, className)} type={visible ? 'text' : 'password'} />
             <Icon
-                className={`${classes.icon} absolute pointer ${iconProps?.className ?? ''}`}
+                className={classnames(classes.icon, iconProps?.className, 'absolute pointer')}
                 path={visible ? mdiEye : mdiEyeOff}
                 onClick={() => setVisible(p => !p)}
                 {...iconProps} 

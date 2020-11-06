@@ -2,6 +2,7 @@ import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { mdiLoading } from '@mdi/js';
+import classnames from 'classnames';
 import Http from '../classes/Http';
 import Header from './Header';
 import Icon from '@mdi/react';
@@ -62,8 +63,8 @@ export default function Index() {
                         key={category.id}
                     >
                         <img
-                            src={`${location.origin}/storage/category-icons/${category.icon}.svg`}
-                            className={`${classes.icon} mb-3`} alt={category.name}
+                            src={`/storage/category-icons/${category.icon}.svg`}
+                            className={classnames(classes.icon, 'mb-3')} alt={category.name}
                         />
                         <h2 className={classes.name}>
                             {category.name}
@@ -78,7 +79,7 @@ export default function Index() {
     return (
         <>
             <Header />
-            <div className={`${classes.categories} no-select`}>
+            <div className={classnames(classes.categories, 'no-select')}>
                 {categoriesRender()}
             </div>
         </>
