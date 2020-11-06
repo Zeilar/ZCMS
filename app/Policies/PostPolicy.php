@@ -6,7 +6,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Models\Role;
 use App\Models\User;
 
-class Rolepolicy
+class PostPolicy
 {
     /**
      * Determine whether the user can create models.
