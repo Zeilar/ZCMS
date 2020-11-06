@@ -27,25 +27,25 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             color: 'var(--text-primary)',
             padding: [5, 10],
             marginRight: 10,
-            '&.active, &:focus': {
+            '&.active': {
                 backgroundColor: 'var(--color-main)',
                 color: 'var(--color-primary)',
             },
-            '&:hover': {
+            '&:hover, &:focus': {
                 textDecoration: 'none',
-            },
-            '&:hover:not(.active)': {
-                backgroundColor: 'var(--color-link)',
-                color: 'var(--color-primary)',
+                '&:not(.active)': {
+                    backgroundColor: 'var(--color-link)',
+                    color: 'var(--color-primary)',
+                },
             },
         },
     });
     const classes = styles();
 
     return (
-        <nav className={`${classes.paginator} ${containerClassname} no-select`} {...props}>
+        <nav className={classnames(classes.paginator, containerClassname, 'no-select')} {...props}>
             {
-                Array(pagination.lastPage).fill().map((item, i) => (
+                Array(pagination.lastPage).fill().map((_, i) => (
                     <NavLink className={classnames(classes.item, { active: active === i + 1 })} to={`${url}/${i + 1}`} key={i}>
                         {i + 1}
                     </NavLink>
