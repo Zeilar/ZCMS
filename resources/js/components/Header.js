@@ -24,6 +24,7 @@ export default function Header({ forwardRef }) {
             alignItems: 'center',
         },
         navitem: {
+            userSelect: 'none',
             margin: [0, 20],
         },
         navlink: {

@@ -112,9 +112,9 @@ export default function Login() {
 
         if (response.code === 200) {
             history.push('/');
-            setUser(response.data);
             setType('success');
             setMessage('Successfully logged in');
+            setUser(response.data);
         } else if (response.code === 422) {
             setErrors({ ...response.data });
         } else {

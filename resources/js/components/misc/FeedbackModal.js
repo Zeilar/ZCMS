@@ -56,7 +56,7 @@ export default function FeedbackModal({ message, type }) {
     const classes = styles();
 
     return (
-        <div className={`${classes.modal} absolute center-children bold p-2 row no-select`}>
+        <div className={`${classes.modal} no-pointer absolute center-children bold p-2 row no-select`}>
             <Icon path={icon} />
             <span className={`${classes.text} ml-1`}>
                 {message}

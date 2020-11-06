@@ -12,7 +12,7 @@ class CategorySeeder extends Seeder
 {
     private function createCategory(string $name, string $icon): void {
         Category::factory(['name' => $name, 'icon' => $icon])
-            ->has(Thread::factory()->count(rand(50, 100))
+            ->has(Thread::factory()->count(rand(3,5))
                 ->has(Post::factory()->count(rand(50, 100))
                     ->has(Postlike::factory()->count(rand(0, 3)))
                 )
