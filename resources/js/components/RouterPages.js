@@ -19,7 +19,7 @@ export default function RouterPages() {
             <Switch>
                 <Route component={Index} path="/" exact />
                 <Route component={Threads} path="/category/:category/:page?" exact />
-                <Route component={Thread} path="/thread/:thread/" exact />
+                <Route component={Thread} path="/thread/:thread/:page?" exact />
                 <Route component={Login} path="/login" exact />
                 <Route component={Register} path="/register" exact />
                 <AdminRoute component={AdminDashboard} path="/admin" />

@@ -17,7 +17,7 @@ class CategoriesController extends Controller
         return response(Category::all());
     }
 
-    public function single(Category $category)
+    public function show(Category $category)
     {
         return response($category);
     }

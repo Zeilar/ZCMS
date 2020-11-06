@@ -5,7 +5,6 @@ import classnames from 'classnames';
 
 export default function Pagination({ pagination, containerClassname = '', ref, ...props }) {
     const [active, setActive] = useState(1);
-    const [items, setItems] = useState(Array(pagination.lastPage));
     const [url, setUrl] = useState('');
     const route = useRouteMatch();
 
@@ -25,7 +24,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             backgroundColor: 'var(--color-primary)',
             color: 'var(--text-primary)',
             padding: [5, 10],
-            margin: [0, 5],
+            marginRight: 10,
             '&.active, &:focus': {
                 backgroundColor: 'var(--color-main)',
                 color: 'var(--color-primary)',
@@ -41,21 +40,15 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
     });
     const classes = styles();
 
-    const itemsRender = () => {
-        const items = [];
-        for (let i = 1; i < pagination.lastPage + 1; i++) {
-            items.push(
-                <NavLink className={classnames(classes.item, { active: active === i })} to={`${url}/${i}`} key={i}>
-                    {i}
-                </NavLink>
-            );
-        }
-        return items;
-    }
-
     return (
-        <nav className={`${classes.paginator} ${containerClassname}`} {...props}>
-            {itemsRender()}
+        <nav className={`${classes.paginator} ${containerClassname} no-select`} {...props}>
+            {
+                Array(pagination.lastPage).fill().map((item, i) => (
+                    <NavLink className={classnames(classes.item, { active: active === i + 1 })} to={`${url}/${i + 1}`} key={i}>
+                        {i + 1}
+                    </NavLink>
+                ))
+            }
         </nav>
     );
 }

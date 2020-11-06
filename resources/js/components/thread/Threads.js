@@ -1,5 +1,5 @@
 import { mdiArrowLeft, mdiEye, mdiForum, mdiLoading } from '@mdi/js';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ucfirst } from '../../functions/helpers';
 import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
@@ -23,6 +23,7 @@ export default function Threads() {
             backgroundImage: 'var(--color-main-gradient)',
             color: 'var(--color-primary)',
             alignItems: 'center',
+            fontSize: '1rem',
             borderRadius: 2,
             padding: 15,
         },
@@ -100,7 +101,6 @@ export default function Threads() {
     const [dbCategory, setDbCategory] = useState();
     const [threads, setThreads] = useState([]);
     const { category, page } = useParams();
-    const header = useRef();
 
     useEffect(async () => {
         if (category) {
@@ -176,9 +176,9 @@ export default function Threads() {
 
     return (
         <>
-            <Header forwardRef={header} />
+            <Header />
             <div className={`${classes.container} py-4`}>
-                <h2 className={`${classes.header} row mb-2`}>
+                <div className={`${classes.header} row mb-2`}>
                     <NavLink className={`${classes.back} d-flex mr-2`} to="/">
                         <Icon path={mdiArrowLeft} />
                     </NavLink>
@@ -191,9 +191,9 @@ export default function Threads() {
                                     alt={ucfirst(category)}
                                 />
                         }
-                        <span className="ml-2">{ucfirst(category)}</span>
+                        <h2 className="ml-2">{ucfirst(category)}</h2>
                     </div>
-                </h2>
+                </div>
                 <div className={`${classes.threads} col relative`}>
                     {renderThreads()}
                     {threads.length > 0 && threadsLoaded && <Pagination pagination={pagination} />}

@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Postlike;
+use App\Models\Thread;
 use App\Models\Post;
 
 class PostsController extends Controller
 {
     public function index()
     {
-        $this->authorize('viewAny', Post::class);
-        return response()->json(Post::all());
+        $posts = Post::paginate(Post::$MAX_PER_PAGE);
+        if ($id = request()->query('thread', false)) {
+            $thread = Thread::where('id', $id)->orWhere('slug', $id)->orWhere('title', $id)->firstOrFail();
+            $posts = $thread->posts()->paginate(Post::$MAX_PER_PAGE);
+        }
+        return response($posts);
     }
 
     public function store(Request $request)
@@ -26,19 +31,15 @@ class PostsController extends Controller
         $post = Post::create([
             'title'   => $request->title,
             'content' => $request->content,
-            'user_id' => auth()->user()->id ?? 1, // TODO: remove null coalescing
+            'user_id' => auth()->user()->id,
         ]);
 
-        return response()->json([
-            'message' => 'Post was successfully created.',
-            'type'    => 'success',
-            'post'    => $post,
-        ]);
+        return response(true);
     }
 
     public function show(Post $post)
     {
-        return response()->json($post);
+        return response($post);
     }
 
     public function update(Request $request, Post $post)
@@ -63,38 +64,28 @@ class PostsController extends Controller
         $post->tags = $post->tags()->pluck('name');
         */
 
-        return response()->json([
-            'message' => 'Post was successfully updated.',
-            'type'    => 'success',
-            'post'    => $post,
-        ]);
+        return response(true);
     }
 
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
-
-        $post_id = $post->id;
-        $post->likes()->delete();
         $post->delete();
-
-        return response()->json([
-            'message' => 'Post was successfully deleted.',
-            'type'    => 'success',
-            'post_id' => $post_id,
-        ]);
+        return response(true);
     }
 
     public function like(Request $request, Post $post) {
         $this->authorize('like', $post);
 
+        $user = auth()->user();
+
         // Remove already existing like, or like it if it hasn't been already
-        if ($postLike = $user->postLikes()->where('post_id', $post->id)->first()) {
+        if ($postLike = $user->postLikes()->where('post_id', $post->id)->firstOrFail()) { // ->find() maybe?
             $postLike->delete();
-            return response()->json(['likes' => $post->likes->count(), 'post_id' => $post->id]);
+            return response(true);
         } else {
             Postlike::create(['user_id' => $user->id, 'post_id' => $post->id]);
-            return response()->json(['likes' => $post->likes->count(), 'post_id' => $post->id]);
+            return response(true);
         }
     }
 }
