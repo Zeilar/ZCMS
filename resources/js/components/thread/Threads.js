@@ -105,16 +105,19 @@ export default function Threads() {
     useEffect(async () => {
         if (category) {
             setThreadsLoaded(false);
-            const pageQuery = page ? `&page=${page}` : '';
-
-            const response = await Http.get(`threads?category=${category}${pageQuery}`);
+            const response = await Http.get(`threads?category=${category}&page=${page}`);
             if (response.code === 200) {
                 setThreads(response.data.data);
                 const pagination = response.data;
-                setPagination({ currentPage: pagination.current_page, lastPage: pagination.last_page });
+                setPagination({
+                    currentPage: pagination.current_page,
+                    lastPage: pagination.last_page,
+                    perPage: pagination.per_page,
+                    total: pagination.total,
+                });
             }
         } else {
-            setThreads(null);
+            setThreads([]);
         }
         setThreadsLoaded(true);
         window.scrollTo(0, 0);
@@ -143,7 +146,7 @@ export default function Threads() {
                                 {thread.title}
                             </NavLink>
                             <NavLink
-                                className={`${classes.op} color-${thread.latestPost.user.roles[0].clearance} bold mt-2 mr-auto`}
+                                className={`${classes.op} color-${thread.op.roles[0].clearance} bold mt-2 mr-auto`}
                                 to={`/user/${thread.op.username}`}
                             >
                                 {thread.op.username}
@@ -187,7 +190,7 @@ export default function Threads() {
                             dbCategory &&
                                 <img
                                     className={classes.categoryIcon}
-                                    src={`${window.location.origin}/storage/category-icons/${dbCategory.icon}.svg`}
+                                    src={`/storage/category-icons/${dbCategory.icon}.svg`}
                                     alt={ucfirst(category)}
                                 />
                         }

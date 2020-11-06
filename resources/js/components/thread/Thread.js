@@ -60,16 +60,19 @@ export default function Threads() {
     useEffect(async () => {
         if (thread) {
             setPostsLoaded(false);
-            const pageQuery = page ? `&page=${page}` : '';
-
-            const response = await Http.get(`posts?thread=${thread}${pageQuery}`);
+            const response = await Http.get(`posts?thread=${thread}&page=${page}`);
             if (response.code === 200) {
                 setPosts(response.data.data);
                 const pagination = response.data;
-                setPagination({ currentPage: pagination.current_page, lastPage: pagination.last_page });
+                setPagination({
+                    currentPage: pagination.current_page,
+                    lastPage: pagination.last_page,
+                    perPage: pagination.per_page,
+                    total: pagination.total,
+                });
             }
         } else {
-            setPosts(null);
+            setPosts([]);
         }
         setPostsLoaded(true);
         window.scrollTo(0, 0);
@@ -91,7 +94,7 @@ export default function Threads() {
             if (posts.length <= 0) {
                 return <p className="text-center">No posts were found</p>;
             } else {
-
+                return posts.length;
             }
         }
     }
