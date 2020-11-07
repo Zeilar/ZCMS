@@ -20,10 +20,11 @@ class PostsController extends Controller
         if ($id = request()->query('getAuthor', false)) {
             $posts->load('user');
 
-            if ($id = request()->query('getAuthorPostsAmount', false)) {
+            if ($id = request()->query('getPostMeta', false)) {
                 foreach ($posts as $post) {
                     $user = $post->user;
                     $user->postsAmount = $user->posts()->count();
+                    $user->likesAmount = $user->likedPosts();
                 }
             }
         }

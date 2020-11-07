@@ -61,7 +61,7 @@ export default function Threads() {
     useEffect(async () => {
         if (thread) {
             setPostsLoaded(false);
-            const response = await Http.get(`posts?thread=${thread}&getAuthor=true&getAuthorPostsAmount=true&page=${page}`);
+            const response = await Http.get(`posts?thread=${thread}&getAuthor=true&getPostMeta=true&page=${page}`);
             if (response.code === 200) {
                 setPosts(response.data.data);
                 const pagination = response.data;
