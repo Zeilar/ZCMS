@@ -60,6 +60,12 @@ class User extends Authenticatable
         return $this->hasMany(PostLike::class);
     }
 
+    public function likedPosts() {
+        return Postlike::where('user_id', '!=', $this->id)
+            ->whereIn('post_id', $this->posts()->select('id'))
+            ->count();
+    }
+
     public function roles() {
         return $this->belongsToMany(Role::class);
     }

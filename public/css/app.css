@@ -120,6 +120,10 @@ a.color-3 {
   box-shadow: 0 0 0 1px var(--color-main-dark);
 }
 
+.ucfirst {
+  text-transform: capitalize;
+}
+
 @font-face {
   src: url("/storage/fonts/Roboto-Regular.ttf");
   font-family: "Roboto";

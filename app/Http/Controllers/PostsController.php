@@ -11,10 +11,21 @@ class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::paginate(Post::$MAX_PER_PAGE);
         if ($id = request()->query('thread', false)) {
             $thread = Thread::where('id', $id)->orWhere('slug', $id)->orWhere('title', $id)->firstOrFail();
             $posts = $thread->posts()->paginate(Post::$MAX_PER_PAGE);
+        } else {
+            $posts = Post::paginate(Post::$MAX_PER_PAGE);
+        }
+        if ($id = request()->query('getAuthor', false)) {
+            $posts->load('user');
+
+            if ($id = request()->query('getAuthorPostsAmount', false)) {
+                foreach ($posts as $post) {
+                    $user = $post->user;
+                    $user->postsAmount = $user->posts()->count();
+                }
+            }
         }
         return response($posts);
     }

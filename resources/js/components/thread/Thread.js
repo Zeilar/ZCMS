@@ -5,6 +5,7 @@ import Pagination from '../misc/Pagination';
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
 import Http from '../../classes/Http';
+import Post from '../layout/Post';
 import Header from '../Header';
 import Icon from '@mdi/react';
 
@@ -60,7 +61,7 @@ export default function Threads() {
     useEffect(async () => {
         if (thread) {
             setPostsLoaded(false);
-            const response = await Http.get(`posts?thread=${thread}&page=${page}`);
+            const response = await Http.get(`posts?thread=${thread}&getAuthor=true&getAuthorPostsAmount=true&page=${page}`);
             if (response.code === 200) {
                 setPosts(response.data.data);
                 const pagination = response.data;
@@ -71,8 +72,6 @@ export default function Threads() {
                     total: pagination.total,
                 });
             }
-        } else {
-            setPosts([]);
         }
         setPostsLoaded(true);
         window.scrollTo(0, 0);
@@ -94,7 +93,7 @@ export default function Threads() {
             if (posts.length <= 0) {
                 return <p className="text-center">No posts were found</p>;
             } else {
-                return posts.length;
+                return posts.map(post => <Post key={post.id} post={post} />);
             }
         }
     }
@@ -107,9 +106,7 @@ export default function Threads() {
                     <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread?.category.name.toLowerCase()}`}>
                         <Icon path={mdiArrowLeft} />
                     </NavLink>
-                    <h2 className={`${classes.headerText} row w-100`}>
-                        {dbThread?.title}
-                    </h2>
+                    <h2 className={`${classes.headerText} row w-100`}>{dbThread?.title}</h2>
                 </div>
                 <div className={`${classes.posts} col relative`}>
                     {renderThreads()}
