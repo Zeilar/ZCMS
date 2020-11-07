@@ -70,4 +70,8 @@ class PostPolicy
     public function giveRole(User $user, Role $role) {
         return $user->getClearance() <= 1 || $user->highestRole()->clearance < $role->clearance;
     }
+    
+    public function toggleLike(User $user) {
+        return (bool) $user;
+    }
 }

@@ -1,8 +1,12 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
+import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
+import Http from '../../classes/Http';
+import { mdiThumbUp } from '@mdi/js';
 import classnames from 'classnames';
+import Icon from '@mdi/react';
 
 export default function Post({ post }) {
     const styles = createUseStyles({
@@ -53,13 +57,31 @@ export default function Post({ post }) {
         metaboxValue: {
             fontWeight: 'bold',
         },
+        likeIcon: {
+            marginRight: 3,
+            width: 15,
+        },
+        likesAmount: {
+            marginRight: 3,
+        },
     });
     const classes = styles();
 
+    const { setMessage } = useContext(FeedbackModalContext);
+    const [hasLiked, setHasLiked] = useState(false);
     const [editing, setEditing] = useState(false);
     const { user } = useContext(UserContext);
 
-    function canEdit() {
+    useEffect(() => {
+        for (let i = 0; i < post.postlikes.length; i++) {
+            if (post.postlikes[i].user_id === user.id) {
+                setHasLiked(true);
+                break;
+            }
+        }
+    }, []);
+
+    function canEditOrRemove() {
         if (!user) return false;
         if (user.suspended) return false;
         if (user.roles[0].clearance <= 3) return true;
@@ -69,6 +91,31 @@ export default function Post({ post }) {
     function parseDate(timestamp) {
         const date = new Date(timestamp);
         return `${date.getFullYear()}-${('0' + (date.getMonth()+1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+    }
+
+    function likeButtonRender() {
+        if (hasLiked) {
+            return <>
+                <Icon className={classnames(classes.likeIcon)} path={mdiThumbUp} />
+                <span className={classnames(classes.likesAmount)}>({post.postlikes.length})</span>
+                <span>You liked this</span>
+            </>;
+        }
+        return <>
+            <span className={classnames(classes.likesAmount)}>({post.postlikes.length})</span>
+            <span>Like this</span>
+        </>;
+    }
+
+    async function toggleLike() {
+        const formData = new FormData();
+        formData.append('hasLiked', hasLiked);
+        const response = await Http.put(`posts/${post.id}/toggleLike`, { body: formData })
+        if (response.code === 200) {
+            setHasLiked(p => !p);
+        } else {
+            setMessage('Something went wrong');
+        }
     }
 
     return (
@@ -102,7 +149,12 @@ export default function Post({ post }) {
             {
                 user &&
                     <div className={classnames(classes.footer, 'row p-2')}>
-                        {canEdit() && <button className={classnames('btn-outline caps')}>Edit</button>}
+                        {canEditOrRemove() && <button className={classnames('btn-outline caps')}>Edit</button>}
+                        {
+                            <button className={classnames('btn-outline')} onClick={toggleLike}>
+                                <span className={classnames('center-children')}>{likeButtonRender()}</span>
+                            </button>
+                        }
                     </div>
             }
         </article>

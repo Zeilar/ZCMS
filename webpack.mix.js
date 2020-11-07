@@ -1,6 +1,9 @@
 const mix = require('laravel-mix');
 require('mix-env-file');
 
+mix.react('resources/js/app.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css');
+
 // Copy into dist folder for production
 if (mix.inProduction()) {
     mix.env(process.env.ENV_FILE);

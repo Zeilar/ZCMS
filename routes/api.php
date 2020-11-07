@@ -28,7 +28,7 @@ Route::resource('threads', ThreadsController::class, ['except' => ['create', 'ed
 
 // PostsController
 Route::resource('posts', PostsController::class, ['except' => ['create', 'edit']]);
-Route::post('/posts/{comment}/like', [PostsController::class, 'like']);
+Route::put('/posts/{post}/toggleLike', [PostsController::class, 'toggleLike']);
 
 // ChatmessagesController
 Route::resource('chatmessages', ChatmessagesController::class, ['except' => ['create', 'edit', 'show']]);

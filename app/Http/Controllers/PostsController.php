@@ -13,7 +13,7 @@ class PostsController extends Controller
     {
         if ($id = request()->query('thread', false)) {
             $thread = Thread::where('id', $id)->orWhere('slug', $id)->orWhere('title', $id)->firstOrFail();
-            $posts = $thread->posts()->paginate(Post::$MAX_PER_PAGE);
+            $posts = $thread->posts()->with('postlikes')->paginate(Post::$MAX_PER_PAGE);
         } else {
             $posts = Post::paginate(Post::$MAX_PER_PAGE);
         }
@@ -40,7 +40,7 @@ class PostsController extends Controller
             'content' => 'required|string|min:3',
         ]);
 
-        $post = Post::create([
+        Post::create([
             'title'   => $request->title,
             'content' => $request->content,
             'user_id' => auth()->user()->id,
@@ -86,13 +86,12 @@ class PostsController extends Controller
         return response(true);
     }
 
-    public function like(Request $request, Post $post) {
-        $this->authorize('like', $post);
+    public function toggleLike(Post $post) {
+        $this->authorize('toggleLike', Post::class);
 
         $user = auth()->user();
 
-        // Remove already existing like, or like it if it hasn't been already
-        if ($postLike = $user->postLikes()->where('post_id', $post->id)->firstOrFail()) { // ->find() maybe?
+        if ($postLike = $user->postLikes()->where('post_id', $post->id)->first()) {
             $postLike->delete();
             return response(true);
         } else {
