@@ -10,6 +10,22 @@ const Knockout = styled.p`
     user-select: none;
 `;
 
+const LinkStandard = styled.a`
+    color: var(--color-link);
+    &:hover {
+        text-decoration: underline;
+    }
+`;
+
+const LinkButton = styled.a`
+    color: inherit;
+    &:hover {
+        text-decoration: none;
+    }
+`;
+
 export {
     Knockout,
-}
+    LinkStandard,
+    LinkButton,
+};

@@ -24,8 +24,11 @@ export default function Header({ forwardRef }) {
             alignItems: 'center',
         },
         navitem: {
+            margin: [0, 20, 0, 0],
             userSelect: 'none',
-            margin: [0, 20],
+            '&:last-child': {
+                marginRight: 0,
+            },
         },
         navlink: {
             transition: 'color 0.25s ease-out',
