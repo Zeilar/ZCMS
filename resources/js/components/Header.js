@@ -1,10 +1,13 @@
 import { FeedbackModalContext } from '../contexts/FeedbackModalContext';
+import React, { useRef, useState, useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { Knockout } from './styled-components/index';
-import React, { useRef, useContext } from 'react';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
+import { mdiLoading } from '@mdi/js';
+import classnames from 'classnames';
 import Http from '../classes/Http';
+import Icon from '@mdi/react';
 
 export default function Header({ forwardRef }) {
     const styles = createUseStyles({
@@ -69,15 +72,21 @@ export default function Header({ forwardRef }) {
             color: 'var(--color-primary)',
             fontFamily: 'Raleway',
         },
+        loading: {
+            color: 'var(--color-main)',
+        }
     });
     const classes = styles();
 
     const { setMessage, setType } = useContext(FeedbackModalContext);
+    const [loggingOut, setLoggingOut] = useState(false);
     const { user, setUser } = useContext(UserContext);
     const navbar = useRef();
 
     async function logout() {
+        setLoggingOut(true);
         const response = await Http.post('logout');
+        setLoggingOut(false);
         if (response.code === 200) {
             setType('success');
             setMessage('Successfully logged out');
@@ -123,16 +132,19 @@ export default function Header({ forwardRef }) {
     }
 
     return (
-        <header className={`${classes.header} center-children sticky col`} ref={forwardRef}>
-            <nav className={`${classes.navbar} w-100 row my-3`} ref={navbar}>
-                <ul className={`${classes.navlist} flex row`}>
-                    <NavLink className={`${classes.brand} mr-auto col center-children`} to="/">
-                        <Knockout className={`${classes.siteHeader} py-2`} as="h1">TPH</Knockout>
-                        <p className={`${classes.siteSlogan}`}>The pioneer hangout</p>
-                    </NavLink>
-                    {navItems()}
-                </ul>
-            </nav>
-        </header>
+        <>
+            <header className={`${classes.header} center-children sticky col`} ref={forwardRef}>
+                <nav className={`${classes.navbar} w-100 row my-3`} ref={navbar}>
+                    <ul className={`${classes.navlist} flex row`}>
+                        <NavLink className={`${classes.brand} mr-auto col center-children`} to="/">
+                            <Knockout className={`${classes.siteHeader} py-2`} as="h1">TPH</Knockout>
+                            <p className={`${classes.siteSlogan}`}>The pioneer hangout</p>
+                        </NavLink>
+                        {navItems()}
+                    </ul>
+                </nav>
+            </header>
+            {loggingOut && <Icon className={classnames(classes.loading, 'fixed center-self')} path={mdiLoading} size={5} spin={1} />}
+        </>
     );
 }

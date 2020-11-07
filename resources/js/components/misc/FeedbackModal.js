@@ -48,13 +48,14 @@ export default function FeedbackModal({ message, type }) {
             letterSpacing: 1,
             borderRadius: 3,
             color: color,
+            padding: 20,
             left: '50%',
         },
     });
     const classes = styles();
 
     return (
-        <div className={`${classes.modal} absolute center-children bold p-3 row no-select`}>
+        <div className={`${classes.modal} absolute center-children bold row no-select`}>
             <Icon path={icon} />
             <span className="ml-1">{message}</span>
         </div>
