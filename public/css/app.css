@@ -24,15 +24,8 @@
   --color-3: rgb(200, 100, 0);
 }
 
-.adminBtn {
-  background-color: #0f0f0f;
-}
-
-.adminBtn:hover {
-  background-color: #141414;
-}
-
 .btn,
+.adminBtn,
 .btn-outline {
   background-image: var(--color-main-gradient);
   background-color: var(--color-main);
@@ -50,13 +43,16 @@
 }
 
 .btn:hover,
+.adminBtn:hover,
 .btn-outline:hover,
 .btn[disabled],
+[disabled].adminBtn,
 [disabled].btn-outline {
   background-color: var(--color-main-dark);
 }
 
 .btn[disabled],
+[disabled].adminBtn,
 [disabled].btn-outline {
   cursor: default;
 }
@@ -70,6 +66,14 @@
 .btn-outline:hover {
   background-color: var(--color-main);
   color: var(--color-primary);
+}
+
+.adminBtn {
+  background-color: #0f0f0f;
+}
+
+.adminBtn:hover {
+  background-color: #141414;
 }
 
 .loadingWheel {
@@ -106,6 +110,14 @@ a.color-2 {
 
 a.color-3 {
   color: var(--color-3);
+}
+
+.outline {
+  transition: all 0.05s linear;
+}
+
+.outline:focus {
+  box-shadow: 0 0 0 1px var(--color-main-dark);
 }
 
 @font-face {

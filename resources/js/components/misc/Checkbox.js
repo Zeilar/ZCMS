@@ -16,9 +16,6 @@ export default function Checkbox({ forwardRef, className, id, ...props }) {
             display: 'flex',
             height: 25,
             width: 25,
-            '&:focus': {
-                boxShadow: [0, 0, 0, 1, 'var(--color-main-dark)'],
-            },
             '&.checked': {
                 backgroundImage: 'var(--color-main-gradient)',
                 borderColor: 'var(--color-main)',
@@ -40,7 +37,7 @@ export default function Checkbox({ forwardRef, className, id, ...props }) {
         <>
             <input ref={forwardRef} checked={checked} onChange={e => setChecked(e.target.checked)} hidden type="checkbox" id={id} />
             <button
-                className={classnames(classes.box, { checked: checked ? 'checked' : '' }, className)}
+                className={classnames(classes.box, { checked: checked }, className, 'outline')}
                 onClick={() => setChecked(p => !p)}
                 type="button"
                 {...props}
