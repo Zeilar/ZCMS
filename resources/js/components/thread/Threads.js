@@ -199,7 +199,7 @@ export default function Threads() {
                 </div>
                 <div className={`${classes.threads} col relative`}>
                     {renderThreads()}
-                    {threads.length > 0 && threadsLoaded && <Pagination pagination={pagination} />}
+                    {threadsLoaded && <Pagination pagination={pagination} />}
                 </div>
             </div>
         </>

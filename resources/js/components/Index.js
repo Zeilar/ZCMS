@@ -17,7 +17,7 @@ export default function Index() {
             gridGap: 50,
         },
         category: {
-            boxShadow: [0, 0, 10, 1, 'rgba(0, 0, 0, 0.15)'],
+            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
             backgroundColor: 'var(--color-primary)',
             transition: 'all 0.1s linear',
             color: 'var(--text-primary)',
