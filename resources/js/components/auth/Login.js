@@ -13,8 +13,8 @@ import { mdiLoading } from '@mdi/js';
 import Header from '../Header';
 import Icon from '@mdi/react';
 
-export default function Login() {
-    const { setMessage, setType } = useContext(FeedbackModalContext);
+export default function Login({ location }) {
+    const { setMessage } = useContext(FeedbackModalContext);
     const { user, setUser } = useContext(UserContext);
 
     if (user) {
@@ -111,7 +111,7 @@ export default function Login() {
         setSubmitting(false);
 
         if (response.code === 200) {
-            history.push('/');
+            history.push(location.state?.url ? location.state.url : '/');
             setUser(response.data);
         } else if (response.code === 422) {
             setErrors({ ...response.data });

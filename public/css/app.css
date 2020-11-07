@@ -61,6 +61,8 @@
   background-color: var(--color-primary);
   border: 2px solid var(--color-main);
   color: var(--color-main);
+  background-image: none;
+  font-weight: bold;
 }
 
 .btn-outline:hover {
@@ -70,6 +72,7 @@
 
 .adminBtn {
   background-color: #0f0f0f;
+  background-image: none;
 }
 
 .adminBtn:hover {
@@ -122,6 +125,10 @@ a.color-3 {
 
 .ucfirst {
   text-transform: capitalize;
+}
+
+.caps {
+  text-transform: uppercase;
 }
 
 @font-face {

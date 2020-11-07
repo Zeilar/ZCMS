@@ -12,7 +12,7 @@ import { mdiLoading } from '@mdi/js';
 import Header from '../Header';
 import Icon from '@mdi/react';
 
-export default function Register() {
+export default function Register({ location }) {
     const { setMessage, setType } = useContext(FeedbackModalContext);
     const { user, setUser } = useContext(UserContext);
 
@@ -118,7 +118,7 @@ export default function Register() {
         setSubmitting(false);
 
         if (response.code === 200) {
-            history.push('/');
+            history.push(location.state?.url ? location.state.url : '/');
             setUser(response.data);
         } else if (response.code === 422) {
             setErrors({ ...response.data.errors });

@@ -1,9 +1,9 @@
 import { FeedbackModalContext } from '../contexts/FeedbackModalContext';
 import React, { useRef, useState, useContext } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 import { Knockout } from './styled-components/index';
 import { createUseStyles } from 'react-jss';
-import { NavLink } from 'react-router-dom';
 import { mdiLoading } from '@mdi/js';
 import classnames from 'classnames';
 import Http from '../classes/Http';
@@ -78,9 +78,10 @@ export default function Header({ forwardRef }) {
     });
     const classes = styles();
 
-    const { setMessage, setType } = useContext(FeedbackModalContext);
+    const { setMessage } = useContext(FeedbackModalContext);
     const [loggingOut, setLoggingOut] = useState(false);
     const { user, setUser } = useContext(UserContext);
+    const history = useHistory();
     const navbar = useRef();
 
     async function logout() {
@@ -88,10 +89,8 @@ export default function Header({ forwardRef }) {
         const response = await Http.post('logout');
         setLoggingOut(false);
         if (response.code === 200) {
-            setType('success');
-            setMessage('Successfully logged out');
+            history.push('/');
             setUser(false);
-            return;
         } else {
             return setMessage('Something went wrong, try refreshing the page');
         }
@@ -118,12 +117,18 @@ export default function Header({ forwardRef }) {
         } else {
             return <>
                 <li className={`${classes.navitem}`}>
-                    <NavLink className={`${classes.navlink}`} to="/login">
+                    <NavLink className={`${classes.navlink}`} to={{
+                        pathname: '/login',
+                        state: { url: window.location.pathname },
+                    }}>
                         Login
                     </NavLink>
                 </li>
                 <li className={`${classes.navitem}`}>
-                    <NavLink className={`${classes.navlink}`} to="/register">
+                    <NavLink className={`${classes.navlink}`} to={{
+                        pathname: '/register',
+                        state: { url: window.location.pathname },
+                    }}>
                         Register
                     </NavLink>
                 </li>

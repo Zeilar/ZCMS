@@ -1,11 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { UserContext } from '../../contexts/UserContext';
 import { createUseStyles } from 'react-jss';
-import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
+import classnames from 'classnames';
 
 export default function Post({ post }) {
     const styles = createUseStyles({
         post: {
+            boxShadow: [0, 0, 3, 0, 'rgba(0, 0, 0, 0.15)'],
             border: '1px solid var(--border-primary)',
             backgroundColor: 'var(--color-primary)',
             borderRadius: 3,
@@ -54,6 +56,16 @@ export default function Post({ post }) {
     });
     const classes = styles();
 
+    const [editing, setEditing] = useState(false);
+    const { user } = useContext(UserContext);
+
+    function canEdit() {
+        if (!user) return false;
+        if (user.suspended) return false;
+        if (user.roles[0].clearance <= 3) return true;
+        if (user.id === post.user.id) return true;        
+    }
+
     function parseDate(timestamp) {
         const date = new Date(timestamp);
         return `${date.getFullYear()}-${('0' + (date.getMonth()+1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
@@ -87,9 +99,12 @@ export default function Post({ post }) {
             <p className={classnames(classes.body, 'p-2')}>
                 {post.content}
             </p>
-            <div className={classnames(classes.footer, 'row p-2')}>
-                Post footer
-            </div>
+            {
+                user &&
+                    <div className={classnames(classes.footer, 'row p-2')}>
+                        {canEdit() && <button className={classnames('btn-outline caps')}>Edit</button>}
+                    </div>
+            }
         </article>
     );
 }

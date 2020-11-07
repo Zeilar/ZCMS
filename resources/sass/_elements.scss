@@ -24,6 +24,8 @@
     background-color: var(--color-primary);
     border: 2px solid var(--color-main);
     color: var(--color-main);
+    background-image: none;
+    font-weight: bold;
 
     &:hover {
         background-color: var(--color-main);
@@ -35,6 +37,7 @@
     @extend .btn;
     
     background-color: rgb(15, 15, 15);
+    background-image: none;
 
     &:hover {
         background-color: rgb(20, 20, 20);
@@ -85,4 +88,8 @@ a {
 
 .ucfirst {
     text-transform: capitalize;
+}
+
+.caps {
+    text-transform: uppercase;
 }
