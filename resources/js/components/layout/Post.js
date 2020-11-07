@@ -67,6 +67,7 @@ export default function Post({ post }) {
     });
     const classes = styles();
 
+    const [likes, setLikes] = useState(post.postlikes.length);
     const { setMessage } = useContext(FeedbackModalContext);
     const [hasLiked, setHasLiked] = useState(false);
     const [editing, setEditing] = useState(false);
@@ -94,21 +95,6 @@ export default function Post({ post }) {
         return `${date.getFullYear()}-${('0' + (date.getMonth()+1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
     }
 
-    function likeButtonRender() {
-        if (liking) return <Icon className={classnames(classes.likeIcon, 'mr-0')} path={mdiLoading} spin={1} />;
-        if (hasLiked) {
-            return <>
-                <Icon className={classnames(classes.likeIcon)} path={mdiThumbUp} />
-                <span className={classnames(classes.likesAmount)}>({post.postlikes.length})</span>
-                <span>You liked this</span>
-            </>;
-        }
-        return <>
-            <span className={classnames(classes.likesAmount)}>({post.postlikes.length})</span>
-            <span>Like this</span>
-        </>;
-    }
-
     async function toggleLike() {
         const formData = new FormData();
         formData.append('hasLiked', hasLiked);
@@ -116,10 +102,26 @@ export default function Post({ post }) {
         const response = await Http.put(`posts/${post.id}/toggleLike`, { body: formData })
         setLiking(false);
         if (response.code === 200) {
+            setLikes(p => hasLiked ? p - 1 : p + 1);
             setHasLiked(p => !p);
         } else {
             setMessage('Something went wrong');
         }
+    }
+
+    function likeButtonRender() {
+        if (liking) return <Icon className={classnames(classes.likeIcon, 'mr-0')} path={mdiLoading} spin={1} />;
+        if (hasLiked) {
+            return <>
+                <Icon className={classnames(classes.likeIcon)} path={mdiThumbUp} />
+                <span className={classnames(classes.likesAmount)}>({likes})</span>
+                <span>You liked this</span>
+            </>;
+        }
+        return <>
+            <span className={classnames(classes.likesAmount)}>({likes})</span>
+            <span>Like this</span>
+        </>;
     }
 
     return (

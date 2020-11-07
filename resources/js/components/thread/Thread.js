@@ -1,9 +1,9 @@
+import { useHistory, useParams } from 'react-router';
 import React, { useState, useEffect } from 'react';
 import { mdiArrowLeft, mdiLoading } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
 import { NavLink } from 'react-router-dom';
-import { useParams } from 'react-router';
 import Http from '../../classes/Http';
 import Post from '../layout/Post';
 import Header from '../Header';
@@ -57,6 +57,7 @@ export default function Threads() {
     const [dbThread, setDbThread] = useState();
     const [posts, setPosts] = useState([]);
     const { thread, page } = useParams();
+    const history = useHistory();
 
     useEffect(async () => {
         if (thread) {
@@ -82,7 +83,7 @@ export default function Threads() {
         if (response.code === 200) {
             setDbThread(response.data);
         } else {
-            setDbThread(false);
+            history.push('/');
         }
     }, [thread]);
 
@@ -103,7 +104,7 @@ export default function Threads() {
             <Header />
             <div className={`${classes.container} py-4`}>
                 <div className={`${classes.header} row mb-2`}>
-                    <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread?.category.name.toLowerCase()}`}>
+                    <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread?.category?.name.toLowerCase()}`}>
                         <Icon path={mdiArrowLeft} />
                     </NavLink>
                     <h2 className={`${classes.headerText} row w-100`}>{dbThread?.title}</h2>
