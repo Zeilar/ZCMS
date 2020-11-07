@@ -99,7 +99,7 @@ export default function Post({ post }) {
         const formData = new FormData();
         formData.append('hasLiked', hasLiked);
         setLiking(true);
-        const response = await Http.put(`posts/${post.id}/toggleLike`, { body: formData })
+        const response = await Http.put(`posts/${post.id}/toggleLike`);
         setLiking(false);
         if (response.code === 200) {
             setLikes(p => hasLiked ? p - 1 : p + 1);
