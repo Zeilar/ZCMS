@@ -1,10 +1,10 @@
 import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
+import { mdiLoading, mdiThumbUp } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import Http from '../../classes/Http';
-import { mdiThumbUp } from '@mdi/js';
 import classnames from 'classnames';
 import Icon from '@mdi/react';
 
@@ -70,6 +70,7 @@ export default function Post({ post }) {
     const { setMessage } = useContext(FeedbackModalContext);
     const [hasLiked, setHasLiked] = useState(false);
     const [editing, setEditing] = useState(false);
+    const [liking, setLiking] = useState(false);
     const { user } = useContext(UserContext);
 
     useEffect(() => {
@@ -94,6 +95,7 @@ export default function Post({ post }) {
     }
 
     function likeButtonRender() {
+        if (liking) return <Icon className={classnames(classes.likeIcon, 'mr-0')} path={mdiLoading} spin={1} />;
         if (hasLiked) {
             return <>
                 <Icon className={classnames(classes.likeIcon)} path={mdiThumbUp} />
@@ -110,7 +112,9 @@ export default function Post({ post }) {
     async function toggleLike() {
         const formData = new FormData();
         formData.append('hasLiked', hasLiked);
+        setLiking(true);
         const response = await Http.put(`posts/${post.id}/toggleLike`, { body: formData })
+        setLiking(false);
         if (response.code === 200) {
             setHasLiked(p => !p);
         } else {
