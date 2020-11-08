@@ -19,7 +19,7 @@ class PostPolicy
     {
         if ($user->suspended()) return false;
         if ($user->getClearance() <= 3) return true;
-        // if ($thread->locked) return false;
+        // if ($thread->locked) return false; // TODO: thread check
         return true;
     }
 

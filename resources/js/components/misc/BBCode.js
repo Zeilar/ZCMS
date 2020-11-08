@@ -1,30 +1,11 @@
-// import React, { useState, useRef, useEffect } from 'react';
-// import bbcodeParser from 'ya-bbcode';
+import BBCodeParser from '@bbob/react/es/Component';
+import reactPreset from "@bbob/preset-react";
+import React from 'react';
 
-// const parser = new bbcodeParser();
-
-// parser.registerTag('quote', {
-//     type: 'replace',
-//     open: (attr, testAttr) => {
-//         console.log(attr, testAttr);
-//         return `
-//             <blockquote>
-//                 <p>Written by ${post?.user.username}</p>
-//                 <p>
-//                     <a href="${post?.id}">Go to post</a>
-//                 </p>
-//         `;
-//     },
-//     close: '</blockquote>'
-// });   
-
-// export default function BBCode({ post }) {
-
-//     console.log(parser.parse('[quote testAttr=asdsadd]Quote[/quote]'));
-
-//     return (
-//         <div>
-            
-//         </div>
-//     );
-// }
+export default function BBCode({ children }) {
+    return (
+        <BBCodeParser plugins={[reactPreset()]}>
+            {children}
+        </BBCodeParser>
+    );
+}
