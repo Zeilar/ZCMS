@@ -119,9 +119,6 @@ export default function Threads() {
                     </NavLink>
                     <h2 className={`${classes.headerText} row w-100`}>{dbThread.data?.title}</h2>
                 </div>
-                {
-                    canPost() && 'Post'
-                }
                 <div className={`${classes.posts} col relative`}>
                     {renderPosts()}
                     {posts.status === 'success' && <Pagination pagination={pagination} />}

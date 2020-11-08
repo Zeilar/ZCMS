@@ -8,6 +8,8 @@ import Http from '../../classes/Http';
 import classnames from 'classnames';
 import Icon from '@mdi/react';
 
+import BBCode from '../misc/BBCode';
+
 export default function Post({ post }) {
     const styles = createUseStyles({
         post: {

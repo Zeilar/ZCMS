@@ -109,7 +109,7 @@ export default function Threads() {
             perPage: pagination.per_page,
             total: pagination.total,
         });
-        return response.data.data;
+        return pagination.data.reverse();
     });
 
     const dbCategory = useQuery(`dbCategory-${category}`, async () => {
