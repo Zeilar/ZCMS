@@ -1,5 +1,6 @@
 import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../contexts/UserContext';
 import { useHistory, useParams } from 'react-router';
 import { mdiArrowLeft, mdiLoading } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
@@ -56,6 +57,7 @@ export default function Threads() {
 
     const { setMessage } = useContext(FeedbackModalContext);
     const [pagination, setPagination] = useState({});
+    const { user } = useContext(UserContext);
     const { thread, page } = useParams();
     const history = useHistory();
 
@@ -80,11 +82,17 @@ export default function Threads() {
         return response.data;
     });
 
+    function canPost() {
+        if (!user) return false;
+        if (user.suspended) return false;
+        return true;
+    }
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [thread, page]);
 
-    const renderThreads = () => {
+    const renderPosts = () => {
         if (posts.status === 'loading') {
             return <Icon className="center-self loadingWheel-2" path={mdiLoading} spin={1} />;
         }
@@ -111,8 +119,11 @@ export default function Threads() {
                     </NavLink>
                     <h2 className={`${classes.headerText} row w-100`}>{dbThread.data?.title}</h2>
                 </div>
+                {
+                    canPost() && 'Post'
+                }
                 <div className={`${classes.posts} col relative`}>
-                    {renderThreads()}
+                    {renderPosts()}
                     {posts.status === 'success' && <Pagination pagination={pagination} />}
                 </div>
             </div>
