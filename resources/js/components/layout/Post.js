@@ -1,5 +1,5 @@
 import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { mdiLoading, mdiThumbUp } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
@@ -75,15 +75,7 @@ export default function Post({ post }) {
     const [editing, setEditing] = useState(false);
     const [liking, setLiking] = useState(false);
     const { user } = useContext(UserContext);
-
-    useEffect(() => {
-        for (let i = 0; i < post.postlikes.length; i++) {
-            if (post.postlikes[i].user_id === user.id) {
-                setHasLiked(true);
-                break;
-            }
-        }
-    }, []);
+    const postElement = useRef();
 
     function canEditOrRemove() {
         if (!user) return false;
@@ -125,9 +117,24 @@ export default function Post({ post }) {
             <span>Like this</span>
         </>;
     }
+    
+    useEffect(() => {
+        for (let i = 0; i < post.postlikes.length; i++) {
+            if (post.postlikes[i].user_id === user.id) {
+                setHasLiked(true);
+                break;
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if (Number(window.location.hash.replace('#', '')) === post.id) {
+            window.scrollTo(0, window.scrollY + postElement.current.getBoundingClientRect().top);
+        }
+    }, [window.location.hash]);
 
     return (
-        <article className={classnames(classes.post, 'col mb-2')}>
+        <article className={classnames(classes.post, 'col mb-2')} ref={postElement}>
             <div className={classnames(classes.head, 'row')}>
                 <img className={classnames(classes.avatar, 'd-flex mx-2 my-auto')} src={`/storage/avatars/${post.user.avatar}`} alt="Profile picture" />
                 <NavLink className={classnames(classes.username)} to={`/user/${post.user.username}`}>
