@@ -157,7 +157,7 @@ export default function Post({ post }) {
                     <div className={classnames(classes.footer, 'row p-2')}>
                         {canEditOrRemove() && <button className={classnames('btn-outline caps')}>Edit</button>}
                         {
-                            <button className={classnames('btn-outline')} onClick={toggleLike}>
+                            <button className={classnames('btn-outline')} onClick={toggleLike} disabled={liking}>
                                 <span className={classnames('center-children')}>{likeButtonRender()}</span>
                             </button>
                         }

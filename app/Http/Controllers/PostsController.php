@@ -17,15 +17,12 @@ class PostsController extends Controller
         } else {
             $posts = Post::paginate(Post::$MAX_PER_PAGE);
         }
-        if ($id = request()->query('getAuthor', false)) {
+        if ($id = request()->query('getPostMeta', false)) {
             $posts->load('user');
-
-            if ($id = request()->query('getPostMeta', false)) {
-                foreach ($posts as $post) {
-                    $user = $post->user;
-                    $user->postsAmount = $user->posts()->count();
-                    $user->likesAmount = $user->likedPosts();
-                }
+            foreach ($posts as $post) {
+                $user = $post->user;
+                $user->postsAmount = $user->posts()->count();
+                $user->likesAmount = $user->likedPosts();
             }
         }
         return response($posts);

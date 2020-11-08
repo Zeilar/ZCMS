@@ -60,7 +60,7 @@ export default function Threads() {
     const history = useHistory();
 
     const posts = useQuery([page, `thread-${thread}`], async (page) => {
-        const response = await Http.get(`posts?thread=${thread}&getAuthor=true&getPostMeta=true&page=${page ?? 1}`);
+        const response = await Http.get(`posts?thread=${thread}&getPostMeta=true&page=${page ?? 1}`);
         const pagination = response.data;
         setPagination({
             currentPage: pagination.current_page,
