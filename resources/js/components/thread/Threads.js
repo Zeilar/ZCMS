@@ -5,6 +5,7 @@ import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
+import { useQuery } from 'react-query';
 import Tooltip from '../misc/Tooltip';
 import Http from '../../classes/Http';
 import Header from '../Header';
@@ -96,84 +97,75 @@ export default function Threads() {
     });
     const classes = styles();
 
-    const [threadsLoaded, setThreadsLoaded] = useState(false);
     const [pagination, setPagination] = useState({});
-    const [dbCategory, setDbCategory] = useState();
-    const [threads, setThreads] = useState([]);
     const { category, page } = useParams();
 
+    const threads = useQuery([page, `category-${category}`], async (page) => {
+        const response = await Http.get(`threads?category=${category}&page=${page}`);
+        const pagination = response.data;
+        setPagination({
+            currentPage: pagination.current_page,
+            lastPage: pagination.last_page,
+            perPage: pagination.per_page,
+            total: pagination.total,
+        });
+        return response.data.data;
+    });
+
+    const dbCategory = useQuery(`dbCategory-${category}`, async () => {
+        const response = await Http.get(`categories/${category}`);
+        return response.data;
+    });
+
     useEffect(async () => {
-        if (category) {
-            setThreadsLoaded(false);
-            const response = await Http.get(`threads?category=${category}&page=${page}`);
-            if (response.code === 200) {
-                setThreads(response.data.data);
-                const pagination = response.data;
-                setPagination({
-                    currentPage: pagination.current_page,
-                    lastPage: pagination.last_page,
-                    perPage: pagination.per_page,
-                    total: pagination.total,
-                });
-            }
-        } else {
-            setThreads([]);
-        }
-        setThreadsLoaded(true);
         window.scrollTo(0, 0);
     }, [category, page]);
 
-    useEffect(async () => {
-        const response = await Http.get(`categories/${category}`);
-        if (response.code === 200) {
-            setDbCategory(response.data);
-        } else {
-            setDbCategory(false);
-        }
-    }, [category]);
-
     const renderThreads = () => {
-        if (!threadsLoaded) {
+        if (threads.status === 'loading') {
             return <Icon className="center-self loadingWheel-2" path={mdiLoading} spin={1} />;
-        } else {
-            if (threads.length <= 0) {
+        }
+        if (threads.status === 'error') {
+            return <p>Error retrieving the threads</p>;
+        }
+        if (threads.status === 'success') {
+            if (threads.data.length <= 0) {
                 return <p className="text-center">No threads were found</p>;
-            } else {
-                return threads.map(thread => (
-                    <div className={`${classes.thread} row mt-1`} key={thread.id}>
-                        <div className={`${classes.title} col`}>
-                            <NavLink className={classes.titleText} to={`/thread/${thread.slug}`}>
-                                {thread.title}
-                            </NavLink>
-                            <NavLink
-                                className={`${classes.op} color-${thread.op.roles[0].clearance} bold mt-2 mr-auto`}
-                                to={`/user/${thread.op.username}`}
-                            >
-                                {thread.op.username}
-                            </NavLink>
-                        </div>
-                        <Tooltip className={`${classes.posts} ml-auto col center-children`} title="Posts">
-                            <Icon path={mdiForum} />
-                            <span>{thread.postsAmount}</span>
-                        </Tooltip>
-                        <Tooltip className={`${classes.views} mr-auto col center-children`} title="Views">
-                            <Icon path={mdiEye} />
-                            <span>{thread.views}</span>
-                        </Tooltip>
-                        <div className={`${classes.latest} col`}>
-                            <span className={`${classes.latestDate} ml-auto`}>
-                                Some date
-                            </span>
-                            <NavLink
-                                className={`${classes.latestLink} color-${thread.latestPost.user.roles[0].clearance} ml-auto mt-2`}
-                                to={`/thread/${thread.slug}/#${thread.latestPost.id}`}
-                            >
-                                {thread.latestPost.user.username}
-                            </NavLink>
-                        </div>
-                    </div>
-                ));
             }
+            return threads.data.map(thread => (
+                <div className={`${classes.thread} row mt-1`} key={thread.id}>
+                    <div className={`${classes.title} col`}>
+                        <NavLink className={classes.titleText} to={`/thread/${thread.slug}`}>
+                            {thread.title}
+                        </NavLink>
+                        <NavLink
+                            className={`${classes.op} color-${thread.op.roles[0].clearance} bold mt-2 mr-auto`}
+                            to={`/user/${thread.op.username}`}
+                        >
+                            {thread.op.username}
+                        </NavLink>
+                    </div>
+                    <Tooltip className={`${classes.posts} ml-auto col center-children`} title="Posts">
+                        <Icon path={mdiForum} />
+                        <span>{thread.postsAmount}</span>
+                    </Tooltip>
+                    <Tooltip className={`${classes.views} mr-auto col center-children`} title="Views">
+                        <Icon path={mdiEye} />
+                        <span>{thread.views}</span>
+                    </Tooltip>
+                    <div className={`${classes.latest} col`}>
+                        <span className={`${classes.latestDate} ml-auto`}>
+                            Some date
+                        </span>
+                        <NavLink
+                            className={`${classes.latestLink} color-${thread.latestPost.user.roles[0].clearance} ml-auto mt-2`}
+                            to={`/thread/${thread.slug}/#${thread.latestPost.id}`}
+                        >
+                            {thread.latestPost.user.username}
+                        </NavLink>
+                    </div>
+                </div>
+            ));
         }
     }
 
@@ -187,10 +179,10 @@ export default function Threads() {
                     </NavLink>
                     <div className={`${classes.headerText} row w-100`}>
                         {
-                            dbCategory &&
+                            dbCategory.status === 'success' &&
                                 <img
                                     className={classes.categoryIcon}
-                                    src={`/storage/category-icons/${dbCategory.icon}.svg`}
+                                    src={`/storage/category-icons/${dbCategory.data.icon}.svg`}
                                     alt={ucfirst(category)}
                                 />
                         }
@@ -199,7 +191,7 @@ export default function Threads() {
                 </div>
                 <div className={`${classes.threads} col relative`}>
                     {renderThreads()}
-                    {threadsLoaded && <Pagination pagination={pagination} />}
+                    {status === 'success' && <Pagination pagination={pagination} />}
                 </div>
             </div>
         </>
