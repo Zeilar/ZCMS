@@ -101,7 +101,7 @@ export default function Threads() {
     const { category, page } = useParams();
 
     const threads = useQuery([page, `category-${category}`], async (page) => {
-        const response = await Http.get(`threads?category=${category}&page=${page}`);
+        const response = await Http.get(`threads?category=${category}&page=${page ?? 1}`);
         const pagination = response.data;
         setPagination({
             currentPage: pagination.current_page,
@@ -117,7 +117,7 @@ export default function Threads() {
         return response.data;
     });
 
-    useEffect(async () => {
+    useEffect(() => {
         window.scrollTo(0, 0);
     }, [category, page]);
 
@@ -129,7 +129,7 @@ export default function Threads() {
             return <p>Error retrieving the threads</p>;
         }
         if (threads.status === 'success') {
-            if (threads.data.length <= 0) {
+            if (!threads.data?.length) {
                 return <p className="text-center">No threads were found</p>;
             }
             return threads.data.map(thread => (

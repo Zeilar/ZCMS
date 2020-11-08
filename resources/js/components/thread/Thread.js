@@ -1,9 +1,11 @@
+import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, useParams } from 'react-router';
-import React, { useState, useEffect } from 'react';
 import { mdiArrowLeft, mdiLoading } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
 import { NavLink } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import Http from '../../classes/Http';
 import Post from '../layout/Post';
 import Header from '../Header';
@@ -52,49 +54,49 @@ export default function Threads() {
     });
     const classes = styles();
 
-    const [postsLoaded, setPostsLoaded] = useState(false);
+    const { setMessage } = useContext(FeedbackModalContext);
     const [pagination, setPagination] = useState({});
-    const [dbThread, setDbThread] = useState();
-    const [posts, setPosts] = useState([]);
     const { thread, page } = useParams();
     const history = useHistory();
 
-    useEffect(async () => {
-        if (thread) {
-            setPostsLoaded(false);
-            const response = await Http.get(`posts?thread=${thread}&getAuthor=true&getPostMeta=true&page=${page}`);
-            if (response.code === 200) {
-                setPosts(response.data.data);
-                const pagination = response.data;
-                setPagination({
-                    currentPage: pagination.current_page,
-                    lastPage: pagination.last_page,
-                    perPage: pagination.per_page,
-                    total: pagination.total,
-                });
-            }
+    const posts = useQuery([page, `thread-${thread}`], async (page) => {
+        const response = await Http.get(`posts?thread=${thread}&getAuthor=true&getPostMeta=true&page=${page ?? 1}`);
+        const pagination = response.data;
+        setPagination({
+            currentPage: pagination.current_page,
+            lastPage: pagination.last_page,
+            perPage: pagination.per_page,
+            total: pagination.total,
+        });
+        return response.data.data;
+    });
+
+    const dbThread = useQuery(`dbThread-${thread}`, async () => {
+        const response = await Http.get(`threads/${thread}?getCategory=true`);
+        if (response.code === 400) {
+            history.push('/');
+            return;
         }
-        setPostsLoaded(true);
+        return response.data;
+    });
+
+    useEffect(() => {
         window.scrollTo(0, 0);
     }, [thread, page]);
 
-    useEffect(async () => {
-        const response = await Http.get(`threads/${thread}?getCategory=true`);
-        if (response.code === 200) {
-            setDbThread(response.data);
-        } else {
-            history.push('/');
-        }
-    }, [thread]);
-
     const renderThreads = () => {
-        if (!postsLoaded) {
+        if (posts.status === 'loading') {
             return <Icon className="center-self loadingWheel-2" path={mdiLoading} spin={1} />;
-        } else {
-            if (posts.length <= 0) {
+        }
+        if (posts.status === 'error') {
+            setMessage('Something went wrong loading the posts');
+            return null;
+        }
+        if (posts.status === 'success') {
+            if (!posts.data?.length) {
                 return <p className="text-center">No posts were found</p>;
             } else {
-                return posts.map(post => <Post key={post.id} post={post} />);
+                return posts.data.map(post => <Post key={post.id} post={post} />);
             }
         }
     }
@@ -104,14 +106,14 @@ export default function Threads() {
             <Header />
             <div className={`${classes.container} py-4`}>
                 <div className={`${classes.header} row mb-2`}>
-                    <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread?.category?.name.toLowerCase()}`}>
+                    <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread.data?.category.name.toLowerCase()}`}>
                         <Icon path={mdiArrowLeft} />
                     </NavLink>
-                    <h2 className={`${classes.headerText} row w-100`}>{dbThread?.title}</h2>
+                    <h2 className={`${classes.headerText} row w-100`}>{dbThread.data?.title}</h2>
                 </div>
                 <div className={`${classes.posts} col relative`}>
                     {renderThreads()}
-                    {posts.length > 0 && postsLoaded && <Pagination pagination={pagination} />}
+                    {posts.status === 'success' && <Pagination pagination={pagination} />}
                 </div>
             </div>
         </>
