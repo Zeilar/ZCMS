@@ -56,6 +56,7 @@ export default function Threads() {
     const classes = styles();
 
     const { setMessage } = useContext(FeedbackModalContext);
+    const [messageInput, setMessageInput] = useState('');
     const [pagination, setPagination] = useState({});
     const { user } = useContext(UserContext);
     const { thread, page } = useParams();
@@ -109,9 +110,25 @@ export default function Threads() {
         }
     }
 
+    async function submitPost(e) {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('content', messageInput);
+        formData.append('threadId', dbThread.data?.id);
+        const response = await Http.post('posts', { body: formData });
+
+    }
+
     return (
         <>
             <Header />
+            {
+                user &&
+                    <form onSubmit={submitPost}>
+                        <textarea onChange={e => setMessageInput(e.target.value)} cols="30" rows="10"></textarea>
+                        <button>Submit</button>
+                    </form>
+            }
             <div className={`${classes.container} py-4`}>
                 <div className={`${classes.header} row mb-2`}>
                     <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread.data?.category.name.toLowerCase()}`}>

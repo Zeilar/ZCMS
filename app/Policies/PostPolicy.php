@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\Thread;
 use App\Models\Role;
 use App\Models\User;
 
@@ -16,7 +17,10 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->suspended()) return false;
+        if ($user->getClearance() <= 3) return true;
+        // if ($thread->locked) return false;
+        return true;
     }
 
     /**
