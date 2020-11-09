@@ -52,7 +52,7 @@ export default function Login({ location }) {
         },
         footer: {
             borderTop: '1px solid var(--border-primary)',
-            backgroundColor: 'var(--body-bg)',
+            backgroundColor: 'var(--color-body)',
             padding: 35,
         },
         submit: {

@@ -8,7 +8,7 @@ export default function Checkbox({ forwardRef, className, id, ...props }) {
     const styles = createUseStyles({
         box: {
             border: '1px solid var(--border-primary)',
-            backgroundColor: 'var(--body-bg)',
+            backgroundColor: 'var(--color-body)',
             justifyContent: 'center',
             alignItems: 'center',
             cursor: 'pointer',

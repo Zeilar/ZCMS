@@ -14,12 +14,12 @@
   --color-main: rgb(0, 200, 125);
   --color-main-dark: rgb(0, 175, 100);
   --color-danger: rgb(200, 0, 0);
+  --color-body: rgb(250, 250, 250);
   --border-primary: rgb(200, 200, 200);
   --border-secondary: rgb(150, 150, 150);
   --text-primary: black;
   --text-secondary: rgb(50, 50, 50);
   --container-margin: 15vw;
-  --body-bg: rgb(250, 250, 250);
   --color-1: var(--color-main);
   --color-2: rgb(200, 0, 0);
   --color-3: rgb(200, 100, 0);
@@ -192,7 +192,7 @@ a.color-3 {
 }
 
 body {
-  background-color: var(--body-bg);
+  background-color: var(--color-body);
   color: var(--text-primary);
   font-family: Roboto;
 }
