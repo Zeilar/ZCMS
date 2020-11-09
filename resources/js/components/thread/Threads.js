@@ -1,5 +1,6 @@
-import { mdiArrowLeft, mdiEye, mdiForum, mdiLoading } from '@mdi/js';
-import React, { useState, useEffect } from 'react';
+import { mdiArrowLeft, mdiEye, mdiForum, mdiLoading, mdiPlusBox } from '@mdi/js';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../contexts/UserContext';
 import { ucfirst } from '../../functions/helpers';
 import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
@@ -8,6 +9,7 @@ import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import Tooltip from '../misc/Tooltip';
 import Http from '../../classes/Http';
+import classnames from 'classnames';
 import Header from '../Header';
 import Icon from '@mdi/react';
 
@@ -94,10 +96,14 @@ export default function Threads() {
         latestDate: {
             fontSize: '0.85rem',
         },
+        newIcon: {
+            width: '1.5rem',
+        },
     });
     const classes = styles();
 
     const [pagination, setPagination] = useState({});
+    const { user } = useContext(UserContext);
     const { category, page } = useParams();
 
     const threads = useQuery([page, `category-${category}`], async (page) => {
@@ -189,6 +195,15 @@ export default function Threads() {
                         <h2 className="ml-2">{ucfirst(category)}</h2>
                     </div>
                 </div>
+                {
+                    user &&
+                        <div className={classnames('row')}>
+                            <NavLink className={classnames('btn dark ml-auto caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
+                                <Icon className={classnames(classes.newIcon)} path={mdiPlusBox} />
+                                <span>New thread</span>
+                            </NavLink>
+                        </div>
+                }
                 <div className={`${classes.threads} col relative`}>
                     {renderThreads()}
                     {status === 'success' && <Pagination pagination={pagination} />}

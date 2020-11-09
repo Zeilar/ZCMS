@@ -13,6 +13,11 @@
     min-height: 2rem;
     border: 0;
 
+    &:hover {
+        color: var(--color-primary);
+        text-decoration: none;
+    }
+
     &:hover,
     &[disabled] {
         background-color: var(--color-main-dark);

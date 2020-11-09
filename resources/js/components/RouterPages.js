@@ -3,6 +3,7 @@ import AdminDashboard from './admin/dashboard/Index';
 import FeedbackModal from './misc/FeedbackModal';
 import { Route, Switch } from 'react-router';
 import AdminRoute from './routes/AdminRoute';
+import NewThread from './thread/NewThread';
 import React, { useContext } from 'react';
 import Register from './auth/Register';
 import Threads from './thread/Threads';
@@ -18,6 +19,7 @@ export default function RouterPages() {
         <>
             <Switch>
                 <Route component={Index} path="/" exact />
+                <Route component={NewThread} path="/category/:category/new" exact />
                 <Route component={Threads} path="/category/:category/:page?" exact />
                 <Route component={Thread} path="/thread/:thread/:page?" exact />
                 <Route component={Login} path="/login" exact />
