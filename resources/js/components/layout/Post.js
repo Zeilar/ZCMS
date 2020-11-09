@@ -16,9 +16,13 @@ export default function Post({ post, refetch }) {
             boxShadow: [0, 0, 3, 0, 'rgba(0, 0, 0, 0.15)'],
             border: '1px solid var(--border-primary)',
             backgroundColor: 'var(--color-primary)',
+            transition: 'all 0.5s linear',
             borderRadius: 3,
             '&:last-child': {
                 marginBottom: 0,
+            },
+            '&.removed': {
+                opacity: 0,
             },
         },
         avatar: {
@@ -113,7 +117,10 @@ export default function Post({ post, refetch }) {
         setDeleting(true);
         const response = await Http.delete(`posts/${post.id}`);
         setDeleting(false);
-        errorCodeHandler(response.code, setMessage, refetch);
+        errorCodeHandler(response.code, setMessage, () => {
+            postElement.current.classList.add('removed');
+            refetch();
+        });
     }
 
     useEffect(() => {
