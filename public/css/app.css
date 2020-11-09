@@ -31,7 +31,6 @@
   transition: all 0.05s linear;
   color: var(--color-primary);
   border-radius: 3px;
-  min-height: 1.5rem;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -40,8 +39,9 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  min-width: 1.5rem;
+  min-width: 2.5rem;
   padding: 8px 12px;
+  height: 2rem;
   border: 0;
 }
 
@@ -56,7 +56,7 @@
 
 .btn.loading {
   pointer-events: none;
-  padding: 2px 8px;
+  padding: 2px;
 }
 
 .btn.dark {
