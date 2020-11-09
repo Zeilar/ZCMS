@@ -22,7 +22,7 @@ export default function Tooltip({ tagName, title, children, ...props }) {
                 },
             },
             '&::before': {
-                borderTop: '10px solid var(--color-darkGray)',
+                borderTop: '10px solid var(--color-dark)',
                 borderRight: '10px solid transparent',
                 borderLeft: '10px solid transparent',
                 content: '""',
@@ -32,7 +32,7 @@ export default function Tooltip({ tagName, title, children, ...props }) {
                 top: -15,
             },
             '&::after': {
-                backgroundColor: 'var(--color-darkGray)',
+                backgroundColor: 'var(--color-dark)',
                 color: 'var(--color-primary)',
                 content: 'attr(data-title)',
                 whiteSpace: 'nowrap',
