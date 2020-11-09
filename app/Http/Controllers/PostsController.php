@@ -25,9 +25,7 @@ class PostsController extends Controller
         $thread = Thread::findOrFail($request->threadId);
         $this->authorize('create', [Post::class, $thread]);
 
-        $request->validate([
-            'content' => 'required|string|min:3|max:500',
-        ]);
+        $request->validate(['content' => 'required|string|min:3|max:500']);
 
         $post = Post::create([
             'content'   => $request->content,
