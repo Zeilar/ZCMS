@@ -2,32 +2,32 @@ function ucfirst(string = '') {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function errorCodeHandler(code, setMessage, success) {
-    if (!setMessage) return console.error('setMessage must be a valid callback');
-    if (!setMessage) return console.error('success must be a valid callback');
+function errorCodeHandler(code, errorCallback, successCallback) {
+    if (!errorCallback) return console.error('errorCallback must be a valid callback');
+    if (!errorCallback) return console.error('successCallback must be a valid callback');
     switch (code) {
         case 200:
-            if (success) success();
+            if (successCallback) successCallback();
             break;
 
         case 404:
-            setMessage('Post not found');
+            errorCallback('Post not found');
             break;
 
         case 403:
-            setMessage('Insufficient permissions');
+            errorCallback('Insufficient permissions');
             break;
 
         case 401:
-            setMessage('Unauthorized');
+            errorCallback('Unauthorized');
             break;
 
         case 500:
-            setMessage('Something went wrong');
+            errorCallback('Something went wrong');
             break;
 
         default:
-            setMessage('Unexpected error');
+            errorCallback('Unexpected error');
             break;
     }
 }

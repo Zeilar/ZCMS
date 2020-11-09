@@ -37,13 +37,13 @@ class PostsController extends Controller
             'content' => 'required|string|min:3|max:500',
         ]);
 
-        Post::create([
+        $post = Post::create([
             'content'   => $request->content,
             'user_id'   => auth()->user()->id,
             'thread_id' => $thread->id,
         ]);
 
-        return response(true);
+        return response($post);
     }
 
     public function show(Post $post)

@@ -12,8 +12,8 @@ import Icon from '@mdi/react';
 export default function Header({ forwardRef }) {
     const styles = createUseStyles({
         header: {
-            backgroundColor: 'var(--color-dark)',
             padding: [0, 'var(--container-margin)'],
+            backgroundColor: 'var(--color-dark)',
         },
         brand: {
             '&:hover': {

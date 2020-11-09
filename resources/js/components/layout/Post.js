@@ -67,12 +67,16 @@ export default function Post({ post, refetch }) {
         likesAmount: {
             marginRight: 3,
         },
+        deleteIcon: {
+            width: 15,
+        },
     });
     const classes = styles();
 
     const [likes, setLikes] = useState(post.postlikes.length);
     const { setMessage } = useContext(FeedbackModalContext);
     const [hasLiked, setHasLiked] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const [editing, setEditing] = useState(false);
     const [liking, setLiking] = useState(false);
     const { user } = useContext(UserContext);
@@ -106,11 +110,22 @@ export default function Post({ post, refetch }) {
 
     async function deletePost() {
         if (!confirm('Are you sure you want to delete this post?')) return;
+        setDeleting(true);
         const response = await Http.delete(`posts/${post.id}`);
+        setDeleting(false);
         errorCodeHandler(response.code, setMessage, refetch);
     }
 
-    function likeButtonRender() {
+    useEffect(() => {
+        for (let i = 0; i < post.postlikes.length; i++) {
+            if (post.postlikes[i].user_id === user.id) {
+                setHasLiked(true);
+                break;
+            }
+        }
+    }, []);
+
+    const likeButtonRender = () => {
         if (liking) return <Icon className={classnames(classes.likeIcon, 'mr-0')} path={mdiLoading} spin={1} />;
         if (hasLiked) {
             return <>
@@ -124,15 +139,6 @@ export default function Post({ post, refetch }) {
             <span>Like this</span>
         </>;
     }
-    
-    useEffect(() => {
-        for (let i = 0; i < post.postlikes.length; i++) {
-            if (post.postlikes[i].user_id === user.id) {
-                setHasLiked(true);
-                break;
-            }
-        }
-    }, []);
 
     useEffect(() => {
         if (Number(window.location.hash.replace('#', '')) === post.id) {
@@ -141,7 +147,7 @@ export default function Post({ post, refetch }) {
     }, [window.location.hash]);
 
     return (
-        <article className={classnames(classes.post, 'col mb-2')} ref={postElement}>
+        <article className={classnames(classes.post, 'col mb-2 relative')} ref={postElement}>
             <div className={classnames(classes.head, 'row')}>
                 <img className={classnames(classes.avatar, 'd-flex mx-2 my-auto')} src={`/storage/avatars/${post.user.avatar}`} alt="Profile picture" />
                 <NavLink className={classnames(classes.username)} to={`/user/${post.user.username}`}>
@@ -175,11 +181,20 @@ export default function Post({ post, refetch }) {
                     <div className={classnames(classes.footer, 'row p-2')}>
                         {canEditOrRemove() && <button className={classnames('btn dark caps')}>Edit</button>}
                         {
-                            <button className={classnames('btn', { dark: !hasLiked })} onClick={toggleLike} disabled={liking}>
+                            <button className={classnames('btn', { dark: !hasLiked, loading: liking })} onClick={toggleLike} disabled={liking}>
                                 <span className={classnames('center-children')}>{likeButtonRender()}</span>
                             </button>
                         }
-                        {canEditOrRemove() && <button className={classnames('btn ml-auto danger caps')} onClick={deletePost}>Delete</button>}
+                        {
+                            canEditOrRemove() &&
+                                <button className={classnames('btn ml-auto danger caps', { loading: deleting })} onClick={deletePost}>
+                                    {
+                                        deleting
+                                            ? <Icon className={classnames(classes.deleteIcon)} path={mdiLoading} spin={1} />
+                                            : 'Delete'
+                                    }
+                                </button>
+                        }
                     </div>
             }
         </article>
