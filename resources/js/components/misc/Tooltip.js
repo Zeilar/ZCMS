@@ -12,7 +12,6 @@ export default function Tooltip({ tagName, title, children, ...props }) {
             },
             '&::before, &::after': {
                 transform: 'translate(-50%, -50%)',
-                transition: 'all 0.05s linear',
                 pointerEvents: 'none',
                 position: 'absolute',
                 fontSize: '1rem',
