@@ -1,5 +1,6 @@
 import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { errorCodeHandler } from '../../functions/helpers';
 import { UserContext } from '../../contexts/UserContext';
 import { mdiLoading, mdiThumbUp } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
@@ -8,7 +9,6 @@ import Http from '../../classes/Http';
 import classnames from 'classnames';
 import BBCode from '../misc/BBCode';
 import Icon from '@mdi/react';
-
 
 export default function Post({ post, refetch }) {
     const styles = createUseStyles({
@@ -106,33 +106,8 @@ export default function Post({ post, refetch }) {
 
     async function deletePost() {
         if (!confirm('Are you sure you want to delete this post?')) return;
-
         const response = await Http.delete(`posts/${post.id}`);
-        switch (response.code) {
-            case 200:
-                refetch();
-                break;
-
-            case 404:
-                setMessage('Post not found');
-                break;
-
-            case 403:
-                setMessage('Insufficient permissions');
-                break;
-
-            case 401:
-                setMessage('Unauthorized');
-                break;
-
-            case 500:
-                setMessage('Something went wrong');
-                break;
-
-            default:
-                setMessage('Unexpected error');
-                break;
-        }
+        errorCodeHandler(response.code, setMessage, refetch);
     }
 
     function likeButtonRender() {
