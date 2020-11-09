@@ -18,7 +18,6 @@ class PostsController extends Controller
             $posts = Post::paginate(Post::$MAX_PER_PAGE);
         }
         if ($id = request()->query('getPostMeta', false)) {
-            $posts->load('user');
             foreach ($posts as $post) {
                 $user = $post->user;
                 $user->postsAmount = $user->posts()->count();

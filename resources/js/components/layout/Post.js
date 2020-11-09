@@ -86,11 +86,18 @@ export default function Post({ post, refetch }) {
     const { user } = useContext(UserContext);
     const postElement = useRef();
 
-    function canEditOrRemove() {
-        if (!user) return false;
-        if (user.suspended) return false;
+    function canEdit() {
+        if (!user || user.suspended) return false;
         if (user.roles[0].clearance <= 3) return true;
-        if (user.id === post.user.id) return true;        
+        if (user.id === post.user.id) return true;
+        return false;  
+    }
+
+    function canRemove() {
+        if (!canEdit) return false;
+        if (user.roles[0].clearance <= 2) return true;
+        if (post.isFirst) return false;
+        return user.id === post.user.id;
     }
 
     function parseDate(timestamp) {
@@ -132,6 +139,12 @@ export default function Post({ post, refetch }) {
         }
     }, []);
 
+    useEffect(() => {
+        if (Number(window.location.hash.replace('#', '')) === post.id) {
+            window.scrollTo(0, window.scrollY + postElement.current.getBoundingClientRect().top);
+        }
+    }, [window.location.hash]);
+
     const likeButtonRender = () => {
         if (liking) return <Icon className={classnames(classes.likeIcon, 'mr-0')} path={mdiLoading} spin={1} />;
         if (hasLiked) {
@@ -146,12 +159,6 @@ export default function Post({ post, refetch }) {
             <span>Like this</span>
         </>;
     }
-
-    useEffect(() => {
-        if (Number(window.location.hash.replace('#', '')) === post.id) {
-            window.scrollTo(0, window.scrollY + postElement.current.getBoundingClientRect().top);
-        }
-    }, [window.location.hash]);
 
     return (
         <article className={classnames(classes.post, 'col mb-2 relative')} ref={postElement}>
@@ -186,14 +193,14 @@ export default function Post({ post, refetch }) {
             {
                 user &&
                     <div className={classnames(classes.footer, 'row p-2')}>
-                        {canEditOrRemove() && <button className={classnames('btn dark caps')}>Edit</button>}
+                        {canEdit() && <button className={classnames('btn dark caps')}>Edit</button>}
                         {
                             <button className={classnames('btn', { dark: !hasLiked, loading: liking })} onClick={toggleLike} disabled={liking}>
                                 <span className={classnames('center-children')}>{likeButtonRender()}</span>
                             </button>
                         }
                         {
-                            canEditOrRemove() &&
+                            canRemove() &&
                                 <button className={classnames('btn ml-auto danger caps', { loading: deleting })} onClick={deletePost}>
                                     {
                                         deleting

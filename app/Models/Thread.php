@@ -24,15 +24,15 @@ class Thread extends Model
         return $this->hasMany(Post::class);
     }
 
-    public function opPost() {
-        return $this->posts()->limit(1)->first();
+    public function opPost(): Post {
+        return $this->posts()->limit(1)->firstOrFail();
     }
 
-    public function op() {
+    public function op(): User {
         return $this->opPost()->user;
     }
 
-    public function latestPost() {
-        return $this->posts()->latest()->limit(1)->first();
+    public function latestPost(): Post {
+        return $this->posts()->latest()->limit(1)->firstOrFail();
     }
 }

@@ -79,7 +79,7 @@ class User extends Authenticatable
     }
 
     public function getClearance(): int {
-        return $this->roles()->orderBy('clearance')->first()->clearance;
+        return $this->roles()->orderBy('clearance')->firstOrFail()->clearance;
     }
 
     public function hasRole(string ...$roles): bool {
@@ -124,7 +124,7 @@ class User extends Authenticatable
     }
     
     public function highestRole() {
-        return $this->roles()->orderBy('clearance')->first();
+        return $this->roles()->orderBy('clearance')->firstOrFail();
     }
 
     public function lowerClearance(User $user): bool {
