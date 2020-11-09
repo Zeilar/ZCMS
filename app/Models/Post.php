@@ -26,7 +26,7 @@ class Post extends Model
     }
 
     public function getUserAttribute(): User {
-        return User::findOrFail($this->user_id);
+        return $this->user()->first();
     }
 
     public function getIsFirstAttribute(): bool {

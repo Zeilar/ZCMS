@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $appends = ['suspended', 'roles'];
+    protected $appends = ['suspended', 'roles', 'postsAmount', 'likesAmount'];
 
     /**
      * The attributes that are mass assignable.
@@ -130,5 +130,13 @@ class User extends Authenticatable
     public function lowerClearance(User $user): bool {
         // The lower clearance number, the higher the rank. Lowest possible is 1.
         return $this->getClearance() <= 1 || $this->highestRole()->clearance < $user->highestRole()->clearance;
+    }
+
+    public function getPostsAmountAttribute(): int {
+        return $this->posts()->count();
+    }
+
+    public function getLikesAmountAttribute(): int {
+        return $this->likedPosts();
     }
 }

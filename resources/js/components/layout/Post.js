@@ -24,6 +24,14 @@ export default function Post({ post, refetch }) {
             '&.removed': {
                 opacity: 0,
             },
+            '&.isOp': {
+                boxShadow: [0, 0, 5, 0, 'var(--color-main)'],
+                borderColor: 'var(--color-main)',
+            },
+            '&.isAuthor': {
+                boxShadow: [0, 0, 5, 0, 'var(--color-dark)'],
+                borderColor: 'var(--color-dark)',
+            },
         },
         avatar: {
             height: 50,
@@ -86,10 +94,14 @@ export default function Post({ post, refetch }) {
     const { user } = useContext(UserContext);
     const postElement = useRef();
 
+    function isAuthor() {
+        return user.id === post.user.id;
+    }
+
     function canEdit() {
         if (!user || user.suspended) return false;
         if (user.roles[0].clearance <= 3) return true;
-        if (user.id === post.user.id) return true;
+        if (isAuthor()) return true;
         return false;  
     }
 
@@ -97,7 +109,7 @@ export default function Post({ post, refetch }) {
         if (!canEdit) return false;
         if (user.roles[0].clearance <= 2) return true;
         if (post.isFirst) return false;
-        return user.id === post.user.id;
+        return isAuthor();
     }
 
     function parseDate(timestamp) {
@@ -161,7 +173,7 @@ export default function Post({ post, refetch }) {
     }
 
     return (
-        <article className={classnames(classes.post, 'col mb-2 relative')} ref={postElement}>
+        <article className={classnames(classes.post, { isOp: post.isOp, isAuthor: isAuthor() }, 'col mb-2 relative')} ref={postElement}>
             <div className={classnames(classes.head, 'row')}>
                 <img className={classnames(classes.avatar, 'd-flex mx-2 my-auto')} src={`/storage/avatars/${post.user.avatar}`} alt="Profile picture" />
                 <NavLink className={classnames(classes.username)} to={`/user/${post.user.username}`}>
@@ -202,11 +214,7 @@ export default function Post({ post, refetch }) {
                         {
                             canRemove() &&
                                 <button className={classnames('btn ml-auto danger caps', { loading: deleting })} onClick={deletePost}>
-                                    {
-                                        deleting
-                                            ? <Icon className={classnames(classes.deleteIcon)} path={mdiLoading} spin={1} />
-                                            : 'Delete'
-                                    }
+                                    {deleting ? <Icon className={classnames(classes.deleteIcon)} path={mdiLoading} spin={1} /> : 'Delete'}
                                 </button>
                         }
                     </div>
