@@ -16,7 +16,7 @@ export default function Post({ post, refetch }) {
             boxShadow: [0, 0, 3, 0, 'rgba(0, 0, 0, 0.15)'],
             border: '1px solid var(--border-primary)',
             backgroundColor: 'var(--color-primary)',
-            transition: 'all 0.5s linear',
+            transition: 'all 0.35s linear',
             borderRadius: 3,
             '&:last-child': {
                 marginBottom: 0,
