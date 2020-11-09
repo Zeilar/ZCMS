@@ -68,4 +68,8 @@ class RolePolicy
     {
         return $user->getClearance() <= 1;
     }
+
+    public function giveRole(User $user, Role $role) {
+        return $user->getClearance() <= 1;
+    }
 }

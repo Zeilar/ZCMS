@@ -15,11 +15,11 @@ class PostPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, Thread $thread)
     {
         if ($user->suspended()) return false;
         if ($user->getClearance() <= 3) return true;
-        // if ($thread->locked) return false; // TODO: thread check
+        if ($thread->locked) return false;
         return true;
     }
 
@@ -71,10 +71,6 @@ class PostPolicy
     public function forceDelete(User $user, Post $post)
     {
         //
-    }
-
-    public function givePost(User $user, Post $post) {
-        return $user->getClearance() <= 1 || $user->highestPost()->clearance < $post->clearance;
     }
     
     public function toggleLike(User $user, Post $post) {

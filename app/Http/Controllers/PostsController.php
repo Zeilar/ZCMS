@@ -23,7 +23,7 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $thread = Thread::findOrFail($request->threadId);
-        $this->authorize('create', Post::class);
+        $this->authorize('create', [Post::class, $thread]);
 
         $request->validate([
             'content' => 'required|string|min:3|max:500',
