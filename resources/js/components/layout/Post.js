@@ -85,6 +85,7 @@ export default function Post({ post, refetch }) {
     });
     const classes = styles();
 
+    const [repuation, setRepuation] = useState(post.user.likesAmount);
     const [likes, setLikes] = useState(post.postlikes.length);
     const { setMessage } = useContext(FeedbackModalContext);
     const [hasLiked, setHasLiked] = useState(false);
@@ -124,6 +125,7 @@ export default function Post({ post, refetch }) {
         const response = await Http.put(`posts/${post.id}/toggleLike`);
         setLiking(false);
         if (response.code === 200) {
+            setRepuation(p => hasLiked ? p - 1 : p + 1);
             setLikes(p => hasLiked ? p - 1 : p + 1);
             setHasLiked(p => !p);
         } else {
@@ -190,7 +192,7 @@ export default function Post({ post, refetch }) {
                     </div>
                     <div className={classnames(classes.metabox)}>
                         <h4 className={classnames(classes.metaboxHeader)}>Reputation</h4>
-                        <span className={classnames(classes.metaboxValue)}>{post.user.likesAmount}</span>
+                        <span className={classnames(classes.metaboxValue)}>{repuation}</span>
                     </div>
                     <div className={classnames(classes.metabox)}>
                         <h4 className={classnames(classes.metaboxValue)}>{post.user.roles[0].name}</h4>

@@ -10,7 +10,9 @@ class Post extends Model
     use HasFactory;
 
     public static $MAX_PER_PAGE = 20;
-    protected $appends = ['isOp', 'isFirst', 'user'];
+    
+    protected $appends = ['isOp', 'isFirst'];
+    protected $with = ['user'];
     protected $guarded = [];
 
     public function user() {
@@ -23,10 +25,6 @@ class Post extends Model
 
     public function postlikes() {
         return $this->hasMany(Postlike::class);
-    }
-
-    public function getUserAttribute(): User {
-        return $this->user()->first();
     }
 
     public function getIsFirstAttribute(): bool {

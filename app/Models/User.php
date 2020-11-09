@@ -11,42 +11,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $hidden = ['password', 'updated_at', 'remember_token', 'email_verified_at',];
     protected $appends = ['suspended', 'roles', 'postsAmount', 'likesAmount'];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'username', 'email', 'password', 'role',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'updated_at', 'remember_token', 'email_verified_at',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function getSuspendedAttribute() {
-        return $this->suspended();
-    }
-
-    public function getRolesAttribute() {
-        return $this->roles()->get(['name', 'clearance']);
-    }
+    protected $fillable = ['username', 'email', 'password', 'role',];
+    protected $casts = ['email_verified_at' => 'datetime',];
 
     public function posts() {
         return $this->hasMany(Post::class);
@@ -138,5 +106,13 @@ class User extends Authenticatable
 
     public function getLikesAmountAttribute(): int {
         return $this->likedPosts();
+    }
+
+    public function getSuspendedAttribute() {
+        return $this->suspended();
+    }
+
+    public function getRolesAttribute() {
+        return $this->roles()->get(['name', 'clearance']);
     }
 }
