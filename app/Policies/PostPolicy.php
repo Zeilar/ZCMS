@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Models\Thread;
-use App\Models\Role;
+use App\Models\Post;
 use App\Models\User;
 
 class PostPolicy
@@ -27,10 +27,10 @@ class PostPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Role  $role
+     * @param  \App\Post  $post
      * @return mixed
      */
-    public function update(User $user, Role $role)
+    public function update(User $user, Post $post)
     {
         //
     }
@@ -39,22 +39,24 @@ class PostPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Role  $role
+     * @param  \App\Post  $post
      * @return mixed
      */
-    public function delete(User $user, Role $role)
+    public function delete(User $user, Post $post)
     {
-        //
+        if ($user->suspended()) return false;
+        if ($user->getClearance() <= 2 || $user->isAuthor($post)) return true;
+        return false;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Role  $role
+     * @param  \App\Post  $post
      * @return mixed
      */
-    public function restore(User $user, Role $role)
+    public function restore(User $user, Post $post)
     {
         //
     }
@@ -63,16 +65,16 @@ class PostPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Role  $role
+     * @param  \App\Post  $post
      * @return mixed
      */
-    public function forceDelete(User $user, Role $role)
+    public function forceDelete(User $user, Post $post)
     {
         //
     }
 
-    public function giveRole(User $user, Role $role) {
-        return $user->getClearance() <= 1 || $user->highestRole()->clearance < $role->clearance;
+    public function givePost(User $user, Post $post) {
+        return $user->getClearance() <= 1 || $user->highestPost()->clearance < $post->clearance;
     }
     
     public function toggleLike(User $user) {

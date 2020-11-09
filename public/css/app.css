@@ -13,6 +13,7 @@
   --color-link: rgb(80, 130, 255);
   --color-main: rgb(0, 200, 125);
   --color-main-dark: rgb(0, 175, 100);
+  --color-danger: rgb(200, 0, 0);
   --border-primary: rgb(200, 200, 200);
   --border-secondary: rgb(150, 150, 150);
   --text-primary: black;
@@ -24,59 +25,83 @@
   --color-3: rgb(200, 100, 0);
 }
 
-.btn,
-.adminBtn,
-.btn-outline {
+.btn {
   background-image: var(--color-main-gradient);
   background-color: var(--color-main);
-  transition: all 0.1s linear;
+  transition: all 0.05s linear;
   color: var(--color-primary);
   border-radius: 3px;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+  font-weight: bold;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
   padding: 8px 12px;
+  border: 0;
 }
 
 .btn:hover,
-.adminBtn:hover,
-.btn-outline:hover,
-.btn[disabled],
-[disabled].adminBtn,
-[disabled].btn-outline {
+.btn[disabled] {
   background-color: var(--color-main-dark);
 }
 
-.btn[disabled],
-[disabled].adminBtn,
-[disabled].btn-outline {
+.btn[disabled] {
   cursor: default;
 }
 
-.btn-outline {
-  background-color: var(--color-primary);
-  border: 2px solid var(--color-main);
-  color: var(--color-main);
-  background-image: none;
-  font-weight: bold;
-}
-
-.btn-outline:hover {
-  background-color: var(--color-main);
-  color: var(--color-primary);
-}
-
-.adminBtn {
+.btn.dark {
   background-color: #0f0f0f;
   background-image: none;
 }
 
-.adminBtn:hover {
-  background-color: #141414;
+.btn.dark:hover {
+  background-color: #232323;
+}
+
+.btn.danger {
+  background-color: var(--color-danger);
+  color: var(--color-primary);
+  background-image: none;
+}
+
+.btn.danger:hover {
+  background-color: #af0000;
+}
+
+.btn.btn-outline {
+  border: 2px solid var(--color-main);
+  background-color: transparent;
+  color: var(--color-main);
+  background-image: none;
+}
+
+.btn.btn-outline:hover {
+  background-color: var(--color-main);
+  color: var(--color-primary);
+}
+
+.btn.btn-outline.dark {
+  border-color: #0f0f0f;
+  color: #0f0f0f;
+  background-image: none;
+}
+
+.btn.btn-outline.dark:hover {
+  background-color: #0f0f0f;
+  color: var(--color-primary);
+}
+
+.btn.btn-outline.danger {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.btn.btn-outline.danger:hover {
+  background-color: var(--color-danger);
+  color: var(--color-primary);
 }
 
 .loadingWheel {

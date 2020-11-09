@@ -1,12 +1,14 @@
 .btn {
     background-image: var(--color-main-gradient);
     background-color: var(--color-main);
-    transition: all 0.1s linear;
+    transition: all 0.05s linear;
     color: var(--color-primary);
     border-radius: 3px;
     width: fit-content;
+    font-weight: bold;
     user-select: none;
     padding: 8px 12px;
+    border: 0;
 
     &:hover,
     &[disabled] {
@@ -16,31 +18,57 @@
     &[disabled] {
         cursor: default;
     }
-}
 
-.btn-outline {
-    @extend .btn;
+    &.dark {    
+        background-color: rgb(15, 15, 15);
+        background-image: none;
 
-    background-color: var(--color-primary);
-    border: 2px solid var(--color-main);
-    color: var(--color-main);
-    background-image: none;
-    font-weight: bold;
-
-    &:hover {
-        background-color: var(--color-main);
-        color: var(--color-primary);
+        &:hover {
+            background-color: rgb(35, 35, 35);
+        }
     }
-}
 
-.adminBtn {
-    @extend .btn;
-    
-    background-color: rgb(15, 15, 15);
-    background-image: none;
+    &.danger {
+        background-color: var(--color-danger);
+        color: var(--color-primary);
+        background-image: none;
 
-    &:hover {
-        background-color: rgb(20, 20, 20);
+        &:hover {
+            background-color: rgb(175, 0, 0);
+        }
+    }
+
+    &.btn-outline {
+        border: 2px solid var(--color-main);
+        background-color: transparent;
+        color: var(--color-main);
+        background-image: none;
+
+        &:hover {
+            background-color: var(--color-main);
+            color: var(--color-primary);
+        }
+
+        &.dark {    
+            border-color: rgb(15, 15, 15);
+            color: rgb(15, 15, 15);
+            background-image: none;
+
+            &:hover {
+                background-color: rgb(15, 15, 15);
+                color: var(--color-primary);
+            }
+        }
+
+        &.danger {
+            border-color: var(--color-danger);
+            color: var(--color-danger);
+
+            &:hover {
+                background-color: var(--color-danger);
+                color: var(--color-primary);
+            }
+        }
     }
 }
 

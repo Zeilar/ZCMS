@@ -10,7 +10,7 @@ import BBCode from '../misc/BBCode';
 import Icon from '@mdi/react';
 
 
-export default function Post({ post }) {
+export default function Post({ post, refetch }) {
     const styles = createUseStyles({
         post: {
             boxShadow: [0, 0, 3, 0, 'rgba(0, 0, 0, 0.15)'],
@@ -37,6 +37,7 @@ export default function Post({ post }) {
         },
         footer: {
             borderTop: '1px solid var(--border-primary)',
+            gap: '10px',
         },
         metaboxes: {
             alignItems: 'center',
@@ -103,6 +104,37 @@ export default function Post({ post }) {
         }
     }
 
+    async function deletePost() {
+        if (!confirm('Are you sure you want to delete this post?')) return;
+
+        const response = await Http.delete(`posts/${post.id}`);
+        switch (response.code) {
+            case 200:
+                refetch();
+                break;
+
+            case 404:
+                setMessage('Post not found');
+                break;
+
+            case 403:
+                setMessage('Insufficient permissions');
+                break;
+
+            case 401:
+                setMessage('Unauthorized');
+                break;
+
+            case 500:
+                setMessage('Something went wrong');
+                break;
+
+            default:
+                setMessage('Unexpected error');
+                break;
+        }
+    }
+
     function likeButtonRender() {
         if (liking) return <Icon className={classnames(classes.likeIcon, 'mr-0')} path={mdiLoading} spin={1} />;
         if (hasLiked) {
@@ -166,12 +198,13 @@ export default function Post({ post }) {
             {
                 user &&
                     <div className={classnames(classes.footer, 'row p-2')}>
-                        {canEditOrRemove() && <button className={classnames('btn-outline caps')}>Edit</button>}
+                        {canEditOrRemove() && <button className={classnames('btn dark caps')}>Edit</button>}
                         {
-                            <button className={classnames('btn-outline')} onClick={toggleLike} disabled={liking}>
+                            <button className={classnames('btn', { dark: !hasLiked })} onClick={toggleLike} disabled={liking}>
                                 <span className={classnames('center-children')}>{likeButtonRender()}</span>
                             </button>
                         }
+                        {canEditOrRemove() && <button className={classnames('btn ml-auto danger caps')} onClick={deletePost}>Delete</button>}
                     </div>
             }
         </article>
