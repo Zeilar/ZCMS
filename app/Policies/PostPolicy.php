@@ -77,7 +77,7 @@ class PostPolicy
         return $user->getClearance() <= 1 || $user->highestPost()->clearance < $post->clearance;
     }
     
-    public function toggleLike(User $user) {
-        return (bool) $user;
+    public function toggleLike(User $user, Post $post) {
+        return !$user->isAuthor($post);
     }
 }

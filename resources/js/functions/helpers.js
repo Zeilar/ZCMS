@@ -7,7 +7,7 @@ function errorCodeHandler(code, errorCallback, successCallback) {
     if (!errorCallback) return console.error('successCallback must be a valid callback');
     switch (code) {
         case 200:
-            if (successCallback) successCallback();
+            successCallback();
             break;
 
         case 404:

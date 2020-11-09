@@ -76,7 +76,7 @@ class PostsController extends Controller
     }
 
     public function toggleLike(Post $post) {
-        $this->authorize('toggleLike', Post::class);
+        $this->authorize('toggleLike', $post);
 
         $user = auth()->user();
 

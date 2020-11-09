@@ -124,13 +124,11 @@ export default function Post({ post, refetch }) {
         setLiking(true);
         const response = await Http.put(`posts/${post.id}/toggleLike`);
         setLiking(false);
-        if (response.code === 200) {
+        errorCodeHandler(response.code, setMessage, () => {
             setRepuation(p => hasLiked ? p - 1 : p + 1);
             setLikes(p => hasLiked ? p - 1 : p + 1);
             setHasLiked(p => !p);
-        } else {
-            setMessage('Something went wrong');
-        }
+        });
     }
 
     async function deletePost() {
@@ -209,9 +207,10 @@ export default function Post({ post, refetch }) {
                     <div className={classnames(classes.footer, 'row p-2')}>
                         {canEdit() && <button className={classnames('btn dark caps')}>Edit</button>}
                         {
-                            <button className={classnames('btn', { dark: !hasLiked, loading: liking })} onClick={toggleLike} disabled={liking}>
-                                <span className={classnames('center-children')}>{likeButtonRender()}</span>
-                            </button>
+                            !isAuthor() &&
+                                <button className={classnames('btn', { dark: !hasLiked, loading: liking })} onClick={toggleLike} disabled={liking}>
+                                    <span className={classnames('center-children')}>{likeButtonRender()}</span>
+                                </button>
                         }
                         {
                             canRemove() &&
