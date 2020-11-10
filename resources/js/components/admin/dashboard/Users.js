@@ -109,8 +109,8 @@ export default function Users() {
             display: 'flex',
             padding: '10px',
             '&.error': {
+                color: 'var(--color-danger)',
                 'border-color': 'red',
-                color: 'red',
             },
             '&.success': {
                 'border-color': 'green',

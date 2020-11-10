@@ -102,7 +102,6 @@ export default function Category() {
     });
     const classes = styles();
 
-    const [pagination, setPagination] = useState({});
     const { user } = useContext(UserContext);
     const { category, page } = useParams();
 

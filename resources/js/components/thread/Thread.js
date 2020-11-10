@@ -69,8 +69,8 @@ export default function Threads() {
         submitIcon: {
             width: 15,
         },
-        titleLoading: {
-            width: '1.5rem',
+        editorError: {
+            color: 'var(--color-danger)',
         },
     });
     const classes = styles();
@@ -78,7 +78,7 @@ export default function Threads() {
     const { setMessage } = useContext(FeedbackModalContext);
     const [editorContent, setEditorContent] = useState('');
     const [submitting, setSubmitting] = useState(false);
-    const [pagination, setPagination] = useState({});
+    const [editorError, setEditorError] = useState();
     const { user } = useContext(UserContext);
     const { thread, page } = useParams();
     const history = useHistory();
@@ -113,7 +113,7 @@ export default function Threads() {
         setSubmitting(true);
         const response = await Http.post('posts', { body: formData });
         setSubmitting(false);
-        // TODO: felhantering
+        if (response.code === 422) setEditorError(response.data.errors.content);
     }
 
     useEffect(() => {
@@ -161,6 +161,7 @@ export default function Threads() {
                                     style={{ height: '100%' }}
                                     value={editorContent}
                                 />
+                                {editorError && <p className={classnames(classes.editorError, 'mt-1 bold')}>{editorError}</p>}
                                 <button className={classnames(classes.submit, 'btn mt-2')}>
                                     {submitting ? <Icon className={classnames(classes.submitIcon)} path={mdiLoading} spin={1} /> : 'Send'}
                                 </button>
