@@ -7,7 +7,6 @@ import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import Http from '../../classes/Http';
 import classnames from 'classnames';
-import BBCode from '../misc/BBCode';
 import Icon from '@mdi/react';
 
 export default function Post({ post, refetch }) {
@@ -198,9 +197,7 @@ export default function Post({ post, refetch }) {
                 </div>
             </div>
             <p className={classnames(classes.body, 'p-2')}>
-                <BBCode>
-                    {post.content}
-                </BBCode>
+                {post.content}
             </p>
             {
                 user &&

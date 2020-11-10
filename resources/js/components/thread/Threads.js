@@ -179,7 +179,7 @@ export default function Threads() {
         <>
             <Header />
             <div className={`${classes.container} py-4`}>
-                <div className={`${classes.header} row mb-2`}>
+                <div className={classnames(classes.header, 'row mb-2')}>
                     <NavLink className={`${classes.back} d-flex mr-2`} to="/">
                         <Icon path={mdiArrowLeft} />
                     </NavLink>
@@ -197,8 +197,8 @@ export default function Threads() {
                 </div>
                 {
                     user &&
-                        <div className={classnames('row')}>
-                            <NavLink className={classnames('btn dark ml-auto caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
+                        <div className={classnames('row mt-2')}>
+                            <NavLink className={classnames('btn dark caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
                                 <Icon className={classnames(classes.newIcon)} path={mdiPlusBox} />
                                 <span>New thread</span>
                             </NavLink>

@@ -2,12 +2,16 @@ import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { useHistory, useParams } from 'react-router';
-import { mdiArrowLeft, mdiLoading } from '@mdi/js';
+import { mdiArrowLeft, mdiChevronDown, mdiChevronUp, mdiLoading } from '@mdi/js';
+import 'react-markdown-editor-lite/lib/index.css';
+import MdEditor from 'react-markdown-editor-lite';
 import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import Http from '../../classes/Http';
+import MarkdownIt from 'markdown-it';
+import classnames from 'classnames';
 import Post from '../layout/Post';
 import Header from '../Header';
 import Icon from '@mdi/react';
@@ -52,18 +56,33 @@ export default function Threads() {
                 backgroundColor: 'var(--bg-color)',
             }
         },
+        editor: {
+            width: 'calc(100% - (var(--container-margin) * 2))',
+            transition: 'all 0.25s linear',
+            width: '100%',
+            height: 350,
+        },
+        submit: {
+            fontSize: '1.15rem',
+        },
+        submitIcon: {
+            width: 15,
+        },
     });
     const classes = styles();
 
     const { setMessage } = useContext(FeedbackModalContext);
-    const [messageInput, setMessageInput] = useState('');
+    const [editorContent, setEditorContent] = useState('');
+    const [submitting, setSubmitting] = useState(false);
     const [pagination, setPagination] = useState({});
     const { user } = useContext(UserContext);
     const { thread, page } = useParams();
     const history = useHistory();
 
+    const mdParser = new MarkdownIt();
+
     const posts = useQuery([page, `thread-${thread}`], async (page) => {
-        const response = await Http.get(`posts?thread=${thread}&getPostMeta=true&page=${page ?? 1}`);
+        const response = await Http.get(`posts?thread=${thread}&page=${page ?? 1}`);
         const pagination = response.data;
         setPagination({
             currentPage: pagination.current_page,
@@ -89,6 +108,17 @@ export default function Threads() {
         return true;
     }
 
+    async function submitPost(e) {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('content', editorContent);
+        formData.append('threadId', dbThread.data?.id);
+        setSubmitting(true);
+        const response = await Http.post('posts', { body: formData });
+        setSubmitting(false);
+        // TODO: felhantering
+    }
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [thread, page]);
@@ -110,25 +140,9 @@ export default function Threads() {
         }
     }
 
-    async function submitPost(e) {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('content', messageInput);
-        formData.append('threadId', dbThread.data?.id);
-        const response = await Http.post('posts', { body: formData });
-
-    }
-
     return (
         <>
             <Header />
-            {
-                user &&
-                    <form onSubmit={submitPost}>
-                        <textarea onChange={e => setMessageInput(e.target.value)} cols="30" rows="10"></textarea>
-                        <button>Submit</button>
-                    </form>
-            }
             <div className={`${classes.container} py-4`}>
                 <div className={`${classes.header} row mb-2`}>
                     <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread.data?.category.name.toLowerCase()}`}>
@@ -138,6 +152,21 @@ export default function Threads() {
                 </div>
                 <div className={`${classes.posts} col relative`}>
                     {renderPosts()}
+                    {
+                        canPost() &&
+                            <form className={classnames(classes.editor, 'mx-auto col')} onSubmit={submitPost}>
+                                <MdEditor
+                                    onChange={({ text }) => setEditorContent(text)}
+                                    renderHTML={text => mdParser.render(text)}
+                                    view={{ menu: true, md: true }}
+                                    style={{ height: '100%' }}
+                                    value={editorContent}
+                                />
+                                <button className={classnames(classes.submit, 'btn mt-2')}>
+                                    {submitting ? <Icon className={classnames(classes.submitIcon)} path={mdiLoading} spin={1} /> : 'Send'}
+                                </button>
+                            </form>
+                    }
                     {posts.status === 'success' && <Pagination pagination={pagination} />}
                 </div>
             </div>
