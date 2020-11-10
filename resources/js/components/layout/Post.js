@@ -6,6 +6,7 @@ import { mdiLoading, mdiThumbUp } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import Http from '../../classes/Http';
+import MarkdownIt from 'markdown-it';
 import classnames from 'classnames';
 import Icon from '@mdi/react';
 
@@ -93,6 +94,8 @@ export default function Post({ post, refetch }) {
     const [liking, setLiking] = useState(false);
     const { user } = useContext(UserContext);
     const postElement = useRef();
+
+    const mdParser = new MarkdownIt();
 
     function isAuthor() {
         return user.id === post.user.id;
@@ -196,9 +199,7 @@ export default function Post({ post, refetch }) {
                     </div>
                 </div>
             </div>
-            <p className={classnames(classes.body, 'p-2')}>
-                {post.content}
-            </p>
+            <p className={classnames(classes.body, 'p-2')} dangerouslySetInnerHTML={{ __html: mdParser.render(post.content) }} />
             {
                 user &&
                     <div className={classnames(classes.footer, 'row p-2')}>

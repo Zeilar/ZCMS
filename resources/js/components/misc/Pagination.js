@@ -34,7 +34,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             '&:hover, &:focus': {
                 textDecoration: 'none',
                 '&:not(.active)': {
-                    backgroundColor: 'var(--color-link)',
+                    backgroundColor: 'var(--color-dark)',
                     color: 'var(--color-primary)',
                 },
             },

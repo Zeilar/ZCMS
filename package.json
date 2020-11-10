@@ -43,7 +43,6 @@
         "react-query": "^2.26.2",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
-        "simplemde": "^1.11.2",
         "styled-components": "^5.2.1"
     }
 }
