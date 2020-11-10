@@ -29,6 +29,7 @@ export default function Threads() {
             backgroundImage: 'var(--color-main-gradient)',
             color: 'var(--color-primary)',
             alignItems: 'center',
+            fontSize: '1.5rem',
             borderRadius: 2,
             padding: 15,
         },
@@ -68,6 +69,9 @@ export default function Threads() {
         submitIcon: {
             width: 15,
         },
+        titleLoading: {
+            width: '1.5rem',
+        },
     });
     const classes = styles();
 
@@ -83,14 +87,7 @@ export default function Threads() {
 
     const posts = useQuery([page, `thread-${thread}`], async (page) => {
         const response = await Http.get(`posts?thread=${thread}&page=${page ?? 1}`);
-        const pagination = response.data;
-        setPagination({
-            currentPage: pagination.current_page,
-            lastPage: pagination.last_page,
-            perPage: pagination.per_page,
-            total: pagination.total,
-        });
-        return response.data.data;
+        return response.data;
     });
 
     const dbThread = useQuery(`dbThread-${thread}`, async () => {
@@ -132,10 +129,10 @@ export default function Threads() {
             return null;
         }
         if (posts.status === 'success') {
-            if (!posts.data?.length) {
+            if (!posts.data?.data.length) {
                 return <p className="text-center">No posts were found</p>;
             } else {
-                return posts.data.map(post => <Post key={post.id} refetch={posts.refetch} post={post} />);
+                return posts.data.data.map(post => <Post key={post.id} refetch={posts.refetch} post={post} />);
             }
         }
     }
@@ -148,12 +145,14 @@ export default function Threads() {
                     <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread.data?.category.name.toLowerCase()}`}>
                         <Icon path={mdiArrowLeft} />
                     </NavLink>
-                    <h2 className={`${classes.headerText} row w-100`}>{dbThread.data?.title}</h2>
+                    <h2 className={`${classes.headerText} w-100`}>
+                        {dbThread.status === 'loading' ? <span style={{ color: 'transparent' }}>Loading</span> : dbThread.data?.title}
+                    </h2>
                 </div>
                 <div className={`${classes.posts} col relative`}>
                     {renderPosts()}
                     {
-                        canPost() &&
+                        canPost() && posts.status === 'success' &&
                             <form className={classnames(classes.editor, 'mx-auto col')} onSubmit={submitPost}>
                                 <MdEditor
                                     onChange={({ text }) => setEditorContent(text)}
@@ -167,7 +166,15 @@ export default function Threads() {
                                 </button>
                             </form>
                     }
-                    {posts.status === 'success' && <Pagination pagination={pagination} />}
+                    {
+                        posts.status === 'success' &&
+                            <Pagination pagination={{
+                                currentPage: posts.data.current_page,
+                                lastPage: posts.data.last_page,
+                                perPage: posts.data.per_page,
+                                total: posts.data.total,
+                            }} />
+                    }
                 </div>
             </div>
         </>

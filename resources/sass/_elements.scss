@@ -3,14 +3,14 @@
     background-color: var(--color-main);
     transition: all 0.05s linear;
     color: var(--color-primary);
+    min-height: 2.25rem;
     border-radius: 3px;
     position: relative;
     width: fit-content;
     font-weight: bold;
     user-select: none;
-    min-width: 2.5rem;
     padding: 8px 12px;
-    min-height: 2rem;
+    min-width: 3rem;
     border: 0;
 
     &:hover {

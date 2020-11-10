@@ -13,7 +13,7 @@ import classnames from 'classnames';
 import Header from '../Header';
 import Icon from '@mdi/react';
 
-export default function Threads() {
+export default function Category() {
     const styles = createUseStyles({
         container: {
             padding: [0, 'var(--container-margin)'],
@@ -108,14 +108,8 @@ export default function Threads() {
 
     const threads = useQuery([page, `category-${category}`], async (page) => {
         const response = await Http.get(`threads?category=${category}&page=${page ?? 1}`);
-        const pagination = response.data;
-        setPagination({
-            currentPage: pagination.current_page,
-            lastPage: pagination.last_page,
-            perPage: pagination.per_page,
-            total: pagination.total,
-        });
-        return pagination.data.reverse();
+        response.data.data.reverse();
+        return response.data;
     });
 
     const dbCategory = useQuery(`dbCategory-${category}`, async () => {
@@ -135,10 +129,10 @@ export default function Threads() {
             return <p>Error retrieving the threads</p>;
         }
         if (threads.status === 'success') {
-            if (!threads.data?.length) {
+            if (!threads.data?.data.length) {
                 return <p className="text-center">No threads were found</p>;
             }
-            return threads.data.map(thread => (
+            return threads.data.data.map(thread => (
                 <div className={`${classes.thread} row mt-1`} key={thread.id}>
                     <div className={`${classes.title} col`}>
                         <NavLink className={classes.titleText} to={`/thread/${thread.slug}`}>
@@ -199,14 +193,22 @@ export default function Threads() {
                     user &&
                         <div className={classnames('row mt-2')}>
                             <NavLink className={classnames('btn dark caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
-                                <Icon className={classnames(classes.newIcon)} path={mdiPlusBox} />
+                                <Icon className={classnames(classes.newIcon, 'mr-1')} path={mdiPlusBox} />
                                 <span>New thread</span>
                             </NavLink>
                         </div>
                 }
                 <div className={`${classes.threads} col relative`}>
                     {renderThreads()}
-                    {status === 'success' && <Pagination pagination={pagination} />}
+                    {
+                        threads.status === 'success' &&
+                            <Pagination pagination={{
+                                currentPage: threads.data.current_page,
+                                lastPage: threads.data.last_page,
+                                perPage: threads.data.per_page,
+                                total: threads.data.total,
+                            }} />
+                    }
                 </div>
             </div>
         </>
