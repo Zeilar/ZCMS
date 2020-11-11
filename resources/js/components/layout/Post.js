@@ -7,9 +7,9 @@ import { mdiLoading, mdiThumbUp } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import Http from '../../classes/Http';
-import MarkdownIt from 'markdown-it';
 import classnames from 'classnames';
 import Icon from '@mdi/react';
+import marked from 'marked';
 
 export default function Post({ post, refetch }) {
     const styles = createUseStyles({
@@ -114,8 +114,6 @@ export default function Post({ post, refetch }) {
     const [liking, setLiking] = useState(false);
     const { user } = useContext(UserContext);
     const postElement = useRef();
-
-    const mdParser = new MarkdownIt();
 
     function isAuthor() {
         return user.id === post.user.id;
@@ -259,14 +257,14 @@ export default function Post({ post, refetch }) {
             {
                 editing
                     ? <MdEditor
-                        renderHTML={text => mdParser.render(text)}
                         style={{ height: '100%', minHeight: 250 }}
                         onChange={({ text }) => setContent(text)}
+                        renderHTML={text => marked(text)}
                         view={{ menu: true, md: true }}
                         value={content}
                     />
                     : <div className={classnames(classes.body, 'p-2')}>
-                        <p dangerouslySetInnerHTML={{ __html: mdParser.render(content) }} />
+                        <p dangerouslySetInnerHTML={{ __html: marked(content) }} />
                         {
                             post.edited_by &&
                                 <p className={classnames(classes.editedByMessage, 'italic mt-2')}>

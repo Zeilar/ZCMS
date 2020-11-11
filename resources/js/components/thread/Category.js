@@ -155,7 +155,7 @@ export default function Category() {
             {
                 user &&
                     <div className={classnames('row mt-2')}>
-                        <NavLink className={classnames('btn btn-dark caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
+                        <NavLink className={classnames('btn caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
                             <Icon className={classnames(classes.newIcon, 'mr-1')} path={mdiPlusBox} />
                             <span>New thread</span>
                         </NavLink>

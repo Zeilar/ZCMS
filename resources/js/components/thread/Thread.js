@@ -1,5 +1,5 @@
 import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { mdiArrowLeft, mdiLoading } from '@mdi/js';
 import MdEditor from 'react-markdown-editor-lite';
@@ -86,6 +86,7 @@ export default function Threads() {
     const [editorError, setEditorError] = useState();
     const { user } = useContext(UserContext);
     const { thread, page } = useParams();
+    const reply = useRef();
 
     const mdParser = new MarkdownIt();
 
@@ -116,6 +117,11 @@ export default function Threads() {
         const response = await Http.post('posts', { body: formData });
         setSubmitting(false);
         if (response.code === 422) setEditorError(response.data.errors.content);
+        if (response.code === 200) setEditorContent('');
+    }
+
+    function goToReply() {
+        window.scrollTo(0, reply.current?.getBoundingClientRect().top - window.scrollY);
     }
 
     useEffect(() => {
@@ -137,17 +143,19 @@ export default function Threads() {
                     {dbThread.status === 'loading' ? <span style={{ color: 'transparent' }}>Loading</span> : dbThread.data?.title}
                 </h2>
             </div>
+            {canPost() && <a className={classnames('btn caps mb-1 mt-2')} onClick={goToReply}>Reply</a>}
             <div className={`${classes.posts} col relative`}>
                 {renderPosts()}
                 {
                     canPost() && posts.status === 'success' &&
-                        <form className={classnames(classes.editor, 'mx-auto col')} onSubmit={submitPost}>
+                        <form className={classnames(classes.editor, 'mx-auto col')} onSubmit={submitPost} ref={reply}>
                             <MdEditor
                                 onChange={({ text }) => setEditorContent(text)}
                                 renderHTML={text => mdParser.render(text)}
                                 view={{ menu: true, md: true }}
                                 style={{ height: '100%' }}
                                 value={editorContent}
+                                id="reply"
                             />
                             {editorError && <p className={classnames(classes.editorError, 'mt-1 bold')}>{editorError}</p>}
                             <button className={classnames(classes.submit, 'btn mt-2')}>
