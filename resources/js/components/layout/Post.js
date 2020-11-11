@@ -86,10 +86,14 @@ export default function Post({ post, refetch }) {
         editorError: {
             color: 'var(--color-danger)',
         },
-        editedByMessage: {
+        editedByInput: {
             borderTop: '1px solid var(--border-primary)',
         },
         editedByLabel: {
+            color: 'var(--text-secondary)',
+            fontSize: '0.85rem',
+        },
+        editedByMessage: {
             color: 'var(--text-secondary)',
             fontSize: '0.85rem',
         },
@@ -97,6 +101,7 @@ export default function Post({ post, refetch }) {
     const classes = styles();
 
     const [repuation, setRepuation] = useState(post.user.likesAmount);
+    const [updatedAt, setUpdatedAt] = useState(post.updated_at);
     const [editedByMessage, setEditedByMessage] = useState('');
     const [likes, setLikes] = useState(post.postlikes.length);
     const { setMessage } = useContext(FeedbackModalContext);
@@ -130,9 +135,13 @@ export default function Post({ post, refetch }) {
         return isAuthor();
     }
 
-    function parseDate(timestamp) {
+    function parseDate(timestamp, withHoursMinutes = false) {
         const date = new Date(timestamp);
-        return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+        let parsedDate = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+        if (withHoursMinutes) {
+            parsedDate += ` ${('0' + (date.getHours())).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}`;
+        }
+        return parsedDate;
     }
 
     async function toggleLike() {
@@ -159,7 +168,9 @@ export default function Post({ post, refetch }) {
         });
     }
 
-    async function updatePost() {
+    async function updatePost(e) {
+        e.preventDefault();
+        const now = new Date();
         const formData = new FormData();
         formData.append('content', content);
         formData.append('editedByMessage', editedByMessage);
@@ -171,6 +182,7 @@ export default function Post({ post, refetch }) {
         } else {
             errorCodeHandler(response.code, setMessage, () => {
                 setEditorError(null);
+                setUpdatedAt(now);
                 setEditing(false);
             });
         }
@@ -253,18 +265,26 @@ export default function Post({ post, refetch }) {
                         view={{ menu: true, md: true }}
                         value={content}
                     />
-                    : <p className={classnames(classes.body, 'p-2')} dangerouslySetInnerHTML={{ __html: mdParser.render(content) }} />
+                    : <div className={classnames(classes.body, 'p-2')}>
+                        <p dangerouslySetInnerHTML={{ __html: mdParser.render(content) }} />
+                        {
+                            post.edited_by &&
+                                <p className={classnames(classes.editedByMessage, 'italic mt-2')}>
+                                    Edited by {post.edited_by} at {parseDate(updatedAt, true)} "{post.edited_by_message}"
+                                </p>
+                        }
+                    </div>
             }
             {
                 user &&
                     <>
-                        {editing && editorError && <p className={classnames(classes.editorError, 'bold')}>{editorError}</p>}
+                        {editing && editorError && <p className={classnames(classes.editorError, 'p-2 bold')}>{editorError}</p>}
                         {
                             editing &&
-                                <div className={classnames(classes.editedByMessage, 'p-2 col')}>
+                                <form className={classnames(classes.editedByInput, 'p-2 col')} onSubmit={updatePost}>
                                     <label className={classnames(classes.editedByLabel, 'mb-2')}>Edit reason <em>(optional)</em></label>
                                     <input value={editedByMessage} onChange={e => setEditedByMessage(e.target.value)} placeholder="Aa" />
-                                </div>
+                                </form>
                         }
                         <div className={classnames(classes.footer, 'row p-2')}>
                             {editButtonsRender()}
