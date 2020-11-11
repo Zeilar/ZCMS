@@ -2,6 +2,7 @@ import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { errorCodeHandler } from '../../functions/helpers';
 import { UserContext } from '../../contexts/UserContext';
+import MdEditor from 'react-markdown-editor-lite';
 import { mdiLoading, mdiThumbUp } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
@@ -79,8 +80,11 @@ export default function Post({ post, refetch }) {
         likesAmount: {
             marginRight: 3,
         },
-        deleteIcon: {
+        loadingIcon: {
             width: 15,
+        },
+        editorError: {
+            color: 'var(--color-danger)',
         },
     });
     const classes = styles();
@@ -88,7 +92,10 @@ export default function Post({ post, refetch }) {
     const [repuation, setRepuation] = useState(post.user.likesAmount);
     const [likes, setLikes] = useState(post.postlikes.length);
     const { setMessage } = useContext(FeedbackModalContext);
+    const [content, setContent] = useState(post.content);
+    const [editorError, setEditorError] = useState();
     const [hasLiked, setHasLiked] = useState(false);
+    const [updating, setUpdating] = useState(false);
     const [deleting, setDeleting] = useState(false);
     const [editing, setEditing] = useState(false);
     const [liking, setLiking] = useState(false);
@@ -144,6 +151,21 @@ export default function Post({ post, refetch }) {
         });
     }
 
+    async function updatePost() {
+        const formData = new FormData();
+        formData.append('content', content);
+        setUpdating(true);
+        const response = await Http.post(`posts/${post.id}`, { body: formData });
+        setUpdating(false);
+        if (response.code === 422) {
+            setEditorError(response.data.errors.content);
+        } else {
+            errorCodeHandler(response.code, setMessage, () => {
+                setEditing(false);
+            });
+        }
+    }
+
     useEffect(() => {
         for (let i = 0; i < post.postlikes.length; i++) {
             if (post.postlikes[i].user_id === user.id) {
@@ -174,6 +196,19 @@ export default function Post({ post, refetch }) {
         </>;
     }
 
+    const editButtonsRender = () => {
+        if (!canEdit()) return false;
+        if (editing) {
+            return <>
+                <button className={classnames('btn caps center-children')} onClick={updatePost}>
+                    {updating ? <Icon className={classnames(classes.loadingIcon)} path={mdiLoading} spin={1} /> : <span>Save</span>}
+                </button>
+                <button className={classnames('btn dark caps')} onClick={() => setEditing(false)}>Cancel</button>
+            </>;
+        }
+        return <button className={classnames('btn dark caps')} onClick={() => setEditing(true)}>Edit</button>;
+    }
+
     return (
         <article className={classnames(classes.post, { isOp: post.isOp, isAuthor: isAuthor() }, 'col mb-2 relative')} ref={postElement}>
             <div className={classnames(classes.head, 'row')}>
@@ -199,24 +234,37 @@ export default function Post({ post, refetch }) {
                     </div>
                 </div>
             </div>
-            <p className={classnames(classes.body, 'p-2')} dangerouslySetInnerHTML={{ __html: mdParser.render(post.content) }} />
+            {
+                editing
+                    ? <MdEditor
+                        onChange={({ text }) => setContent(text)}
+                        renderHTML={text => mdParser.render(text)}
+                        view={{ menu: true, md: true }}
+                        style={{ height: '100%' }}
+                        value={content}
+                    />
+                    : <p className={classnames(classes.body, 'p-2')} dangerouslySetInnerHTML={{ __html: mdParser.render(content) }} />
+            }
             {
                 user &&
-                    <div className={classnames(classes.footer, 'row p-2')}>
-                        {canEdit() && <button className={classnames('btn dark caps')}>Edit</button>}
-                        {
-                            !isAuthor() &&
-                                <button className={classnames('btn', { dark: !hasLiked, loading: liking })} onClick={toggleLike} disabled={liking}>
-                                    <span className={classnames('center-children')}>{likeButtonRender()}</span>
-                                </button>
-                        }
-                        {
-                            canRemove() &&
-                                <button className={classnames('btn ml-auto danger caps', { loading: deleting })} onClick={deletePost}>
-                                    {deleting ? <Icon className={classnames(classes.deleteIcon)} path={mdiLoading} spin={1} /> : 'Delete'}
-                                </button>
-                        }
-                    </div>
+                    <>
+                        {editing && editorError && <p className={classnames(classes.editorError, 'bold')}>{editorError}</p>}
+                        <div className={classnames(classes.footer, 'row p-2')}>
+                            {editButtonsRender()}
+                            {
+                                !isAuthor() &&
+                                    <button className={classnames('btn', { dark: !hasLiked, loading: liking })} onClick={toggleLike} disabled={liking}>
+                                        <span className={classnames('center-children')}>{likeButtonRender()}</span>
+                                    </button>
+                            }
+                            {
+                                canRemove() &&
+                                    <button className={classnames('btn ml-auto danger caps', { loading: deleting })} onClick={deletePost}>
+                                        {deleting ? <Icon className={classnames(classes.loadingIcon)} path={mdiLoading} spin={1} /> : 'Delete'}
+                                    </button>
+                            }
+                        </div>
+                    </>
             }
         </article>
     );

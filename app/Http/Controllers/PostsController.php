@@ -25,7 +25,7 @@ class PostsController extends Controller
         $thread = Thread::findOrFail($request->threadId);
         $this->authorize('create', [Post::class, $thread]);
 
-        $request->validate(['content' => 'required|string|min:3|max:500']);
+        $request->validate(['content' => 'required|string|max:500']);
 
         $post = Post::create([
             'content'   => $request->content,
@@ -43,13 +43,14 @@ class PostsController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        $this->authorize('update', $post);
+        $this->authorize('update', [$post, $post->thread]);
 
-        $user = auth()->user();
+        $request->validate(['content' => 'required|string|max:500']);
+
         $post->update([
-            'title'     => $request->title,
-            'content'   => $request->content,
-            'edited_by' => $user->username,
+            'content'      => $request->content,
+            // 'edited_by'    => auth()->user()->username,
+            // 'edit_message' => $request->message,
         ]);
 
         /*

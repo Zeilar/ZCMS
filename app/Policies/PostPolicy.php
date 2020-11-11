@@ -30,9 +30,13 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function update(User $user, Post $post)
+    public function update(User $user, Post $post, Thread $thread)
     {
-        //
+        if ($user->suspended()) return false;
+        if ($user->getClearance() <= 3) return true;
+        if ($thread->locked) return false;
+        if ($user->isAuthor($post)) return true;
+        return false;
     }
 
     /**

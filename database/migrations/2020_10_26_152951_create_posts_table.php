@@ -18,6 +18,8 @@ class CreatePostsTable extends Migration
             $table->text('content');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('thread_id');
+            $table->string('edit_message')->nullable();
+            $table->string('edited_by')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('thread_id')->references('id')->on('threads')->onDelete('cascade');
             $table->timestamps();

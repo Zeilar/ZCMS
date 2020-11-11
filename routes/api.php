@@ -27,8 +27,9 @@ Route::bind('thread', fn($value) => Thread::where('id', $value)->orWhere('slug',
 Route::resource('threads', ThreadsController::class, ['except' => ['create', 'edit']]);
 
 // PostsController
-Route::resource('posts', PostsController::class, ['except' => ['create', 'edit']]);
+Route::resource('posts', PostsController::class, ['except' => ['create', 'edit', 'update']]);
 Route::put('/posts/{post}/toggleLike', [PostsController::class, 'toggleLike']);
+Route::post('posts/{post}', [PostsController::class, 'update']);
 
 // ChatmessagesController
 Route::resource('chatmessages', ChatmessagesController::class, ['except' => ['create', 'edit', 'show']]);
