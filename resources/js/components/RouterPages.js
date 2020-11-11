@@ -7,8 +7,8 @@ import NewThread from './thread/NewThread';
 import React, { useContext } from 'react';
 import Category from './thread/Category';
 import Register from './auth/Register';
+import NotFound from './http/NotFound';
 import Thread from './thread/Thread';
-import NotFound from './NotFound';
 import Login from './auth/Login';
 import Index from './Index';
 

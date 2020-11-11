@@ -1,12 +1,12 @@
 import { mdiArrowLeft, mdiEye, mdiForum, mdiLoading, mdiPlusBox } from '@mdi/js';
-import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
+import React, { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
-import React, { useEffect, useContext } from 'react';
-import { useHistory, useParams } from 'react-router';
 import { ucfirst } from '../../functions/helpers';
 import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
 import { NavLink } from 'react-router-dom';
+import HttpError from '../http/HttpError';
+import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import Tooltip from '../misc/Tooltip';
 import Http from '../../classes/Http';
@@ -100,38 +100,80 @@ export default function Category() {
         newIcon: {
             width: '1.5rem',
         },
+        loadingSpinner: {
+            color: 'var(--color-main)',
+            width: 50,
+        },
     });
     const classes = styles();
 
-    const { setMessage } = useContext(FeedbackModalContext);
+    const [httpError, setHttpError] = useState(false);
     const { user } = useContext(UserContext);
     const { category, page } = useParams();
-    const history = useHistory();
 
     const threads = useQuery([page, `category-${category}`], async (page) => {
         const response = await Http.get(`threads?category=${category}&page=${page ?? 1}`);
-        if (response.code === 404) {
-            setMessage('That category does not exist');
-            history.push('/');
-            return;
-        }
+        if (response.code !== 200) return setHttpError(response.code); // TODO: remoev this
         response.data.data.reverse();
         return response.data;
     });
 
     const dbCategory = useQuery(`dbCategory-${category}`, async () => {
         const response = await Http.get(`categories/${category}`);
-        if (response.code === 404) {
-            setMessage('That category does not exist');
-            history.push('/');
-            return;
-        }
+        if (response.code !== 200) return setHttpError(response.code);
         return response.data;
     });
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [category, page]);
+
+    if (httpError) return <HttpError code={httpError} />
+
+    const render = () => {
+        if (dbCategory.status === 'loading') {
+            return <Icon className={classnames(classes.loadingSpinner, 'm-auto')} path={mdiLoading} spin={1} />
+        }
+        return <>
+            <div className={classnames(classes.header, 'row mb-2')}>
+                <NavLink className={`${classes.back} d-flex mr-2`} to="/">
+                    <Icon path={mdiArrowLeft} />
+                </NavLink>
+                <div className={`${classes.headerText} row w-100`}>
+                    {
+                        dbCategory.status === 'success' &&
+                            <img
+                                className={classes.categoryIcon}
+                                src={`/storage/category-icons/${dbCategory.data.icon}.svg`}
+                                alt={ucfirst(category)}
+                            />
+                    }
+                    <h2 className="ml-2">{ucfirst(category)}</h2>
+                </div>
+            </div>
+            {
+                user &&
+                    <div className={classnames('row mt-2')}>
+                        <NavLink className={classnames('btn btn-dark caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
+                            <Icon className={classnames(classes.newIcon, 'mr-1')} path={mdiPlusBox} />
+                            <span>New thread</span>
+                        </NavLink>
+                    </div>
+            }
+            <div className={`${classes.threads} col relative`}>
+                {renderThreads()}
+                {
+                    threads.status === 'success' &&
+                        <Pagination pagination={{
+                            currentPage: threads.data.current_page,
+                            lastPage: threads.data.last_page,
+                            perPage: threads.data.per_page,
+                            total: threads.data.total,
+                        }} />
+                }
+            </div>
+        </>;
+    }
 
     const renderThreads = () => {
         if (threads.status === 'loading') {
@@ -184,44 +226,8 @@ export default function Category() {
     return (
         <>
             <Header />
-            <div className={`${classes.container} py-4`}>
-                <div className={classnames(classes.header, 'row mb-2')}>
-                    <NavLink className={`${classes.back} d-flex mr-2`} to="/">
-                        <Icon path={mdiArrowLeft} />
-                    </NavLink>
-                    <div className={`${classes.headerText} row w-100`}>
-                        {
-                            dbCategory.status === 'success' &&
-                                <img
-                                    className={classes.categoryIcon}
-                                    src={`/storage/category-icons/${dbCategory.data.icon}.svg`}
-                                    alt={ucfirst(category)}
-                                />
-                        }
-                        <h2 className="ml-2">{ucfirst(category)}</h2>
-                    </div>
-                </div>
-                {
-                    user &&
-                        <div className={classnames('row mt-2')}>
-                            <NavLink className={classnames('btn btn-dark caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
-                                <Icon className={classnames(classes.newIcon, 'mr-1')} path={mdiPlusBox} />
-                                <span>New thread</span>
-                            </NavLink>
-                        </div>
-                }
-                <div className={`${classes.threads} col relative`}>
-                    {renderThreads()}
-                    {
-                        threads.status === 'success' &&
-                            <Pagination pagination={{
-                                currentPage: threads.data.current_page,
-                                lastPage: threads.data.last_page,
-                                perPage: threads.data.per_page,
-                                total: threads.data.total,
-                            }} />
-                    }
-                </div>
+            <div className={`${classes.container} col py-4`}>
+                {render()}
             </div>
         </>
     );

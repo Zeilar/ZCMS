@@ -1,12 +1,13 @@
 import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
-import { useHistory, useParams } from 'react-router';
 import { mdiArrowLeft, mdiLoading } from '@mdi/js';
 import MdEditor from 'react-markdown-editor-lite';
 import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
 import { NavLink } from 'react-router-dom';
+import HttpError from '../http/HttpError';
+import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import Http from '../../classes/Http';
 import MarkdownIt from 'markdown-it';
@@ -71,42 +72,37 @@ export default function Threads() {
         editorError: {
             color: 'var(--color-danger)',
         },
+        loadingSpinner: {
+            color: 'var(--color-main)',
+            width: 50,
+        },
     });
     const classes = styles();
 
     const { setMessage } = useContext(FeedbackModalContext);
     const [editorContent, setEditorContent] = useState('');
     const [submitting, setSubmitting] = useState(false);
+    const [httpError, setHttpError] = useState(false);
     const [editorError, setEditorError] = useState();
     const { user } = useContext(UserContext);
     const { thread, page } = useParams();
-    const history = useHistory();
 
     const mdParser = new MarkdownIt();
 
     const posts = useQuery([page, `thread-${thread}`], async (page) => {
         const response = await Http.get(`posts?thread=${thread}&page=${page ?? 1}`);
-        if (response.code === 404) {
-            setMessage('That thread does not exist');
-            history.push('/');
-            return;
-        }
+        if (response.code !== 200) return setHttpError(response.code); // TODO: remove this
         return response.data;
     });
 
     const dbThread = useQuery(`dbThread-${thread}`, async () => {
         const response = await Http.get(`threads/${thread}?getCategory=true`);
-        if (response.code === 404) {
-            setMessage('That thread does not exist');
-            history.push('/');
-            return;
-        }
+        if (response.code !== 200) return setHttpError(response.code);
         return response.data;
     });
 
     function canPost() {
-        if (!user) return false;
-        if (user.suspended) return false;
+        if (!user || user.suspended) return false;
         return true;
     }
 
@@ -124,6 +120,52 @@ export default function Threads() {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [thread, page]);
+
+    if (httpError) return <HttpError code={httpError} />
+
+    const render = () => {
+        if (dbThread.status === 'loading') {
+            return <Icon className={classnames(classes.loadingSpinner, 'm-auto')} path={mdiLoading} spin={1} />
+        }
+        return <>
+            <div className={`${classes.header} row mb-2`}>
+                <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread.data?.category.name.toLowerCase()}`}>
+                    <Icon path={mdiArrowLeft} />
+                </NavLink>
+                <h2 className={`${classes.headerText} w-100`}>
+                    {dbThread.status === 'loading' ? <span style={{ color: 'transparent' }}>Loading</span> : dbThread.data?.title}
+                </h2>
+            </div>
+            <div className={`${classes.posts} col relative`}>
+                {renderPosts()}
+                {
+                    canPost() && posts.status === 'success' &&
+                        <form className={classnames(classes.editor, 'mx-auto col')} onSubmit={submitPost}>
+                            <MdEditor
+                                onChange={({ text }) => setEditorContent(text)}
+                                renderHTML={text => mdParser.render(text)}
+                                view={{ menu: true, md: true }}
+                                style={{ height: '100%' }}
+                                value={editorContent}
+                            />
+                            {editorError && <p className={classnames(classes.editorError, 'mt-1 bold')}>{editorError}</p>}
+                            <button className={classnames(classes.submit, 'btn mt-2')}>
+                                {submitting ? <Icon className={classnames(classes.submitIcon)} path={mdiLoading} spin={1} /> : 'Send'}
+                            </button>
+                        </form>
+                }
+                {
+                    posts.status === 'success' &&
+                        <Pagination pagination={{
+                            currentPage: posts.data.current_page,
+                            lastPage: posts.data.last_page,
+                            perPage: posts.data.per_page,
+                            total: posts.data.total,
+                        }} />
+                }
+            </div>
+        </>;
+    }
 
     const renderPosts = () => {
         if (posts.status === 'loading') {
@@ -145,43 +187,8 @@ export default function Threads() {
     return (
         <>
             <Header />
-            <div className={`${classes.container} py-4`}>
-                <div className={`${classes.header} row mb-2`}>
-                    <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread.data?.category.name.toLowerCase()}`}>
-                        <Icon path={mdiArrowLeft} />
-                    </NavLink>
-                    <h2 className={`${classes.headerText} w-100`}>
-                        {dbThread.status === 'loading' ? <span style={{ color: 'transparent' }}>Loading</span> : dbThread.data?.title}
-                    </h2>
-                </div>
-                <div className={`${classes.posts} col relative`}>
-                    {renderPosts()}
-                    {
-                        canPost() && posts.status === 'success' &&
-                            <form className={classnames(classes.editor, 'mx-auto col')} onSubmit={submitPost}>
-                                <MdEditor
-                                    onChange={({ text }) => setEditorContent(text)}
-                                    renderHTML={text => mdParser.render(text)}
-                                    view={{ menu: true, md: true }}
-                                    style={{ height: '100%' }}
-                                    value={editorContent}
-                                />
-                                {editorError && <p className={classnames(classes.editorError, 'mt-1 bold')}>{editorError}</p>}
-                                <button className={classnames(classes.submit, 'btn mt-2')}>
-                                    {submitting ? <Icon className={classnames(classes.submitIcon)} path={mdiLoading} spin={1} /> : 'Send'}
-                                </button>
-                            </form>
-                    }
-                    {
-                        posts.status === 'success' &&
-                            <Pagination pagination={{
-                                currentPage: posts.data.current_page,
-                                lastPage: posts.data.last_page,
-                                perPage: posts.data.per_page,
-                                total: posts.data.total,
-                            }} />
-                    }
-                </div>
+            <div className={`${classes.container} col py-4`}>
+                {render()}
             </div>
         </>
     );
