@@ -91,11 +91,8 @@ export default function Threads() {
 
     const posts = useQuery([page, `thread-${thread}`], async (page) => {
         const response = await Http.get(`posts?thread=${thread}&page=${page ?? 1}`);
-        if (response.code !== 200) {
-            return setHttpError(response.code); // TODO: remove this
-        } else {
-            setHttpError(false);
-        }
+        if (response.code !== 200) return setHttpError(response.code); // TODO: remove this
+        setHttpError(false);
         return response.data;
     });
 
