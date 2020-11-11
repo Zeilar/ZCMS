@@ -1,4 +1,5 @@
 import Unauthorized from './Unauthorized';
+import ServerError from './ServerError';
 import Forbidden from './Forbidden';
 import NotFound from './NotFound';
 import React from 'react';
@@ -15,6 +16,6 @@ export default function HttpError({ code }) {
             return <Forbidden />
         
         default:
-            return 'Oops';
+            return <ServerError />;
     }
 }

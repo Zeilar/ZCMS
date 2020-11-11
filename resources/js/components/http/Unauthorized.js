@@ -1,10 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { Knockout } from '../styled-components';
 import { createUseStyles } from 'react-jss';
+import classnames from 'classnames';
+import Header from '../Header';
+import React from 'react';
 
 export default function Unauthorized() {
+    const styles = createUseStyles({
+        header: {
+            fontSize: '4rem',
+        },
+    });
+    const classes = styles();
+
     return (
-        <div>
-            401 Unauthorized
-        </div>
+        <>
+            <Header />
+            <Knockout className={classnames(classes.header, 'center-self')}>
+                401 Unauthorized
+            </Knockout>
+        </>
     );
 }

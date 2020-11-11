@@ -113,7 +113,11 @@ export default function Category() {
 
     const threads = useQuery([page, `category-${category}`], async (page) => {
         const response = await Http.get(`threads?category=${category}&page=${page ?? 1}`);
-        if (response.code !== 200) return setHttpError(response.code); // TODO: remoev this
+        if (response.code !== 200) {
+            return setHttpError(response.code); // TODO: remove this
+        } else {
+            setHttpError(false);
+        }
         response.data.data.reverse();
         return response.data;
     });

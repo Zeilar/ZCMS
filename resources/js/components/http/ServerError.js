@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import Header from '../Header';
 import React from 'react';
 
-export default function Forbidden() {
+export default function ServerError() {
     const styles = createUseStyles({
         header: {
             fontSize: '4rem',
@@ -16,7 +16,7 @@ export default function Forbidden() {
         <>
             <Header />
             <Knockout className={classnames(classes.header, 'center-self')}>
-                403 Forbidden
+                500 Server Error
             </Knockout>
         </>
     );
