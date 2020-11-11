@@ -1,11 +1,12 @@
 import { mdiArrowLeft, mdiEye, mdiForum, mdiLoading, mdiPlusBox } from '@mdi/js';
-import React, { useState, useEffect, useContext } from 'react';
+import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import { UserContext } from '../../contexts/UserContext';
+import React, { useEffect, useContext } from 'react';
+import { useHistory, useParams } from 'react-router';
 import { ucfirst } from '../../functions/helpers';
 import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
 import { NavLink } from 'react-router-dom';
-import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import Tooltip from '../misc/Tooltip';
 import Http from '../../classes/Http';
@@ -102,17 +103,29 @@ export default function Category() {
     });
     const classes = styles();
 
+    const { setMessage } = useContext(FeedbackModalContext);
     const { user } = useContext(UserContext);
     const { category, page } = useParams();
+    const history = useHistory();
 
     const threads = useQuery([page, `category-${category}`], async (page) => {
         const response = await Http.get(`threads?category=${category}&page=${page ?? 1}`);
+        if (response.code === 404) {
+            setMessage('That category does not exist');
+            history.push('/');
+            return;
+        }
         response.data.data.reverse();
         return response.data;
     });
 
     const dbCategory = useQuery(`dbCategory-${category}`, async () => {
         const response = await Http.get(`categories/${category}`);
+        if (response.code === 404) {
+            setMessage('That category does not exist');
+            history.push('/');
+            return;
+        }
         return response.data;
     });
 
@@ -191,7 +204,7 @@ export default function Category() {
                 {
                     user &&
                         <div className={classnames('row mt-2')}>
-                            <NavLink className={classnames('btn dark caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
+                            <NavLink className={classnames('btn btn-dark caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
                                 <Icon className={classnames(classes.newIcon, 'mr-1')} path={mdiPlusBox} />
                                 <span>New thread</span>
                             </NavLink>

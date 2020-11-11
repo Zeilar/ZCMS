@@ -86,12 +86,18 @@ export default function Threads() {
 
     const posts = useQuery([page, `thread-${thread}`], async (page) => {
         const response = await Http.get(`posts?thread=${thread}&page=${page ?? 1}`);
+        if (response.code === 404) {
+            setMessage('That thread does not exist');
+            history.push('/');
+            return;
+        }
         return response.data;
     });
 
     const dbThread = useQuery(`dbThread-${thread}`, async () => {
         const response = await Http.get(`threads/${thread}?getCategory=true`);
-        if (response.code === 400) {
+        if (response.code === 404) {
+            setMessage('That thread does not exist');
             history.push('/');
             return;
         }
@@ -135,7 +141,7 @@ export default function Threads() {
             }
         }
     }
-
+    
     return (
         <>
             <Header />

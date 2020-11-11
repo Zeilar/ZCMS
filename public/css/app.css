@@ -65,22 +65,22 @@
   padding: 2px;
 }
 
-.btn.dark {
+.btn.btn-dark {
   background-color: #0f0f0f;
   background-image: none;
 }
 
-.btn.dark:hover {
+.btn.btn-dark:hover {
   background-color: #232323;
 }
 
-.btn.danger {
+.btn.btn-danger {
   background-color: var(--color-danger);
   color: var(--color-primary);
   background-image: none;
 }
 
-.btn.danger:hover {
+.btn.btn-danger:hover {
   background-color: #af0000;
 }
 
@@ -96,23 +96,23 @@
   color: var(--color-primary);
 }
 
-.btn.btn-outline.dark {
+.btn.btn-outline.btn-dark {
   border-color: #0f0f0f;
   color: #0f0f0f;
   background-image: none;
 }
 
-.btn.btn-outline.dark:hover {
+.btn.btn-outline.btn-dark:hover {
   background-color: #0f0f0f;
   color: var(--color-primary);
 }
 
-.btn.btn-outline.danger {
+.btn.btn-outline.btn-danger {
   border-color: var(--color-danger);
   color: var(--color-danger);
 }
 
-.btn.btn-outline.danger:hover {
+.btn.btn-outline.btn-danger:hover {
   background-color: var(--color-danger);
   color: var(--color-primary);
 }
@@ -258,5 +258,17 @@ label {
   width: -moz-fit-content;
   width: fit-content;
   cursor: text;
+}
+
+input {
+  border: 1px solid var(--border-primary);
+  transition: all 0.05s linear;
+  border-radius: 2px;
+  font-size: 1rem;
+  padding: 8px;
+}
+
+input:focus {
+  box-shadow: 0 0 0 2px var(--color-main);
 }
 

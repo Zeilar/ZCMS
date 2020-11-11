@@ -8,13 +8,13 @@ export default class Http {
                 'X-CSRF-Token': document.querySelector('[name=csrf-token]').getAttribute('content'),
             },
         };
-        const response = await fetch(url, {...standard, ...args});
+        const response = await fetch(url, { ...args, ...standard });
 
         return { data: await response.json(), code: response.status};
     }
 
-    static async get(url) {
-        return await Http.request('get', url);
+    static async get(url, args) {
+        return await Http.request('get', url, args);
     }
 
     static async post(url, args) {

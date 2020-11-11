@@ -86,10 +86,18 @@ export default function Post({ post, refetch }) {
         editorError: {
             color: 'var(--color-danger)',
         },
+        editedByMessage: {
+            borderTop: '1px solid var(--border-primary)',
+        },
+        editedByLabel: {
+            color: 'var(--text-secondary)',
+            fontSize: '0.85rem',
+        },
     });
     const classes = styles();
 
     const [repuation, setRepuation] = useState(post.user.likesAmount);
+    const [editedByMessage, setEditedByMessage] = useState('');
     const [likes, setLikes] = useState(post.postlikes.length);
     const { setMessage } = useContext(FeedbackModalContext);
     const [content, setContent] = useState(post.content);
@@ -124,7 +132,7 @@ export default function Post({ post, refetch }) {
 
     function parseDate(timestamp) {
         const date = new Date(timestamp);
-        return `${date.getFullYear()}-${('0' + (date.getMonth()+1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+        return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
     }
 
     async function toggleLike() {
@@ -154,6 +162,7 @@ export default function Post({ post, refetch }) {
     async function updatePost() {
         const formData = new FormData();
         formData.append('content', content);
+        formData.append('editedByMessage', editedByMessage);
         setUpdating(true);
         const response = await Http.post(`posts/${post.id}`, { body: formData });
         setUpdating(false);
@@ -161,6 +170,7 @@ export default function Post({ post, refetch }) {
             setEditorError(response.data.errors.content);
         } else {
             errorCodeHandler(response.code, setMessage, () => {
+                setEditorError(null);
                 setEditing(false);
             });
         }
@@ -203,10 +213,10 @@ export default function Post({ post, refetch }) {
                 <button className={classnames('btn caps center-children')} onClick={updatePost}>
                     {updating ? <Icon className={classnames(classes.loadingIcon)} path={mdiLoading} spin={1} /> : <span>Save</span>}
                 </button>
-                <button className={classnames('btn dark caps')} onClick={() => setEditing(false)}>Cancel</button>
+                <button className={classnames('btn btn-dark caps')} onClick={() => setEditing(false)}>Cancel</button>
             </>;
         }
-        return <button className={classnames('btn dark caps')} onClick={() => setEditing(true)}>Edit</button>;
+        return <button className={classnames('btn btn-dark caps')} onClick={() => setEditing(true)}>Edit</button>;
     }
 
     return (
@@ -237,10 +247,10 @@ export default function Post({ post, refetch }) {
             {
                 editing
                     ? <MdEditor
-                        onChange={({ text }) => setContent(text)}
                         renderHTML={text => mdParser.render(text)}
+                        style={{ height: '100%', minHeight: 250 }}
+                        onChange={({ text }) => setContent(text)}
                         view={{ menu: true, md: true }}
-                        style={{ height: '100%' }}
                         value={content}
                     />
                     : <p className={classnames(classes.body, 'p-2')} dangerouslySetInnerHTML={{ __html: mdParser.render(content) }} />
@@ -249,17 +259,24 @@ export default function Post({ post, refetch }) {
                 user &&
                     <>
                         {editing && editorError && <p className={classnames(classes.editorError, 'bold')}>{editorError}</p>}
+                        {
+                            editing &&
+                                <div className={classnames(classes.editedByMessage, 'p-2 col')}>
+                                    <label className={classnames(classes.editedByLabel, 'mb-2')}>Edit reason <em>(optional)</em></label>
+                                    <input value={editedByMessage} onChange={e => setEditedByMessage(e.target.value)} placeholder="Aa" />
+                                </div>
+                        }
                         <div className={classnames(classes.footer, 'row p-2')}>
                             {editButtonsRender()}
                             {
                                 !isAuthor() &&
-                                    <button className={classnames('btn', { dark: !hasLiked, loading: liking })} onClick={toggleLike} disabled={liking}>
+                                    <button className={classnames('btn', { 'btn-dark': !hasLiked, loading: liking })} onClick={toggleLike} disabled={liking}>
                                         <span className={classnames('center-children')}>{likeButtonRender()}</span>
                                     </button>
                             }
                             {
                                 canRemove() &&
-                                    <button className={classnames('btn ml-auto danger caps', { loading: deleting })} onClick={deletePost}>
+                                    <button className={classnames('btn ml-auto btn-danger caps', { loading: deleting })} onClick={deletePost}>
                                         {deleting ? <Icon className={classnames(classes.loadingIcon)} path={mdiLoading} spin={1} /> : 'Delete'}
                                     </button>
                             }

@@ -32,7 +32,7 @@
         padding: 2px;
     }
 
-    &.dark {    
+    &.btn-dark {    
         background-color: rgb(15, 15, 15);
         background-image: none;
 
@@ -41,7 +41,7 @@
         }
     }
 
-    &.danger {
+    &.btn-danger {
         background-color: var(--color-danger);
         color: var(--color-primary);
         background-image: none;
@@ -62,7 +62,7 @@
             color: var(--color-primary);
         }
 
-        &.dark {    
+        &.btn-dark {    
             border-color: rgb(15, 15, 15);
             color: rgb(15, 15, 15);
             background-image: none;
@@ -73,7 +73,7 @@
             }
         }
 
-        &.danger {
+        &.btn-danger {
             border-color: var(--color-danger);
             color: var(--color-danger);
 

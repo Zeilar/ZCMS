@@ -47,11 +47,16 @@ class PostsController extends Controller
 
         $request->validate(['content' => 'required|string|max:500']);
 
-        $post->update([
-            'content'      => $request->content,
-            // 'edited_by'    => auth()->user()->username,
-            // 'edit_message' => $request->message,
-        ]);
+        if ($request->editedByMessage) {
+            $data = [
+                'content'           => $request->content,
+                'edited_by'         => auth()->user()->username,
+                'edited_by_message' => $request->editedByMessage,
+            ];
+        } else {
+            $data = ['content' => $request->content];
+        }
+        $post->update($data);
 
         /*
         $validTags = [];
