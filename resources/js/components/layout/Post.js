@@ -258,11 +258,11 @@ export default function Post({ post, refetch }) {
                         <h4 className={classnames(classes.metaboxHeader)}>Reputation</h4>
                         <span className={classnames(classes.metaboxValue)}>{repuation}</span>
                     </div>
-                </div>
-                <div className={classnames(classes.metabox)}>
+                    <div className={classnames(classes.metabox)}>
                         <h4 className={classnames(classes.metaboxHeader)}>Registered</h4>
                         <span className={classnames(classes.metaboxValue)}>{parseDate(post.user.created_at)}</span>
                     </div>
+                </div>
             </div>
             {
                 editing
