@@ -249,6 +249,7 @@ export default function Post({ post, refetch }) {
                 </h3>
                 <div className={classnames(classes.metaboxes, 'ml-auto d-flex')}>
                     <div className={classnames(classes.metabox)}>
+                        <h4 className={classnames(classes.metaboxHeader)}>Forum Rank</h4>
                         <span className={classnames(classes.metaboxValue)}>{post.user.rank.name}</span>
                     </div>
                     <div className={classnames(classes.metabox)}>
