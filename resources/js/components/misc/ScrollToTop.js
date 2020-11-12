@@ -17,6 +17,9 @@ export default function ScrollToTop() {
                 pointerEvents: 'none',
                 opacity: 0,
             },
+            '@media (max-width: 1200px)': {
+                display: 'none',
+            },
         },
         icon: {
             color: 'var(--color-primary)',
