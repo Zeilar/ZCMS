@@ -18,7 +18,7 @@ class IsAdmin
     {
         $user = auth()->user();
         if (!$user) return abort(401);
-        if (!$user->getClearance() <= 2) return abort(403);
+        if (!$user->getClearance() > 2) return abort(403);
         return $next($request);
     }
 }

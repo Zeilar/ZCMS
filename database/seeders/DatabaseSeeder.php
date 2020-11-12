@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\{ Chatmessage, Postlike, Category, Thread, Role, User, Post };
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
@@ -17,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
+            RankSeeder::class,
             UserSeeder::class,
             CategorySeeder::class,
         ]);

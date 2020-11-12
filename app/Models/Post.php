@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Events\CreatedPost;
 
 class Post extends Model
 {
@@ -11,6 +12,7 @@ class Post extends Model
 
     public static $MAX_PER_PAGE = 20;
     
+    protected $dispatchesEvents = ['saved' => CreatedPost::class];
     protected $appends = ['isOp', 'isFirst'];
     protected $with = ['user'];
     protected $guarded = [];

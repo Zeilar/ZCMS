@@ -11,10 +11,11 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $hidden = ['password', 'updated_at', 'remember_token', 'email_verified_at',];
-    protected $appends = ['suspended', 'roles', 'postsAmount', 'likesAmount'];
-    protected $fillable = ['username', 'email', 'password', 'role',];
+    protected $hidden = ['password', 'updated_at', 'remember_token', 'email_verified_at'];
+    protected $appends = ['suspended', 'postsAmount', 'likesAmount', 'rank'];
+    protected $fillable = ['username', 'email', 'password', 'role'];
     protected $casts = ['email_verified_at' => 'datetime',];
+    protected $with = ['roles'];
 
     public function posts() {
         return $this->hasMany(Post::class);
@@ -36,6 +37,10 @@ class User extends Authenticatable
 
     public function roles() {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function ranks() {
+        return $this->belongsToMany(Rank::class);
     }
 
     public function isAuthor(Post $post): bool {
@@ -114,5 +119,9 @@ class User extends Authenticatable
 
     public function getRolesAttribute() {
         return $this->roles()->get(['name', 'clearance']);
+    }
+
+    public function getRankAttribute() {
+        return $this->ranks()->orderByDesc('threshold')->first(['name']);
     }
 }

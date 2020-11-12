@@ -38,7 +38,7 @@ export default function Post({ post, refetch }) {
             height: 50,
             width: 50,
         },
-        username: {
+        user: {
             color: 'var(--text-primary)',
             alignSelf: 'center',
             '&:hover': {
@@ -99,6 +99,9 @@ export default function Post({ post, refetch }) {
         },
         postedAt: {
             fontSize: '0.85rem',
+        },
+        role: {
+            fontSize: '1rem',
         },
     });
     const classes = styles();
@@ -238,13 +241,13 @@ export default function Post({ post, refetch }) {
         <article className={classnames(classes.post, { isOp: post.isOp, isAuthor: isAuthor() }, 'col mb-2 relative')} ref={postElement}>
             <div className={classnames(classes.head, 'row')}>
                 <img className={classnames(classes.avatar, 'd-flex mx-2 my-auto')} src={`/storage/avatars/${post.user.avatar}`} alt="Profile picture" />
-                <NavLink className={classnames(classes.username)} to={`/user/${post.user.username}`}>
-                    <h3>{post.user.username}</h3>
-                </NavLink>
+                <h3 className={classnames(classes.user, 'col')}>
+                    <NavLink to={`/user/${post.user.username}`}>{post.user.username}</NavLink>
+                    <p className={classnames(classes.role, 'ucfirst')}>{post.user.roles[0].name}</p>
+                </h3>
                 <div className={classnames(classes.metaboxes, 'ml-auto d-flex')}>
                     <div className={classnames(classes.metabox)}>
-                        <h4 className={classnames(classes.metaboxHeader)}>Registered</h4>
-                        <span className={classnames(classes.metaboxValue)}>{parseDate(post.user.created_at)}</span>
+                        <span className={classnames(classes.metaboxValue)}>{post.user.rank.name}</span>
                     </div>
                     <div className={classnames(classes.metabox)}>
                         <h4 className={classnames(classes.metaboxHeader)}>Posts</h4>
@@ -254,10 +257,11 @@ export default function Post({ post, refetch }) {
                         <h4 className={classnames(classes.metaboxHeader)}>Reputation</h4>
                         <span className={classnames(classes.metaboxValue)}>{repuation}</span>
                     </div>
-                    <div className={classnames(classes.metabox)}>
-                        <h4 className={classnames(classes.metaboxValue)}>{post.user.roles[0].name}</h4>
-                    </div>
                 </div>
+                <div className={classnames(classes.metabox)}>
+                        <h4 className={classnames(classes.metaboxHeader)}>Registered</h4>
+                        <span className={classnames(classes.metaboxValue)}>{parseDate(post.user.created_at)}</span>
+                    </div>
             </div>
             {
                 editing
@@ -295,7 +299,7 @@ export default function Post({ post, refetch }) {
                             {
                                 !isAuthor() &&
                                     <button className={classnames('btn', { 'btn-dark': !hasLiked, loading: liking })} onClick={toggleLike} disabled={liking}>
-                                        <span className={classnames('center-children')}>{likeButtonRender()}</span>
+                                        <span className={classnames(classes.likeButton, 'center-children')}>{likeButtonRender()}</span>
                                     </button>
                             }
                             {
