@@ -27,13 +27,7 @@ export default function ScrollToTop() {
     const [hidden, setHidden] = useState(true);
 
     useEffect(() => {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > window.innerHeight * 1.5) {
-                setHidden(false);
-            } else {
-                setHidden(true);
-            }
-        });
+        window.addEventListener('scroll', () => setHidden(window.scrollY > window.innerHeight * 1.5 ? false : true));
     }, []);
 
     return (
