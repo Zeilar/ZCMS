@@ -268,7 +268,7 @@ export default function Post({ post, refetch }) {
                         view={{ menu: true, md: true }}
                         value={content}
                     />
-                    : <div className={classnames(classes.body, 'p-2')}>
+                    : <div className={classnames(classes.body, 'p-2 custom-html-style')}>
                         <p className={classnames(classes.postedAt, 'bold mb-2')}>Posted at {parseDate(post.created_at, true)}</p>
                         <p dangerouslySetInnerHTML={{ __html: marked(content) }} />
                         {
