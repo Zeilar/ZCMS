@@ -99,6 +99,7 @@ export default function Post({ post, refetch }) {
             fontSize: '0.85rem',
         },
         postedAt: {
+            fontFamily: 'Montserrat',
             fontSize: '0.85rem',
         },
         role: {
