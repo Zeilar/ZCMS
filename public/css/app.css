@@ -240,6 +240,10 @@ a:hover {
   color: var(--color-link);
 }
 
+textarea {
+  font-family: inherit;
+}
+
 img,
 svg,
 button {
