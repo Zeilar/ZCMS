@@ -3,6 +3,7 @@ import AdminDashboard from './admin/dashboard/Index';
 import FeedbackModal from './misc/FeedbackModal';
 import { Route, Switch } from 'react-router';
 import AdminRoute from './routes/AdminRoute';
+import ScrollToTop from './misc/ScrollToTop';
 import NewThread from './thread/NewThread';
 import React, { useContext } from 'react';
 import Category from './thread/Category';
@@ -28,6 +29,7 @@ export default function RouterPages() {
                 <Route component={NotFound} />
             </Switch>
             {message && <FeedbackModal message={message} type={type} />}
+            <ScrollToTop />
         </>
     );
 }
