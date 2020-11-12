@@ -97,6 +97,9 @@ export default function Post({ post, refetch }) {
             color: 'var(--text-secondary)',
             fontSize: '0.85rem',
         },
+        postedAt: {
+            fontSize: '0.85rem',
+        },
     });
     const classes = styles();
 
@@ -264,6 +267,7 @@ export default function Post({ post, refetch }) {
                         value={content}
                     />
                     : <div className={classnames(classes.body, 'p-2')}>
+                        <p className={classnames(classes.postedAt, 'bold mb-2')}>Posted at {parseDate(post.created_at, true)}</p>
                         <p dangerouslySetInnerHTML={{ __html: marked(content) }} />
                         {
                             post.edited_by &&
