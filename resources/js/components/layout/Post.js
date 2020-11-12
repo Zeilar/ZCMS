@@ -53,6 +53,7 @@ export default function Post({ post, refetch }) {
             gap: '10px',
         },
         metaboxes: {
+            fontFamily: 'Montserrat',
             alignItems: 'center',
         },
         metabox: {

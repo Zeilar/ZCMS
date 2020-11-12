@@ -130,6 +130,18 @@ export default function Threads() {
 
     if (httpError) return <HttpError code={httpError} />
 
+    const paginationRender = () => {
+        if (posts.status !== 'success') return;
+        return (
+            <Pagination pagination={{
+                currentPage: posts.data.current_page,
+                lastPage: posts.data.last_page,
+                perPage: posts.data.per_page,
+                total: posts.data.total,
+            }} />
+        );
+    }
+
     const render = () => {
         if (dbThread.status === 'loading') {
             return <Icon className={classnames(classes.loadingSpinner, 'm-auto')} path={mdiLoading} spin={1} />
@@ -144,6 +156,7 @@ export default function Threads() {
                 </h2>
             </div>
             {canPost() && <a className={classnames('btn caps mb-1 mt-2')} onClick={goToReply}>Reply</a>}
+            {paginationRender()}
             <div className={`${classes.posts} col relative`}>
                 {renderPosts()}
                 {
@@ -163,15 +176,7 @@ export default function Threads() {
                             </button>
                         </form>
                 }
-                {
-                    posts.status === 'success' &&
-                        <Pagination pagination={{
-                            currentPage: posts.data.current_page,
-                            lastPage: posts.data.last_page,
-                            perPage: posts.data.per_page,
-                            total: posts.data.total,
-                        }} />
-                }
+                {paginationRender()}
             </div>
         </>;
     }
