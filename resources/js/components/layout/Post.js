@@ -105,22 +105,24 @@ export default function Post({ post, refetch }) {
 
     const [repuation, setRepuation] = useState(post.user.likesAmount);
     const [updatedAt, setUpdatedAt] = useState(post.updated_at);
-    const [editedByMessage, setEditedByMessage] = useState('');
     const [likes, setLikes] = useState(post.postlikes.length);
-    const { setMessage } = useContext(FeedbackModalContext);
     const [content, setContent] = useState(post.content);
+
+    const [editedByMessage, setEditedByMessage] = useState('');
     const [editorError, setEditorError] = useState();
     const [hasLiked, setHasLiked] = useState(false);
+
     const [updating, setUpdating] = useState(false);
     const [deleting, setDeleting] = useState(false);
     const [editing, setEditing] = useState(false);
     const [liking, setLiking] = useState(false);
+
+    const { setMessage } = useContext(FeedbackModalContext);
     const { user } = useContext(UserContext);
+
     const postElement = useRef();
 
-    function isAuthor() {
-        return user.id === post.user.id;
-    }
+    const isAuthor = () => user.id === post.user.id;
 
     function canEdit() {
         if (!user || user.suspended) return false;
