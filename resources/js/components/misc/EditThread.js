@@ -8,7 +8,7 @@ import Http from '../../classes/Http';
 import classnames from 'classnames';
 import Icon from '@mdi/react';
 
-export default function ModBar({ data, input, field, refetch, url }) {
+export default function ModBar({ thread, refetch }) {
     const styles = createUseStyles({
         modbar: {
             
@@ -31,12 +31,15 @@ export default function ModBar({ data, input, field, refetch, url }) {
     });
     const classes = styles();
 
-    const [inputValue, setInputValue] = useState(input);
+    const [locked, setLocked] = useState(thread.locked);
+    const [input, setInput] = useState(thread.title);
+
     const [submitting, setSubmitting] = useState(false);
-    const [locked, setLocked] = useState(data.locked);
     const [editing, setEditing] = useState(false);
+
     const { user } = useContext(UserContext);
     const [error, setError] = useState();
+
     const history = useHistory();
 
     function canModify() {
@@ -53,10 +56,10 @@ export default function ModBar({ data, input, field, refetch, url }) {
     async function submit(e) {
         e.preventDefault();
         const formData = new FormData();
-        formData.append(field, inputValue);
+        formData.append('title', input);
         formData.append('locked', locked);
         setSubmitting(true);
-        const response = await Http.post(`${url}/${data.id}`, { body: formData });
+        const response = await Http.post(`threads/${thread.id}`, { body: formData });
         setSubmitting(false);
         if (response.code === 422) return setError(response.data.errors.title[0]);
         errorCodeHandler(response.code, (message) => setError(message), () => {
@@ -78,7 +81,7 @@ export default function ModBar({ data, input, field, refetch, url }) {
                 );
             }
             return <>
-                <input className={classnames(classes.input, 'w-100')} value={inputValue} onChange={e => setInputValue(e.target.value)} />
+                <input className={classnames(classes.input, 'w-100')} value={input} onChange={e => setInput(e.target.value)} />
                 <button className={classnames(classes.button, 'btn btn-outline ml-2 btn-dark')} onClick={() => setLocked(p => p ? 0 : 1)} type="button">
                     <Icon path={locked ? mdiLock : mdiLockOpen} />
                 </button>
