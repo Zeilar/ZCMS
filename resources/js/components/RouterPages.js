@@ -22,7 +22,7 @@ export default function RouterPages() {
                 <Route component={Index} path="/" exact />
                 <Route component={NewThread} path="/category/:category/new" exact />
                 <Route component={Category} path="/category/:category/:page?" exact />
-                <Route component={Thread} path="/thread/:thread/:page?" exact />
+                <Route component={Thread} path="/thread/:id/:slug?/:page?" exact />
                 <Route component={Login} path="/login" exact />
                 <Route component={Register} path="/register" exact />
                 <AdminRoute component={AdminDashboard} path="/admin" />

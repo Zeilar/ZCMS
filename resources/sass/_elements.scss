@@ -50,37 +50,40 @@
             background-color: rgb(175, 0, 0);
         }
     }
+}
 
-    &.btn-outline {
-        border: 2px solid var(--color-main);
+.btn-outline {
+    @extend .btn;
+
+    border: 2px solid var(--color-main);
+    background-color: transparent;
+    color: var(--color-main);
+    background-image: none;
+
+    &:hover {
+        background-color: var(--color-main);
+        color: var(--color-primary);
+    }
+
+    &.btn-dark {    
+        border-color: rgb(15, 15, 15);
         background-color: transparent;
-        color: var(--color-main);
+        color: rgb(15, 15, 15);
         background-image: none;
 
         &:hover {
-            background-color: var(--color-main);
+            background-color: rgb(15, 15, 15);
             color: var(--color-primary);
         }
+    }
 
-        &.btn-dark {    
-            border-color: rgb(15, 15, 15);
-            color: rgb(15, 15, 15);
-            background-image: none;
+    &.btn-danger {
+        border-color: var(--color-danger);
+        color: var(--color-danger);
 
-            &:hover {
-                background-color: rgb(15, 15, 15);
-                color: var(--color-primary);
-            }
-        }
-
-        &.btn-danger {
-            border-color: var(--color-danger);
-            color: var(--color-danger);
-
-            &:hover {
-                background-color: var(--color-danger);
-                color: var(--color-primary);
-            }
+        &:hover {
+            background-color: var(--color-danger);
+            color: var(--color-primary);
         }
     }
 }

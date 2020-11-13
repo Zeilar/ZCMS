@@ -11,6 +11,7 @@ import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import Http from '../../classes/Http';
 import classnames from 'classnames';
+import ModBar from '../misc/ModBar';
 import Post from '../layout/Post';
 import Header from '../Header';
 import Icon from '@mdi/react';
@@ -86,18 +87,18 @@ export default function Threads() {
     const [editorError, setEditorError] = useState();
     const [channel, setChannel] = useState();
     const { user } = useContext(UserContext);
-    const { thread, page } = useParams();
+    const { id, page } = useParams();
     const reply = useRef();
 
-    const posts = useQuery([page, `thread-${thread}`], async (page) => {
-        const response = await Http.get(`posts?thread=${thread}&page=${page ?? 1}`);
+    const posts = useQuery([page, `thread-${id}`], async (page) => {
+        const response = await Http.get(`posts?thread=${id}&page=${page ?? 1}`);
         if (response.code !== 200) return setHttpError(response.code);
         setHttpError(false);
         return response.data;
     });
 
-    const dbThread = useQuery(`dbThread-${thread}`, async () => {
-        const response = await Http.get(`threads/${thread}?getCategory=true`);
+    const dbThread = useQuery(`dbThread-${id}`, async () => {
+        const response = await Http.get(`threads/${id}?getCategory=true`);
         if (response.code !== 200) return setHttpError(response.code);
         return response.data;
     });
@@ -125,7 +126,7 @@ export default function Threads() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [thread, page]);
+    }, [id, page]);
 
     useEffect(() => {
         if (dbThread.status === 'success' && channel == null) {
@@ -153,6 +154,7 @@ export default function Threads() {
             return <Icon className={classnames(classes.loadingSpinner, 'm-auto')} path={mdiLoading} spin={1} />
         }
         return <>
+            {dbThread.status === 'success' && <ModBar data={dbThread.data} input={dbThread.data.title} url="threads" field="title" refetch={dbThread.refetch} />}
             <div className={`${classes.header} row mb-2`}>
                 <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread.data?.category.name.toLowerCase()}`}>
                     <Icon path={mdiArrowLeft} />

@@ -18,8 +18,6 @@ object-assign
  * Released under the MIT licence.
  */
 
-/*! https://mths.be/punycode v1.4.1 by @mathias */
-
 /**
  * A better abstraction over CSS.
  *

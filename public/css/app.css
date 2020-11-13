@@ -25,7 +25,8 @@
   --color-3: rgb(200, 100, 0);
 }
 
-.btn {
+.btn,
+.btn-outline {
   background-image: var(--color-main-gradient);
   background-color: var(--color-main);
   transition: all 0.05s linear;
@@ -46,73 +47,83 @@
   border: 0;
 }
 
-.btn:hover {
+.btn:hover,
+.btn-outline:hover {
   color: var(--color-primary);
   text-decoration: none;
 }
 
 .btn:hover,
-.btn[disabled] {
+.btn-outline:hover,
+.btn[disabled],
+[disabled].btn-outline {
   background-color: var(--color-main-dark);
 }
 
-.btn[disabled] {
+.btn[disabled],
+[disabled].btn-outline {
   cursor: default;
 }
 
-.btn.loading {
+.btn.loading,
+.loading.btn-outline {
   pointer-events: none;
   padding: 2px;
 }
 
-.btn.btn-dark {
+.btn.btn-dark,
+.btn-dark.btn-outline {
   background-color: #0f0f0f;
   background-image: none;
 }
 
-.btn.btn-dark:hover {
+.btn.btn-dark:hover,
+.btn-dark.btn-outline:hover {
   background-color: #232323;
 }
 
-.btn.btn-danger {
+.btn.btn-danger,
+.btn-danger.btn-outline {
   background-color: var(--color-danger);
   color: var(--color-primary);
   background-image: none;
 }
 
-.btn.btn-danger:hover {
+.btn.btn-danger:hover,
+.btn-danger.btn-outline:hover {
   background-color: #af0000;
 }
 
-.btn.btn-outline {
+.btn-outline {
   border: 2px solid var(--color-main);
   background-color: transparent;
   color: var(--color-main);
   background-image: none;
 }
 
-.btn.btn-outline:hover {
+.btn-outline:hover {
   background-color: var(--color-main);
   color: var(--color-primary);
 }
 
-.btn.btn-outline.btn-dark {
+.btn-outline.btn-dark {
   border-color: #0f0f0f;
+  background-color: transparent;
   color: #0f0f0f;
   background-image: none;
 }
 
-.btn.btn-outline.btn-dark:hover {
+.btn-outline.btn-dark:hover {
   background-color: #0f0f0f;
   color: var(--color-primary);
 }
 
-.btn.btn-outline.btn-danger {
+.btn-outline.btn-danger {
   border-color: var(--color-danger);
   color: var(--color-danger);
 }
 
-.btn.btn-outline.btn-danger:hover {
+.btn-outline.btn-danger:hover {
   background-color: var(--color-danger);
   color: var(--color-primary);
 }

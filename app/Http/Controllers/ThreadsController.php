@@ -37,7 +37,14 @@ class ThreadsController extends Controller
 
     public function update(Request $request, Thread $thread)
     {
-        //
+        $this->authorize('update', $thread);
+        $request->validate(['title' => 'required|string|min:3|max:150']);
+        $title = $request->title;
+        $thread->update([
+            'title' => $title,
+            'slug'  => str_replace(' ', '-', $title),
+        ]);
+        return response($thread);
     }
 
     public function destroy(Thread $thread)
