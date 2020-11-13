@@ -10,11 +10,11 @@ import HttpError from '../http/HttpError';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import Http from '../../classes/Http';
-import MarkdownIt from 'markdown-it';
 import classnames from 'classnames';
 import Post from '../layout/Post';
 import Header from '../Header';
 import Icon from '@mdi/react';
+import marked from 'marked';
 
 export default function Threads() {
     const styles = createUseStyles({
@@ -84,15 +84,14 @@ export default function Threads() {
     const [submitting, setSubmitting] = useState(false);
     const [httpError, setHttpError] = useState(false);
     const [editorError, setEditorError] = useState();
+    const [channel, setChannel] = useState();
     const { user } = useContext(UserContext);
     const { thread, page } = useParams();
     const reply = useRef();
 
-    const mdParser = new MarkdownIt();
-
     const posts = useQuery([page, `thread-${thread}`], async (page) => {
         const response = await Http.get(`posts?thread=${thread}&page=${page ?? 1}`);
-        if (response.code !== 200) return setHttpError(response.code); // TODO: remove this
+        if (response.code !== 200) return setHttpError(response.code);
         setHttpError(false);
         return response.data;
     });
@@ -128,6 +127,13 @@ export default function Threads() {
         window.scrollTo(0, 0);
     }, [thread, page]);
 
+    useEffect(() => {
+        if (dbThread.status === 'success' && channel == null) {
+            const channel = window.Echo.join(`thread-${dbThread.data.id}`).listen('NewPost', () => posts.refetch());
+            setChannel(channel);
+        }
+    }, [dbThread]);
+
     if (httpError) return <HttpError code={httpError} />
 
     const paginationRender = () => {
@@ -155,7 +161,7 @@ export default function Threads() {
                     {dbThread.status === 'loading' ? <span style={{ color: 'transparent' }}>Loading</span> : dbThread.data?.title}
                 </h2>
             </div>
-            {canPost() && <a className={classnames('btn caps mb-1 mt-2')} onClick={goToReply}>Reply</a>}
+            {canPost() && posts.status === 'success' && <a className={classnames('btn caps mb-1 mt-2')} onClick={goToReply}>Reply</a>}
             {paginationRender()}
             <div className={`${classes.posts} col relative`}>
                 {renderPosts()}
@@ -164,11 +170,10 @@ export default function Threads() {
                         <form className={classnames(classes.editor, 'mx-auto col')} onSubmit={submitPost} ref={reply}>
                             <MdEditor
                                 onChange={({ text }) => setEditorContent(text)}
-                                renderHTML={text => mdParser.render(text)}
+                                renderHTML={text => marked(text)}
                                 view={{ menu: true, md: true }}
                                 style={{ height: '100%' }}
                                 value={editorContent}
-                                id="reply"
                             />
                             {editorError && <p className={classnames(classes.editorError, 'mt-1 bold')}>{editorError}</p>}
                             <button className={classnames(classes.submit, 'btn mt-2')}>

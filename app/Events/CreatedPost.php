@@ -4,6 +4,7 @@ namespace App\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Events\NewPost;
 use App\Models\Rank;
 
 class CreatedPost
@@ -23,5 +24,6 @@ class CreatedPost
                 $user->ranks()->syncWithoutDetaching($rank->id);
             }
         });
+        broadcast(new NewPost($post->thread));
     }
 }
