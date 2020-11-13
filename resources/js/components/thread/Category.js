@@ -193,7 +193,7 @@ export default function Category() {
             return threads.data.data.map(thread => (
                 <div className={`${classes.thread} row mt-1`} key={thread.id}>
                     <div className={`${classes.title} col`}>
-                        <NavLink className={classes.titleText} to={`/thread/${thread.id}/${thread.slug}`}>
+                        <NavLink className={classnames(classes.titleText, 'w-fit')} to={`/thread/${thread.id}/${thread.slug}`}>
                             {thread.title}
                         </NavLink>
                         <NavLink
