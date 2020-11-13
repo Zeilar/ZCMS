@@ -24,6 +24,6 @@ class CreatedPost
                 $user->ranks()->syncWithoutDetaching($rank->id);
             }
         });
-        broadcast(new NewPost($post->thread));
+        broadcast(new NewPost($post->thread)); // TODO: ->toOthers()
     }
 }

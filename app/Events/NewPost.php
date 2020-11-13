@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
@@ -31,6 +32,6 @@ class NewPost implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('thread-'.$this->thread->id);
+        return new Channel('thread-'.$this->thread->id);
     }
 }

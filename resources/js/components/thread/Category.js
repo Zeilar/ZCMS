@@ -1,4 +1,4 @@
-import { mdiArrowLeft, mdiEye, mdiForum, mdiLoading, mdiPlusBox } from '@mdi/js';
+import { mdiArrowLeft, mdiEye, mdiForum, mdiLoading, mdiLock, mdiPlusBox } from '@mdi/js';
 import React, { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { ucfirst } from '../../functions/helpers';
@@ -103,6 +103,9 @@ export default function Category() {
         loadingSpinner: {
             color: 'var(--color-main)',
             width: 50,
+        },
+        locked: {
+            left: -35,
         },
     });
     const classes = styles();
@@ -219,6 +222,7 @@ export default function Category() {
                             {thread.latestPost.user.username}
                         </NavLink>
                     </div>
+                    {thread.locked ? <Icon className={classnames(classes.locked, 'absolute')} path={mdiLock} /> : ''}
                 </div>
             ));
         }

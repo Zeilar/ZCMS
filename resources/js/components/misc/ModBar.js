@@ -1,4 +1,4 @@
-import { mdiCogOutline, mdiClose, mdiCheck, mdiLoading } from '@mdi/js';
+import { mdiCogOutline, mdiClose, mdiCheck, mdiLoading, mdiLockOpen, mdiLock } from '@mdi/js';
 import { errorCodeHandler } from '../../functions/helpers';
 import { UserContext } from '../../contexts/UserContext';
 import React, { useState, useContext } from 'react';
@@ -8,7 +8,7 @@ import Http from '../../classes/Http';
 import classnames from 'classnames';
 import Icon from '@mdi/react';
 
-export default function ModBar({ data, input, field, url, refetch }) {
+export default function ModBar({ data, input, field, url }) {
     const styles = createUseStyles({
         modbar: {
             
@@ -32,6 +32,7 @@ export default function ModBar({ data, input, field, url, refetch }) {
 
     const [inputValue, setInputValue] = useState(input);
     const [submitting, setSubmitting] = useState(false);
+    const [locked, setLocked] = useState(data.locked);
     const [editing, setEditing] = useState(false);
     const { user } = useContext(UserContext);
     const [error, setError] = useState();
@@ -52,6 +53,7 @@ export default function ModBar({ data, input, field, url, refetch }) {
         e.preventDefault();
         const formData = new FormData();
         formData.append(field, inputValue);
+        formData.append('locked', locked);
         setSubmitting(true);
         const response = await Http.post(`${url}/${data.id}`, { body: formData });
         setSubmitting(false);
@@ -68,23 +70,26 @@ export default function ModBar({ data, input, field, url, refetch }) {
         if (editing) {
             if (submitting) {
                 return (
-                    <button className={classnames(classes.button, 'btn btn-outline ml-auto')}>
-                        <Icon path={mdiCheck} />
+                    <button className={classnames(classes.button, 'btn btn-outline ml-auto no-pointer')}>
+                        <Icon path={mdiLoading} spin={1} />
                     </button>
                 );
             }
             return <>
                 <input className={classnames(classes.input, 'w-100')} value={inputValue} onChange={e => setInputValue(e.target.value)} />
+                <button className={classnames(classes.button, 'btn btn-outline ml-2 btn-dark')} onClick={() => setLocked(p => p ? 0 : 1)} type="button">
+                    <Icon path={locked ? mdiLock : mdiLockOpen} />
+                </button>
                 <button className={classnames(classes.button, 'btn btn-outline ml-2')} onClick={edit}>
                     <Icon path={mdiCheck} />
                 </button>
-                <button className={classnames(classes.button, 'btn btn-outline ml-2 btn-dark')} onClick={() => setEditing(false)}>
+                <button className={classnames(classes.button, 'btn btn-outline ml-2 btn-dark')} onClick={() => setEditing(false)} type="button">
                     <Icon path={mdiClose} />
                 </button>
             </>;
         }
         return (
-            <button className={classnames(classes.button, 'btn btn-outline ml-auto btn-dark')} onClick={edit}>
+            <button className={classnames(classes.button, 'btn btn-outline ml-auto btn-dark')} onClick={edit} type="button">
                 <Icon path={mdiCogOutline} />
             </button>
         );

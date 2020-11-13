@@ -41,8 +41,9 @@ class ThreadsController extends Controller
         $request->validate(['title' => 'required|string|min:3|max:150']);
         $title = $request->title;
         $thread->update([
-            'title' => $title,
-            'slug'  => str_replace(' ', '-', $title),
+            'title'  => $title,
+            'slug'   => str_replace(' ', '-', $title),
+            'locked' => $request->locked,
         ]);
         return response($thread);
     }

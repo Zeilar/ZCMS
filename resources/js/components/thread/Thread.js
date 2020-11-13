@@ -105,7 +105,9 @@ export default function Threads() {
 
     function canPost() {
         if (!user || user.suspended) return false;
-        return true;
+        if (user.roles[0].clearance <= 3) return true;
+        if (dbThread.data?.locked) return false;
+        return false;
     }
 
     async function submitPost(e) {
@@ -130,7 +132,10 @@ export default function Threads() {
 
     useEffect(() => {
         if (dbThread.status === 'success' && channel == null) {
-            const channel = window.Echo.join(`thread-${dbThread.data.id}`).listen('NewPost', () => posts.refetch());
+            const channel = window.Echo.join(`thread-${dbThread.data.id}`).listen('NewPost', () => {
+                console.log('refetch'); // TODO: one liner
+                posts.refetch()
+            });
             setChannel(channel);
         }
     }, [dbThread]);
