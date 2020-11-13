@@ -168,7 +168,7 @@ export default function Threads() {
                     {dbThread.status === 'loading' ? <span style={{ color: 'transparent' }}>Loading</span> : dbThread.data?.title}
                 </h2>
             </div>
-            {canPost() && posts.status === 'success' && <a className={classnames('btn caps mb-1 mt-2')} onClick={goToReply}>Reply</a>}
+            {canPost() && posts.status === 'success' && <button className={classnames('btn caps mb-1 mt-2')} onClick={goToReply}>Reply</button>}
             {paginationRender()}
             <div className={`${classes.posts} col relative`}>
                 {renderPosts()}

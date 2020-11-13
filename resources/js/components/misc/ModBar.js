@@ -8,7 +8,7 @@ import Http from '../../classes/Http';
 import classnames from 'classnames';
 import Icon from '@mdi/react';
 
-export default function ModBar({ data, input, field, url }) {
+export default function ModBar({ data, input, field, refetch, url }) {
     const styles = createUseStyles({
         modbar: {
             
@@ -22,6 +22,7 @@ export default function ModBar({ data, input, field, url }) {
             width: 50,
         },
         input: {
+            fontSize: '1.5rem',
             height: 50,
         },
         error: {
@@ -62,6 +63,7 @@ export default function ModBar({ data, input, field, url }) {
             const thread = response.data;
             setEditing(false);
             setError(null);
+            refetch();
             history.push(`/thread/${thread.id}/${thread.slug}`);
         });
     }
