@@ -99,6 +99,7 @@
   background-color: transparent;
   color: var(--color-main);
   background-image: none;
+  transition: none;
 }
 
 .btn-outline:hover {

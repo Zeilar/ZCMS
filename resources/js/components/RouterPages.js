@@ -2,8 +2,9 @@ import { FeedbackModalContext } from '../contexts/FeedbackModalContext';
 import AdminDashboard from './admin/dashboard/Index';
 import FeedbackModal from './misc/FeedbackModal';
 import { Route, Switch } from 'react-router';
-import AdminRoute from './routes/AdminRoute';
 import ScrollToTop from './misc/ScrollToTop';
+import PostSingle from './layout/PostSingle';
+import AdminRoute from './routes/AdminRoute';
 import NewThread from './thread/NewThread';
 import React, { useContext } from 'react';
 import Category from './thread/Category';
@@ -20,6 +21,7 @@ export default function RouterPages() {
         <>
             <Switch>
                 <Route component={Index} path="/" exact />
+                <Route component={PostSingle} path="/post/:id" exact />
                 <Route component={NewThread} path="/category/:category/new" exact />
                 <Route component={Category} path="/category/:category/:page?" exact />
                 <Route component={Thread} path="/thread/:id/:slug?/:page?" exact />

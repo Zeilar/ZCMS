@@ -13,7 +13,7 @@ class Post extends Model
     public static $MAX_PER_PAGE = 20;
     
     protected $dispatchesEvents = ['saved' => CreatedPost::class];
-    protected $appends = ['isOp', 'isFirst'];
+    protected $appends = ['isOp', 'isFirst', 'pageNumber'];
     protected $with = ['user'];
     protected $guarded = [];
 
@@ -35,5 +35,11 @@ class Post extends Model
 
     public function getIsOpAttribute(): bool {
         return $this->user->id === $this->thread->op()->id;
+    }
+
+    public function getPageNumberAttribute() {
+        $posts = $this->thread->posts()->get(['id'])->pluck('id');
+        $index = $posts->search(fn($id) => $id === $this->id);
+        return (int) floor($index / Post::$MAX_PER_PAGE) + 1;
     }
 }

@@ -66,7 +66,7 @@ export default function EditThread({ thread, refetch }) {
         const response = await Http.post(`threads/${thread.id}`, { body: formData });
         setSubmitting(false);
         if (response.code === 422) return setError(response.data.errors.title[0]);
-        errorCodeHandler(response.code, (message) => setError(message), () => {
+        errorCodeHandler(response.code, (message) => setMessage(message), () => {
             const thread = response.data;
             setEditing(false);
             setError(null);
