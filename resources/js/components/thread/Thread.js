@@ -1,13 +1,13 @@
 import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
+import { useHistory, useParams } from 'react-router';
 import { mdiArrowLeft, mdiLoading } from '@mdi/js';
 import MdEditor from 'react-markdown-editor-lite';
 import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
 import { NavLink } from 'react-router-dom';
 import HttpError from '../http/HttpError';
-import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import EditThread from './EditThread';
 import Http from '../../classes/Http';
@@ -87,6 +87,7 @@ export default function Threads() {
     const [channel, setChannel] = useState();
     const { user } = useContext(UserContext);
     const { id, page } = useParams();
+    const history = useHistory();
     const reply = useRef();
 
     const posts = useQuery([page, `thread-${id}`], async (page) => {
@@ -118,7 +119,12 @@ export default function Threads() {
         const response = await Http.post('posts', { body: formData });
         setSubmitting(false);
         if (response.code === 422) setEditorError(response.data.errors.content);
-        if (response.code === 200) setEditorContent('');
+        if (response.code === 200) {
+            setEditorContent('');
+            const thread = dbThread.data;
+            const post = response.data;
+            history.push(`/thread/${thread.id}/${thread.slug}/${post.pageNumber}#${post.id}`)
+        }
     }
 
     function goToReply() {
