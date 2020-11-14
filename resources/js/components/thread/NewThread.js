@@ -1,7 +1,7 @@
 import { errorCodeHandler } from '../../functions/helpers';
+import { useHistory, useParams } from 'react-router';
 import MdEditor from 'react-markdown-editor-lite';
 import { createUseStyles } from 'react-jss';
-import { useHistory } from 'react-router';
 import React, { useState } from 'react';
 import Http from '../../classes/Http';
 import { mdiLoading } from '@mdi/js';
@@ -12,9 +12,11 @@ import marked from 'marked';
 
 export default function NewThread() {
     const styles = createUseStyles({
+        wrapper: {
+            margin: ['auto', 'var(--container-margin)'],
+        },
         form: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
-            margin: ['auto', 'var(--container-margin)'],
             border: '1px solid var(--border-primary)',
             backgroundColor: 'var(--color-primary)',
             borderRadius: 3,
@@ -68,17 +70,22 @@ export default function NewThread() {
         button: {
             fontSize: '1.25rem',
         },
+        icon: {
+            width: 15,
+        },
     });
     const classes = styles();
 
     const [submitting, setSubmitting] = useState(false);
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
+    const { category } = useParams();
     const history = useHistory();
     
     async function submit(e) {
         e.preventDefault();
         const formData = new FormData();
+        formData.append('category', category);
         formData.append('content', content);
         formData.append('title', title);
         setSubmitting(true);
@@ -90,26 +97,32 @@ export default function NewThread() {
     return (
         <>
             <Header />
-            <form className={classnames(classes.form, 'p-4')} onSubmit={submit}>
-                <div className={classnames(classes.titleGroup, 'relative mb-3')}>
-                    <input
-                        className={classnames(classes.title, { active: title !== '' }, 'relative')} 
-                        value={title} onChange={e => setTitle(e.target.value)}
+            <div className={classnames(classes.wrapper)}>
+                <h2 className={classnames('px-4 mb-3')}>
+                    Create new thread in <span style={{ color: 'var(--color-main)' }}>{category}</span>
+                </h2>
+                <form className={classnames(classes.form, 'p-4')} onSubmit={submit}>
+                    <div className={classnames(classes.titleGroup, 'relative mb-3')}>
+                        <input
+                            className={classnames(classes.title, { active: title !== '' }, 'relative')} 
+                            value={title} onChange={e => setTitle(e.target.value)}
+                        />
+                        <label className={classnames(classes.label, 'absolute no-select no-pointer')}>Title</label>
+                        <div className={classnames(classes.border, 'absolute')}></div>
+                    </div>
+                    <MdEditor
+                        onChange={({ text }) => setContent(text)}
+                        renderHTML={text => marked(text)}
+                        view={{ menu: true, md: true }}
+                        style={{ height: 400 }}
+                        placeholder="Aa"
+                        value={content}
                     />
-                    <label className={classnames(classes.label, 'absolute no-select no-pointer')}>Title</label>
-                    <div className={classnames(classes.border, 'absolute')}></div>
-                </div>
-                <MdEditor
-                    onChange={({ text }) => setContent(text)}
-                    renderHTML={text => marked(text)}
-                    view={{ menu: true, md: true }}
-                    style={{ height: 300, }}
-                    value={content}
-                />
-                <button className={classnames(classes.button, 'btn mt-3')}>
-                    {submitting ? <Icon path={mdiLoading} spin={1} /> : 'Create thread'}
-                </button>
-            </form>
+                    <button className={classnames(classes.button, 'btn mt-3')}>
+                        {submitting ? <Icon className={classnames(classes.icon)} path={mdiLoading} spin={1} /> : <span>Create thread</span>}
+                    </button>
+                </form>
+            </div>
         </>
     );
 }

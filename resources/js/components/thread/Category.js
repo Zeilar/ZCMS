@@ -110,15 +110,18 @@ export default function Category() {
     });
     const classes = styles();
 
+    const [threadsStatus, setThreadsStatus] = useState('loading');
     const [httpError, setHttpError] = useState(false);
+    const [threads, setThreads] = useState({ data: [] });
     const { user } = useContext(UserContext);
     const { category, page } = useParams();
 
-    const threads = useQuery([page, `category-${category}`], async (page) => {
+    useEffect(async () => {
         const response = await Http.get(`threads?category=${category}&page=${page ?? 1}`);
-        if (response.code === 200) response.data.data.reverse();
-        return response.data;
-    });
+        if (response.code !== 404 && response.code !== 200) setThreadsStatus('error');
+        if (response.code === 200) setThreads(response.data);
+        setThreadsStatus('success');
+    }, [category]);
 
     const dbCategory = useQuery(`dbCategory-${category}`, async () => {
         const response = await Http.get(`categories/${category}`);
@@ -166,13 +169,14 @@ export default function Category() {
                 <div className={`${classes.threads} col relative`}>
                     {renderThreads()}
                     {
-                        threads.status === 'success' && threads.data?.length &&
-                            <Pagination pagination={{
-                                currentPage: threads.data.current_page,
-                                lastPage: threads.data.last_page,
-                                perPage: threads.data.per_page,
-                                total: threads.data.total,
+                        threadsStatus === 'success' && threads.data.length > 0
+                            ? <Pagination pagination={{
+                                currentPage: threads.current_page,
+                                lastPage: threads.last_page,
+                                perPage: threads.per_page,
+                                total: threads.total,
                             }} />
+                            : null
                     }
                 </div>
             </>
@@ -180,17 +184,17 @@ export default function Category() {
     }
 
     const renderThreads = () => {
-        if (threads.status === 'loading') {
+        if (threadsStatus === 'loading') {
             return <Icon className="center-self loadingWheel-2" path={mdiLoading} spin={1} />;
         }
-        if (threads.status === 'error') {
+        if (threadsStatus === 'error') {
             return <h3 className={classnames('text-center mt-3')}>Error retrieving the threads</h3>;
         }
-        if (threads.status === 'success') {
-            if (!threads.data?.data.length) {
+        if (threadsStatus === 'success') {
+            if (threads.data.length <= 0) {
                 return <h3 className={classnames('text-center mt-3')}>No threads were found, be the first to create one!</h3>;
             }
-            return threads.data.data.map(thread => (
+            return threads.data.map(thread => (
                 <div className={`${classes.thread} row mt-1`} key={thread.id}>
                     <div className={`${classes.title} col`}>
                         <NavLink className={classnames(classes.titleText, 'w-fit')} to={`/thread/${thread.id}/${thread.slug}`}>

@@ -273,6 +273,7 @@ export default function Post({ post, refetch, quote }) {
                         onChange={({ text }) => setContent(text)}
                         renderHTML={text => marked(text)}
                         view={{ menu: true, md: true }}
+                        placeholder="Aa"
                         value={content}
                     />
                     : <div className={classnames(classes.body, 'p-2 custom-html-style')}>

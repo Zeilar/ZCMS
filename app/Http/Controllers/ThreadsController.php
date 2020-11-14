@@ -30,7 +30,7 @@ class ThreadsController extends Controller
             'content' => 'required|string|min:3|max:1000',
             'title'   => 'required|string|min:3|max:150',
         ]);
-        $thread = Thread::factory(['title' => $request->title])->create();
+        $thread = Thread::factory(['title' => $request->title, 'category_id' => Category::where('name', $request->category)->firstOrFail()->id])->create();
         Post::create([
             'content'   => $request->content,
             'user_id'   => auth()->user()->id,

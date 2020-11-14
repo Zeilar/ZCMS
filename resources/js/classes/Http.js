@@ -1,14 +1,15 @@
 export default class Http {
-    static async request(method = 'get', url = '', args = null, headers = null) {
+    static async request(method = 'get', url = '', args = null) {
         url = `/api/${url}`;
         const standard = {
             method: method,
             headers: {
-                ...headers,
+                Accept: 'application/json',
                 'X-CSRF-Token': document.querySelector('[name=csrf-token]').getAttribute('content'),
             },
         };
         const response = await fetch(url, { ...args, ...standard });
+
         return { data: await response.json(), code: response.status};
     }
 

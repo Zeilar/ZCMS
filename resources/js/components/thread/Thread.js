@@ -190,6 +190,7 @@ export default function Threads() {
                                 view={{ menu: true, md: true }}
                                 style={{ height: 300, }}
                                 value={editorContent}
+                                placeholder="Aa"
                             />
                             {editorError && <p className={classnames(classes.editorError, 'mt-1 bold')}>{editorError}</p>}
                             <button className={classnames(classes.submit, 'btn mt-2')}>
