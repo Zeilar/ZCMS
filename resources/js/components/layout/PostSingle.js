@@ -1,6 +1,6 @@
 import { Redirect, useParams } from 'react-router';
 import { createUseStyles } from 'react-jss';
-import NotFound from '../http/NotFound';
+import HttpError from '../http/HttpError';
 import { useQuery } from 'react-query';
 import Http from '../../classes/Http';
 import { mdiLoading } from '@mdi/js';
@@ -25,7 +25,7 @@ export default function PostSingle() {
         return response.data;
     });
 
-    if (status === 'error') return <NotFound />;
+    if (status === 'error') return <HttpError code={404} />;
     if (status === 'success') return <Redirect to={`/thread/${data.thread.id}/${data.thread.slug}/${data.pageNumber}#${data.id}`} />;
 
     return (

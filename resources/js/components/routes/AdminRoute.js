@@ -1,6 +1,6 @@
 import { UserContext } from '../../contexts/UserContext';
 import React, { useContext } from 'react';
-import Forbidden from '../http/Forbidden';
+import HttpError from '../http/HttpError';
 import { Route } from 'react-router-dom';
 import { mdiLoading } from '@mdi/js';
 import Icon from '@mdi/react';
@@ -26,6 +26,6 @@ export default function AdminRoute({ children, ...props }) {
             </Route>
         );
     } else {
-        return <Forbidden />;
+        return <HttpError code={403} />;
     }
 }

@@ -8,8 +8,8 @@ import AdminRoute from './routes/AdminRoute';
 import NewThread from './thread/NewThread';
 import React, { useContext } from 'react';
 import Category from './thread/Category';
+import HttpError from './http/HttpError';
 import Register from './auth/Register';
-import NotFound from './http/NotFound';
 import Thread from './thread/Thread';
 import Login from './auth/Login';
 import Index from './Index';
@@ -28,7 +28,9 @@ export default function RouterPages() {
                 <Route component={Login} path="/login" exact />
                 <Route component={Register} path="/register" exact />
                 <AdminRoute component={AdminDashboard} path="/admin" />
-                <Route component={NotFound} />
+                <Route>
+                    <HttpError code={404} />
+                </Route>
             </Switch>
             {message && <FeedbackModal message={message} type={type} />}
             <ScrollToTop />

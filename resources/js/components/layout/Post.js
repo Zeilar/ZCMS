@@ -244,7 +244,11 @@ export default function Post({ post, refetch, quote }) {
     return (
         <article className={classnames(classes.post, { isOp: post.isOp, isAuthor: isAuthor() }, 'col mb-2 relative')} ref={postElement}>
             <div className={classnames(classes.head, 'row')}>
-                <img className={classnames(classes.avatar, 'd-flex mx-2 my-auto')} src={`/storage/avatars/${post.user.avatar}`} alt="Profile picture" />
+                <img
+                    className={classnames(classes.avatar, 'd-flex mx-2 my-auto')}
+                    src={`/storage/avatars/${post.user.avatar}`}
+                    alt="Profile picture"
+                />
                 <h3 className={classnames(classes.user, 'col')}>
                     <NavLink to={`/user/${post.user.username}`}>{post.user.username}</NavLink>
                     <p className={classnames(classes.role, 'ucfirst')}>{post.user.roles[0].name}</p>
@@ -306,7 +310,10 @@ export default function Post({ post, refetch, quote }) {
                             {editButtonsRender()}
                             {
                                 !isAuthor() &&
-                                    <button className={classnames('btn', { 'btn-dark': !hasLiked, loading: liking })} onClick={toggleLike} disabled={liking}>
+                                    <button
+                                        className={classnames('btn', { 'btn-dark': !hasLiked, loading: liking })}
+                                        onClick={toggleLike} disabled={liking}
+                                    >
                                         <span className={classnames(classes.likeButton, 'center-children')}>{likeButtonRender()}</span>
                                     </button>
                             }
