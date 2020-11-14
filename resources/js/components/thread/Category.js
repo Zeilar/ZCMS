@@ -217,7 +217,7 @@ export default function Category() {
                         </span>
                         <NavLink
                             className={`${classes.latestLink} color-${thread.latestPost.user.roles[0].clearance} ml-auto mt-2`}
-                            to={`/thread/${thread.slug}/#${thread.latestPost.id}`}
+                            to={`/thread/${thread.id}/${thread.slug}/${thread.latestPost.pageNumber}/#${thread.latestPost.id}`}
                         >
                             {thread.latestPost.user.username}
                         </NavLink>
