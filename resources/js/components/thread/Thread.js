@@ -183,7 +183,7 @@ export default function Threads() {
                                 onChange={({ text }) => setEditorContent(text)}
                                 renderHTML={text => marked(text)}
                                 view={{ menu: true, md: true }}
-                                style={{ height: '100%' }}
+                                style={{ height: 300 }}
                                 value={editorContent}
                             />
                             {editorError && <p className={classnames(classes.editorError, 'mt-1 bold')}>{editorError}</p>}
