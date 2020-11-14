@@ -50,6 +50,9 @@ class ThreadsController extends Controller
 
     public function destroy(Thread $thread)
     {
-        //
+        $this->authorize('delete', $thread);
+        $category = $thread->category;
+        $thread->delete();
+        return response($category);
     }
 }

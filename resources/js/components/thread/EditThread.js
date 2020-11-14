@@ -1,4 +1,5 @@
-import { mdiCogOutline, mdiClose, mdiCheck, mdiLoading, mdiLockOpen, mdiLock } from '@mdi/js';
+import { mdiCogOutline, mdiClose, mdiCheck, mdiLoading, mdiTrashCanOutline, mdiLockOutline, mdiLockOpenOutline } from '@mdi/js';
+import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import { errorCodeHandler } from '../../functions/helpers';
 import { UserContext } from '../../contexts/UserContext';
 import React, { useState, useContext } from 'react';
@@ -8,7 +9,7 @@ import Http from '../../classes/Http';
 import classnames from 'classnames';
 import Icon from '@mdi/react';
 
-export default function ModBar({ thread, refetch }) {
+export default function EditThread({ thread, refetch }) {
     const styles = createUseStyles({
         modbar: {
             
@@ -37,7 +38,9 @@ export default function ModBar({ thread, refetch }) {
     const [submitting, setSubmitting] = useState(false);
     const [editing, setEditing] = useState(false);
 
+    const { setType, setMessage } = useContext(FeedbackModalContext);
     const { user } = useContext(UserContext);
+
     const [error, setError] = useState();
 
     const history = useHistory();
@@ -71,22 +74,30 @@ export default function ModBar({ thread, refetch }) {
         });
     }
 
+    async function remove() {
+        if (!confirm('Are you sure you want to delete this thread?')) return;
+        setSubmitting(true);
+        const response = await Http.delete(`threads/${thread.id}`);
+        setSubmitting(false);
+        errorCodeHandler(response.code, (message) => setError(message), () => {
+            setType('success');
+            setMessage('Successfully deleted thread');
+            history.push(`/category/${response.data.name.toLowerCase()}`);
+        });
+    }
+
     const buttonsRender = () => {
         if (editing) {
-            if (submitting) {
-                return (
-                    <button className={classnames(classes.button, 'btn btn-outline ml-auto no-pointer')}>
-                        <Icon path={mdiLoading} spin={1} />
-                    </button>
-                );
-            }
             return <>
                 <input className={classnames(classes.input, 'w-100')} value={input} onChange={e => setInput(e.target.value)} />
-                <button className={classnames(classes.button, 'btn btn-outline ml-2 btn-dark')} onClick={() => setLocked(p => p ? 0 : 1)} type="button">
-                    <Icon path={locked ? mdiLock : mdiLockOpen} />
+                <button className={classnames(classes.button, 'btn btn-outline btn-danger ml-2')} onClick={remove}>
+                    {submitting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiTrashCanOutline} />}
                 </button>
-                <button className={classnames(classes.button, 'btn btn-outline ml-2')} onClick={edit}>
-                    <Icon path={mdiCheck} />
+                <button className={classnames(classes.button, 'btn btn-outline ml-2 btn-dark')} onClick={() => setLocked(p => p ? 0 : 1)} type="button">
+                    <Icon path={locked ? mdiLockOutline : mdiLockOpenOutline} />
+                </button>
+                <button className={classnames(classes.button, { 'no-pointer': submitting }, 'btn btn-outline ml-2')} onClick={edit}>
+                    {submitting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiCheck} />}
                 </button>
                 <button className={classnames(classes.button, 'btn btn-outline ml-2 btn-dark')} onClick={() => setEditing(false)} type="button">
                     <Icon path={mdiClose} />

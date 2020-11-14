@@ -79,7 +79,9 @@
 
     &.btn-danger {
         border-color: var(--color-danger);
+        background-color: transparent;
         color: var(--color-danger);
+        background-image: none;
 
         &:hover {
             background-color: var(--color-danger);

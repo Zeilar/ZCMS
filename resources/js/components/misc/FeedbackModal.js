@@ -44,11 +44,11 @@ export default function FeedbackModal({ message, type }) {
             animation: '$fadeIn 0.25s linear forwards, $fadeOut 0.25s 2s linear forwards',
             backgroundColor: backgroundColor,
             transform: 'translateX(-50%)',
-            fontSize: '1.5rem',
+            fontSize: '1.25rem',
             letterSpacing: 1,
             borderRadius: 3,
             color: color,
-            padding: 20,
+            padding: 15,
             left: '50%',
         },
     });

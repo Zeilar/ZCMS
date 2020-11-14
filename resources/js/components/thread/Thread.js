@@ -132,7 +132,7 @@ export default function Threads() {
 
     useEffect(() => {
         if (dbThread.status === 'success' && channel == null) {
-            const channel = window.Echo.join(`thread-${dbThread.data.id}`).listen('NewPost', () => {
+            const channel = window.Echo.join(`thread-${dbThread.data?.id}`).listen('NewPost', () => {
                 console.log('refetch'); // TODO: one liner
                 posts.refetch()
             });
