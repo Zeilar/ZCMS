@@ -11,7 +11,7 @@ import Icon from '@mdi/react';
 
 export default function EditThread({ thread, refetch }) {
     const styles = createUseStyles({
-        modbar: {
+        wrapper: {
             
         },
         button: {
@@ -52,10 +52,6 @@ export default function EditThread({ thread, refetch }) {
         return false;
     }
 
-    function edit() {
-        if (canModify()) setEditing(true);
-    }
-
     async function submit(e) {
         e.preventDefault();
         const formData = new FormData();
@@ -88,7 +84,7 @@ export default function EditThread({ thread, refetch }) {
 
     return (
         <>
-            <form className={classnames(classes.modbar, 'row center-children mb-2')} onSubmit={submit}>
+            <form className={classnames(classes.wrapper, 'row center-children mb-2')} onSubmit={submit}>
                 {
                     editing
                         ? (
@@ -108,7 +104,7 @@ export default function EditThread({ thread, refetch }) {
                                 </button>
                                 <button
                                     className={classnames(classes.button, { 'no-pointer': submitting }, 'btn btn-outline ml-2')}
-                                    onClick={edit}
+                                    onClick={() => setEditing(false)}
                                 >
                                     {submitting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiCheck} />}
                                 </button>
@@ -121,7 +117,7 @@ export default function EditThread({ thread, refetch }) {
                             </>
                         )
                         : (
-                            <button className={classnames(classes.button, 'btn btn-outline ml-auto btn-dark')} onClick={edit} type="button">
+                            <button className={classnames(classes.button, 'btn btn-outline ml-auto btn-dark')} onClick={() => setEditing(true)} type="button">
                                 <Icon path={mdiCogOutline} />
                             </button>
                         )

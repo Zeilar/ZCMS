@@ -2,7 +2,9 @@ import { errorCodeHandler } from '../../functions/helpers';
 import { useHistory, useParams } from 'react-router';
 import MdEditor from 'react-markdown-editor-lite';
 import { createUseStyles } from 'react-jss';
+import HttpError from '../http/HttpError';
 import React, { useState } from 'react';
+import { useQuery } from 'react-query';
 import Http from '../../classes/Http';
 import { mdiLoading } from '@mdi/js';
 import classnames from 'classnames';
@@ -19,6 +21,12 @@ export default function NewThread() {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
             border: '1px solid var(--border-primary)',
             backgroundColor: 'var(--color-primary)',
+            borderRadius: 3,
+        },
+        header: {
+            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
+            backgroundImage: 'var(--color-main-gradient)',
+            color: 'var(--color-primary)',
             borderRadius: 3,
         },
         titleGroup: {
@@ -73,14 +81,25 @@ export default function NewThread() {
         icon: {
             width: 15,
         },
+        loading: {
+            color: 'var(--color-main)',
+            width: 50,
+        },
     });
     const classes = styles();
 
     const [submitting, setSubmitting] = useState(false);
+    const [httpError, setHttpError] = useState(false);
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
     const { category } = useParams();
     const history = useHistory();
+
+    const { data, status } = useQuery(`category-${category}`, async () => {
+        const response = await Http.get(`categories/${category}`);
+        if (response.code !== 200) return setHttpError(response.code);
+        return response.data;
+    });
     
     async function submit(e) {
         e.preventDefault();
@@ -91,16 +110,16 @@ export default function NewThread() {
         setSubmitting(true);
         const response = await Http.post('threads', { body: formData });
         setSubmitting(false);
-        errorCodeHandler(response.code, () => console.log(''), () => history.push(`/thread/${response.data.id}/${response.data.slug}`));
+        errorCodeHandler(response.code, () => console.log(''/* INPUT HANDLING */), () => history.push(`/thread/${response.data.id}/${response.data.slug}`));
     }
 
-    return (
-        <>
-            <Header />
-            <div className={classnames(classes.wrapper)}>
-                <h2 className={classnames('px-4 mb-3')}>
-                    Create new thread in <span style={{ color: 'var(--color-main)' }}>{category}</span>
-                </h2>
+    if (httpError) return <HttpError code={httpError} />
+
+    const render = () => {
+        if (status === 'loading') return <Icon className={classnames(classes.loading, 'center-self')} path={mdiLoading} spin={1} />
+        return (
+            <>
+                <h2 className={classnames(classes.header, 'px-4 py-2 w-fit mb-3')}>Create new thread in {data?.name ?? category}</h2>
                 <form className={classnames(classes.form, 'p-4')} onSubmit={submit}>
                     <div className={classnames(classes.titleGroup, 'relative mb-3')}>
                         <input
@@ -122,6 +141,15 @@ export default function NewThread() {
                         {submitting ? <Icon className={classnames(classes.icon)} path={mdiLoading} spin={1} /> : <span>Create thread</span>}
                     </button>
                 </form>
+            </>
+        );
+    }
+
+    return (
+        <>
+            <Header />
+            <div className={classnames(classes.wrapper, 'col')}>
+                {render()}
             </div>
         </>
     );

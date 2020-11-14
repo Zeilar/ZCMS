@@ -135,6 +135,12 @@ export default function Threads() {
         setEditorContent(p => p + `> ${post.content}<br /><br />[Visit post](/post/${post.id})`);
     }
 
+    function canModify() {
+        if (!user || user.suspended) return false;
+        if (user.roles[0].clearance <= 3) return true;
+        return false;
+    }
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [id, page]);
@@ -168,7 +174,7 @@ export default function Threads() {
             return <Icon className={classnames(classes.loadingSpinner, 'm-auto')} path={mdiLoading} spin={1} />
         }
         return <>
-            {dbThread.status === 'success' && <EditThread thread={dbThread.data} refetch={dbThread.refetch} />}
+            {dbThread.status === 'success' && canModify() && <EditThread thread={dbThread.data} refetch={dbThread.refetch} />}
             <div className={`${classes.header} row mb-2`}>
                 <NavLink className={`${classes.back} d-flex mr-2`} to={`/category/${dbThread.data?.category.name.toLowerCase()}`}>
                     <Icon path={mdiArrowLeft} />

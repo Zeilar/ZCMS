@@ -129,6 +129,8 @@ export default function Post({ post, refetch, quote }) {
 
     const isAuthor = () => user.id === post.user.id;
 
+    const canPost = () => user && !user.suspended;
+
     function canEdit() {
         if (!user || user.suspended) return false;
         if (user.roles[0].clearance <= 3) return true;
@@ -308,7 +310,7 @@ export default function Post({ post, refetch, quote }) {
                                         <span className={classnames(classes.likeButton, 'center-children')}>{likeButtonRender()}</span>
                                     </button>
                             }
-                            {quote && <button className={classnames('btn btn-dark')} onClick={() => quote(post)}>Quote</button>}
+                            {canPost() && quote && <button className={classnames('btn btn-dark')} onClick={() => quote(post)}>Quote</button>}
                             {
                                 canRemove() &&
                                     <button className={classnames('btn ml-auto btn-danger caps', { loading: deleting })} onClick={deletePost}>

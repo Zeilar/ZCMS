@@ -24,8 +24,8 @@ body {
 }
 
 ::selection {
-    background-color: var(--color-main);
-    color: white;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: var(--color-main);
 }
 
 a,
