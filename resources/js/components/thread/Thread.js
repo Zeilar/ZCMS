@@ -126,6 +126,10 @@ export default function Threads() {
         window.scrollTo(0, reply.current?.getBoundingClientRect().top - window.scrollY);
     }
 
+    function quote(post) {
+        setEditorContent(p => p + `> ${post.content}<br /><br />[Visit post](/post/${post.id})`);
+    }
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [id, page]);
@@ -205,7 +209,7 @@ export default function Threads() {
             if (!posts.data?.data.length) {
                 return <p className="text-center">No posts were found</p>;
             } else {
-                return posts.data.data.map(post => <Post key={post.id} refetch={posts.refetch} post={post} />);
+                return posts.data.data.map(post => <Post key={post.id} quote={quote} refetch={posts.refetch} post={post} />);
             }
         }
     }

@@ -11,7 +11,7 @@ import classnames from 'classnames';
 import Icon from '@mdi/react';
 import marked from 'marked';
 
-export default function Post({ post, refetch }) {
+export default function Post({ post, refetch, quote }) {
     const styles = createUseStyles({
         post: {
             boxShadow: [0, 0, 3, 0, 'rgba(0, 0, 0, 0.15)'],
@@ -247,7 +247,7 @@ export default function Post({ post, refetch }) {
                     <NavLink to={`/user/${post.user.username}`}>{post.user.username}</NavLink>
                     <p className={classnames(classes.role, 'ucfirst')}>{post.user.roles[0].name}</p>
                 </h3>
-                <div className={classnames(classes.metaboxes, 'ml-auto d-flex')}>
+                <aside className={classnames(classes.metaboxes, 'ml-auto d-flex')}>
                     <div className={classnames(classes.metabox)}>
                         <h4 className={classnames(classes.metaboxHeader)}>Forum Rank</h4>
                         <span className={classnames(classes.metaboxValue)}>{post.user.rank.name}</span>
@@ -264,7 +264,7 @@ export default function Post({ post, refetch }) {
                         <h4 className={classnames(classes.metaboxHeader)}>Registered</h4>
                         <span className={classnames(classes.metaboxValue)}>{parseDate(post.user.created_at)}</span>
                     </div>
-                </div>
+                </aside>
             </div>
             {
                 editing
@@ -293,7 +293,9 @@ export default function Post({ post, refetch }) {
                         {
                             editing &&
                                 <form className={classnames(classes.editedByInput, 'p-2 col')} onSubmit={updatePost}>
-                                    <label className={classnames(classes.editedByLabel, 'mb-2')}>Edit reason <em>(optional)</em></label>
+                                    <label className={classnames(classes.editedByLabel, 'mb-2')}>
+                                        Edit reason <span className={classnames('italic')}>(optional)</span>
+                                    </label>
                                     <input value={editedByMessage} onChange={e => setEditedByMessage(e.target.value)} placeholder="Aa" />
                                 </form>
                         }
@@ -305,6 +307,7 @@ export default function Post({ post, refetch }) {
                                         <span className={classnames(classes.likeButton, 'center-children')}>{likeButtonRender()}</span>
                                     </button>
                             }
+                            {quote && <button className={classnames('btn btn-dark')} onClick={() => quote(post)}>Quote</button>}
                             {
                                 canRemove() &&
                                     <button className={classnames('btn ml-auto btn-danger caps', { loading: deleting })} onClick={deletePost}>
