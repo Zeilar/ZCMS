@@ -36,6 +36,7 @@ export default function EditThread({ thread, refetch }) {
     const [input, setInput] = useState(thread.title);
 
     const [submitting, setSubmitting] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const [editing, setEditing] = useState(false);
 
     const { setType, setMessage } = useContext(FeedbackModalContext);
@@ -76,9 +77,9 @@ export default function EditThread({ thread, refetch }) {
 
     async function remove() {
         if (!confirm('Are you sure you want to delete this thread?')) return;
-        setSubmitting(true);
+        setDeleting(true);
         const response = await Http.delete(`threads/${thread.id}`);
-        setSubmitting(false);
+        setDeleting(false);
         errorCodeHandler(response.code, (message) => setError(message), () => {
             setType('success');
             setMessage('Successfully deleted thread');
@@ -89,11 +90,11 @@ export default function EditThread({ thread, refetch }) {
     const buttonsRender = () => {
         if (editing) {
             return <>
-                <input className={classnames(classes.input, 'w-100')} value={input} onChange={e => setInput(e.target.value)} />
+                <input className={classnames(classes.input, 'w-100')} value={input} onChange={e => setInput(e.target.value)} placeholder="Title" />
                 <button className={classnames(classes.button, 'btn btn-outline btn-danger ml-2')} onClick={remove}>
-                    {submitting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiTrashCanOutline} />}
+                    {deleting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiTrashCanOutline} />}
                 </button>
-                <button className={classnames(classes.button, 'btn btn-outline ml-2 btn-dark')} onClick={() => setLocked(p => p ? 0 : 1)} type="button">
+                <button className={classnames(classes.button, 'btn btn-outline mx-2 btn-dark')} onClick={() => setLocked(p => p ? 0 : 1)} type="button">
                     <Icon path={locked ? mdiLockOutline : mdiLockOpenOutline} />
                 </button>
                 <button className={classnames(classes.button, { 'no-pointer': submitting }, 'btn btn-outline ml-2')} onClick={edit}>

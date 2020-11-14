@@ -184,11 +184,11 @@ export default function Category() {
             return <Icon className="center-self loadingWheel-2" path={mdiLoading} spin={1} />;
         }
         if (threads.status === 'error') {
-            return <p>Error retrieving the threads</p>;
+            return <h3 className={classnames('text-center mt-3')}>Error retrieving the threads</h3>;
         }
         if (threads.status === 'success') {
             if (!threads.data?.data.length) {
-                return <p className="text-center">No threads were found</p>;
+                return <h3 className={classnames('text-center mt-3')}>No threads were found, be the first to create one!</h3>;
             }
             return threads.data.data.map(thread => (
                 <div className={`${classes.thread} row mt-1`} key={thread.id}>
