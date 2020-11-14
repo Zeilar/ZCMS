@@ -62,7 +62,6 @@ export default function Threads() {
             width: 'calc(100% - (var(--container-margin) * 2))',
             transition: 'all 0.25s linear',
             width: '100%',
-            height: 350,
         },
         submit: {
             fontSize: '1.15rem',
@@ -183,7 +182,7 @@ export default function Threads() {
                                 onChange={({ text }) => setEditorContent(text)}
                                 renderHTML={text => marked(text)}
                                 view={{ menu: true, md: true }}
-                                style={{ height: 300 }}
+                                style={{ height: 300, }}
                                 value={editorContent}
                             />
                             {editorError && <p className={classnames(classes.editorError, 'mt-1 bold')}>{editorError}</p>}

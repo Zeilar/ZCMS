@@ -91,7 +91,7 @@ export default function EditThread({ thread, refetch }) {
         if (editing) {
             return <>
                 <input className={classnames(classes.input, 'w-100')} value={input} onChange={e => setInput(e.target.value)} placeholder="Title" />
-                <button className={classnames(classes.button, 'btn btn-outline btn-danger ml-2')} onClick={remove}>
+                <button className={classnames(classes.button, 'btn btn-outline btn-danger ml-2')} onClick={remove} type="button">
                     {deleting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiTrashCanOutline} />}
                 </button>
                 <button className={classnames(classes.button, 'btn btn-outline mx-2 btn-dark')} onClick={() => setLocked(p => p ? 0 : 1)} type="button">
