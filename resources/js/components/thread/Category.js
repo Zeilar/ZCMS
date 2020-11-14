@@ -116,9 +116,7 @@ export default function Category() {
 
     const threads = useQuery([page, `category-${category}`], async (page) => {
         const response = await Http.get(`threads?category=${category}&page=${page ?? 1}`);
-        if (response.code !== 200) return setHttpError(response.code); // TODO: remove this
-        setHttpError(false);
-        response.data.data.reverse();
+        if (response.code === 200) response.data.data.reverse();
         return response.data;
     });
 
@@ -138,45 +136,47 @@ export default function Category() {
         if (dbCategory.status === 'loading') {
             return <Icon className={classnames(classes.loadingSpinner, 'm-auto')} path={mdiLoading} spin={1} />
         }
-        return <>
-            <div className={classnames(classes.header, 'row mb-2')}>
-                <NavLink className={`${classes.back} d-flex mr-2`} to="/">
-                    <Icon path={mdiArrowLeft} />
-                </NavLink>
-                <div className={`${classes.headerText} row w-100`}>
-                    {
-                        dbCategory.status === 'success' &&
-                            <img
-                                className={classes.categoryIcon}
-                                src={`/storage/category-icons/${dbCategory.data.icon}.svg`}
-                                alt={ucfirst(category)}
-                            />
-                    }
-                    <h2 className="ml-2">{ucfirst(category)}</h2>
-                </div>
-            </div>
-            {
-                user &&
-                    <div className={classnames('row mt-2')}>
-                        <NavLink className={classnames('btn caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
-                            <Icon className={classnames(classes.newIcon, 'mr-1')} path={mdiPlusBox} />
-                            <span>New thread</span>
-                        </NavLink>
+        return (
+            <>
+                <div className={classnames(classes.header, 'row mb-2')}>
+                    <NavLink className={`${classes.back} d-flex mr-2`} to="/">
+                        <Icon path={mdiArrowLeft} />
+                    </NavLink>
+                    <div className={`${classes.headerText} row w-100`}>
+                        {
+                            dbCategory.status === 'success' &&
+                                <img
+                                    className={classes.categoryIcon}
+                                    src={`/storage/category-icons/${dbCategory.data.icon}.svg`}
+                                    alt={ucfirst(category)}
+                                />
+                        }
+                        <h2 className="ml-2">{ucfirst(category)}</h2>
                     </div>
-            }
-            <div className={`${classes.threads} col relative`}>
-                {renderThreads()}
+                </div>
                 {
-                    threads.status === 'success' &&
-                        <Pagination pagination={{
-                            currentPage: threads.data.current_page,
-                            lastPage: threads.data.last_page,
-                            perPage: threads.data.per_page,
-                            total: threads.data.total,
-                        }} />
+                    user &&
+                        <div className={classnames('row mt-2')}>
+                            <NavLink className={classnames('btn caps center-children')} to={`/category/${dbCategory.data?.name}/new`}>
+                                <Icon className={classnames(classes.newIcon, 'mr-1')} path={mdiPlusBox} />
+                                <span>New thread</span>
+                            </NavLink>
+                        </div>
                 }
-            </div>
-        </>;
+                <div className={`${classes.threads} col relative`}>
+                    {renderThreads()}
+                    {
+                        threads.status === 'success' && threads.data?.length &&
+                            <Pagination pagination={{
+                                currentPage: threads.data.current_page,
+                                lastPage: threads.data.last_page,
+                                perPage: threads.data.per_page,
+                                total: threads.data.total,
+                            }} />
+                    }
+                </div>
+            </>
+        );
     }
 
     const renderThreads = () => {

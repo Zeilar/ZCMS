@@ -36,6 +36,6 @@ class CategorySeeder extends Seeder
         $this->createCategory('Entertainment', 'entertainment');
         $this->createCategory('Food', 'food');
         $this->createCategory('Sport', 'sport');
-        $this->createCategory('Politics', 'politics');
+        // $this->createCategory('Politics', 'politics');
     }
 }

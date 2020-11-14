@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Thread;
+use App\Models\Post;
 
 class ThreadsController extends Controller
 {
@@ -24,7 +25,18 @@ class ThreadsController extends Controller
 
     public function store(Request $request)
     {
-        
+        $this->authorize('create', Thread::class);
+        $request->validate([
+            'content' => 'required|string|min:3|max:1000',
+            'title'   => 'required|string|min:3|max:150',
+        ]);
+        $thread = Thread::factory(['title' => $request->title])->create();
+        Post::create([
+            'content'   => $request->content,
+            'user_id'   => auth()->user()->id,
+            'thread_id' => $thread->id,
+        ]);
+        return response($thread);
     }
 
     public function show(Thread $thread)
