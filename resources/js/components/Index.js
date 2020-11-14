@@ -12,7 +12,7 @@ export default function Index() {
     const styles = createUseStyles({
         categories: {
             margin: [50, 'var(--container-margin)'],
-            gridTemplateColumns: 'repeat(3, 1fr)',
+            gridTemplateColumns: 'repeat(4, 1fr)',
             display: 'grid',
             gridGap: 50,
         },
