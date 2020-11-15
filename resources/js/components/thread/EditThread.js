@@ -40,17 +40,10 @@ export default function EditThread({ thread, refetch }) {
     const [editing, setEditing] = useState(false);
 
     const { setType, setMessage } = useContext(FeedbackModalContext);
-    const { user } = useContext(UserContext);
 
     const [error, setError] = useState();
 
     const history = useHistory();
-
-    function canModify() {
-        if (!user || user.suspended) return false;
-        if (user.roles[0].clearance <= 3) return true;
-        return false;
-    }
 
     async function submit(e) {
         e.preventDefault();
@@ -102,10 +95,7 @@ export default function EditThread({ thread, refetch }) {
                                 >
                                     <Icon path={locked ? mdiLockOutline : mdiLockOpenOutline} />
                                 </button>
-                                <button
-                                    className={classnames(classes.button, 'btn btn-outline ml-2')}
-                                    onClick={() => setEditing(false)} disabled={submitting}
-                                >
+                                <button className={classnames(classes.button, 'btn btn-outline ml-2')} onClick={submit} disabled={submitting}>
                                     {submitting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiCheck} />}
                                 </button>
                                 <button
