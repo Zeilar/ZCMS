@@ -1,5 +1,6 @@
 import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { humanReadableDate, ucfirst } from '../../functions/helpers';
 import { errorCodeHandler } from '../../functions/helpers';
 import { UserContext } from '../../contexts/UserContext';
 import MdEditor from 'react-markdown-editor-lite';
@@ -58,7 +59,6 @@ export default function Post({ post, refetch, quote }) {
         },
         metabox: {
             borderLeft: '1px solid var(--border-primary)',
-            textTransform: 'capitalize',
             justifyContent: 'center',
             flexDirection: 'column',
             alignItems: 'center',
@@ -143,15 +143,6 @@ export default function Post({ post, refetch, quote }) {
         if (user.roles[0].clearance <= 2) return true;
         if (post.isFirst) return false;
         return isAuthor();
-    }
-
-    function parseDate(timestamp, withHoursMinutes = false) {
-        const date = new Date(timestamp);
-        let parsedDate = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
-        if (withHoursMinutes) {
-            parsedDate += ` ${('0' + (date.getHours())).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}`;
-        }
-        return parsedDate;
     }
 
     async function toggleLike() {
@@ -256,7 +247,7 @@ export default function Post({ post, refetch, quote }) {
                 <aside className={classnames(classes.metaboxes, 'ml-auto d-flex')}>
                     <div className={classnames(classes.metabox)}>
                         <h4 className={classnames(classes.metaboxHeader)}>Forum Rank</h4>
-                        <span className={classnames(classes.metaboxValue)}>{post.user.rank.name}</span>
+                        <span className={classnames(classes.metaboxValue)}>{ucfirst(post.user.rank.name)}</span>
                     </div>
                     <div className={classnames(classes.metabox)}>
                         <h4 className={classnames(classes.metaboxHeader)}>Posts</h4>
@@ -268,7 +259,7 @@ export default function Post({ post, refetch, quote }) {
                     </div>
                     <div className={classnames(classes.metabox)}>
                         <h4 className={classnames(classes.metaboxHeader)}>Registered</h4>
-                        <span className={classnames(classes.metaboxValue)}>{parseDate(post.user.created_at)}</span>
+                        <span className={classnames(classes.metaboxValue)}>{humanReadableDate(post.user.created_at)}</span>
                     </div>
                 </aside>
             </div>
@@ -283,12 +274,12 @@ export default function Post({ post, refetch, quote }) {
                         value={content}
                     />
                     : <div className={classnames(classes.body, 'p-2 custom-html-style')}>
-                        <p className={classnames(classes.postedAt, 'bold mb-2')}>Posted at {parseDate(post.created_at, true)}</p>
+                        <p className={classnames(classes.postedAt, 'bold mb-2')}>Posted {humanReadableDate(post.created_at)}</p>
                         <p dangerouslySetInnerHTML={{ __html: marked(content) }} />
                         {
                             post.edited_by &&
                                 <p className={classnames(classes.editedByMessage, 'italic mt-2')}>
-                                    Edited by {post.edited_by} at {parseDate(updatedAt, true)} "{post.edited_by_message}"
+                                    Edited by {post.edited_by} {humanReadableDate(updatedAt)} "{post.edited_by_message}"
                                 </p>
                         }
                     </div>

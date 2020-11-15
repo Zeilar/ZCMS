@@ -1,3 +1,6 @@
+import calendar from 'dayjs/plugin/calendar';
+import dayjs from 'dayjs';
+
 function ucfirst(string = '') {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -30,7 +33,17 @@ function errorCodeHandler(code, errorCallback, successCallback) {
     }
 }
 
+function humanReadableDate(date) {
+    dayjs.extend(calendar);
+    return dayjs(date).calendar(null, {
+        sameDay: '[Today at] hh:mm',
+        lastDay: '[Yesterday at] hh:mm',
+        sameElse: 'YYYY/MM/DD',
+    });
+}
+
 export {
     ucfirst,
     errorCodeHandler,
+    humanReadableDate,
 };

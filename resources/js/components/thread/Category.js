@@ -1,7 +1,7 @@
 import { mdiArrowLeft, mdiEye, mdiForum, mdiLoading, mdiLock, mdiPlusBox } from '@mdi/js';
+import { ucfirst, humanReadableDate } from '../../functions/helpers';
 import React, { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
-import { ucfirst } from '../../functions/helpers';
 import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
 import { NavLink } from 'react-router-dom';
@@ -217,7 +217,7 @@ export default function Category() {
                     </Tooltip>
                     <div className={`${classes.latest} col`}>
                         <span className={`${classes.latestDate} ml-auto`}>
-                            Some date
+                            {humanReadableDate(thread.latestPost.created_at)}
                         </span>
                         <NavLink
                             className={`${classes.latestLink} color-${thread.latestPost.user.roles[0].clearance} ml-auto mt-2`}
