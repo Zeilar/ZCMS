@@ -130,7 +130,6 @@ export default function Post({ post, refetch, quote }) {
     const postElement = useRef();
 
     const isAuthor = () => user.id === post.user.id;
-
     const canPost = () => user && !user.suspended;
 
     function canEdit() {
