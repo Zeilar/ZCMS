@@ -199,7 +199,7 @@ export default function Threads() {
                                 placeholder="Aa"
                             />
                             {editorError && <p className={classnames(classes.editorError, 'mt-1 bold')}>{editorError}</p>}
-                            <button className={classnames(classes.submit, 'btn mt-2')} disabled={submtiting}>
+                            <button className={classnames(classes.submit, 'btn mt-2')} disabled={submitting}>
                                 {submitting ? <Icon className={classnames(classes.submitIcon)} path={mdiLoading} spin={1} /> : 'Send'}
                             </button>
                         </form>

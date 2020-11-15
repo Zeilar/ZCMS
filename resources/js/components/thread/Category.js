@@ -226,7 +226,7 @@ export default function Category() {
                             {thread.latestPost.user.username}
                         </NavLink>
                     </div>
-                    {thread.locked ? <Icon className={classnames(classes.locked, 'absolute')} path={mdiLock} /> : ''}
+                    {parseInt(thread.locked) ? <Icon className={classnames(classes.locked, 'absolute')} path={mdiLock} /> : ''}
                 </div>
             ));
         }

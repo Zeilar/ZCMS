@@ -32,7 +32,7 @@ export default function EditThread({ thread, refetch }) {
     });
     const classes = styles();
 
-    const [locked, setLocked] = useState(thread.locked);
+    const [locked, setLocked] = useState(parseInt(thread.locked));
     const [input, setInput] = useState(thread.title);
 
     const [submitting, setSubmitting] = useState(false);
