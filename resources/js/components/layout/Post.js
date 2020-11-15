@@ -274,12 +274,12 @@ export default function Post({ post, refetch, quote }) {
                         value={content}
                     />
                     : <div className={classnames(classes.body, 'p-2 custom-html-style')}>
-                        <p className={classnames(classes.postedAt, 'bold mb-2')}>Posted {humanReadableDate(post.created_at)}</p>
+                        <p className={classnames(classes.postedAt, 'bold mb-2')}>Posted {humanReadableDate(post.created_at).toLowerCase()}</p>
                         <p dangerouslySetInnerHTML={{ __html: marked(content) }} />
                         {
                             post.edited_by &&
                                 <p className={classnames(classes.editedByMessage, 'italic mt-2')}>
-                                    Edited by {post.edited_by} {humanReadableDate(updatedAt)} "{post.edited_by_message}"
+                                    Edited by {post.edited_by} {humanReadableDate(updatedAt).toLowerCase()} "{post.edited_by_message}"
                                 </p>
                         }
                     </div>
