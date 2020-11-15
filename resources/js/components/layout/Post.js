@@ -108,12 +108,14 @@ export default function Post({ post, refetch, quote }) {
     });
     const classes = styles();
 
+    const [editedByMessage, setEditedByMessage] = useState(post.edited_by_message);
     const [repuation, setRepuation] = useState(post.user.likesAmount);
     const [updatedAt, setUpdatedAt] = useState(post.updated_at);
     const [likes, setLikes] = useState(post.postlikes.length);
+    const [editedBy, setEditedBy] = useState(post.edited_by);
     const [content, setContent] = useState(post.content);
 
-    const [editedByMessage, setEditedByMessage] = useState('');
+    const [editedByInput, setEditedByInput] = useState('');
     const [editorError, setEditorError] = useState();
     const [hasLiked, setHasLiked] = useState(false);
 
@@ -174,7 +176,7 @@ export default function Post({ post, refetch, quote }) {
         const now = new Date();
         const formData = new FormData();
         formData.append('content', content);
-        formData.append('editedByMessage', editedByMessage);
+        formData.append('editedByMessage', editedByInput);
         setUpdating(true);
         const response = await Http.post(`posts/${post.id}`, { body: formData });
         setUpdating(false);
@@ -182,6 +184,8 @@ export default function Post({ post, refetch, quote }) {
             setEditorError(response.data.errors.content);
         } else {
             errorCodeHandler(response.code, setMessage, () => {
+                setEditedByMessage(editedByInput);
+                setEditedBy(user.username);
                 setEditorError(null);
                 setUpdatedAt(now);
                 setEditing(false);
@@ -277,9 +281,9 @@ export default function Post({ post, refetch, quote }) {
                         <p className={classnames(classes.postedAt, 'bold mb-2')}>Posted {humanReadableDate(post.created_at).toLowerCase()}</p>
                         <p dangerouslySetInnerHTML={{ __html: marked(content) }} />
                         {
-                            post.edited_by &&
+                            editedBy &&
                                 <p className={classnames(classes.editedByMessage, 'italic mt-2')}>
-                                    Edited by {post.edited_by} {humanReadableDate(updatedAt).toLowerCase()} "{post.edited_by_message}"
+                                    Edited by {editedBy} {humanReadableDate(updatedAt).toLowerCase()} "{editedByMessage}"
                                 </p>
                         }
                     </div>
@@ -294,7 +298,7 @@ export default function Post({ post, refetch, quote }) {
                                     <label className={classnames(classes.editedByLabel, 'mb-2')}>
                                         Edit reason <span className={classnames('italic')}>(optional)</span>
                                     </label>
-                                    <input value={editedByMessage} onChange={e => setEditedByMessage(e.target.value)} placeholder="Aa" />
+                                    <input value={editedByInput} onChange={e => setEditedByInput(e.target.value)} placeholder="Aa" />
                                 </form>
                         }
                         <div className={classnames(classes.footer, 'row p-2')}>
