@@ -103,8 +103,8 @@ export default function EditThread({ thread, refetch }) {
                                     <Icon path={locked ? mdiLockOutline : mdiLockOpenOutline} />
                                 </button>
                                 <button
-                                    className={classnames(classes.button, { 'no-pointer': submitting }, 'btn btn-outline ml-2')}
-                                    onClick={() => setEditing(false)}
+                                    className={classnames(classes.button, 'btn btn-outline ml-2')}
+                                    onClick={() => setEditing(false)} disabled={submitting}
                                 >
                                     {submitting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiCheck} />}
                                 </button>

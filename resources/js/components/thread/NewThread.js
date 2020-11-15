@@ -137,7 +137,7 @@ export default function NewThread() {
                         placeholder="Aa"
                         value={content}
                     />
-                    <button className={classnames(classes.button, 'btn mt-3')}>
+                    <button className={classnames(classes.button, 'btn mt-3')} disabled={submitting}>
                         {submitting ? <Icon className={classnames(classes.icon)} path={mdiLoading} spin={1} /> : <span>Create thread</span>}
                     </button>
                 </form>
