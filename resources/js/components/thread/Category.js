@@ -166,7 +166,7 @@ export default function Category() {
                             </NavLink>
                         </div>
                 }
-                <div className={`${classes.threads} col relative`}>
+                <div className={`${classes.threads} col mt-2 relative`}>
                     {renderThreads()}
                     {
                         threadsStatus === 'success' && threads.data.length > 0

@@ -57,17 +57,6 @@ class PostsController extends Controller
         }
         $post->update($data);
 
-        /*
-        $validTags = [];
-        $tags = explode(', ', $request->tags);
-        foreach ($tags as $tag) {
-            $tag = Tag::where('name', $tag)->first();
-            if ($tag !== null) array_push($validTags, $tag->id);
-        }
-        $post->tags()->sync($validTags);
-        $post->tags = $post->tags()->pluck('name');
-        */
-
         return response(true);
     }
 

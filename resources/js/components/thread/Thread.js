@@ -185,7 +185,7 @@ export default function Threads() {
             </div>
             {canPost() && posts.status === 'success' && <button className={classnames('btn caps mb-1 mt-2')} onClick={goToReply}>Reply</button>}
             {paginationRender()}
-            <div className={`${classes.posts} col relative`}>
+            <div className={`${classes.posts} col mt-2 relative`}>
                 {renderPosts()}
                 {
                     canPost() && posts.status === 'success' &&
