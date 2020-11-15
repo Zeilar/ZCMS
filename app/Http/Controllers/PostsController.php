@@ -44,7 +44,6 @@ class PostsController extends Controller
     public function update(Request $request, Post $post)
     {
         $this->authorize('update', [$post, $post->thread]);
-
         $request->validate(['content' => 'required|string|min:3|max:1000']);
 
         if ($request->editedByMessage) {

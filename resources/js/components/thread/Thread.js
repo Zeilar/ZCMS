@@ -107,7 +107,7 @@ export default function Threads() {
         if (!user || user.suspended) return false;
         if (user.roles[0].clearance <= 3) return true;
         if (dbThread.data?.locked) return false;
-        return false;
+        return user ? true : false;
     }
 
     async function submitPost(e) {
