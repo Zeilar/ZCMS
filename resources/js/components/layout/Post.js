@@ -207,6 +207,10 @@ export default function Post({ post, refetch, quote }) {
         }
     }, [window.location.hash]);
 
+    window.addEventListener('beforeunload', function(e) {
+        if (post.content !== content) e.returnValue = 'You have unsaved changes';
+    });
+
     const likeButtonRender = () => {
         if (liking) return <Icon className={classnames(classes.likeIcon, 'mr-0')} path={mdiLoading} spin={1} />;
         if (hasLiked) {

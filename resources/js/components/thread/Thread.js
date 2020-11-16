@@ -157,6 +157,10 @@ export default function Threads() {
 
     if (httpError) return <HttpError code={httpError} />
 
+    window.addEventListener('beforeunload', function(e) {
+        if (editorContent) e.returnValue = 'You have unsaved changes';
+    });
+
     const paginationRender = () => {
         if (posts.status !== 'success') return;
         return (
