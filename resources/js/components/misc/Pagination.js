@@ -26,7 +26,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             margin: [20, 0],
         },
         item: {
-            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
+            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.1)'],
             backgroundColor: 'var(--color-primary)',
             color: 'var(--text-primary)',
             justifyContent: 'center',
@@ -38,6 +38,10 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             marginRight: 10,
             display: 'flex',
             minWidth: 40,
+            '&.disabled': {
+                pointerEvents: 'none',
+                opacity: 0.35,
+            },
             '&.active': {
                 backgroundColor: 'var(--color-main)',
                 color: 'var(--color-primary)',
@@ -92,20 +96,16 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             );
         }
 
-        if (page > 1) {
-            pages.unshift(
-                <NavLink className={classnames(classes.item)} to={`${url}/${page - 1}`} key="prev">
-                    <Icon className={classnames(classes.icon)} path={mdiChevronLeft} />
-                </NavLink>
-            );
-        }
-        if (page < pagination.lastPage) {
+        pages.unshift(
+            <NavLink className={classnames(classes.item, { disabled: page <= 1 })} to={`${url}/${page - 1}`} key="prev">
+                <Icon className={classnames(classes.icon)} path={mdiChevronLeft} />
+            </NavLink>
+        );
             pages.push(
-                <NavLink className={classnames(classes.item)} to={`${url}/${page + 1}`} key="next">
+                <NavLink className={classnames(classes.item, { disabled: page >= pagination.lastPage })} to={`${url}/${page + 1}`} key="next">
                     <Icon className={classnames(classes.icon)} path={mdiChevronRight} />
                 </NavLink>
             );
-        }
 
         return pages;
     }
