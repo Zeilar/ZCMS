@@ -36,9 +36,12 @@ function errorCodeHandler(code, errorCallback, successCallback) {
 function humanReadableDate(date) {
     dayjs.extend(calendar);
     return dayjs(date).calendar(null, {
-        sameDay: '[Today at] hh:mm',
-        lastDay: '[Yesterday at] hh:mm',
-        sameElse: 'YYYY/MM/DD',
+        sameDay: '[Today] hh:mm',
+        nextDay: 'MMM D, YYYY',
+        nextWeek: 'MMM D, YYYY',
+        lastDay: '[Yesterday] hh:mm',
+        lastWeek: 'MMM D, YYYY',
+        sameElse: 'MMM D, YYYY',
     });
 }
 
