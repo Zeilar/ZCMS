@@ -11,7 +11,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    public static $MAX_PER_PAGE = 20;
+    public static $MAX_PER_PAGE = 5;
     
     protected $dispatchesEvents = ['saved' => CreatedPost::class, 'deleted' => DeletedPost::class];
     protected $appends = ['isOp', 'isFirst', 'pageNumber'];
@@ -38,7 +38,7 @@ class Post extends Model
         return $this->user->id === $this->thread->op()->id;
     }
 
-    public function getPageNumberAttribute() {
+    public function getPageNumberAttribute(): int {
         $posts = $this->thread->posts()->get(['id'])->pluck('id');
         $index = $posts->search(fn($id) => $id === $this->id);
         return (int) floor($index / Post::$MAX_PER_PAGE) + 1;
