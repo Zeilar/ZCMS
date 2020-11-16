@@ -163,6 +163,7 @@ export default function Threads() {
 
     const paginationRender = () => {
         if (posts.status !== 'success') return;
+        if (posts.data.data.length <= 0) return;
         return (
             <Pagination pagination={{
                 currentPage: posts.data.current_page,
