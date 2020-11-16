@@ -1,4 +1,4 @@
-import { NavLink, useParams, useRouteMatch } from 'react-router-dom';
+import { NavLink, useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
@@ -11,15 +11,17 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
     const [active, setActive] = useState(1);
     const [url, setUrl] = useState('');
     const route = useRouteMatch();
+    const history = useHistory();
     let { page } = useParams();
     page = parseInt(page);
+
+    const [input, setInput] = useState(page);
 
     useEffect(() => {
         const url = route.url;
         setUrl(page == null ? url : url.slice(0, url.length - String(page).length - 1));
         setActive(page ?? 1);
     }, [route]);
-
 
     const styles = createUseStyles({
         paginator: {
@@ -57,8 +59,20 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
         icon: {
             width: '1rem',
         },
+        input: {
+            border: '2px solid var(--color-main)',
+            width: '3.8rem',
+            '&:focus': {
+                boxShadow: 'none',
+            },
+        },
     });
     const classes = styles();
+
+    function goTo(e) {
+        e.preventDefault();
+        history.push(`${url}/${input || page}`);
+    }
 
     const render = () => {
         let pages = [page];
@@ -101,11 +115,28 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
                 <Icon className={classnames(classes.icon)} path={mdiChevronLeft} />
             </NavLink>
         );
-            pages.push(
-                <NavLink className={classnames(classes.item, { disabled: page >= pagination.lastPage })} to={`${url}/${page + 1}`} key="next">
-                    <Icon className={classnames(classes.icon)} path={mdiChevronRight} />
-                </NavLink>
+        pages.push(
+            <NavLink className={classnames(classes.item, { disabled: page >= pagination.lastPage })} to={`${url}/${page + 1}`} key="next">
+                <Icon className={classnames(classes.icon)} path={mdiChevronRight} />
+            </NavLink>
+        );
+
+        if (page > 20 || page < pagination.lastPage - 20) {
+            const item = pages[Math.ceil(pages.length / 2)];
+            pages[Math.ceil(pages.length / 2)] = (
+                <form key="goto" onSubmit={goTo}>
+                    <input
+                        className={classnames(classes.input, 'bold mr-2')}
+                        onChange={e => setInput(e.target.value)}
+                        max={pagination.lastPage}
+                        placeholder={item.key}
+                        value={input}
+                        type="number"
+                        min={1}
+                    />
+                </form>
             );
+        }
 
         return pages;
     }

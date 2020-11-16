@@ -11,7 +11,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    public static $MAX_PER_PAGE = 5;
+    public static $MAX_PER_PAGE = 2;
     
     protected $dispatchesEvents = ['saved' => CreatedPost::class, 'deleted' => DeletedPost::class];
     protected $appends = ['isOp', 'isFirst', 'pageNumber'];
