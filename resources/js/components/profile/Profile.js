@@ -64,21 +64,18 @@ export default function Profile() {
                     <h1 className={classnames(classes.username, 'mt-3')}>{data.username}</h1>
                 </div>
                 <nav className={classnames(classes.tabs, 'center-children mt-3')}>
-                    <BigNavButton>
-                        Test
-                    </BigNavButton>
-                    <a className={classnames(classes.tab, { active: activeTab === 'about' })} onClick={() => setActiveTab('about')}>
+                    <BigNavButton className={classnames(classes.tab, { active: activeTab === 'about' })} onClick={() => setActiveTab('about')}>
                         About
-                    </a>
-                    <a className={classnames(classes.tab, { active: activeTab === 'threads' })} onClick={() => setActiveTab('threads')}>
+                    </BigNavButton>
+                    <BigNavButton className={classnames(classes.tab, { active: activeTab === 'threads' })} onClick={() => setActiveTab('threads')}>
                         Threads
-                    </a>
-                    <a className={classnames(classes.tab, { active: activeTab === 'posts' })} onClick={() => setActiveTab('posts')}>
+                    </BigNavButton>
+                    <BigNavButton className={classnames(classes.tab, { active: activeTab === 'posts' })} onClick={() => setActiveTab('posts')}>
                         Posts
-                    </a>
-                    <a className={classnames(classes.tab, { active: activeTab === 'chat' })} onClick={() => setActiveTab('chat')}>
+                    </BigNavButton>
+                    <BigNavButton className={classnames(classes.tab, { active: activeTab === 'chat' })} onClick={() => setActiveTab('chat')}>
                         Chat
-                    </a>
+                    </BigNavButton>
                 </nav>
                 <div className={classnames(classes.content)}>
                     {<About active={activeTab === 'about'} />}

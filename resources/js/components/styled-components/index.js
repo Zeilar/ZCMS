@@ -34,18 +34,21 @@ const BigNavButton = styled.a`
     padding: 30px 50px;
     user-select: none;
     font-weight: bold;
+    &:hover, &:focus {
+        transform: scale(1.02);
+    }
     &:focus, &.active {
         background-color: var(--color-main);
         color: var(--color-primary);
+        &:hover {
+            color: var(--color-primary);
+        }
         svg, img {
             filter: brightness(0) invert(1);
         }
     }
-    &:hover, &:focus {
-        color: var(--text-primary);
-        transform: scale(1.02);
-    }
     &:hover {
+        color: var(--text-primary);
         text-decoration: none;
     }
 `;
