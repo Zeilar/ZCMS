@@ -1,3 +1,4 @@
+import { BigNavButton } from './styled-components';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from 'react-query';
@@ -57,10 +58,11 @@ export default function Index() {
         if (status === 'success') {
             if (data.length > 0) {
                 return data.map(category => (
-                    <NavLink
+                    <BigNavButton
                         className={`${classes.category} rounded p-4 center-children pointer col`}
                         to={`/category/${category.name.toLowerCase()}`}
                         key={category.id}
+                        as={NavLink}
                     >
                         <img
                             src={`/storage/category-icons/${category.icon}.svg`}
@@ -69,7 +71,7 @@ export default function Index() {
                         <h2 className={classes.name}>
                             {category.name}
                         </h2>
-                    </NavLink>
+                    </BigNavButton>
                 ));
             }
             return <p className="text-center">No categories were found, please contact the webmaster!</p>;

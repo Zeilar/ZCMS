@@ -11,6 +11,7 @@ import Icon from '@mdi/react';
 import Posts from './Posts';
 import About from './About';
 import Chat from './Chat';
+import { BigNavButton } from '../styled-components';
 
 export default function Profile() {
     const styles = createUseStyles({
@@ -63,6 +64,9 @@ export default function Profile() {
                     <h1 className={classnames(classes.username, 'mt-3')}>{data.username}</h1>
                 </div>
                 <nav className={classnames(classes.tabs, 'center-children mt-3')}>
+                    <BigNavButton>
+                        Test
+                    </BigNavButton>
                     <a className={classnames(classes.tab, { active: activeTab === 'about' })} onClick={() => setActiveTab('about')}>
                         About
                     </a>
