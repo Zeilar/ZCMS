@@ -83,7 +83,6 @@ export default function NewThread() {
         },
         loading: {
             color: 'var(--color-main)',
-            width: 50,
         },
     });
     const classes = styles();
@@ -116,7 +115,7 @@ export default function NewThread() {
     if (httpError) return <HttpError code={httpError} />
 
     const render = () => {
-        if (status === 'loading') return <Icon className={classnames(classes.loading, 'center-self')} path={mdiLoading} spin={1} />
+        if (status === 'loading') return <Icon className={classnames(classes.loading, 'loadingWheel-2 center-self')} path={mdiLoading} spin={1} />
         return (
             <>
                 <h2 className={classnames(classes.header, 'px-4 py-2 w-fit mb-3')}>Create new thread in {data?.name ?? category}</h2>

@@ -64,6 +64,7 @@ export default function Header({ forwardRef }) {
             },
         },
         siteHeader: {
+            fontFamily: 'Merriweather',
             fontSize: '2.5rem',
             letterSpacing: 2,
             lineHeight: 0.7,

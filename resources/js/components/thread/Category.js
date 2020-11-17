@@ -102,7 +102,6 @@ export default function Category() {
         },
         loadingSpinner: {
             color: 'var(--color-main)',
-            width: 50,
         },
         locked: {
             left: -35,
@@ -137,7 +136,7 @@ export default function Category() {
 
     const render = () => {
         if (dbCategory.status === 'loading') {
-            return <Icon className={classnames(classes.loadingSpinner, 'm-auto')} path={mdiLoading} spin={1} />
+            return <Icon className={classnames(classes.loadingSpinner, 'loadingWheel-2 m-auto')} path={mdiLoading} spin={1} />
         }
         return (
             <>

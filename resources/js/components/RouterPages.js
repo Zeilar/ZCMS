@@ -9,6 +9,7 @@ import NewThread from './thread/NewThread';
 import React, { useContext } from 'react';
 import Category from './thread/Category';
 import HttpError from './http/HttpError';
+import Profile from './profile/Profile';
 import Register from './auth/Register';
 import Thread from './thread/Thread';
 import Login from './auth/Login';
@@ -22,6 +23,7 @@ export default function RouterPages() {
             <Switch>
                 <Route component={Index} path="/" exact />
                 <Route component={PostSingle} path="/post/:id" exact />
+                <Route component={Profile} path="/user/:id" exact />
                 <Route component={NewThread} path="/category/:category/new" exact />
                 <Route component={Category} path="/category/:category/:page?" exact />
                 <Route component={Thread} path="/thread/:id/:slug?/:page?" exact />

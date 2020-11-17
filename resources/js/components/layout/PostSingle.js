@@ -13,7 +13,6 @@ export default function PostSingle() {
     const styles = createUseStyles({
         icon: {
             color: 'var(--color-main)',
-            width: 50,
         },
     });
     const classes = styles();
@@ -31,7 +30,7 @@ export default function PostSingle() {
     return (
         <>
             <Header />
-            {status === 'loading' && <Icon className={classnames(classes.icon, 'center-self')} path={mdiLoading} spin={1} />}
+            {status === 'loading' && <Icon className={classnames(classes.icon, 'loadingWheel-2 center-self')} path={mdiLoading} spin={1} />}
         </>
     );
 }

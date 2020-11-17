@@ -45,6 +45,10 @@ Route::prefix('admin')->middleware('IsAdmin')->group(function() {
     });
 });
 
+Route::get('users/{id}', function($id) {
+    return App\Models\User::where('id', $id)->orWhere('username', $id)->firstOrFail();
+});
+
 Route::get('authenticate', function() {
     $user = auth()->user();
     return response()->json($user, $user ? 200 : 401);

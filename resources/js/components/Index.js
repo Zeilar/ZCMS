@@ -19,7 +19,7 @@ export default function Index() {
         category: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
             backgroundColor: 'var(--color-primary)',
-            transition: 'all 0.1s linear',
+            transition: 'all 0.05s linear',
             color: 'var(--text-primary)',
             '&:hover, &:focus': {
                 transform: 'scale(1.02)',
@@ -31,7 +31,7 @@ export default function Index() {
             '&:focus': {
                 backgroundColor: 'var(--color-main)',
                 color: 'var(--color-primary)',
-                '& img': {
+                '& svg, img': {
                     filter: 'brightness(0) invert(1)',
                 }
             },
@@ -52,7 +52,7 @@ export default function Index() {
             return <Icon className="center-self loadingWheel-2" path={mdiLoading} spin={1} />;
         }
         if (status === 'error') {
-            return <p className="text-center">Something went wrong getting the categories!</p>;
+            return <p className="text-center">Something went wrong loading the categories!</p>;
         }
         if (status === 'success') {
             if (data.length > 0) {

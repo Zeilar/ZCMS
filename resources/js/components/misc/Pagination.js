@@ -13,7 +13,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
     const route = useRouteMatch();
     const history = useHistory();
     let { page } = useParams();
-    page = parseInt(page);
+    page = parseInt(page) || 1;
 
     const [input, setInput] = useState(page);
 
@@ -75,6 +75,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
     }
 
     const render = () => {
+        console.log(page);
         let pages = [page];
         let offset = 8;
 
@@ -82,11 +83,14 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             if (pages[0] > 1 && offset > 0) {
                 pages.unshift(pages[0] - 1);
                 offset -= 1;
+                continue;
             }
             if (pages[pages.length - 1] < pagination.lastPage && offset > 0) {
                 pages.push(pages[pages.length - 1] + 1);
                 offset -= 1;
+                continue;
             }
+            break;
         }
 
         pages = pages.map(page => (
