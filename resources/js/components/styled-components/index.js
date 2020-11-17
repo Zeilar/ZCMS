@@ -28,20 +28,26 @@ const BigNavButton = styled.a`
     background-color: var(--color-primary);
     transition: all 0.05s linear;
     color: var(--text-primary);
-    &:hover, &:focus: {
-        transform: scale(1.02);
-    },
-    &:hover: {
+    font-family: Raleway;
+    border-radius: 3px;
+    padding: 30px 50px;
+    user-select: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+    &:hover, &:focus {
         color: var(--text-primary);
-        textDecoration: none;
-    },
-    &:focus: {
-        backgroundColor: var(--color-main);
+        transform: scale(1.02);
+    }
+    &:hover {
+        text-decoration: none;
+    }
+    &:focus, &.active {
+        background-color: var(--color-main);
         color: var(--color-primary);
-        svg, img: {
+        svg, img {
             filter: brightness(0) invert(1);
         }
-    },
+    }
 `;
 
 export {

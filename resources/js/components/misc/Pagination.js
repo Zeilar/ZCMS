@@ -24,9 +24,6 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
     }, [route]);
 
     const styles = createUseStyles({
-        paginator: {
-            margin: [20, 0],
-        },
         item: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.1)'],
             backgroundColor: 'var(--color-primary)',
@@ -50,7 +47,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             },
             '&:hover, &:focus': {
                 textDecoration: 'none',
-                '&:not(.active)': {
+                '&:not(.active):not(.disabled)': {
                     backgroundColor: 'var(--color-dark)',
                     color: 'var(--color-primary)',
                 },
@@ -75,7 +72,6 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
     }
 
     const render = () => {
-        console.log(page);
         let pages = [page];
         let offset = 8;
 
@@ -94,7 +90,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
         }
 
         pages = pages.map(page => (
-            <NavLink className={classnames(classes.item, { active: active === page })} to={`${url}/${page}`} key={page}>
+            <NavLink className={classnames(classes.item)} to={`${url}/${page}`} key={page}>
                 {page}
             </NavLink>
         ));
@@ -146,7 +142,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
     }
 
     return (
-        <nav className={classnames(classes.paginator, containerClassname, 'no-select row')} {...props}>
+        <nav className={classnames(classes.paginator, containerClassname, 'no-select my-2 row')} {...props}>
             {render()}
         </nav>
     );
