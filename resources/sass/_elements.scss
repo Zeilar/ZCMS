@@ -1,5 +1,6 @@
 .btn {
     background-image: var(--color-main-gradient);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
     background-color: var(--color-main);
     transition: all 0.05s linear;
     color: var(--color-primary);
