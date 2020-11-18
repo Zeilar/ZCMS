@@ -105,6 +105,19 @@ export default function Post({ post, refetch, quote }) {
         role: {
             fontSize: '1rem',
         },
+        signature: {
+            color: 'var(--text-secondary)',
+            fontFamily: 'Montserrat',
+            '&::after': {
+                backgroundColor: 'var(--text-secondary)',
+                position: 'absolute',
+                content: '""',
+                width: 200,
+                height: 1,
+                left: 0,
+                top: 0,
+            },
+        },
     });
     const classes = styles();
 
@@ -287,6 +300,12 @@ export default function Post({ post, refetch, quote }) {
                             editedBy &&
                                 <p className={classnames(classes.editedByMessage, 'italic mt-2')}>
                                     Edited by {editedBy} {humanReadableDate(updatedAt).toLowerCase()} "{editedByMessage}"
+                                </p>
+                        }
+                        {
+                            post.user.signature &&
+                                <p className={classnames(classes.signature, 'mt-2 pt-2 relative bold')}>
+                                    {post.user.signature}
                                 </p>
                         }
                     </div>
