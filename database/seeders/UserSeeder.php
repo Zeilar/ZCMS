@@ -23,28 +23,29 @@ class UserSeeder extends Seeder
 
         $admin = User::create([
             'username' => 'Philip',
-            'email' => 'philip@angelin.dev',
+            'email'    => 'philip@angelin.dev',
+            'avatar'   => 'philip.png',
             'password' => Hash::make(env('ADMIN_PASSWORD')),
         ]);
         $admin->roles()->sync([$superadminRole->id, $adminRole->id, $moderatorRole->id, $userRole->id]);
         
         $admin = User::create([
             'username' => 'Admin',
-            'email' => 'admin@example.com',
+            'email'    => 'admin@example.com',
             'password' => Hash::make('123'),
         ]);
         $admin->roles()->sync([$adminRole->id, $moderatorRole->id, $userRole->id]);
 
         $moderator = User::create([
             'username' => 'Moderator',
-            'email' => 'moderator@example.com',
+            'email'    => 'moderator@example.com',
             'password' => Hash::make('123'),
         ]);
         $moderator->roles()->sync([$moderatorRole->id, $userRole->id]);
 
         $user = User::create([
             'username' => 'User',
-            'email' => 'user@example.com',
+            'email'    => 'user@example.com',
             'password' => Hash::make('123'),
         ]);
         $user->roles()->sync([$userRole->id]);
