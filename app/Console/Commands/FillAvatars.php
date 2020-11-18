@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use App\Models\User;
 
-class ProfilePictures extends Command
+class FillAvatars extends Command
 {
     /**
      * The name and signature of the console command.
@@ -41,7 +41,8 @@ class ProfilePictures extends Command
     public function handle()
     {
         $users = User::where('avatar', 'default.png');
-        if ($users->count() <= 0) {
+        $count = $users->count();
+        if ($count <= 0) {
             return $this->warn('No users with default avatar');
         }
         $bar = $this->output->createProgressBar($users->count());
@@ -52,8 +53,8 @@ class ProfilePictures extends Command
             $name = Str::uuid() . substr($picture, strrpos($picture, '/') + 1);
             Storage::put('public\avatars\\'.$name, file_get_contents($picture));
             $user->update(['avatar' => $name]);
-            sleep(5);
         });
         $bar->finish();
+        $this->line("\n<fg=green>Installed $count avatars</>");
     }
 }

@@ -31,7 +31,7 @@ class UserFactory extends Factory
             $name = Str::uuid() . substr($picture, strrpos($picture, '/') + 1);
             Storage::put('public\avatars\\'.$name, file_get_contents($picture));
         } catch (Exception $e) {
-            $name = 'default.jpg';
+            $name = 'default.png';
         }
 
         return [
