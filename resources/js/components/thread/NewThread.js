@@ -84,6 +84,10 @@ export default function NewThread() {
         loading: {
             color: 'var(--color-main)',
         },
+        categoryIcon: {
+            filter: 'brightness(0) invert(1)',
+            width: 25,
+        },
     });
     const classes = styles();
 
@@ -118,7 +122,10 @@ export default function NewThread() {
         if (status === 'loading') return <Icon className={classnames(classes.loading, 'loadingWheel-2 center-self')} path={mdiLoading} spin={1} />
         return (
             <>
-                <h2 className={classnames(classes.header, 'px-4 py-2 w-fit mb-3')}>Create new thread in {data?.name ?? category}</h2>
+                <h2 className={classnames(classes.header, 'ml-4 px-3 py-2 center-children w-fit mb-3')}>
+                    <img className={classnames(classes.categoryIcon, 'mr-2')} src={`/storage/category-icons/${data?.icon}.svg`} alt={data?.name} />
+                    <span>{data?.name}</span>
+                </h2>
                 <form className={classnames(classes.form, 'p-4')} onSubmit={submit}>
                     <div className={classnames(classes.titleGroup, 'relative mb-3')}>
                         <input
