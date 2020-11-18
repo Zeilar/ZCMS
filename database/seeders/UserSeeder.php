@@ -21,13 +21,13 @@ class UserSeeder extends Seeder
         $moderatorRole = Role::where('name', 'moderator')->first();
         $userRole = Role::where('name', 'user')->first();
 
-        $admin = User::create([
+        $superadmin = User::create([
             'username' => 'Philip',
             'email'    => 'philip@angelin.dev',
             'avatar'   => 'philip.png',
             'password' => Hash::make(env('ADMIN_PASSWORD')),
         ]);
-        $admin->roles()->sync([$superadminRole->id, $adminRole->id, $moderatorRole->id, $userRole->id]);
+        $superadmin->roles()->sync([$superadminRole->id, $adminRole->id, $moderatorRole->id, $userRole->id]);
         
         $admin = User::create([
             'username' => 'Admin',
