@@ -46,13 +46,13 @@ class ProfilePictures extends Command
         }
         $bar = $this->output->createProgressBar($users->count());
         $users->each(function($user) use ($bar) {
+            $bar->advance();
             $generatedUser = json_decode(file_get_contents('https://randomuser.me/api'));
             $picture = $generatedUser->results[0]->picture->medium;
             $name = Str::uuid() . substr($picture, strrpos($picture, '/') + 1);
             Storage::put('public\avatars\\'.$name, file_get_contents($picture));
             $user->update(['avatar' => $name]);
             sleep(5);
-            $bar->advance();
         });
         $bar->finish();
     }
