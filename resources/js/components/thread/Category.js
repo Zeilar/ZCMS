@@ -1,20 +1,19 @@
-import { mdiArrowLeft, mdiEye, mdiForum, mdiLoading, mdiLock, mdiPlusBox } from '@mdi/js';
-import { ucfirst, humanReadableDate } from '../../functions/helpers';
 import React, { useEffect, useState, useContext } from 'react';
+import { mdiArrowLeft, mdiLoading, mdiPlusBox } from '@mdi/js';
+import { Back, TableTitle } from '../styled-components/tables';
 import { UserContext } from '../../contexts/UserContext';
+import { ucfirst } from '../../functions/helpers';
 import { createUseStyles } from 'react-jss';
 import Pagination from '../misc/Pagination';
 import { NavLink } from 'react-router-dom';
 import HttpError from '../http/HttpError';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
-import Tooltip from '../misc/Tooltip';
+import Thread from '../layout/Thread';
 import Http from '../../classes/Http';
 import classnames from 'classnames';
 import Header from '../Header';
 import Icon from '@mdi/react';
-import { Back, TableTitle } from '../styled-components/tables';
-import Thread from '../layout/Thread';
 
 export default function Category() {
     const styles = createUseStyles({
