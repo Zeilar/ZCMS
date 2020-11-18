@@ -106,8 +106,11 @@ export default function Post({ post, refetch, quote }) {
             fontSize: '1rem',
         },
         signature: {
+            marginBottom: '5px !important',
             color: 'var(--text-secondary)',
+            marginTop: '10px !important',
             fontFamily: 'Montserrat',
+            paddingTop: 15,
             '&::after': {
                 backgroundColor: 'var(--text-secondary)',
                 position: 'absolute',
@@ -304,7 +307,7 @@ export default function Post({ post, refetch, quote }) {
                         }
                         {
                             post.user.signature &&
-                                <p className={classnames(classes.signature, 'mt-2 pt-2 relative bold')}>
+                                <p className={classnames(classes.signature, 'relative bold')}>
                                     {post.user.signature}
                                 </p>
                         }
