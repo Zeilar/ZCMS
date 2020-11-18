@@ -35,8 +35,9 @@ class FillAvatars extends Command
 
     /**
      * Execute the console command.
+     * Take users with default avatars and assign them a new random one.
      *
-     * @return int
+     * @return void
      */
     public function handle()
     {
