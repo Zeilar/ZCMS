@@ -50,14 +50,14 @@ export default function Post({ post, refetch, quote }) {
             backgroundColor: 'inherit',
             content: '""',
             height: 25,
-            left: -0.9,
             width: 25,
+            left: -1,
             top: 25,
         },
         avatar: {
             height: 50,
-            left: -100,
             width: 50,
+            left: -80,
             top: 10,
         },
         user: {
@@ -279,14 +279,14 @@ export default function Post({ post, refetch, quote }) {
     }
 
     return (
-        <article className={classnames(classes.post, { isOp: post.isOp, isAuthor: isAuthor() }, 'col mb-2 relative')} ref={postElement}>
+        <article className={classnames(classes.post, { isOp: post.isOp, isAuthor: isAuthor() }, 'col mb-3 relative')} ref={postElement}>
             <div className={classnames(classes.head, 'row')}>
                 <img
                     className={classnames(classes.avatar, 'absolute round')}
                     src={`/storage/avatars/${post.user.avatar}`}
                     alt="Profile picture"
                 />
-                <h3 className={classnames(classes.user, 'col px-2')}>
+                <h3 className={classnames(classes.user, 'col p-3')}>
                     <NavLink to={`/user/${post.user.username}`}>{post.user.username}</NavLink>
                     <p className={classnames(classes.role, 'ucfirst mt-1')}>{post.user.roles[0].name}</p>
                 </h3>
@@ -319,12 +319,12 @@ export default function Post({ post, refetch, quote }) {
                         placeholder="Aa"
                         value={content}
                     />
-                    : <div className={classnames(classes.body, 'p-2 custom-html-style')}>
-                        <p className={classnames(classes.postedAt, 'bold mb-2')}>Posted {humanReadableDate(post.created_at).toLowerCase()}</p>
+                    : <div className={classnames(classes.body, 'p-3 custom-html-style')}>
+                        <p className={classnames(classes.postedAt, 'bold mb-3')}>Posted {humanReadableDate(post.created_at).toLowerCase()}</p>
                         <p dangerouslySetInnerHTML={{ __html: marked(content) }} />
                         {
                             editedBy &&
-                                <p className={classnames(classes.editedByMessage, 'italic mt-2')}>
+                                <p className={classnames(classes.editedByMessage, 'italic mt-3')}>
                                     Edited by {editedBy} {humanReadableDate(updatedAt).toLowerCase()} "{editedByMessage}"
                                 </p>
                         }
@@ -339,17 +339,17 @@ export default function Post({ post, refetch, quote }) {
             {
                 user &&
                     <>
-                        {editing && editorError && <p className={classnames(classes.editorError, 'p-2 bold')}>{editorError}</p>}
+                        {editing && editorError && <p className={classnames(classes.editorError, 'p-3 bold')}>{editorError}</p>}
                         {
                             editing &&
-                                <form className={classnames(classes.editedByInput, 'p-2 col')} onSubmit={updatePost}>
-                                    <label className={classnames(classes.editedByLabel, 'mb-2')}>
+                                <form className={classnames(classes.editedByInput, 'p-3 col')} onSubmit={updatePost}>
+                                    <label className={classnames(classes.editedByLabel, 'mb-3')}>
                                         Edit reason <span className={classnames('italic')}>(optional)</span>
                                     </label>
                                     <input value={editedByInput} onChange={e => setEditedByInput(e.target.value)} placeholder="Aa" />
                                 </form>
                         }
-                        <div className={classnames(classes.footer, 'row p-2')}>
+                        <div className={classnames(classes.footer, 'row p-3')}>
                             {editButtonsRender()}
                             {
                                 !isAuthor() &&
