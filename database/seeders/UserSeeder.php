@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
         ]);
         $user->roles()->sync([$userRole->id]);
 
-        User::factory()->count(10)->create()->each(function($user) use ($userRole) {
+        User::factory()->count(20)->create()->each(function($user) use ($userRole) {
             $user->roles()->attach($userRole);
         });
     }

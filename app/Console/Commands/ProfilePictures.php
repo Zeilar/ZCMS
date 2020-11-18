@@ -14,7 +14,7 @@ class ProfilePictures extends Command
      *
      * @var string
      */
-    protected $signature = 'profile-pictures';
+    protected $signature = 'fill-avatars';
 
     /**
      * The console command description.

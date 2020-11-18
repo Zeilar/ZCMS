@@ -2,7 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
-        "seed": "php artisan migrate:fresh --seed && php artisan profile-pictures",
+        "seed": "php artisan migrate:fresh --seed && php artisan fill-avatars",
         "clear": "php artisan clear && php artisan config:clear && php artisan view:clear && php artisan route:clear && php artisan cache:clear && php artisan event:clear && php artisan clear-compiled && composer dump-autoload",
         "deploy": "npm run clear && npm run prod && npm run dev",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
