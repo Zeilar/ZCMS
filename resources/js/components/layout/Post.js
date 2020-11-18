@@ -29,19 +29,42 @@ export default function Post({ post, refetch, quote }) {
             '&.isOp': {
                 boxShadow: [0, 0, 5, 0, 'var(--color-main)'],
                 borderColor: 'var(--color-main)',
+                '& .triangle': {
+                    boxShadow: [0, 0, 5, 0, 'var(--color-main)'],
+                    borderColor: 'var(--color-main)',
+                },
             },
             '&.isAuthor': {
                 boxShadow: [0, 0, 5, 0, 'var(--color-dark)'],
                 borderColor: 'var(--color-dark)',
+                '& .triangle': {
+                    boxShadow: [0, 0, 5, 0, 'var(--color-dark)'],
+                    borderColor: 'var(--color-dark)',
+                },
             },
+        },
+        triangle: {
+            borderBottom: '1px solid var(--border-primary)',
+            borderLeft: '1px solid var(--border-primary)',
+            transform: 'translateX(-50%) rotate(45deg)',
+            backgroundColor: 'inherit',
+            content: '""',
+            height: 25,
+            left: -0.9,
+            width: 25,
+            top: 25,
         },
         avatar: {
             height: 50,
+            left: -100,
             width: 50,
+            top: 10,
         },
         user: {
+            backgroundColor: 'var(--color-primary)',
             color: 'var(--text-primary)',
             alignSelf: 'center',
+            zIndex: 100,
             '&:hover': {
                 textDecoration: 'none',
             },
@@ -259,13 +282,13 @@ export default function Post({ post, refetch, quote }) {
         <article className={classnames(classes.post, { isOp: post.isOp, isAuthor: isAuthor() }, 'col mb-2 relative')} ref={postElement}>
             <div className={classnames(classes.head, 'row')}>
                 <img
-                    className={classnames(classes.avatar, 'd-flex mx-2 my-auto')}
+                    className={classnames(classes.avatar, 'absolute round')}
                     src={`/storage/avatars/${post.user.avatar}`}
                     alt="Profile picture"
                 />
-                <h3 className={classnames(classes.user, 'col')}>
+                <h3 className={classnames(classes.user, 'col px-2')}>
                     <NavLink to={`/user/${post.user.username}`}>{post.user.username}</NavLink>
-                    <p className={classnames(classes.role, 'ucfirst')}>{post.user.roles[0].name}</p>
+                    <p className={classnames(classes.role, 'ucfirst mt-1')}>{post.user.roles[0].name}</p>
                 </h3>
                 <aside className={classnames(classes.metaboxes, 'ml-auto d-flex')}>
                     <div className={classnames(classes.metabox)}>
@@ -345,6 +368,7 @@ export default function Post({ post, refetch, quote }) {
                                     </button>
                             }
                         </div>
+                        <span className={classnames(classes.triangle, 'absolute triangle')} />
                     </>
             }
         </article>

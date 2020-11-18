@@ -50,9 +50,9 @@ export default function Profile() {
     const { id } = useParams();
 
     const { data, status } = useQuery(`profile-${id}`, async () => {
-        const response = await Http.get(`profile/${id}`);
-        if (response.code !== 200) return response.code;
-        return response.data;
+        const { data, code } = await Http.get(`profile/${id}`);
+        if (code !== 200) return code;
+        return data;
     }, { retry: false });
 
     const threads = useQuery(`profile-${id}-threads`, async () => {

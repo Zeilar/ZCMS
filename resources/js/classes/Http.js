@@ -16,7 +16,7 @@ export default class Http {
         } catch (e) {
             console.error(`${method.toUpperCase()} ${location.origin}${url} ${response.status}`);
         }
-        return { data: data, code: response.status};
+        return { data: data, code: response.status, response: response };
     }
 
     static async get(url, args, headers) {
