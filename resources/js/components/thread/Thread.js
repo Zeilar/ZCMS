@@ -31,14 +31,14 @@ export default function Threads() {
             color: 'var(--color-primary)',
             alignItems: 'center',
             fontSize: '1.5rem',
-            borderRadius: 2,
+            borderRadius: 3,
             padding: 15,
         },
         back: {
             boxShadow: [0, 0, 10, 0, 'rgba(0, 0, 0, 0.25)'],
             backgroundImage: 'var(--color-main-gradient)',
             color: 'var(--color-primary)',
-            borderRadius: 2,
+            borderRadius: 3,
             padding: 15,
             '&:hover': {
                 color: 'var(--color-primary)',
@@ -52,7 +52,7 @@ export default function Threads() {
             backgroundColor: 'var(--color-primary)',
             transition: 'all 0.1s linear',
             alignItems: 'center',
-            borderRadius: 2,
+            borderRadius: 3,
             padding: 15,
             '&:hover': {
                 backgroundColor: 'var(--bg-color)',

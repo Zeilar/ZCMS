@@ -28,12 +28,16 @@ const BigNavButton = styled.a`
     background-color: var(--color-primary);
     transition: all 0.05s linear;
     color: var(--text-primary);
+    justify-content: center;
+    flex-direction: column;
     font-family: Raleway;
+    align-items: center;
     border-radius: 3px;
     font-size: 1.25rem;
     padding: 30px 50px;
     user-select: none;
     font-weight: bold;
+    display: flex;
     &:hover, &:focus {
         transform: scale(1.02);
     }

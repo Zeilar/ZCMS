@@ -33,7 +33,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             fontWeight: 'bold',
             fontSize: '1rem',
             padding: [8, 12],
-            borderRadius: 2,
+            borderRadius: 3,
             marginRight: 10,
             display: 'flex',
             minWidth: 40,

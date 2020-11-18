@@ -13,33 +13,13 @@ import Http from '../../classes/Http';
 import classnames from 'classnames';
 import Header from '../Header';
 import Icon from '@mdi/react';
+import { Back, TableTitle } from '../styled-components/tables';
+import Thread from '../layout/Thread';
 
 export default function Category() {
     const styles = createUseStyles({
         container: {
             padding: [0, 'var(--container-margin)'],
-        },
-        header: {
-
-        },
-        headerText: {
-            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.25)'],
-            backgroundImage: 'var(--color-main-gradient)',
-            color: 'var(--color-primary)',
-            alignItems: 'center',
-            fontSize: '1rem',
-            borderRadius: 2,
-            padding: 15,
-        },
-        back: {
-            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.25)'],
-            backgroundImage: 'var(--color-main-gradient)',
-            color: 'var(--color-primary)',
-            borderRadius: 2,
-            padding: 15,
-            '&:hover': {
-                color: 'var(--color-primary)',
-            },
         },
         categoryIcon: {
             filter: 'brightness(0) invert(1)',
@@ -49,69 +29,18 @@ export default function Category() {
         threads: {
             minHeight: 100,
         },
-        thread: {
-            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
-            backgroundColor: 'var(--color-primary)',
-            transition: 'all 0.1s linear',
-            alignItems: 'center',
-            borderRadius: 2,
-            padding: 15,
-            '&:hover': {
-                backgroundColor: 'var(--bg-color)',
-            }
-        },
-        title: {
-            width: '50%',
-        },
-        titleText: {
-            color: 'var(--text-primary)',
-            textDecoration: 'none',
-            fontWeight: 'bold',
-            '&:hover': {
-                textDecoration: 'none',
-            },
-        },
-        op: {
-            color: 'var(--text-secondary)',
-            '&:hover': {
-                textDecoration: 'none',
-            },
-        },
-        posts: {
-            
-        },
-        views: {
-            marginLeft: '7.5%',
-        },
-        latest: {
-            width: '15%',
-        },
-        latestLink: {
-            color: 'var(--text-primary)',
-            fontWeight: 'bold',
-            '&:hover': {
-                color: 'var(--color-link)',
-                textDecoration: 'none',
-            },
-        },
-        latestDate: {
-            fontSize: '0.85rem',
-        },
         newIcon: {
             width: '1.5rem',
         },
         loadingSpinner: {
             color: 'var(--color-main)',
         },
-        locked: {
-            left: -35,
-        },
     });
     const classes = styles();
 
     const [threadsStatus, setThreadsStatus] = useState('loading');
-    const [httpError, setHttpError] = useState(false);
     const [threads, setThreads] = useState({ data: [] });
+    const [httpError, setHttpError] = useState(false);
     const { user } = useContext(UserContext);
     const { category, page } = useParams();
 
@@ -140,21 +69,21 @@ export default function Category() {
         }
         return (
             <>
-                <div className={classnames(classes.header, 'row mb-2')}>
-                    <NavLink className={`${classes.back} d-flex mr-2`} to="/">
+                <div className={classnames('row mb-2')}>
+                    <Back as={NavLink} to="/">
                         <Icon path={mdiArrowLeft} />
-                    </NavLink>
-                    <div className={`${classes.headerText} row w-100`}>
+                    </Back>
+                    <TableTitle>
                         {
                             dbCategory.status === 'success' &&
                                 <img
-                                    className={classes.categoryIcon}
                                     src={`/storage/category-icons/${dbCategory.data.icon}.svg`}
+                                    className={classes.categoryIcon}
                                     alt={ucfirst(category)}
                                 />
                         }
                         <h2 className="ml-2">{ucfirst(category)}</h2>
-                    </div>
+                    </TableTitle>
                 </div>
                 {
                     user &&
@@ -193,41 +122,7 @@ export default function Category() {
             if (threads.data.length <= 0) {
                 return <h3 className={classnames('text-center mt-3')}>No threads were found, be the first to create one!</h3>;
             }
-            return threads.data.map(thread => (
-                <div className={`${classes.thread} row mt-1`} key={thread.id}>
-                    <div className={`${classes.title} col`}>
-                        <NavLink className={classnames(classes.titleText, 'w-fit')} to={`/thread/${thread.id}/${thread.slug}`}>
-                            {thread.title}
-                        </NavLink>
-                        <NavLink
-                            className={`${classes.op} color-${thread.op.roles[0].clearance} bold mt-2 mr-auto`}
-                            to={`/user/${thread.op.username}`}
-                        >
-                            {thread.op.username}
-                        </NavLink>
-                    </div>
-                    <Tooltip className={`${classes.posts} ml-auto col center-children`} title="Posts">
-                        <Icon path={mdiForum} />
-                        <span>{thread.postsAmount}</span>
-                    </Tooltip>
-                    <Tooltip className={`${classes.views} mr-auto col center-children`} title="Views">
-                        <Icon path={mdiEye} />
-                        <span>{thread.views}</span>
-                    </Tooltip>
-                    <div className={`${classes.latest} col`}>
-                        <span className={`${classes.latestDate} ml-auto`}>
-                            {humanReadableDate(thread.latestPost.created_at)}
-                        </span>
-                        <NavLink
-                            className={`${classes.latestLink} color-${thread.latestPost.user.roles[0].clearance} ml-auto mt-2`}
-                            to={`/thread/${thread.id}/${thread.slug}/${thread.latestPost.pageNumber}/#${thread.latestPost.id}`}
-                        >
-                            {thread.latestPost.user.username}
-                        </NavLink>
-                    </div>
-                    {parseInt(thread.locked) ? <Icon className={classnames(classes.locked, 'absolute')} path={mdiLock} /> : ''}
-                </div>
-            ));
+            return threads.data.map(thread => <Thread thread={thread} key={thread.id} />);
         }
     }
 

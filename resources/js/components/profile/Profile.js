@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { BigNavButton } from '../styled-components';
+import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
@@ -11,7 +12,6 @@ import Icon from '@mdi/react';
 import Posts from './Posts';
 import About from './About';
 import Chat from './Chat';
-import { BigNavButton } from '../styled-components';
 
 export default function Profile() {
     const styles = createUseStyles({
