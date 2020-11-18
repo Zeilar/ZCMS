@@ -47,16 +47,25 @@ export default function Profile() {
     const classes = styles();
 
     const [activeTab, setActiveTab] = useState('about');
-    const [httpError, setHttpError] = useState(false);
     const { id } = useParams();
 
-    const { data, status } = useQuery(`user-${id}`, async () => {
-        const response = await Http.get(`users/${id}`);
-        if (response.code !== 200) setHttpError(response.code);
+    const { data, status } = useQuery(`profile-${id}`, async () => {
+        const response = await Http.get(`profile/${id}`);
+        if (response.code !== 200) return response.code;
         return response.data;
-    });
+    }, { retry: false });
 
-    if (httpError) return <HttpError code={httpError} />
+    const threads = useQuery(`profile-${id}-threads`, async () => {
+        const response = await Http.get(`profile/${id}/threads`, null, { Accept: null });
+        return response.data;
+    }, { retry: false });
+
+    const posts = useQuery(`profile-${id}-posts`, async () => {
+        const response = await Http.get(`profile/${id}/posts`, null, { Accept: null });
+        return response.data;
+    }, { retry: false });
+
+    if (data === 404) return <HttpError code={data} />
 
     const render = () => {
         if (status === 'loading') {
@@ -84,8 +93,8 @@ export default function Profile() {
                 </nav>
                 <div className={classnames(classes.content)}>
                     {<About active={activeTab === 'about'} />}
-                    {<Threads active={activeTab === 'threads'} />}
-                    {<Posts active={activeTab === 'posts'} />}
+                    {<Threads active={activeTab === 'threads'} threads={threads} />}
+                    {<Posts active={activeTab === 'posts'} posts={posts} />}
                     {<Chat active={activeTab === 'chat'} />}
                 </div>
             </div>

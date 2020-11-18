@@ -3,6 +3,7 @@
 use App\Http\Controllers\{
     ChatmessagesController,
     CategoriesController,
+    ProfilesController,
     ThreadsController,
     PostsController,
     AuthController,
@@ -12,11 +13,19 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Thread;
+use App\Models\User;
 
 // AuthController
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::post('/login', [AuthController::class, 'login']);
+
+// ProfilesController
+Route::bind('user', fn($value) => User::where('id', $value)->orWhere('username', $value)->firstOrFail());
+// Route::get('user/{user}/messages', [ProfilesController::class, 'messages']);
+Route::get('profile/{user}/threads', [ProfilesController::class, 'threads']);
+Route::get('profile/{user}/posts', [ProfilesController::class, 'posts']);
+Route::get('profile/{user}', [ProfilesController::class, 'show']);
 
 // CategoriesController
 Route::bind('category', fn($value) => Category::where('id', $value)->orWhere('name', $value)->firstOrFail());
@@ -43,10 +52,6 @@ Route::prefix('admin')->middleware('IsAdmin')->group(function() {
         Route::post('{user}/suspend', [UsersController::class, 'suspend']);
         Route::post('{user}/pardon', [UsersController::class, 'pardon']);
     });
-});
-
-Route::get('users/{id}', function($id) {
-    return App\Models\User::where('id', $id)->orWhere('username', $id)->firstOrFail();
 });
 
 Route::get('authenticate', function() {
