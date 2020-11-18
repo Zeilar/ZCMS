@@ -1,6 +1,7 @@
 import { BigNavButton } from '../styled-components';
 import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
+import HttpError from '../http/HttpError';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import Http from '../../classes/Http';
@@ -46,12 +47,16 @@ export default function Profile() {
     const classes = styles();
 
     const [activeTab, setActiveTab] = useState('about');
+    const [httpError, setHttpError] = useState(false);
     const { id } = useParams();
 
     const { data, status } = useQuery(`user-${id}`, async () => {
         const response = await Http.get(`users/${id}`);
+        if (response.code !== 200) setHttpError(response.code);
         return response.data;
     });
+
+    if (httpError) return <HttpError code={httpError} />
 
     const render = () => {
         if (status === 'loading') {
@@ -60,7 +65,7 @@ export default function Profile() {
         return (
             <div className={classnames(classes.container, 'mt-5')}>
                 <div className={classnames('col center-children')}>
-                    <img className={classnames(classes.avatar, 'round')} src={`/storage/avatars/${data?.avatar}`} alt="Profile avatar" />
+                    <img className={classnames(classes.avatar, 'round')} src={`/storage/avatars/${data.avatar}`} alt="Profile avatar" />
                     <h1 className={classnames(classes.username, 'mt-3')}>{data.username}</h1>
                 </div>
                 <nav className={classnames(classes.tabs, 'center-children mt-3')}>

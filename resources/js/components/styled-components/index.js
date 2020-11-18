@@ -38,7 +38,7 @@ const BigNavButton = styled.a`
     user-select: none;
     font-weight: bold;
     display: flex;
-    &:hover, &:focus {
+    &:hover, &:focus, &.active {
         transform: scale(1.02);
     }
     &:focus, &.active {
