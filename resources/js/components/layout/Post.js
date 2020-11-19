@@ -346,7 +346,7 @@ export default function Post({ post, refetch, quote }) {
                         {
                             editing &&
                                 <form className={classnames(classes.editedByInput, 'p-3 col')} onSubmit={updatePost}>
-                                    <label className={classnames(classes.editedByLabel, 'mb-3')}>
+                                    <label className={classnames(classes.editedByLabel, 'mb-2')}>
                                         Edit reason <span className={classnames('italic')}>(optional)</span>
                                     </label>
                                     <input value={editedByInput} onChange={e => setEditedByInput(e.target.value)} placeholder="Aa" />
@@ -355,7 +355,7 @@ export default function Post({ post, refetch, quote }) {
                         <div className={classnames(classes.footer, 'row p-3')}>
                             {editButtonsRender()}
                             {
-                                !isAuthor() &&
+                                !isAuthor() && !editing &&
                                     <button
                                         className={classnames('btn', { 'btn-dark': !hasLiked, loading: liking })}
                                         onClick={toggleLike} disabled={liking}
@@ -363,7 +363,12 @@ export default function Post({ post, refetch, quote }) {
                                         <span className={classnames(classes.likeButton, 'center-children')}>{likeButtonRender()}</span>
                                     </button>
                             }
-                            {canPost() && quote && <button className={classnames('btn btn-dark')} onClick={() => quote(post)}>Quote</button>}
+                            {
+                                canPost() && quote && !editing &&
+                                    <button className={classnames('btn btn-dark')} onClick={() => quote(post)}>
+                                        Quote
+                                    </button>
+                            }
                             {
                                 canRemove() &&
                                     <button className={classnames('btn ml-auto btn-danger caps', { loading: deleting })} onClick={deletePost}>
