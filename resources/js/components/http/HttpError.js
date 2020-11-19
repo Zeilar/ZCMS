@@ -1,7 +1,7 @@
 import { Knockout } from '../styled-components';
 import { createUseStyles } from 'react-jss';
 import classnames from 'classnames';
-import Header from '../Header';
+import { Header } from '../layout';
 import React from 'react';
 
 export default function HttpError({ code }) {

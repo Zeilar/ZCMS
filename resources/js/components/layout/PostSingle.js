@@ -1,12 +1,12 @@
 import { Redirect, useParams } from 'react-router';
 import { createUseStyles } from 'react-jss';
-import HttpError from '../http/HttpError';
 import { useQuery } from 'react-query';
-import Http from '../../classes/Http';
+import { Http } from '../../classes';
 import { mdiLoading } from '@mdi/js';
+import { HttpError } from '../http';
 import classnames from 'classnames';
-import Header from '../Header';
 import Icon from '@mdi/react';
+import { Header } from './';
 import React from 'react';
 
 export default function PostSingle() {

@@ -2,8 +2,8 @@ import { humanReadableDate } from '../../functions/helpers';
 import { mdiLock, mdiEye, mdiForum } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
-import Tooltip from '../misc/Tooltip';
 import classnames from 'classnames';
+import { Tooltip } from '../misc';
 import Icon from '@mdi/react';
 import React from 'react';
 

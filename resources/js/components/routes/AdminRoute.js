@@ -1,8 +1,8 @@
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../../contexts';
 import React, { useContext } from 'react';
-import HttpError from '../http/HttpError';
 import { Route } from 'react-router-dom';
 import { mdiLoading } from '@mdi/js';
+import { HttpError } from '../http';
 import Icon from '@mdi/react';
 
 export default function AdminRoute({ children, ...props }) {

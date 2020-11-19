@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const FeedbackModalContext = createContext();
 
-export default function FeedbackModalContextProvider({ children }) {
+export function FeedbackModalContextProvider({ children }) {
     const [type, setType] = useState('error');
     const [message, setMessage] = useState();
 

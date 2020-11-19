@@ -1,16 +1,13 @@
-import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
+import { FeedbackModalContext, UserContext } from '../../contexts';
 import React, { useState, useRef, useContext } from 'react';
-import { UserContext } from '../../contexts/UserContext';
-import { Knockout } from '../styled-components/index';
 import { Redirect, useHistory } from 'react-router';
-import PasswordField from '../misc/PasswordField';
-import Validator from '../../classes/Validator';
+import { PasswordField, Checkbox } from '../misc';
+import { Http, Validator, } from '../../classes';
+import { Knockout } from '../styled-components';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
-import Checkbox from '../misc/Checkbox';
-import Http from '../../classes/Http';
 import { mdiLoading } from '@mdi/js';
-import Header from '../Header';
+import { Header } from '../layout';
 import Icon from '@mdi/react';
 
 export default function Login({ location }) {

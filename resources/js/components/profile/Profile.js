@@ -1,19 +1,17 @@
 import { humanReadableDate } from '../../functions/helpers';
 import { BigNavButton } from '../styled-components';
 import { createUseStyles } from 'react-jss';
+import { NavLink } from 'react-router-dom';
+import { Posts, Threads, Chat } from './';
 import HttpError from '../http/HttpError';
 import { useParams } from 'react-router';
-import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import Http from '../../classes/Http';
 import { mdiLoading } from '@mdi/js';
+import { Http } from '../../classes';
 import classnames from 'classnames';
-import Threads from './Threads';
-import Header from '../Header';
+import { Header } from '../layout';
 import Icon from '@mdi/react';
-import Posts from './Posts';
-import Chat from './Chat';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
 
 export default function Profile() {
     const styles = createUseStyles({

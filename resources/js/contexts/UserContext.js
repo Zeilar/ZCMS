@@ -3,7 +3,7 @@ import Http from '../classes/Http';
 
 export const UserContext = createContext();
 
-export default function UserContextProvider({ children }) {
+export function UserContextProvider({ children }) {
     const [user, setUser] = useState();
 
     useEffect(async () => {

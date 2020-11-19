@@ -1,13 +1,11 @@
-import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
+import { humanReadableDate, ucfirst, errorCodeHandler } from '../../functions/helpers';
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { humanReadableDate, ucfirst } from '../../functions/helpers';
-import { errorCodeHandler } from '../../functions/helpers';
-import { UserContext } from '../../contexts/UserContext';
+import { FeedbackModalContext, UserContext } from '../../contexts';
 import MdEditor from 'react-markdown-editor-lite';
 import { mdiLoading, mdiThumbUp } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
-import Http from '../../classes/Http';
+import { Http } from '../../classes';
 import classnames from 'classnames';
 import Icon from '@mdi/react';
 import marked from 'marked';

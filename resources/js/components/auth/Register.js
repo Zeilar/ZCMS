@@ -1,19 +1,17 @@
-import { FeedbackModalContext } from '../../contexts/FeedbackModalContext';
-import { UserContext } from '../../contexts/UserContext';
-import { Knockout } from '../styled-components/index';
+import { FeedbackModalContext, UserContext } from '../../contexts';
 import React, { useState, useContext } from 'react';
 import { Redirect, useHistory } from 'react-router';
-import PasswordField from '../misc/PasswordField';
-import Validator from '../../classes/Validator';
+import { Http, Validator } from '../../classes';
+import { Knockout } from '../styled-components';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
-import Http from '../../classes/Http';
+import { PasswordField } from '../misc';
 import { mdiLoading } from '@mdi/js';
-import Header from '../Header';
+import { Header } from '../layout';
 import Icon from '@mdi/react';
 
 export default function Register({ location }) {
-    const { setMessage, setType } = useContext(FeedbackModalContext);
+    const { setMessage } = useContext(FeedbackModalContext);
     const { user, setUser } = useContext(UserContext);
 
     if (user) {
