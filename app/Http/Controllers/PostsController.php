@@ -13,7 +13,7 @@ class PostsController extends Controller
     {
         if ($id = request()->query('thread', false)) {
             $thread = Thread::where('id', $id)->orWhere('slug', $id)->orWhere('title', $id)->firstOrFail();
-            $posts = $thread->posts()->with('postlikes')->paginate(Post::$MAX_PER_PAGE);
+            $posts = $thread->posts()->paginate(Post::$MAX_PER_PAGE);
         } else {
             $posts = Post::paginate(Post::$MAX_PER_PAGE);
         }

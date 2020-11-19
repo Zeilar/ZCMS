@@ -18,6 +18,9 @@ export default function Profile() {
         container: {
             margin: [0, 'var(--container-margin)'],
         },
+        content: {
+            minHeight: 200,
+        },
         avatar: {
             width: 100,
         },
@@ -68,11 +71,6 @@ export default function Profile() {
         return response.data;
     }, { retry: false });
 
-    const posts = useQuery(`profile-${id}-posts`, async () => {
-        const response = await Http.get(`profile/${id}/posts`, null, { Accept: null });
-        return response.data;
-    }, { retry: false });
-
     if (data === 404) return <HttpError code={data} />
 
     const render = () => {
@@ -80,7 +78,7 @@ export default function Profile() {
             return <Icon className={classnames(classes.loading, 'loadingWheel-3 center-self')} path={mdiLoading} spin={1} />
         }
         return (
-            <div className={classnames(classes.container, 'mt-5')}>
+            <div className={classnames(classes.container, 'mt-4')}>
                 <div className={classnames('col center-children')}>
                     <img className={classnames(classes.avatar, 'round')} src={`/storage/avatars/${data.avatar}`} alt="Profile avatar" />
                     <h1 className={classnames(classes.username, `color-${data.roles[0].clearance}`, 'mt-3')}>{data.username}</h1>
@@ -117,9 +115,9 @@ export default function Profile() {
                         Chat
                     </BigNavButton>
                 </nav>
-                <div className={classnames('col mt-4')}>
-                    {tab === 'threads' && <Threads threads={threads} />}
-                    {tab === 'posts' && <Posts posts={posts} />}
+                <div className={classnames(classes.content, 'col mt-4 relative')}>
+                    {tab === 'threads' && <Threads />}
+                    {tab === 'posts' && <Posts />}
                     {tab === 'chat' && <Chat />}
                 </div>
             </div>

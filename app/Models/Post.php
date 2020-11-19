@@ -15,7 +15,7 @@ class Post extends Model
     
     protected $dispatchesEvents = ['saved' => CreatedPost::class, 'deleted' => DeletedPost::class];
     protected $appends = ['isOp', 'isFirst', 'pageNumber'];
-    protected $with = ['user'];
+    protected $with = ['user', 'postlikes'];
     protected $guarded = [];
 
     public function user() {

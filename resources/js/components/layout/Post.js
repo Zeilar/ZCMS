@@ -10,7 +10,7 @@ import classnames from 'classnames';
 import Icon from '@mdi/react';
 import marked from 'marked';
 
-export default function Post({ post, refetch, quote }) {
+export default function Post({ post, refetch, quote, controls = true }) {
     const styles = createUseStyles({
         post: {
             boxShadow: [0, 0, 3, 0, 'rgba(0, 0, 0, 0.15)'],
@@ -266,6 +266,46 @@ export default function Post({ post, refetch, quote }) {
         </>;
     }
 
+    const controlsRender = () => {
+        if (!user || !controls) return null;
+        return <>
+            {editing && editorError && <p className={classnames(classes.editorError, 'p-3 bold')}>{editorError}</p>}
+            {
+                editing &&
+                    <form className={classnames(classes.editedByInput, 'p-3 col')} onSubmit={updatePost}>
+                        <label className={classnames(classes.editedByLabel, 'mb-2')}>
+                            Edit reason <span className={classnames('italic')}>(optional)</span>
+                        </label>
+                        <input value={editedByInput} onChange={e => setEditedByInput(e.target.value)} placeholder="Aa" />
+                    </form>
+            }
+            <div className={classnames(classes.footer, 'row p-3')}>
+                {editButtonsRender()}
+                {
+                    !isAuthor() && !editing &&
+                        <button
+                            className={classnames('btn', { 'btn-dark': !hasLiked, loading: liking })}
+                            onClick={toggleLike} disabled={liking}
+                        >
+                            <span className={classnames(classes.likeButton, 'center-children')}>{likeButtonRender()}</span>
+                        </button>
+                }
+                {
+                    canPost() && quote && !editing &&
+                        <button className={classnames('btn btn-dark')} onClick={() => quote(post)}>
+                            Quote
+                        </button>
+                }
+                {
+                    canRemove() &&
+                        <button className={classnames('btn ml-auto btn-danger caps', { loading: deleting })} onClick={deletePost}>
+                            {deleting ? <Icon className={classnames(classes.loadingIcon)} path={mdiLoading} spin={1} /> : 'Delete'}
+                        </button>
+                }
+            </div>
+        </>
+    }
+
     const editButtonsRender = () => {
         if (!canEdit()) return false;
         if (editing) {
@@ -337,45 +377,7 @@ export default function Post({ post, refetch, quote }) {
                         }
                     </div>
             }
-            {
-                user &&
-                    <>
-                        {editing && editorError && <p className={classnames(classes.editorError, 'p-3 bold')}>{editorError}</p>}
-                        {
-                            editing &&
-                                <form className={classnames(classes.editedByInput, 'p-3 col')} onSubmit={updatePost}>
-                                    <label className={classnames(classes.editedByLabel, 'mb-2')}>
-                                        Edit reason <span className={classnames('italic')}>(optional)</span>
-                                    </label>
-                                    <input value={editedByInput} onChange={e => setEditedByInput(e.target.value)} placeholder="Aa" />
-                                </form>
-                        }
-                        <div className={classnames(classes.footer, 'row p-3')}>
-                            {editButtonsRender()}
-                            {
-                                !isAuthor() && !editing &&
-                                    <button
-                                        className={classnames('btn', { 'btn-dark': !hasLiked, loading: liking })}
-                                        onClick={toggleLike} disabled={liking}
-                                    >
-                                        <span className={classnames(classes.likeButton, 'center-children')}>{likeButtonRender()}</span>
-                                    </button>
-                            }
-                            {
-                                canPost() && quote && !editing &&
-                                    <button className={classnames('btn btn-dark')} onClick={() => quote(post)}>
-                                        Quote
-                                    </button>
-                            }
-                            {
-                                canRemove() &&
-                                    <button className={classnames('btn ml-auto btn-danger caps', { loading: deleting })} onClick={deletePost}>
-                                        {deleting ? <Icon className={classnames(classes.loadingIcon)} path={mdiLoading} spin={1} /> : 'Delete'}
-                                    </button>
-                            }
-                        </div>
-                    </>
-            }
+            {controls && controlsRender()}
         </article>
     );
 }
