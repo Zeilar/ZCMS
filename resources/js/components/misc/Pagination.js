@@ -12,8 +12,8 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
 
     const [url, setUrl] = useState('');
     const route = useRouteMatch();
-    const history = useHistory();
     const { page } = useParams();
+    const history = useHistory();
 
     const [input, setInput] = useState(parseInt(page) || 1);
 
