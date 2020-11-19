@@ -17,10 +17,11 @@ export default function Posts() {
     });
     const classes = styles();
 
-    const { id } = useParams();
+    const { id, page } = useParams();
 
-    const { data, status } = useQuery(`profile-${id}-posts`, async () => {
-        const { data, code } = await Http.get(`profile/${id}/posts`);
+    const { data, status } = useQuery([page ?? 1, `profile-${id}-posts`], async () => {
+        const pageFinal = page ? `?page=${page ?? 1}` : '';
+        const { data, code } = await Http.get(`profile/${id}/posts${pageFinal}`);
         if (code !== 200) return code;
         return data;
     }, { retry: false });
@@ -29,9 +30,22 @@ export default function Posts() {
         return <Icon className={classnames(classes.icon, 'center-self loadingWheel-2')} path={mdiLoading} spin={1} />
     }
 
+    const paginationRender = () => {
+        return (
+            <Pagination pagination={{
+                currentPage: data.current_page,
+                lastPage: data.last_page,
+                perPage: data.per_page,
+                total: data.total,
+            }} />
+        );
+    }
+
     return (
         <div className={classnames(classes.posts)}>
+            {paginationRender()}
             {data.data.length > 0 && data.data.map(post => <Post post={post} controls={false} key={post.id} />)}
+            {paginationRender()}
         </div>
     );
 }

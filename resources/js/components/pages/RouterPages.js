@@ -19,7 +19,7 @@ export default function RouterPages() {
             <Switch>
                 <Route component={Home} path="/" exact />
                 <Route component={PostSingle} path="/post/:id" exact />
-                <Route component={Profile} path="/user/:id/:tab?" exact />
+                <Route component={Profile} path="/user/:id/:tab?/:page?" exact />
                 <Route component={NewThread} path="/category/:category/new" exact />
                 <Route component={Category} path="/category/:category/:page?" exact />
                 <Route component={Thread} path="/thread/:id/:slug?/:page?" exact />

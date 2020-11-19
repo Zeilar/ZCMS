@@ -115,7 +115,7 @@ export default function Profile() {
                         Chat
                     </BigNavButton>
                 </nav>
-                <div className={classnames(classes.content, 'col mt-4 relative')}>
+                <div className={classnames(classes.content, 'col py-4 relative')}>
                     {tab === 'threads' && <Threads />}
                     {tab === 'posts' && <Posts />}
                     {tab === 'chat' && <Chat />}

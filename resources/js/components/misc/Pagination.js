@@ -6,21 +6,20 @@ import classnames from 'classnames';
 import Icon from '@mdi/react';
 
 export default function Pagination({ pagination, containerClassname = '', ref, ...props }) {
-    if (pagination.total <= pagination.perPage) return null;
+    if (pagination.total <= pagination.perPage) {
+        return null;
+    }
 
-    const [active, setActive] = useState(1);
     const [url, setUrl] = useState('');
     const route = useRouteMatch();
     const history = useHistory();
-    let { page } = useParams();
-    page = parseInt(page) || 1;
+    const { page } = useParams();
 
-    const [input, setInput] = useState(page);
+    const [input, setInput] = useState(parseInt(page) || 1);
 
     useEffect(() => {
         const url = route.url;
-        setUrl(page == null ? url : url.slice(0, url.length - String(page).length - 1));
-        setActive(page ?? 1);
+        setUrl(!page ? url : url.substring(0, url.lastIndexOf('/')));
     }, [route]);
 
     const styles = createUseStyles({
@@ -73,7 +72,9 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
     }
 
     const render = () => {
-        let pages = [page];
+        const currentPage = parseInt(page) || 1;
+
+        let pages = [currentPage];
         let offset = 8;
 
         while (offset > 0) {
@@ -91,7 +92,11 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
         }
 
         pages = pages.map(number => (
-            <NavLink className={classnames(classes.item, { active: page === 1 && page === number })} to={`${url}/${number}`} key={number}>
+            <NavLink
+                className={classnames(classes.item, { active: currentPage === 1 && currentPage === number })}
+                to={`${url}/${number}`}
+                key={number}
+            >
                 {number}
             </NavLink>
         ));
@@ -112,17 +117,17 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
         }
 
         pages.unshift(
-            <NavLink className={classnames(classes.item, { disabled: page <= 1 })} to={`${url}/${page - 1}`} key="prev">
+            <NavLink className={classnames(classes.item, { disabled: currentPage <= 1 })} to={`${url}/${currentPage - 1}`} key="prev">
                 <Icon className={classnames(classes.icon)} path={mdiChevronLeft} />
             </NavLink>
         );
         pages.push(
-            <NavLink className={classnames(classes.item, { disabled: page >= pagination.lastPage })} to={`${url}/${page + 1}`} key="next">
+            <NavLink className={classnames(classes.item, { disabled: currentPage >= pagination.lastPage })} to={`${url}/${currentPage + 1}`} key="next">
                 <Icon className={classnames(classes.icon)} path={mdiChevronRight} />
             </NavLink>
         );
 
-        if (page > 20 || page < pagination.lastPage - 20) {
+        if (currentPage > 20 || currentPage < pagination.lastPage - 20) {
             const item = pages[Math.ceil(pages.length / 2)];
             pages[Math.ceil(pages.length / 2)] = (
                 <form key="goto" onSubmit={goTo}>
