@@ -26,7 +26,7 @@ export default function Threads() {
 
         },
         headerText: {
-            boxShadow: [0, 0, 10, 0, 'rgba(0, 0, 0, 0.25)'],
+            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.35)'],
             backgroundImage: 'var(--color-main-gradient)',
             color: 'var(--color-primary)',
             alignItems: 'center',
@@ -35,7 +35,7 @@ export default function Threads() {
             padding: 15,
         },
         back: {
-            boxShadow: [0, 0, 10, 0, 'rgba(0, 0, 0, 0.25)'],
+            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.35)'],
             backgroundImage: 'var(--color-main-gradient)',
             color: 'var(--color-primary)',
             borderRadius: 3,
