@@ -30,6 +30,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             color: 'var(--text-primary)',
             justifyContent: 'center',
             alignItems: 'center',
+            transition: 'none',
             fontWeight: 'bold',
             fontSize: '1rem',
             padding: [8, 12],
@@ -42,7 +43,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
                 opacity: 0.35,
             },
             '&.active': {
-                backgroundColor: 'var(--color-main)',
+                backgroundImage: 'var(--color-main-gradient)',
                 color: 'var(--color-primary)',
             },
             '&:hover, &:focus': {
