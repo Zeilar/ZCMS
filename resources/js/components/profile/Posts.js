@@ -1,4 +1,3 @@
-import React, { useState, useRef, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
@@ -8,6 +7,7 @@ import { Http } from '../../classes';
 import classnames from 'classnames';
 import { Post } from '../layout';
 import Icon from '@mdi/react';
+import React from 'react';
 
 export default function Posts() {
     const styles = createUseStyles({
@@ -50,7 +50,7 @@ export default function Posts() {
         <div className={classnames(classes.posts)}>
             {!gotPosts() && <h5 className={classnames(classes.noposts, 'text-center')}>No posts were found</h5>}
             {gotPosts() && paginationRender()}
-            {gotPosts() && data.data.map(post => <Post post={post} controls={false} key={post.id} />)}
+            {gotPosts() && data.data.map(post => <Post post={post} controls={false} permalink={true} key={post.id} />)}
             {gotPosts() && paginationRender()}
         </div>
     );

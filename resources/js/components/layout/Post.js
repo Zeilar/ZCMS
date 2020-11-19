@@ -1,8 +1,8 @@
 import { humanReadableDate, ucfirst, errorCodeHandler } from '../../functions/helpers';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { FeedbackModalContext, UserContext } from '../../contexts';
+import { mdiLoading, mdiThumbUp, mdiLinkVariant } from '@mdi/js';
 import MdEditor from 'react-markdown-editor-lite';
-import { mdiLoading, mdiThumbUp } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import { Http } from '../../classes';
@@ -10,7 +10,7 @@ import classnames from 'classnames';
 import Icon from '@mdi/react';
 import marked from 'marked';
 
-export default function Post({ post, refetch, quote, controls = true }) {
+export default function Post({ post, refetch, quote, controls = true, permalink = false }) {
     const styles = createUseStyles({
         post: {
             boxShadow: [0, 0, 3, 0, 'rgba(0, 0, 0, 0.15)'],
@@ -144,6 +144,14 @@ export default function Post({ post, refetch, quote, controls = true }) {
                 left: 0,
                 top: 0,
             },
+        },
+        permalink: {
+            color: 'var(--text-primary) !important',
+            right: 5,
+            top: 5,
+            '&:hover': {
+                color: 'var(--color-link) !important',
+            }, 
         },
     });
     const classes = styles();
@@ -360,7 +368,13 @@ export default function Post({ post, refetch, quote, controls = true }) {
                         placeholder="Aa"
                         value={content}
                     />
-                    : <div className={classnames(classes.body, 'p-3 custom-html-style')}>
+                    : <div className={classnames(classes.body, 'p-3 custom-html-style relative')}>
+                        {
+                            permalink &&
+                                <NavLink className={classnames(classes.permalink, 'absolute')} to={`/post/${post.id}`}>
+                                    <Icon path={mdiLinkVariant} />
+                                </NavLink>
+                        }
                         <p className={classnames(classes.postedAt, 'bold mb-3')}>Posted {humanReadableDate(post.created_at).toLowerCase()}</p>
                         <p dangerouslySetInnerHTML={{ __html: marked(content) }} />
                         {

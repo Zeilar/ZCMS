@@ -39,7 +39,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             minWidth: 40,
             '&.disabled': {
                 pointerEvents: 'none',
-                opacity: 0.35,
+                opacity: 0.5,
             },
             '&.active': {
                 backgroundImage: 'var(--color-main-gradient)',
@@ -153,7 +153,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
     }
 
     return (
-        <nav className={classnames(classes.paginator, containerClassname, 'no-select my-2 row')} {...props}>
+        <nav className={classnames(classes.paginator, containerClassname, 'no-select my-3 row')} {...props}>
             {render()}
         </nav>
     );
