@@ -30,14 +30,16 @@ export default function Profile() {
             fontFamily: 'Merriweather',
         },
         tab: {
+            fontFamily: 'TitilliumWeb !important',
             margin: [0, 20],
             padding: 10,
         },
         signature: {
             fontFamily: 'RobotoSlab',
+            fontSize: '1.15rem',
         },
         metabox: {
-            fontFamily: 'Merriweather',
+            fontFamily: 'TitilliumWeb',
             justifyContent: 'center',
             flexDirection: 'column',
             alignItems: 'center',
