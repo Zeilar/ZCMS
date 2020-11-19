@@ -122,12 +122,17 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             </NavLink>
         );
         pages.push(
-            <NavLink className={classnames(classes.item, { disabled: currentPage >= pagination.lastPage })} to={`${url}/${currentPage + 1}`} key="next">
+            <NavLink
+                className={classnames(classes.item, { disabled: currentPage >= pagination.lastPage })}
+                to={`${url}/${currentPage + 1}`}
+                key="next"
+            >
                 <Icon className={classnames(classes.icon)} path={mdiChevronRight} />
             </NavLink>
         );
 
-        if (currentPage > 20 || currentPage < pagination.lastPage - 20) {
+        // If more than 20 pages, display a goto-page button
+        if (pagination.lastPage >= 20) {
             const item = pages[Math.ceil(pages.length / 2)];
             pages[Math.ceil(pages.length / 2)] = (
                 <form key="goto" onSubmit={goTo}>
