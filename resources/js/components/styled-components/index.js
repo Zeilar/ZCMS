@@ -38,10 +38,10 @@ const BigNavButton = styled.a`
     user-select: none;
     font-weight: bold;
     display: flex;
-    &:hover, &:focus, &.active {
+    &:hover, &.active {
         transform: scale(1.02);
     }
-    &:focus, &.active {
+    &.active {
         background-color: var(--color-main);
         color: var(--color-primary);
         &:hover {

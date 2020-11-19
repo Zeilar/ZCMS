@@ -17,26 +17,6 @@ export default function Index() {
             display: 'grid',
             gridGap: 50,
         },
-        category: {
-            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
-            backgroundColor: 'var(--color-primary)',
-            transition: 'all 0.05s linear',
-            color: 'var(--text-primary)',
-            '&:hover, &:focus': {
-                transform: 'scale(1.02)',
-            },
-            '&:hover': {
-                color: 'var(--text-primary)',
-                textDecoration: 'none',
-            },
-            '&:focus': {
-                backgroundColor: 'var(--color-main)',
-                color: 'var(--color-primary)',
-                '& svg, img': {
-                    filter: 'brightness(0) invert(1)',
-                }
-            },
-        },
         icon: {
             width: 50,
         },
@@ -59,7 +39,7 @@ export default function Index() {
             if (data.length > 0) {
                 return data.map(category => (
                     <BigNavButton
-                        className={`${classes.category} rounded p-4 center-children pointer col`}
+                        className={classnames('rounded p-4 center-children pointer col')}
                         to={`/category/${category.name.toLowerCase()}`}
                         key={category.id}
                         as={NavLink}
