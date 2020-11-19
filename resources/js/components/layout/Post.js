@@ -43,22 +43,12 @@ export default function Post({ post, refetch, quote }) {
                 },
             },
         },
-        triangle: {
-            borderBottom: '1px solid var(--border-primary)',
-            borderLeft: '1px solid var(--border-primary)',
-            transform: 'translateX(-50%) rotate(45deg)',
-            backgroundColor: 'inherit',
-            content: '""',
-            height: 25,
-            width: 25,
-            left: -1,
-            top: 25,
-        },
         avatar: {
+            transform: 'translateY(-50%)',
             height: 50,
+            top: '50%',
             width: 50,
             left: -80,
-            top: 10,
         },
         user: {
             backgroundColor: 'var(--color-primary)',
@@ -71,6 +61,18 @@ export default function Post({ post, refetch, quote }) {
         },
         head: {
             borderBottom: '1px solid var(--border-primary)',
+            '&::after': {
+                transform: 'translate(-50%, -50%) rotate(45deg)',
+                borderBottom: '1px solid var(--border-primary)',
+                borderLeft: '1px solid var(--border-primary)',
+                backgroundColor: 'var(--color-primary)',
+                position: 'absolute',
+                content: '""',
+                height: 25,
+                top: '50%',
+                width: 25,
+                left: -1,
+            },
         },
         footer: {
             borderTop: '1px solid var(--border-primary)',
@@ -280,7 +282,7 @@ export default function Post({ post, refetch, quote }) {
 
     return (
         <article className={classnames(classes.post, { isOp: post.isOp, isAuthor: isAuthor() }, 'col mb-3 relative')} ref={postElement}>
-            <div className={classnames(classes.head, 'row')}>
+            <div className={classnames(classes.head, 'row relative')}>
                 <img
                     className={classnames(classes.avatar, 'absolute round')}
                     src={`/storage/avatars/${post.user.avatar}`}
@@ -368,7 +370,6 @@ export default function Post({ post, refetch, quote }) {
                                     </button>
                             }
                         </div>
-                        <span className={classnames(classes.triangle, 'absolute triangle')} />
                     </>
             }
         </article>
