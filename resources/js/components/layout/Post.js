@@ -29,7 +29,7 @@ export default function Post({ post, refetch, quote }) {
             '&.isOp': {
                 boxShadow: [0, 0, 5, 0, 'var(--color-main)'],
                 borderColor: 'var(--color-main)',
-                '& .triangle': {
+                '& .head::after': {
                     boxShadow: [0, 0, 5, 0, 'var(--color-main)'],
                     borderColor: 'var(--color-main)',
                 },
@@ -37,7 +37,7 @@ export default function Post({ post, refetch, quote }) {
             '&.isAuthor': {
                 boxShadow: [0, 0, 5, 0, 'var(--color-dark)'],
                 borderColor: 'var(--color-dark)',
-                '& .triangle': {
+                '& .head::after': {
                     boxShadow: [0, 0, 5, 0, 'var(--color-dark)'],
                     borderColor: 'var(--color-dark)',
                 },
@@ -282,7 +282,7 @@ export default function Post({ post, refetch, quote }) {
 
     return (
         <article className={classnames(classes.post, { isOp: post.isOp, isAuthor: isAuthor() }, 'col mb-3 relative')} ref={postElement}>
-            <div className={classnames(classes.head, 'row relative')}>
+            <div className={classnames(classes.head, 'row head relative')}>
                 <img
                     className={classnames(classes.avatar, 'absolute round')}
                     src={`/storage/avatars/${post.user.avatar}`}
