@@ -1,8 +1,9 @@
+import { humanReadableDate } from '../../functions/helpers';
 import { BigNavButton } from '../styled-components';
-import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import HttpError from '../http/HttpError';
 import { useParams } from 'react-router';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import Http from '../../classes/Http';
 import { mdiLoading } from '@mdi/js';
@@ -11,8 +12,8 @@ import Threads from './Threads';
 import Header from '../Header';
 import Icon from '@mdi/react';
 import Posts from './Posts';
-import About from './About';
 import Chat from './Chat';
+import { NavLink } from 'react-router-dom';
 
 export default function Profile() {
     const styles = createUseStyles({
@@ -28,26 +29,33 @@ export default function Profile() {
         username: {
             fontFamily: 'Merriweather',
         },
-        content: {
-            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
-            margin: [0, 'var(--container-margin)'],
-            marginTop: 2,
-        },
-        tabs: {
-
-        },
         tab: {
+            margin: [0, 20],
             padding: 10,
-            margin: 10,
-            '&.active': {
-
-            },
+        },
+        signature: {
+            fontFamily: 'RobotoSlab',
+        },
+        metabox: {
+            fontFamily: 'Merriweather',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
+            display: 'flex',
+            margin: [0, 40],
+        },
+        metaheader: {
+            fontWeight: 'normal',
+            fontSize: '1.25rem',
+            marginBottom: 10,
+        },
+        metavalue: {
+            fontSize: '1.5rem',
         },
     });
     const classes = styles();
 
-    const [activeTab, setActiveTab] = useState('about');
-    const { id } = useParams();
+    const { id, tab } = useParams();
 
     const { data, status } = useQuery(`profile-${id}`, async () => {
         const { data, code } = await Http.get(`profile/${id}`);
@@ -75,27 +83,44 @@ export default function Profile() {
             <div className={classnames(classes.container, 'mt-5')}>
                 <div className={classnames('col center-children')}>
                     <img className={classnames(classes.avatar, 'round')} src={`/storage/avatars/${data.avatar}`} alt="Profile avatar" />
-                    <h1 className={classnames(classes.username, 'mt-3')}>{data.username}</h1>
+                    <h1 className={classnames(classes.username, `color-${data.roles[0].clearance}`, 'mt-3')}>{data.username}</h1>
+                    {data.signature && <p className={classnames(classes.signature, 'mt-3')}>{data.signature}</p>}
                 </div>
-                <nav className={classnames(classes.tabs, 'center-children mt-3')}>
-                    <BigNavButton className={classnames(classes.tab, { active: activeTab === 'about' })} onClick={() => setActiveTab('about')}>
-                        About
-                    </BigNavButton>
-                    <BigNavButton className={classnames(classes.tab, { active: activeTab === 'threads' })} onClick={() => setActiveTab('threads')}>
+                <div className={classnames('col center-children mt-4')}>
+                    <div className={classnames('row center-children')}>
+                        <div className={classnames(classes.metabox)}>
+                            <h4 className={classnames(classes.metaheader)}>Rank</h4>
+                            <h3 className={classnames(classes.metavalue, 'ucfirst')}>{data.rank}</h3>
+                        </div>
+                        <div className={classnames(classes.metabox)}>
+                            <h4 className={classnames(classes.metaheader)}>Posts</h4>
+                            <h3 className={classnames(classes.metavalue)}>{data.postsAmount}</h3>
+                        </div>
+                        <div className={classnames(classes.metabox)}>
+                            <h4 className={classnames(classes.metaheader)}>Reputation</h4>
+                            <h3 className={classnames(classes.metavalue)}>{data.likesAmount}</h3>
+                        </div>
+                        <div className={classnames(classes.metabox)}>
+                            <h4 className={classnames(classes.metaheader)}>Joined</h4>
+                            <h3 className={classnames(classes.metavalue)}>{humanReadableDate(data.created_at)}</h3>
+                        </div>
+                    </div>
+                </div>
+                <nav className={classnames('center-children mt-4')}>
+                    <BigNavButton as={NavLink} className={classnames(classes.tab, { active: tab === 'threads' })} to={`/user/${id}/threads`}>
                         Threads
                     </BigNavButton>
-                    <BigNavButton className={classnames(classes.tab, { active: activeTab === 'posts' })} onClick={() => setActiveTab('posts')}>
+                    <BigNavButton as={NavLink} className={classnames(classes.tab, { active: tab === 'posts' })} to={`/user/${id}/posts`}>
                         Posts
                     </BigNavButton>
-                    <BigNavButton className={classnames(classes.tab, { active: activeTab === 'chat' })} onClick={() => setActiveTab('chat')}>
+                    <BigNavButton as={NavLink} className={classnames(classes.tab, { active: tab === 'chat' })} to={`/user/${id}/chat`}>
                         Chat
                     </BigNavButton>
                 </nav>
-                <div className={classnames(classes.content)}>
-                    {<About active={activeTab === 'about'} />}
-                    {<Threads active={activeTab === 'threads'} threads={threads} />}
-                    {<Posts active={activeTab === 'posts'} posts={posts} />}
-                    {<Chat active={activeTab === 'chat'} />}
+                <div className={classnames('col mt-4')}>
+                    {tab === 'threads' && <Threads threads={threads} />}
+                    {tab === 'posts' && <Posts posts={posts} />}
+                    {tab === 'chat' && <Chat />}
                 </div>
             </div>
         );

@@ -296,7 +296,7 @@ export default function Post({ post, refetch, quote }) {
                 <aside className={classnames(classes.metaboxes, 'ml-auto d-flex')}>
                     <div className={classnames(classes.metabox)}>
                         <h4 className={classnames(classes.metaboxHeader)}>Forum Rank</h4>
-                        <span className={classnames(classes.metaboxValue)}>{ucfirst(post.user.rank.name)}</span>
+                        <span className={classnames(classes.metaboxValue)}>{ucfirst(post.user.rank)}</span>
                     </div>
                     <div className={classnames(classes.metabox)}>
                         <h4 className={classnames(classes.metaboxHeader)}>Posts</h4>

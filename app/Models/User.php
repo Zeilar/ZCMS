@@ -122,6 +122,6 @@ class User extends Authenticatable
     }
 
     public function getRankAttribute() {
-        return $this->ranks()->orderByDesc('threshold')->first(['name']);
+        return $this->ranks()->orderByDesc('threshold')->first(['name'])->name;
     }
 }
