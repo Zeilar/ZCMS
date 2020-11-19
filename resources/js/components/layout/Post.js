@@ -64,6 +64,7 @@ export default function Post({ post, refetch, quote }) {
             '&::after': {
                 transform: 'translate(-50%, -50%) rotate(45deg)',
                 borderBottom: '1px solid var(--border-primary)',
+                boxShadow: [0, 0, 3, 0, 'rgba(0, 0, 0, 0.15)'],
                 borderLeft: '1px solid var(--border-primary)',
                 backgroundColor: 'var(--color-primary)',
                 position: 'absolute',
