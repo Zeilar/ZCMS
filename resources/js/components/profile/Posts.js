@@ -14,6 +14,9 @@ export default function Posts() {
         icon: {
             color: 'var(--color-main)',
         },
+        noposts: {
+            fontSize: '1rem',
+        },
     });
     const classes = styles();
 
@@ -41,11 +44,14 @@ export default function Posts() {
         );
     }
 
+    const gotPosts = () => data.data.length > 0;
+
     return (
         <div className={classnames(classes.posts)}>
-            {paginationRender()}
-            {data.data.length > 0 && data.data.map(post => <Post post={post} controls={false} key={post.id} />)}
-            {paginationRender()}
+            {!gotPosts() && <h5 className={classnames(classes.noposts, 'text-center')}>No posts were found</h5>}
+            {gotPosts() && paginationRender()}
+            {gotPosts() && data.data.map(post => <Post post={post} controls={false} key={post.id} />)}
+            {gotPosts() && paginationRender()}
         </div>
     );
 }
