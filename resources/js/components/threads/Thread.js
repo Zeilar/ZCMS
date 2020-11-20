@@ -82,7 +82,6 @@ export default function Threads() {
     const [submitting, setSubmitting] = useState(false);
     const [httpError, setHttpError] = useState(false);
     const [editorError, setEditorError] = useState();
-    const [channel, setChannel] = useState();
     const { user } = useContext(UserContext);
     const { id, page } = useParams();
     const history = useHistory();
@@ -142,16 +141,6 @@ export default function Threads() {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [id, page]);
-
-    useEffect(() => {
-        if (dbThread.status === 'success' && channel == null) {
-            const channel = window.Echo.join(`thread-${dbThread.data?.id}`).listen('NewPost', () => {
-                console.log('refetch'); // TODO: one liner
-                posts.refetch()
-            });
-            setChannel(channel);
-        }
-    }, [dbThread]);
 
     if (httpError) return <HttpError code={httpError} />
 
