@@ -11,9 +11,10 @@ class ThreadsController extends Controller
 {
     public function index()
     {
-        $threads = Thread::paginate(Thread::$MAX_PER_PAGE);
+        $perPage = Thread::$MAX_PER_PAGE;
+        $threads = Thread::paginate($perPage);
         if ($id = request()->query('category', false)) {
-            $threads = Category::where('name', $id)->orWhere('id', $id)->firstOrFail()->threads()->paginate(Thread::$MAX_PER_PAGE);
+            $threads = Category::where('name', $id)->orWhere('id', $id)->firstOrFail()->threads()->paginate($perPage);
         }
         return response($threads);
     }
@@ -27,8 +28,8 @@ class ThreadsController extends Controller
         ]);
         $thread = Thread::factory([
             'category_id' => Category::where('name', $request->category)->firstOrFail()->id,
-            'user_id' => auth()->user()->id,
-            'title' => $request->title,
+            'user_id'     => auth()->user()->id,
+            'title'       => $request->title,
         ])->create();
         Post::create([
             'content'   => $request->content,
