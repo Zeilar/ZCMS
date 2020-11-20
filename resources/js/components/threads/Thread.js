@@ -5,14 +5,13 @@ import { mdiArrowLeft, mdiLoading } from '@mdi/js';
 import MdEditor from 'react-markdown-editor-lite';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
+import { Header, Post } from '../layout';
 import { useQuery } from 'react-query';
 import EditThread from './EditThread';
 import { Pagination } from '../misc';
 import { Http } from '../../classes';
 import { HttpError } from '../http';
 import classnames from 'classnames';
-import { Header } from '../layout';
-import Post from '../layout/Post';
 import Icon from '@mdi/react';
 import marked from 'marked';
 
