@@ -70,11 +70,6 @@ export default function Profile() {
         return data;
     }, { retry: false });
 
-    const threads = useQuery(`profile-${id}-threads`, async () => {
-        const response = await Http.get(`profile/${id}/threads`, null, { Accept: null });
-        return response.data;
-    }, { retry: false });
-
     if (data === 404) return <HttpError code={data} />
 
     const render = () => {
@@ -109,13 +104,13 @@ export default function Profile() {
                     </div>
                 </div>
                 <nav className={classnames(classes.tabs, 'center-children mt-4')}>
-                    <BigNavButton as={NavLink} className={classnames(classes.tab, { active: tab === 'threads' })} to={`/user/${id}/threads`}>
+                    <BigNavButton as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/threads`}>
                         Threads
                     </BigNavButton>
-                    <BigNavButton as={NavLink} className={classnames(classes.tab, { active: tab === 'posts' })} to={`/user/${id}/posts`}>
+                    <BigNavButton as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/posts`}>
                         Posts
                     </BigNavButton>
-                    <BigNavButton as={NavLink} className={classnames(classes.tab, { active: tab === 'chat' })} to={`/user/${id}/chat`}>
+                    <BigNavButton as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/chat`}>
                         Chat
                     </BigNavButton>
                 </nav>

@@ -14,8 +14,8 @@ class Post extends Model
     public static $MAX_PER_PAGE = 20;
     
     protected $dispatchesEvents = ['saved' => CreatedPost::class, 'deleted' => DeletedPost::class];
-    protected $appends = ['isOp', 'isFirst', 'pageNumber'];
     protected $with = ['user', 'postlikes'];
+    protected $appends = ['pageNumber'];
     protected $guarded = [];
 
     public function user() {
@@ -30,16 +30,8 @@ class Post extends Model
         return $this->hasMany(Postlike::class);
     }
 
-    public function getIsFirstAttribute(): bool {
-        return $this->id === $this->thread->opPost()->id;
-    }
-
-    public function getIsOpAttribute(): bool {
-        return $this->user->id === $this->thread->op()->id;
-    }
-
     public function getPageNumberAttribute(): int {
-        $posts = $this->thread->posts()->get(['id'])->pluck('id');
+        $posts = Post::where('thread_id', $this->thread_id)->get(['id'])->pluck('id');
         $index = $posts->search(fn($id) => $id === $this->id);
         return (int) floor($index / Post::$MAX_PER_PAGE) + 1;
     }

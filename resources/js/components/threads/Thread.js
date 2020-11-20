@@ -212,7 +212,7 @@ export default function Threads() {
             if (!posts.data?.data.length) {
                 return <p className="text-center bold mb-2">No posts were found</p>;
             } else {
-                return posts.data.data.map(post => <Post key={post.id} quote={quote} refetch={posts.refetch} post={post} />);
+                return posts.data.data.map(post => <Post key={post.id} thread={dbThread.data} quote={quote} refetch={posts.refetch} post={post} />);
             }
         }
     }

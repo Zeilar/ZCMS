@@ -1,8 +1,8 @@
 import { createUseStyles } from 'react-jss';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
-import { mdiLoading } from '@mdi/js';
 import { Pagination } from '../misc';
+import { mdiLoading } from '@mdi/js';
 import { Http } from '../../classes';
 import classnames from 'classnames';
 import { Post } from '../layout';

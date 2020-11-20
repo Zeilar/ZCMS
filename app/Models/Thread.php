@@ -10,10 +10,13 @@ class Thread extends Model
     use HasFactory;
 
     public static $MAX_PER_PAGE = 20;
+
+    protected $appends = ['latestPost', 'firstPost', 'postsAmount'];
+    protected $with = ['user'];
     protected $guarded = [];
 
     public function user() {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function category() {
@@ -24,15 +27,15 @@ class Thread extends Model
         return $this->hasMany(Post::class);
     }
 
-    public function opPost(): Post {
+    public function getFirstPostAttribute(): Post {
         return $this->posts()->limit(1)->firstOrFail();
     }
 
-    public function op(): User {
-        return $this->opPost()->user;
+    public function getLatestPostAttribute(): Post {
+        return $this->posts()->latest()->limit(1)->firstOrFail();
     }
 
-    public function latestPost(): Post {
-        return $this->posts()->latest()->limit(1)->firstOrFail();
+    public function getPostsAmountAttribute() {
+        return $this->posts()->count();
     }
 }

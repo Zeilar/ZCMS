@@ -10,7 +10,7 @@ import classnames from 'classnames';
 import Icon from '@mdi/react';
 import marked from 'marked';
 
-export default function Post({ post, refetch, quote, controls = true, permalink = false }) {
+export default function Post({ thread, post, refetch, quote, controls = true, permalink = false }) {
     const styles = createUseStyles({
         post: {
             boxShadow: [0, 0, 3, 0, 'rgba(0, 0, 0, 0.15)'],
@@ -177,20 +177,20 @@ export default function Post({ post, refetch, quote, controls = true, permalink 
 
     const postElement = useRef();
 
+    const isOp = () => thread && thread.user.id === post.user.id;
     const isAuthor = () => user.id === post.user.id;
     const canPost = () => user && !user.suspended;
 
     function canEdit() {
         if (!user || user.suspended) return false;
         if (user.roles[0].clearance <= 3) return true;
-        if (isAuthor()) return true;
-        return false;  
+        return isAuthor();  
     }
 
     function canRemove() {
         if (!canEdit) return false;
         if (user.roles[0].clearance <= 2) return true;
-        if (post.isFirst) return false;
+        if (thread.firstPost === post) return false;
         return isAuthor();
     }
 
@@ -328,7 +328,7 @@ export default function Post({ post, refetch, quote, controls = true, permalink 
     }
 
     return (
-        <article className={classnames(classes.post, { isOp: post.isOp, isAuthor: isAuthor() }, 'col mb-3 relative')} ref={postElement}>
+        <article className={classnames(classes.post, { isOp: !isAuthor() && isOp(), isAuthor: isAuthor() }, 'col mb-3 relative')} ref={postElement}>
             <div className={classnames(classes.head, 'row head relative')}>
                 <img
                     className={classnames(classes.avatar, 'absolute round')}

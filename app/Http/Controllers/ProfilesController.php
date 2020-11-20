@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Thread;
 use App\Models\Post;
 use App\Models\User;
 
@@ -17,7 +18,7 @@ class ProfilesController extends Controller
     }
 
     public function threads(User $user) {
-        return response($user->threads);
+        return response($user->threads()->paginate(Thread::$MAX_PER_PAGE));
     }
 
     /*

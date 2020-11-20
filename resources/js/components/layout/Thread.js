@@ -62,10 +62,10 @@ export default function Thread({ thread }) {
                     {thread.title}
                 </NavLink>
                 <NavLink
-                    className={classnames(classes.op, `color-${thread.op.roles[0].clearance}`, 'bold mt-2 mr-auto')}
-                    to={`/user/${thread.op.username}`}
+                    className={classnames(classes.op, `color-${thread.user.roles[0].clearance}`, 'bold mt-2 mr-auto')}
+                    to={`/user/${thread.user.username}`}
                 >
-                    {thread.op.username}
+                    {thread.user.username}
                 </NavLink>
             </div>
             <Tooltip className={classnames('ml-auto col center-children')} title="Posts">

@@ -14,11 +14,6 @@ class ThreadsController extends Controller
         $threads = Thread::paginate(Thread::$MAX_PER_PAGE);
         if ($id = request()->query('category', false)) {
             $threads = Category::where('name', $id)->orWhere('id', $id)->firstOrFail()->threads()->paginate(Thread::$MAX_PER_PAGE);
-            foreach ($threads as $thread) {
-                $thread->postsAmount = $thread->posts()->count();
-                $thread->latestPost = $thread->latestPost()->load('user');
-                $thread->op = $thread->op();
-            }
         }
         return response($threads);
     }
@@ -32,6 +27,7 @@ class ThreadsController extends Controller
         ]);
         $thread = Thread::factory([
             'category_id' => Category::where('name', $request->category)->firstOrFail()->id,
+            'user_id' => auth()->user()->id,
             'title' => $request->title,
         ])->create();
         Post::create([
