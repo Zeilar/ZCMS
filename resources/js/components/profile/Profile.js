@@ -36,6 +36,7 @@ export default function Profile() {
         },
         tab: {
             fontFamily: 'TitilliumWeb !important',
+            transform: 'none !important',
             padding: 10,
             flex: 1,
         },
