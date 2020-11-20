@@ -22,6 +22,7 @@ export default function Profile() {
             minHeight: 200,
         },
         avatar: {
+            border: '2px solid black',
             width: 100,
         },
         loading: {
