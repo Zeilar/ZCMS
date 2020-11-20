@@ -119,8 +119,8 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
             fontSize: '0.85rem',
         },
         editedByMessage: {
-            color: 'var(--text-secondary)',
             fontSize: '0.75rem !important',
+            color: 'var(--text-secondary)',
         },
         postedAt: {
             fontSize: '0.75rem !important',
