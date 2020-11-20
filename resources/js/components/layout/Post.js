@@ -178,7 +178,7 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
     const postElement = useRef();
 
     const isOp = () => thread && thread.user.id === post.user.id;
-    const isAuthor = () => user.id === post.user.id;
+    const isAuthor = () => thread && user.id === post.user.id;
     const canPost = () => user && !user.suspended;
 
     function canEdit() {
