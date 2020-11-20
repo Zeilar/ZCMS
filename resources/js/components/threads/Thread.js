@@ -99,13 +99,6 @@ export default function Threads() {
         return response.data;
     }, { retry: false });
 
-    function canPost() {
-        if (!user || user.suspended) return false;
-        if (user.roles[0].clearance <= 3) return true;
-        if (dbThread.data?.locked) return false;
-        return user ? true : false;
-    }
-
     async function submitPost(e) {
         e.preventDefault();
         const formData = new FormData();
@@ -131,11 +124,18 @@ export default function Threads() {
         setEditorContent(p => p + `> ${post.content}<br /><br />[Visit post](/post/${post.id})`);
     }
 
-    function canModify() {
-        if (!user || user.suspended) return false;
-        if (user.roles[0].clearance <= 3) return true;
-        return false;
+    const loggedOutOrSuspended = () => !user || user.suspended;
+    const isModeratorOrHigher = () => user.roles[0].clearance <= 3;
+    const isAuthor = () => dbThread.data?.user.id === user.id;
+
+    function canPost() {
+        if (loggedOutOrSuspended()) return false;
+        if (isModeratorOrHigher()) return true;
+        if (dbThread.data?.locked) return false;
+        return Boolean(user);
     }
+
+    const canModify = () => isModeratorOrHigher() || isAuthor() && !loggedOutOrSuspended();
 
     useEffect(() => {
         window.scrollTo(0, 0);

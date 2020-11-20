@@ -190,7 +190,7 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
     function canRemove() {
         if (!canEdit) return false;
         if (user.roles[0].clearance <= 2) return true;
-        if (thread.firstPost === post) return false;
+        if (thread.firstPost.id === post.id) return false;
         return isAuthor();
     }
 

@@ -1,6 +1,6 @@
 import { mdiCogOutline, mdiClose, mdiCheck, mdiLoading, mdiTrashCanOutline, mdiLockOutline, mdiLockOpenOutline } from '@mdi/js';
+import { FeedbackModalContext, UserContext } from '../../contexts';
 import { errorCodeHandler } from '../../functions/helpers';
-import { FeedbackModalContext } from '../../contexts';
 import React, { useState, useContext } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useHistory } from 'react-router';
@@ -41,8 +41,14 @@ export default function EditThread({ thread, refetch }) {
     const [error, setError] = useState();
 
     const { setType, setMessage } = useContext(FeedbackModalContext);
+    const { user } = useContext(UserContext);
 
     const history = useHistory();
+
+    if (!user) return null;
+
+    const canRemove = () => user.roles[0].clearance <= 2;
+    const canLock = () => user.roles[0].clearance <= 3;
 
     async function submit(e) {
         e.preventDefault();
@@ -85,15 +91,24 @@ export default function EditThread({ thread, refetch }) {
                                     className={classnames(classes.input, 'w-100')} value={input}
                                     onChange={e => setInput(e.target.value)} placeholder="Title"
                                 />
-                                <button className={classnames(classes.button, 'btn btn-outline btn-danger ml-2')} onClick={remove} type="button">
-                                    {deleting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiTrashCanOutline} />}
-                                </button>
-                                <button 
-                                    className={classnames(classes.button, 'btn btn-outline mx-2 btn-dark')}
-                                    onClick={() => setLocked(p => p ? 0 : 1)} type="button"
-                                >
-                                    <Icon path={locked ? mdiLockOutline : mdiLockOpenOutline} />
-                                </button>
+                                {
+                                    canRemove() &&
+                                        <button
+                                            className={classnames(classes.button, 'btn btn-outline btn-danger ml-2')}
+                                            onClick={remove} type="button"
+                                        >
+                                            {deleting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiTrashCanOutline} />}
+                                        </button>
+                                }
+                                {
+                                    canLock() &&
+                                        <button 
+                                            className={classnames(classes.button, 'btn btn-outline mx-2 btn-dark')}
+                                            onClick={() => setLocked(p => p ? 0 : 1)} type="button"
+                                        >
+                                            <Icon path={locked ? mdiLockOutline : mdiLockOpenOutline} />
+                                        </button>
+                                }
                                 <button className={classnames(classes.button, 'btn btn-outline ml-2')} onClick={submit} disabled={submitting}>
                                     {submitting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiCheck} />}
                                 </button>
