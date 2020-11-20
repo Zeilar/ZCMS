@@ -93,13 +93,13 @@ export default function Threads() {
         if (response.code !== 200) return setHttpError(response.code);
         setHttpError(false);
         return response.data;
-    });
+    }, { retry: false });
 
     const dbThread = useQuery(`dbThread-${id}`, async () => {
         const response = await Http.get(`threads/${id}?getCategory=true`);
         if (response.code !== 200) return setHttpError(response.code);
         return response.data;
-    });
+    }, { retry: false });
 
     function canPost() {
         if (!user || user.suspended) return false;

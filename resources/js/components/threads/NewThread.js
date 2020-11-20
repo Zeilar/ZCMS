@@ -102,7 +102,7 @@ export default function NewThread() {
         const response = await Http.get(`categories/${category}`);
         if (response.code !== 200) return setHttpError(response.code);
         return response.data;
-    });
+    }, { retry: false });
     
     async function submit(e) {
         e.preventDefault();

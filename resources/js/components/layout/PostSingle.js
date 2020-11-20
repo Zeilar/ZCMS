@@ -22,7 +22,7 @@ export default function PostSingle() {
     const { data, status } = useQuery(`post-${id}`, async () => {
         const response = await Http.get(`posts/${id}`);
         return response.data;
-    });
+    }, { retry: false });
 
     if (status === 'error') return <HttpError code={404} />;
     if (status === 'success') return <Redirect to={`/thread/${data.thread.id}/${data.thread.slug}/${data.pageNumber}#${data.id}`} />;

@@ -53,7 +53,7 @@ export default function Category() {
         const response = await Http.get(`categories/${category}`);
         if (response.code !== 200) return setHttpError(response.code);
         return response.data;
-    });
+    }, { retry: false });
 
     useEffect(() => {
         window.scrollTo(0, 0);

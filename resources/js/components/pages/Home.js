@@ -26,7 +26,7 @@ export default function Home() {
     const { data, status } = useQuery('categories', async () => {
         const response = await Http.get('categories');
         return response.data;
-    });
+    }, { retry: false });
 
     const categoriesRender = () => {
         if (status === 'loading') {
