@@ -38,7 +38,7 @@ class PostsController extends Controller
 
     public function show(Post $post)
     {
-        return response($post);
+        return response($post->load('thread'));
     }
 
     public function update(Request $request, Post $post)
