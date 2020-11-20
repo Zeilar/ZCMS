@@ -31,10 +31,13 @@ export default function Profile() {
         username: {
             fontFamily: 'Merriweather',
         },
+        tabs: {
+            gap: '20px',
+        },
         tab: {
             fontFamily: 'TitilliumWeb !important',
-            margin: [0, 20],
             padding: 10,
+            flex: 1,
         },
         signature: {
             fontFamily: 'RobotoSlab',
@@ -105,7 +108,7 @@ export default function Profile() {
                         </div>
                     </div>
                 </div>
-                <nav className={classnames('center-children mt-4')}>
+                <nav className={classnames(classes.tabs, 'center-children mt-4')}>
                     <BigNavButton as={NavLink} className={classnames(classes.tab, { active: tab === 'threads' })} to={`/user/${id}/threads`}>
                         Threads
                     </BigNavButton>
