@@ -135,7 +135,7 @@ export default function Threads() {
         return Boolean(user);
     }
 
-    const canModify = () => isModeratorOrHigher() || isAuthor() && !loggedOutOrSuspended();
+    const canModify = () => (isModeratorOrHigher() || isAuthor()) && !loggedOutOrSuspended();
 
     useEffect(() => {
         window.scrollTo(0, 0);
