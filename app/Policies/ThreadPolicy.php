@@ -29,6 +29,12 @@ class ThreadPolicy
     public function update(User $user, Thread $thread)
     {
         if ($user->suspended()) return false;
+        return $user->getClearance() <= 3 || $user->isOp($thread);
+    }
+
+    public function lock(User $user, Thread $thread)
+    {
+        if ($user->suspended()) return false;
         return $user->getClearance() <= 3;
     }
 
