@@ -341,6 +341,7 @@ input:focus {
 }
 
 div.custom-html-style p {
+  font-size: 1rem;
   margin: 0;
 }
 

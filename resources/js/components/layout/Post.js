@@ -120,11 +120,11 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
         },
         editedByMessage: {
             color: 'var(--text-secondary)',
-            fontSize: '0.85rem',
+            fontSize: '0.75rem !important',
         },
         postedAt: {
+            fontSize: '0.75rem !important',
             fontFamily: 'Montserrat',
-            fontSize: '0.85rem',
         },
         role: {
             fontSize: '1rem',
