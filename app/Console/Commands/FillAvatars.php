@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use App\Models\Setting;
 use App\Models\User;
+use Exception;
 
 class FillAvatars extends Command
 {
@@ -42,6 +43,10 @@ class FillAvatars extends Command
      */
     public function handle()
     {
+        if (env('APP_ENV') !== 'local' && !$this->confirm('You are not in development mode! This will overwrite existing users, are you sure?')) {
+            return;
+        }
+
         // Get users that have the default avatar
         $users = User::whereDoesntHave('settings', function($query) {
             return $query->where('name', 'avatar')->where('value', '!=', null);
@@ -53,7 +58,12 @@ class FillAvatars extends Command
         $bar = $this->output->createProgressBar($count);
         $users->each(function($user) use ($bar) {
             $bar->advance();
-            $generatedUser = json_decode(file_get_contents('https://randomuser.me/api'));
+            try {
+                $generatedUser = json_decode(file_get_contents('https://randomuser.me/api'));
+            } catch (Exception $e) {
+                $this->error("\n" . $e->getMessage());
+                die;
+            }
             $picture = $generatedUser->results[0]->picture->medium;
             $name = Str::uuid() . substr($picture, strrpos($picture, '/') + 1);
             Storage::put('public\avatars\\'.$name, file_get_contents($picture));
