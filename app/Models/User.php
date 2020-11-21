@@ -12,10 +12,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $dispatchesEvents = ['saved' => CreatedUser::class];
     protected $appends = ['suspended', 'postsAmount', 'likesAmount', 'rank', 'avatar', 'signature'];
     protected $hidden = ['password', 'updated_at', 'remember_token', 'email_verified_at'];
     protected $fillable = ['username', 'email', 'password', 'role', 'avatar'];
+    protected $dispatchesEvents = ['saved' => CreatedUser::class];
     protected $casts = ['email_verified_at' => 'datetime'];
     protected $with = ['roles'];
 
@@ -42,11 +42,11 @@ class User extends Authenticatable
     }
 
     public function roles() {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class)->orderBy('clearance');
     }
 
     public function ranks() {
-        return $this->belongsToMany(Rank::class);
+        return $this->belongsToMany(Rank::class)->orderBy('threshold');
     }
 
     public function isAuthor(Post $post): bool {
