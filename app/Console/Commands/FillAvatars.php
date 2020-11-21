@@ -52,21 +52,26 @@ class FillAvatars extends Command
             return $query->where('name', 'avatar')->where('value', '!=', null);
         })->get();
         $count = $users->count();
+
         if ($count <= 0) {
             return $this->warn('No users with default avatar');
         }
+
         $bar = $this->output->createProgressBar($count);
         $users->each(function($user) use ($bar) {
             $bar->advance();
+
             try {
                 $generatedUser = json_decode(file_get_contents('https://randomuser.me/api'));
             } catch (Exception $e) {
                 $this->error("\n" . $e->getMessage());
                 die;
             }
+
             $picture = $generatedUser->results[0]->picture->medium;
             $name = Str::uuid() . substr($picture, strrpos($picture, '/') + 1);
             Storage::put('public\avatars\\'.$name, file_get_contents($picture));
+            
             $avatarSetting = Setting::where('name', 'avatar')->first();
             $user->settings()->attach($avatarSetting, ['value' => $name]);
         });
