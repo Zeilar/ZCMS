@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use App\Models\Setting;
 use App\Models\User;
 
 class FillAvatars extends Command
@@ -41,19 +42,23 @@ class FillAvatars extends Command
      */
     public function handle()
     {
-        $users = User::where('avatar', 'default.png');
+        // Get users that have the default avatar
+        $users = User::whereDoesntHave('settings', function($query) {
+            return $query->where('name', 'avatar')->where('value', '!=', null);
+        })->get();
         $count = $users->count();
         if ($count <= 0) {
             return $this->warn('No users with default avatar');
         }
-        $bar = $this->output->createProgressBar($users->count());
+        $bar = $this->output->createProgressBar($count);
         $users->each(function($user) use ($bar) {
             $bar->advance();
             $generatedUser = json_decode(file_get_contents('https://randomuser.me/api'));
             $picture = $generatedUser->results[0]->picture->medium;
             $name = Str::uuid() . substr($picture, strrpos($picture, '/') + 1);
             Storage::put('public\avatars\\'.$name, file_get_contents($picture));
-            $user->update(['avatar' => $name]);
+            $avatarSetting = Setting::where('name', 'avatar')->first();
+            $user->settings()->attach($avatarSetting, ['value' => $name]);
         });
         $bar->finish();
         $this->line("\n<fg=green>Installed $count avatars</>");
