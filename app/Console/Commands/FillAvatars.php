@@ -16,7 +16,7 @@ class FillAvatars extends Command
      *
      * @var string
      */
-    protected $signature = 'fill-avatars';
+    protected $signature = 'fill-avatars {--force : Force the operation}';
 
     /**
      * The console command description.
@@ -43,7 +43,8 @@ class FillAvatars extends Command
      */
     public function handle()
     {
-        if (env('APP_ENV') !== 'local' && !$this->confirm('You are not in development mode! This will overwrite existing users, are you sure?')) {
+        $confirmMessage = 'You are not in development mode! This will overwrite existing users, are you sure?';
+        if (!$this->option('force') && env('APP_ENV') !== 'local' && !$this->confirm($confirmMessage)) {
             return;
         }
 
@@ -79,7 +80,7 @@ class FillAvatars extends Command
         $bar->finish();
         $this->line("\n<fg=green>Installed $successes/$total avatars</>");
         if ($successes !== $total && $this->confirm('Some installations failed, run them again?', true)) {
-            $this->call('fill-avatars');
+            $this->call('fill-avatars', ['--force' => true]);
         }
     }
 }
