@@ -12,6 +12,9 @@ class ThreadsController extends Controller
     public function index()
     {
         $perPage = Thread::$MAX_PER_PAGE;
+        if ($user = auth()->user()) {
+            $perPage = $user->getSetting('perPage') ?? Thread::$MAX_PER_PAGE;
+        }
         $threads = Thread::paginate($perPage);
         if ($id = request()->query('category', false)) {
             $threads = Category::where('name', $id)->orWhere('id', $id)->firstOrFail()->threads()->paginate($perPage);

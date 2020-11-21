@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use App\Events\CreatedUser;
 use \Carbon\Carbon;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $appends = ['suspended', 'postsAmount', 'likesAmount', 'rank', 'avatar', 'signature'];
     protected $hidden = ['password', 'updated_at', 'remember_token', 'email_verified_at'];
     protected $fillable = ['username', 'email', 'password', 'role', 'avatar'];
-    protected $appends = ['suspended', 'postsAmount', 'likesAmount', 'rank'];
     protected $casts = ['email_verified_at' => 'datetime',];
     protected $with = ['roles'];
 
@@ -27,6 +28,10 @@ class User extends Authenticatable
 
     public function postLikes() {
         return $this->hasMany(Postlike::class);
+    }
+
+    public function settings() {
+        return $this->belongsToMany(Setting::class)->withPivot('value');
     }
 
     public function likedPosts() {
@@ -103,6 +108,22 @@ class User extends Authenticatable
     public function lowerClearance(User $user): bool {
         // The lower clearance number, the higher the rank. Lowest possible is 1.
         return $this->getClearance() <= 1 || $this->highestRole()->clearance < $user->highestRole()->clearance;
+    }
+
+    public function getSetting(string $name) {
+        $setting = $this->settings()->where('name', $name)->first();
+        if (is_null($setting)) {
+            return $setting;
+        }
+        return $setting->pivot->value;
+    }
+
+    public function getSignatureAttribute() {
+        return $this->getSetting('signature');
+    }
+
+    public function getAvatarAttribute() {
+        return $this->getSetting('avatar') ?? 'default.png';
     }
 
     public function getPostsAmountAttribute(): int {

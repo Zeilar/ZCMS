@@ -11,11 +11,15 @@ class PostsController extends Controller
 {
     public function index()
     {
+        $perPage = Thread::$MAX_PER_PAGE;
+        if ($user = auth()->user()) {
+            $perPage = $user->getSetting('perPage') ?? Thread::$MAX_PER_PAGE;
+        }
         if ($id = request()->query('thread', false)) {
             $thread = Thread::where('id', $id)->orWhere('slug', $id)->orWhere('title', $id)->firstOrFail();
-            $posts = $thread->posts()->paginate(Post::$MAX_PER_PAGE);
+            $posts = $thread->posts()->paginate($perPage);
         } else {
-            $posts = Post::paginate(Post::$MAX_PER_PAGE);
+            $posts = Post::paginate($perPage);
         }
         return response($posts);
     }

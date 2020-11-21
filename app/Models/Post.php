@@ -33,6 +33,10 @@ class Post extends Model
     public function getPageNumberAttribute(): int {
         $posts = Post::where('thread_id', $this->thread_id)->get(['id'])->pluck('id');
         $index = $posts->search(fn($id) => $id === $this->id);
-        return (int) floor($index / Post::$MAX_PER_PAGE) + 1;
+        $perPage = Thread::$MAX_PER_PAGE;
+        if ($user = auth()->user()) {
+            $perPage = $user->getSetting('perPage') ?? Thread::$MAX_PER_PAGE;
+        }
+        return (int) floor($index / $perPage) + 1;
     }
 }
