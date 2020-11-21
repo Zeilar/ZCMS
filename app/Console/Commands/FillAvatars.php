@@ -78,5 +78,8 @@ class FillAvatars extends Command
         });
         $bar->finish();
         $this->line("\n<fg=green>Installed $successes/$total avatars</>");
+        if ($successes !== $total && $this->confirm('Some installations failed, run them again?', true)) {
+            $this->call('fill-avatars');
+        }
     }
 }
