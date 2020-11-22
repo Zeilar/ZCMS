@@ -15,8 +15,8 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
         listWrapper: {
             transform: 'translateX(-50%)',
             background: 'none',
-            left: '50%',
             paddingTop: 10,
+            left: '50%',
         },
         list: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
