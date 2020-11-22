@@ -114,9 +114,7 @@ class User extends Authenticatable
 
     public function getSetting(string $name) {
         $setting = $this->settings()->where('name', $name)->first();
-        if (is_null($setting)) {
-            return $setting;
-        }
+        if (is_null($setting)) return;
         return $setting->pivot->value;
     }
 

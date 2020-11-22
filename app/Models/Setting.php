@@ -11,6 +11,8 @@ class Setting extends Model
 
     protected $guarded = [];
 
+    public static $PER_PAGE = 20;
+
     public function users() {
         return $this->belongsToMany(User::class);
     }

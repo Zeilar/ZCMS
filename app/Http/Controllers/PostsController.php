@@ -4,22 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Postlike;
+use App\Models\Setting;
 use App\Models\Thread;
 use App\Models\Post;
 
 class PostsController extends Controller
 {
+    protected $perPage;
+
+    public function __construct() {
+        $user = auth()->user();
+        $this->perPage = $user ? $user->getSetting('perPage') : Setting::$PER_PAGE;
+    }
+
     public function index()
     {
-        $perPage = Thread::$MAX_PER_PAGE;
-        if ($user = auth()->user()) {
-            $perPage = $user->getSetting('perPage') ?? Thread::$MAX_PER_PAGE;
-        }
         if ($id = request()->query('thread', false)) {
             $thread = Thread::where('id', $id)->orWhere('slug', $id)->orWhere('title', $id)->firstOrFail();
-            $posts = $thread->posts()->paginate($perPage);
+            $posts = $thread->posts()->paginate($this->perPage);
         } else {
-            $posts = Post::paginate($perPage);
+            $posts = Post::paginate($this->perPage);
         }
         return response($posts);
     }

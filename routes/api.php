@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Setting;
 use App\Models\Thread;
 use App\Models\User;
 
@@ -52,6 +53,22 @@ Route::prefix('admin')->middleware('IsAdmin')->group(function() {
         Route::post('{user}/suspend', [UsersController::class, 'suspend']);
         Route::post('{user}/pardon', [UsersController::class, 'pardon']);
     });
+});
+
+Route::get('search', function(Request $request) {
+    if (!$request->search) return abort(400);
+    $user = auth()->user();
+    $perPage = $user ? $user->getSetting('perPage') : Setting::$PER_PAGE;
+    switch ($request->resource) {
+        case 'users':
+            return response(User::search($request->search)->paginate($perPage));
+        case 'posts':
+            return response(App\Models\Post::search($request->search)->paginate($perPage));
+        case 'threads':
+            return response(App\Models\Thread::search($request->search)->paginate($perPage));
+        default:
+            return abort(400);
+    }
 });
 
 Route::get('authenticate', function() {
