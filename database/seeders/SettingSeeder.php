@@ -14,8 +14,8 @@ class SettingSeeder extends Seeder
      */
     public function run()
     {
-        Setting::create(['name' => 'perPage']);
-        Setting::create(['name' => 'avatar']);
-        Setting::create(['name' => 'signature']);
+        Setting::create(['name' => 'perPage', 'default' => '20', 'datatype' => 'int']);
+        Setting::create(['name' => 'avatar', 'default' => 'default.png']);
+        Setting::create(['name' => 'signature', 'default' => null]);
     }
 }

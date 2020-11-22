@@ -13,7 +13,7 @@ class ThreadsController extends Controller
     protected $perPage;
 
     public function __construct() {
-        $this->perPage = Setting::$PER_PAGE;
+        $this->perPage = Setting::get('perPage', auth()->user());
     }
     
     public function index()

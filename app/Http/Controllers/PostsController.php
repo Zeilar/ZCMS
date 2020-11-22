@@ -13,8 +13,7 @@ class PostsController extends Controller
     protected $perPage;
 
     public function __construct() {
-        $user = auth()->user();
-        $this->perPage = $user ? $user->getSetting('perPage') : Setting::$PER_PAGE;
+        $this->perPage = Setting::get('perPage', auth()->user());
     }
 
     public function index()

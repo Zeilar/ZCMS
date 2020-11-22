@@ -57,8 +57,7 @@ Route::prefix('admin')->middleware('IsAdmin')->group(function() {
 
 Route::get('search', function(Request $request) {
     if (!$request->search) return abort(400);
-    $user = auth()->user();
-    $perPage = $user ? $user->getSetting('perPage') : Setting::$PER_PAGE;
+    $perPage = Setting::get('perPage', auth()->user());
     switch ($request->resource) {
         case 'users':
             return response(User::search($request->search)->paginate($perPage));

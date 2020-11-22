@@ -17,11 +17,6 @@ class Post extends Model
     protected $appends = ['pageNumber'];
     protected $guarded = [];
 
-    private function perPage() {
-        $user = auth()->user();
-        return $user ? $user->getSetting('perPage') : Setting::$PER_PAGE;
-    }
-
     public function user() {
         return $this->belongsTo(User::class);
     }
@@ -38,6 +33,6 @@ class Post extends Model
         $posts = Post::where('thread_id', $this->thread_id)->get(['id'])->pluck('id');
         if (!$posts) return 1;
         $index = $posts->search(fn($id) => $id === $this->id);
-        return (int) floor($index / $this->perPage()) + 1;
+        return (int) floor($index / Setting::get('perPage', auth()->user())) + 1;
     }
 }

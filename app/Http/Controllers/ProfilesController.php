@@ -13,7 +13,7 @@ class ProfilesController extends Controller
     protected $perPage;
 
     public function __construct() {
-        $this->perPage = Setting::$PER_PAGE;
+        $this->perPage = Setting::get('perPage', auth()->user());
     }
 
     public function show(User $user) {

@@ -11,9 +11,17 @@ class Setting extends Model
 
     protected $guarded = [];
 
-    public static $PER_PAGE = 20;
-
     public function users() {
         return $this->belongsToMany(User::class);
+    }
+
+    public static function cast(string $value, string $datatype) {
+        
+    }
+
+    public static function get(string $setting, $user, $fallback = null) {
+        $fallback = $fallback ?? Setting::where('name', $setting)->firstOrFail()->default;
+        if (!$user) return $fallback;
+        return $user->getSetting($setting) ?? $fallback;
     }
 }
