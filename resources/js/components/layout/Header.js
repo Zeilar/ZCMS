@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { NavDropdown } from '../misc';
 import classnames from 'classnames';
 
-export default function Header({ forwardRef }) {
+export default function Header() {
     const styles = createUseStyles({
         header: {
             padding: [0, 'var(--container-margin)'],
@@ -139,7 +139,7 @@ export default function Header({ forwardRef }) {
     }
 
     return (
-        <header className={classnames(classes.header, 'center-children sticky col')} ref={forwardRef}>
+        <header className={classnames(classes.header, 'center-children sticky col')}>
             <nav className={classnames(classes.navbar, 'w-100 row my-3')} ref={navbar}>
                 <ul className={classnames(classes.navlist, 'flex row')}>
                     <NavLink className={classnames(classes.brand, 'mr-auto col center-children')} to="/">
