@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Thread;
 use App\Models\User;
+use App\Models\Post;
 
 class ThreadFactory extends Factory
 {
@@ -26,14 +27,19 @@ class ThreadFactory extends Factory
     {
         $title = $this->faker->sentence(10);
 
-        // dd($this);
-
         return [
             'title'       => $title,
-            'slug'        => Str::slug($title),
+            'slug'        => fn(array $attributes) => Str::slug($attributes['title']),
             'views'       => rand(10, 500),
             'user_id'     => User::inRandomOrder()->limit(1)->first()->id,
             'category_id' => Category::inRandomOrder()->limit(1)->first()->id,
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function(Thread $thread) {
+            Post::factory(['thread_id' => $thread->id, 'user_id' => $thread->user->id]);
+        });
     }
 }

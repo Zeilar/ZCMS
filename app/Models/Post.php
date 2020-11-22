@@ -11,13 +11,16 @@ use App\Events\DeletedPost;
 class Post extends Model
 {
     use HasFactory, Searchable;
-
-    public static $MAX_PER_PAGE = 20;
     
     protected $dispatchesEvents = ['saved' => CreatedPost::class, 'deleted' => DeletedPost::class];
     protected $with = ['user', 'postlikes'];
     protected $appends = ['pageNumber'];
     protected $guarded = [];
+    protected $perPage;
+
+    public function __construct() {
+        $this->perPage = Setting::$PER_PAGE;
+    }
 
     public function user() {
         return $this->belongsTo(User::class);
@@ -34,10 +37,6 @@ class Post extends Model
     public function getPageNumberAttribute(): int {
         $posts = Post::where('thread_id', $this->thread_id)->get(['id'])->pluck('id');
         $index = $posts->search(fn($id) => $id === $this->id);
-        $perPage = Thread::$MAX_PER_PAGE;
-        if ($user = auth()->user()) {
-            $perPage = $user->getSetting('perPage') ?? Thread::$MAX_PER_PAGE;
-        }
-        return (int) floor($index / $perPage) + 1;
+        return (int) floor($index / $this->perPage) + 1;
     }
 }

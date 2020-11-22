@@ -10,8 +10,6 @@ class Thread extends Model
 {
     use HasFactory, Searchable;
 
-    public static $MAX_PER_PAGE = 20;
-
     protected $appends = ['latestPost', 'firstPost', 'postsAmount'];
     protected $with = ['user'];
     protected $guarded = [];
@@ -28,12 +26,12 @@ class Thread extends Model
         return $this->hasMany(Post::class);
     }
 
-    public function getFirstPostAttribute(): Post {
-        return $this->posts()->limit(1)->firstOrFail();
+    public function getFirstPostAttribute() {
+        return $this->posts()->limit(1)->first();
     }
 
-    public function getLatestPostAttribute(): Post {
-        return $this->posts()->latest()->limit(1)->firstOrFail();
+    public function getLatestPostAttribute() {
+        return $this->posts()->latest()->limit(1)->first();
     }
 
     public function getPostsAmountAttribute() {
