@@ -10,10 +10,8 @@ use App\Models\User;
 
 class ProfilesController extends Controller
 {
-    protected $perPage;
-
-    public function __construct() {
-        $this->perPage = Setting::get('perPage', auth()->user());
+    protected function perPage() {
+        return Setting::get('perPage', auth()->user());
     }
 
     public function show(User $user) {
@@ -21,11 +19,11 @@ class ProfilesController extends Controller
     }
 
     public function posts(User $user) {
-        return response($user->posts()->paginate($this->perPage));
+        return response($user->posts()->paginate($this->perPage()));
     }
 
     public function threads(User $user) {
-        return response($user->threads()->paginate($this->perPage));
+        return response($user->threads()->paginate($this->perPage()));
     }
 
     /*

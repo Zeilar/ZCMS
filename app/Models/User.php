@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Scout\Searchable;
 use App\Events\CreatedUser;
 use \Carbon\Carbon;
+use Dotenv\Parser\Value;
 
 class User extends Authenticatable
 {
@@ -115,7 +116,7 @@ class User extends Authenticatable
     public function getSetting(string $name) {
         $setting = $this->settings()->where('name', $name)->first();
         if (is_null($setting)) return;
-        return $setting->pivot->value;
+        return Setting::cast($setting->pivot->value, $setting->datatype);
     }
 
     public function getSignatureAttribute() {

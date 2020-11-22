@@ -10,17 +10,15 @@ use App\Models\Post;
 
 class ThreadsController extends Controller
 {
-    protected $perPage;
-
-    public function __construct() {
-        $this->perPage = Setting::get('perPage', auth()->user());
+    protected function perPage() {
+        return Setting::get('perPage', auth()->user());
     }
     
     public function index()
     {
-        $threads = Thread::paginate($this->perPage);
+        $threads = Thread::paginate($this->perPage());
         if ($id = request()->query('category', false)) {
-            $threads = Category::where('name', $id)->orWhere('id', $id)->firstOrFail()->threads()->paginate($this->perPage);
+            $threads = Category::where('name', $id)->orWhere('id', $id)->firstOrFail()->threads()->paginate($this->perPage());
         }
         return response($threads);
     }

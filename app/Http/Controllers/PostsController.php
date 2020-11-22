@@ -10,19 +10,17 @@ use App\Models\Post;
 
 class PostsController extends Controller
 {
-    protected $perPage;
-
-    public function __construct() {
-        $this->perPage = Setting::get('perPage', auth()->user());
+    protected function perPage() {
+        return Setting::get('perPage', auth()->user());
     }
 
     public function index()
     {
         if ($id = request()->query('thread', false)) {
             $thread = Thread::where('id', $id)->orWhere('slug', $id)->orWhere('title', $id)->firstOrFail();
-            $posts = $thread->posts()->paginate($this->perPage);
+            $posts = $thread->posts()->paginate($this->perPage());
         } else {
-            $posts = Post::paginate($this->perPage);
+            $posts = Post::paginate($this->perPage());
         }
         return response($posts);
     }
