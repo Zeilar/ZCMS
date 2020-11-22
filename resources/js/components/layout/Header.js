@@ -33,7 +33,6 @@ export default function Header() {
         },
         navlink: {
             transition: 'color 0.25s ease-out',
-            color: 'var(--text-secondary)',
             color: 'var(--color-primary)',
             textTransform: 'uppercase',
             position: 'relative',
@@ -81,6 +80,7 @@ export default function Header() {
     const navbar = useRef();
 
     const navItems = () => {
+        if (user == null) return;
         if (user) {
             return (
                 <>
@@ -146,7 +146,7 @@ export default function Header() {
                         <Knockout className={classnames(classes.siteHeader, 'py-2')} as="h1">TPH</Knockout>
                         <p className={classnames(classes.siteSlogan)}>The pioneer hangout</p>
                     </NavLink>
-                    {user && navItems()}
+                    {navItems()}
                 </ul>
             </nav>
         </header>
