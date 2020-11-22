@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Thread;
 use App\Models\User;
@@ -25,9 +26,11 @@ class ThreadFactory extends Factory
     {
         $title = $this->faker->sentence(10);
 
+        // dd($this);
+
         return [
             'title'       => $title,
-            'slug'        => str_replace(' ', '-', $title),
+            'slug'        => Str::slug($title),
             'views'       => rand(10, 500),
             'user_id'     => User::inRandomOrder()->limit(1)->first()->id,
             'category_id' => Category::inRandomOrder()->limit(1)->first()->id,

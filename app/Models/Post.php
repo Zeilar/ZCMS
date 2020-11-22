@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 use App\Events\CreatedPost;
 use App\Events\DeletedPost;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     public static $MAX_PER_PAGE = 20;
     
