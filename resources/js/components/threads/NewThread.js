@@ -2,6 +2,7 @@ import { errorCodeHandler } from '../../functions/helpers';
 import { useHistory, useParams } from 'react-router';
 import MdEditor from 'react-markdown-editor-lite';
 import { createUseStyles } from 'react-jss';
+import { NavLink } from 'react-router-dom';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Http } from '../../classes';
@@ -28,6 +29,10 @@ export default function NewThread() {
             backgroundImage: 'var(--color-main-gradient)',
             color: 'var(--color-primary)',
             borderRadius: 3,
+            '&:hover': {
+                color: 'var(--color-primary)',
+                textDecoration: 'none',
+            },
         },
         titleGroup: {
 
@@ -122,10 +127,10 @@ export default function NewThread() {
         if (status === 'loading') return <Icon className={classnames(classes.loading, 'loadingWheel-2 center-self')} path={mdiLoading} spin={1} />
         return (
             <>
-                <h2 className={classnames(classes.header, 'ml-4 px-3 py-2 center-children w-fit mb-3')}>
+                <NavLink className={classnames(classes.header, 'ml-4 px-3 py-2 center-children w-fit mb-3')} to={`/category/${data?.name}`}>
                     <img className={classnames(classes.categoryIcon, 'mr-2')} src={`/storage/category-icons/${data?.icon}.svg`} alt={data?.name} />
-                    <span>{data?.name}</span>
-                </h2>
+                    <h2>{data?.name}</h2>
+                </NavLink>
                 <form className={classnames(classes.form, 'p-4')} onSubmit={submit}>
                     <div className={classnames(classes.titleGroup, 'relative mb-3')}>
                         <input

@@ -7,11 +7,11 @@ import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import { Header, Post } from '../layout';
 import { useQuery } from 'react-query';
-import EditThread from './EditThread';
 import { Pagination } from '../misc';
 import { Http } from '../../classes';
 import { HttpError } from '../http';
 import classnames from 'classnames';
+import { EditThread } from './';
 import Icon from '@mdi/react';
 import marked from 'marked';
 
