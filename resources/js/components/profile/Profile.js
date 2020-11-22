@@ -1,8 +1,10 @@
 import { humanReadableDate } from '../../functions/helpers';
 import { BigNavButton } from '../styled-components';
+import { UserContext } from '../../contexts';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import { Posts, Threads, Chat } from './';
+import React, { useContext } from 'react';
 import HttpError from '../http/HttpError';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
@@ -11,7 +13,6 @@ import { Http } from '../../classes';
 import classnames from 'classnames';
 import { Header } from '../layout';
 import Icon from '@mdi/react';
-import React from 'react';
 
 export default function Profile() {
     const styles = createUseStyles({
@@ -32,7 +33,7 @@ export default function Profile() {
             fontFamily: 'Merriweather',
         },
         tabs: {
-            gap: '20px',
+            gap: '75px',
         },
         tab: {
             fontFamily: 'TitilliumWeb !important',
@@ -63,6 +64,7 @@ export default function Profile() {
     });
     const classes = styles();
 
+    const { user } = useContext(UserContext);
     const { id, tab } = useParams();
 
     const { data, status } = useQuery(`profile-${id}`, async () => {
@@ -111,14 +113,17 @@ export default function Profile() {
                     <BigNavButton as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/posts`}>
                         Posts
                     </BigNavButton>
-                    <BigNavButton as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/chat`}>
-                        Chat
-                    </BigNavButton>
+                    {
+                        user &&
+                            <BigNavButton as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/chat`}>
+                                Chat
+                            </BigNavButton>
+                    }
                 </nav>
                 <div className={classnames(classes.content, 'col py-4 relative')}>
                     {tab === 'threads' && <Threads />}
                     {tab === 'posts' && <Posts />}
-                    {tab === 'chat' && <Chat />}
+                    {tab === 'chat' && user && <Chat />}
                 </div>
             </div>
         );
