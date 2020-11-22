@@ -3,6 +3,7 @@ import React, { useRef, useState, useContext } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { Knockout } from '../styled-components';
 import { createUseStyles } from 'react-jss';
+import { NavDropdown } from '../misc';
 import { mdiLoading } from '@mdi/js';
 import { Http } from '../../classes';
 import classnames from 'classnames';
@@ -99,6 +100,20 @@ export default function Header({ forwardRef }) {
     const navItems = () => {
         if (user == null) return;
         if (user) {
+            return (
+                <NavDropdown toggler={<img className={classnames('round')} style={{ width: 50 }} src={`/storage/avatars/${user.avatar}`} />} items={[
+                    { name: 'Logout', to: '/logout'},
+                    {
+                        name: 'Profile',
+                        to: {
+                            pathname: `/user/${user.username}`,
+                            state: {
+                                url: window.location.pathname,
+                            },
+                        },
+                    },
+                ]} />
+            );
             return <>
                 {
                     user.roles[0].clearance <= 2 &&
