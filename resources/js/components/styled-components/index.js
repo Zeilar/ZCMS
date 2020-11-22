@@ -42,7 +42,7 @@ const BigNavButton = styled.a`
         transform: scale(1.02);
     }
     &.active {
-        background-color: var(--color-main);
+        background-image: var(--color-main-gradient);
         color: var(--color-primary);
         &:hover {
             color: var(--color-primary);

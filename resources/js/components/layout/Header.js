@@ -79,92 +79,78 @@ export default function Header({ forwardRef }) {
     });
     const classes = styles();
 
-    const { setMessage } = useContext(FeedbackModalContext);
-    const [loggingOut, setLoggingOut] = useState(false);
-    const { user, setUser } = useContext(UserContext);
-    const history = useHistory();
+    const { user } = useContext(UserContext);
     const navbar = useRef();
 
-    async function logout() {
-        setLoggingOut(true);
-        const response = await Http.post('logout');
-        setLoggingOut(false);
-        if (response.code === 200) {
-            history.push('/');
-            setUser(false);
-        } else {
-            return setMessage('Something went wrong, try refreshing the page');
-        }
-    }
-
     const navItems = () => {
-        if (user == null) return;
         if (user) {
             return (
-                <NavDropdown toggler={<img className={classnames('round')} style={{ width: 50 }} src={`/storage/avatars/${user.avatar}`} />} items={[
-                    { name: 'Logout', to: '/logout'},
+                <>
                     {
-                        name: 'Profile',
-                        to: {
-                            pathname: `/user/${user.username}`,
-                            state: {
-                                url: window.location.pathname,
+                        user.roles[0].clearance <= 2 &&
+                            <NavDropdown
+                                toggler="Admin"
+                                items={[
+                                    {
+                                        name: 'Dashboard',
+                                        to: { pathname: '/admin' },
+                                    },
+                                ]} 
+                            />
+                    }
+                    <NavDropdown
+                        toggler={<img className={classnames('round')} style={{ width: 50 }} src={`/storage/avatars/${user.avatar}`} />}
+                        items={[
+                            {
+                                name: 'Logout',
+                                to: {
+                                    pathname: '/logout',
+                                    state: { url: window.location.pathname },
+                                },
                             },
-                        },
-                    },
-                ]} />
+                            {
+                                name: 'Profile',
+                                to: { pathname: `/user/${user.username}` },
+                            },
+                        ]} 
+                    />
+                </>
             );
-            return <>
-                {
-                    user.roles[0].clearance <= 2 &&
-                        <li className={`${classes.navitem}`}>
-                            <NavLink className={`${classes.navlink} no-select`} to="/admin">
-                                Admin
-                            </NavLink>
-                        </li>
-                }
-                <li className={`${classes.navitem}`}>
-                    <a className={`${classes.navlink} no-select`} onClick={logout}>
-                        Logout
-                    </a>
-                </li>
-            </>
         } else {
-            return <>
-                <li className={`${classes.navitem}`}>
-                    <NavLink className={`${classes.navlink}`} to={{
-                        pathname: '/login',
-                        state: { url: window.location.pathname },
-                    }}>
-                        Login
-                    </NavLink>
-                </li>
-                <li className={`${classes.navitem}`}>
-                    <NavLink className={`${classes.navlink}`} to={{
-                        pathname: '/register',
-                        state: { url: window.location.pathname },
-                    }}>
-                        Register
-                    </NavLink>
-                </li>
-            </>
+            return (
+                <>
+                    <li className={classnames(classes.navitem)}>
+                        <NavLink className={classnames(classes.navlink)} to={{
+                            pathname: '/login',
+                            state: { url: window.location.pathname },
+                        }}>
+                            Login
+                        </NavLink>
+                    </li>
+                    <li className={classnames(classes.navitem)}>
+                        <NavLink className={classnames(classes.navlink)} to={{
+                            pathname: '/register',
+                            state: { url: window.location.pathname },
+                        }}>
+                            Register
+                        </NavLink>
+                    </li>
+                </>
+            );
         }
     }
 
     return (
-        <>
-            <header className={`${classes.header} center-children sticky col`} ref={forwardRef}>
-                <nav className={`${classes.navbar} w-100 row my-3`} ref={navbar}>
-                    <ul className={`${classes.navlist} flex row`}>
-                        <NavLink className={`${classes.brand} mr-auto col center-children`} to="/">
-                            <Knockout className={`${classes.siteHeader} py-2`} as="h1">TPH</Knockout>
-                            <p className={`${classes.siteSlogan}`}>The pioneer hangout</p>
-                        </NavLink>
-                        {navItems()}
-                    </ul>
-                </nav>
-            </header>
-            {loggingOut && <Icon className={classnames(classes.loading, 'fixed center-self')} path={mdiLoading} size={5} spin={1} />}
-        </>
+        <header className={classnames(classes.header, 'center-children sticky col')} ref={forwardRef}>
+            <nav className={classnames(classes.navbar, 'w-100 row my-3')} ref={navbar}>
+                <ul className={classnames(classes.navlist, 'flex row')}>
+                    <NavLink className={classnames(classes.brand, 'mr-auto col center-children')} to="/">
+                        <Knockout className={classnames(classes.siteHeader, 'py-2')} as="h1">TPH</Knockout>
+                        <p className={classnames(classes.siteSlogan)}>The pioneer hangout</p>
+                    </NavLink>
+                    {user && navItems()}
+                </ul>
+            </nav>
+        </header>
     );
 }
