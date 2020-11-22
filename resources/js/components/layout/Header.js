@@ -14,6 +14,7 @@ export default function Header({ forwardRef }) {
         header: {
             padding: [0, 'var(--container-margin)'],
             backgroundColor: 'var(--color-dark)',
+            zIndex: 100,
         },
         brand: {
             '&:hover': {
