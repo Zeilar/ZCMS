@@ -39,7 +39,7 @@ class ThreadFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function(Thread $thread) {
-            Post::factory(['thread_id' => $thread->id, 'user_id' => $thread->user->id]);
+            Post::factory(['thread_id' => $thread->id, 'user_id' => $thread->user->id])->count(1)->create();
         });
     }
 }

@@ -16,10 +16,10 @@ class Post extends Model
     protected $with = ['user', 'postlikes'];
     protected $appends = ['pageNumber'];
     protected $guarded = [];
-    protected $perPage;
 
-    public function __construct() {
-        $this->perPage = Setting::$PER_PAGE;
+    private function perPage() {
+        $user = auth()->user();
+        return $user ? $user->getSetting('perPage') : Setting::$PER_PAGE;
     }
 
     public function user() {
@@ -36,7 +36,8 @@ class Post extends Model
 
     public function getPageNumberAttribute(): int {
         $posts = Post::where('thread_id', $this->thread_id)->get(['id'])->pluck('id');
+        if (!$posts) return 1;
         $index = $posts->search(fn($id) => $id === $this->id);
-        return (int) floor($index / $this->perPage) + 1;
+        return (int) floor($index / $this->perPage()) + 1;
     }
 }
