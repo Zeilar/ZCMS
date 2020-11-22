@@ -15,14 +15,15 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
         listWrapper: {
             transform: 'translateX(-50%)',
             background: 'none',
-            paddingTop: 10,
             left: '50%',
+            paddingTop: 10,
         },
         list: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
             background: 'none',
         },
         item: {
+            borderTop: '1px solid var(--border-primary)',
             backgroundColor: 'var(--color-primary)',
             color: 'var(--text-primary)',
             fontFamily: 'TitilliumWeb',
@@ -31,11 +32,13 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
             '&:hover': {
                 backgroundImage: 'var(--color-main-gradient)',
                 color: 'var(--color-primary)',
+                borderColor: 'transparent',
                 textDecoration: 'none',
             },
             '&:first-child': {
                 borderTopRightRadius: 4,
                 borderTopLeftRadius: 4,
+                borderTop: 0,
             },
             '&:last-child': {
                 borderBottomRightRadius: 4,
@@ -53,7 +56,7 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
 
     return (
         <div
-            className={classnames('relative', containerClassName, { 'ml-4': align === 'right', 'mr-4': align !== 'right' })}
+            className={classnames('relative p-2 pointer no-select', { 'ml-4': align === 'right', 'mr-4': align !== 'right', containerClassName })}
             onMouseLeave={() => setOpen(false)}
             onMouseEnter={() => setOpen(true)}
             ref={wrapper}
