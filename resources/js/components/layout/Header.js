@@ -100,15 +100,15 @@ export default function Header() {
                         toggler={<img className={classnames('round')} style={{ width: 50 }} src={`/storage/avatars/${user.avatar}`} />}
                         items={[
                             {
+                                name: 'Profile',
+                                to: { pathname: `/user/${user.username}` },
+                            },
+                            {
                                 name: 'Logout',
                                 to: {
                                     pathname: '/logout',
                                     state: { url: window.location.pathname },
                                 },
-                            },
-                            {
-                                name: 'Profile',
-                                to: { pathname: `/user/${user.username}` },
                             },
                         ]} 
                     />
