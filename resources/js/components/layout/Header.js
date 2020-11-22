@@ -1,13 +1,10 @@
-import { FeedbackModalContext, UserContext } from '../../contexts';
-import React, { useRef, useState, useContext } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import React, { useRef, useContext } from 'react';
 import { Knockout } from '../styled-components';
+import { UserContext } from '../../contexts';
 import { createUseStyles } from 'react-jss';
+import { NavLink } from 'react-router-dom';
 import { NavDropdown } from '../misc';
-import { mdiLoading } from '@mdi/js';
-import { Http } from '../../classes';
 import classnames from 'classnames';
-import Icon from '@mdi/react';
 
 export default function Header({ forwardRef }) {
     const styles = createUseStyles({
