@@ -10,7 +10,9 @@ export default function AdminRoute({ children, ...props }) {
 
     if (user == null) return <Icon className=" center-self loadingWheel-4" path={mdiLoading} spin={1} />;
 
-    const isAdmin = () => {
+    if (user.suspended) return <HttpError code={403} />
+
+    function isAdmin() {
         for (let i = 0; i < user.roles.length; i++) {
             if (user.roles[i].name.toLowerCase() === 'admin') {
                 return true;

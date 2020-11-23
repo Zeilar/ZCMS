@@ -85,7 +85,7 @@ export default function Header() {
             return (
                 <>
                     {
-                        user.roles[0].clearance <= 2 &&
+                        !user.suspended && user.roles[0].clearance <= 2 &&
                             <NavDropdown
                                 toggler="Admin"
                                 items={[
