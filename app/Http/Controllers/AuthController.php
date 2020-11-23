@@ -33,9 +33,6 @@ class AuthController extends Controller
         } else {
             return response(['password' => 'Incorrect password.'], 422);
         }
-
-        // If none of the above executes, the user has done something strange
-        return abort(400);
     }
 
     public function register(Request $request) {

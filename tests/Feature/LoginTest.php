@@ -15,7 +15,7 @@ class LoginTest extends TestCase
     public function testExample()
     {
         $response = $this->json('POST', '/api/login', [
-            'username' => 'user',
+            'id'       => 'user',
             'password' => '123',
         ]);
 
