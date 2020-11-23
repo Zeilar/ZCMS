@@ -11,9 +11,6 @@ import React from 'react';
 
 export default function Posts() {
     const styles = createUseStyles({
-        icon: {
-            color: 'var(--color-main)',
-        },
         noposts: {
             fontSize: '1rem',
         },
@@ -30,7 +27,7 @@ export default function Posts() {
     }, { retry: false });
 
     if (status === 'loading') {
-        return <Icon className={classnames(classes.icon, 'center-self loadingWheel-2')} path={mdiLoading} spin={1} />
+        return <Icon className={classnames('center-self loadingWheel-2')} path={mdiLoading} spin={1} />
     }
 
     const paginationRender = () => {

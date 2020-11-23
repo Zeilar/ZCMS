@@ -8,7 +8,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Scout\Searchable;
 use App\Events\CreatedUser;
 use \Carbon\Carbon;
-use Dotenv\Parser\Value;
 
 class User extends Authenticatable
 {

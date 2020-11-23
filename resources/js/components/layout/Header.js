@@ -70,9 +70,6 @@ export default function Header() {
             color: 'var(--color-primary)',
             fontFamily: 'Raleway',
         },
-        loading: {
-            color: 'var(--color-main)',
-        }
     });
     const classes = styles();
 

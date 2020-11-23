@@ -102,14 +102,14 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
         ));
 
         if (!pages.find(page => parseInt(page.key) === 1)) {
-            pages[0] = (
+            pages.unshift(
                 <NavLink className={classnames(classes.item)} to={`${url}/1`} key={1}>
                     1
                 </NavLink>
             );
         }
         if (!pages.find(page => parseInt(page.key) === pagination.lastPage)) {
-            pages[pages.length - 1] = (
+            pages.push(
                 <NavLink className={classnames(classes.item)} to={`${url}/${pagination.lastPage}`} key={pagination.lastPage}>
                     {pagination.lastPage}
                 </NavLink>

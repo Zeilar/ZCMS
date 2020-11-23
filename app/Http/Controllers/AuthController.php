@@ -63,6 +63,6 @@ class AuthController extends Controller
     public function logout() {
         if (!Auth::check()) return abort(405);
         Auth::logout();
-        return response(true);
+        return redirect('/');
     }
 }

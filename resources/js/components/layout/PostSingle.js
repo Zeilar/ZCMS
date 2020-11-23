@@ -1,5 +1,4 @@
 import { Redirect, useParams } from 'react-router';
-import { createUseStyles } from 'react-jss';
 import { useQuery } from 'react-query';
 import { Http } from '../../classes';
 import { mdiLoading } from '@mdi/js';
@@ -10,13 +9,6 @@ import { Header } from './';
 import React from 'react';
 
 export default function PostSingle() {
-    const styles = createUseStyles({
-        icon: {
-            color: 'var(--color-main)',
-        },
-    });
-    const classes = styles();
-
     const { id } = useParams();
 
     const { data, status } = useQuery(`post-${id}`, async () => {
@@ -30,7 +22,7 @@ export default function PostSingle() {
     return (
         <>
             <Header />
-            {status === 'loading' && <Icon className={classnames(classes.icon, 'loadingWheel-2 center-self')} path={mdiLoading} spin={1} />}
+            {status === 'loading' && <Icon className={classnames('loadingWheel-2 center-self')} path={mdiLoading} spin={1} />}
         </>
     );
 }

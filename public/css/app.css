@@ -209,6 +209,10 @@ span.color-3 {
   text-transform: uppercase;
 }
 
+.color-main {
+  color: var(--color-main);
+}
+
 @font-face {
   src: url("/storage/fonts/Roboto-Regular.ttf");
   font-family: "Roboto";

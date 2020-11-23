@@ -70,9 +70,6 @@ export default function Threads() {
         editorError: {
             color: 'var(--color-danger)',
         },
-        loadingSpinner: {
-            color: 'var(--color-main)',
-        },
     });
     const classes = styles();
 
@@ -162,7 +159,7 @@ export default function Threads() {
 
     const render = () => {
         if (dbThread.status === 'loading') {
-            return <Icon className={classnames(classes.loadingSpinner, 'loadingWheel-2 m-auto')} path={mdiLoading} spin={1} />
+            return <Icon className={classnames('color-main loadingWheel-2 m-auto')} path={mdiLoading} spin={1} />
         }
         return <>
             {dbThread.status === 'success' && canModify() && <EditThread thread={dbThread.data} refetch={dbThread.refetch} />}

@@ -7,7 +7,6 @@ import classnames from 'classnames';
 export default function NavDropdown({ containerClassName = '', toggler, items = [], align = 'right' }) {
     const styles = createUseStyles({
         toggler: {
-            color: 'var(--color-main)',
             fontSize: '1.25rem',
             background: 'none',
             border: 0,
@@ -60,7 +59,7 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
             onMouseEnter={() => setOpen(true)}
             ref={wrapper}
         >
-            <button className={classnames(classes.toggler, 'center-children bold')} onClick={() => setOpen(p => !p)}>
+            <button className={classnames(classes.toggler, 'color-main center-children bold')} onClick={() => setOpen(p => !p)}>
                 {toggler}
             </button>
             <div className={classnames(classes.listWrapper, 'absolute')}>

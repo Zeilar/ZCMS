@@ -12,7 +12,6 @@ export default function PasswordField({ children, className, containerClass, ico
         icon: {
             transform: 'translateY(-50%)',
             backgroundColor: 'inherit',
-            color: 'var(--color-main)',
             top: '50%',
             width: 25,
             right: 8,
@@ -26,7 +25,7 @@ export default function PasswordField({ children, className, containerClass, ico
         <div className={classnames(containerClass, 'relative row')}>
             <input {...props} className={classnames(classes.input, className)} type={visible ? 'text' : 'password'} />
             <Icon
-                className={classnames(classes.icon, iconProps?.className, 'absolute pointer')}
+                className={classnames(classes.icon, iconProps?.className, 'color-main absolute pointer')}
                 path={visible ? mdiEye : mdiEyeOff}
                 onClick={() => setVisible(p => !p)}
                 {...iconProps} 

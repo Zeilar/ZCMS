@@ -86,9 +86,6 @@ export default function NewThread() {
         icon: {
             width: 15,
         },
-        loading: {
-            color: 'var(--color-main)',
-        },
         categoryIcon: {
             filter: 'brightness(0) invert(1)',
             width: 25,
@@ -124,7 +121,7 @@ export default function NewThread() {
     if (httpError) return <HttpError code={httpError} />
 
     const render = () => {
-        if (status === 'loading') return <Icon className={classnames(classes.loading, 'loadingWheel-2 center-self')} path={mdiLoading} spin={1} />
+        if (status === 'loading') return <Icon className={classnames('loadingWheel-2 center-self')} path={mdiLoading} spin={1} />
         return (
             <>
                 <NavLink className={classnames(classes.header, 'ml-4 px-3 py-2 center-children w-fit mb-3')} to={`/category/${data?.name}`}>

@@ -17,9 +17,9 @@ use App\Models\Thread;
 use App\Models\User;
 
 // AuthController
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/logout', [AuthController::class, 'logout']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+Route::get('logout', [AuthController::class, 'logout']);
+Route::post('login', [AuthController::class, 'login']);
 
 // ProfilesController
 Route::bind('user', fn($value) => User::where('id', $value)->orWhere('username', $value)->firstOrFail());
@@ -55,20 +55,20 @@ Route::prefix('admin')->middleware('IsAdmin')->group(function() {
     });
 });
 
-Route::get('search', function(Request $request) {
-    if (!$request->search) return abort(400);
-    $perPage = Setting::get('perPage', auth()->user());
-    switch ($request->resource) {
-        case 'users':
-            return response(User::search($request->search)->paginate($perPage));
-        case 'posts':
-            return response(App\Models\Post::search($request->search)->paginate($perPage));
-        case 'threads':
-            return response(App\Models\Thread::search($request->search)->paginate($perPage));
-        default:
-            return abort(400);
-    }
-});
+// Route::get('search', function(Request $request) {
+//     if (!$request->search) return abort(400);
+//     $perPage = Setting::get('perPage', auth()->user());
+//     switch ($request->resource) {
+//         case 'users':
+//             return response(User::search($request->search)->paginate($perPage));
+//         case 'posts':
+//             return response(App\Models\Post::search($request->search)->paginate($perPage));
+//         case 'threads':
+//             return response(App\Models\Thread::search($request->search)->paginate($perPage));
+//         default:
+//             return abort(400);
+//     }
+// });
 
 Route::get('authenticate', function() {
     $user = auth()->user();

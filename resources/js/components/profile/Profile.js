@@ -26,9 +26,6 @@ export default function Profile() {
             border: '2px solid black',
             width: 100,
         },
-        loading: {
-            color: 'var(--color-main)',
-        },
         username: {
             fontFamily: 'Merriweather',
         },
@@ -77,7 +74,7 @@ export default function Profile() {
 
     const render = () => {
         if (status === 'loading') {
-            return <Icon className={classnames(classes.loading, 'loadingWheel-3 center-self')} path={mdiLoading} spin={1} />
+            return <Icon className={classnames('loadingWheel-2 center-self')} path={mdiLoading} spin={1} />
         }
         return (
             <div className={classnames(classes.container, 'mt-4')}>

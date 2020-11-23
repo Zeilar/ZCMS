@@ -30,9 +30,6 @@ export default function Category() {
         newIcon: {
             width: '1.5rem',
         },
-        loadingSpinner: {
-            color: 'var(--color-main)',
-        },
     });
     const classes = styles();
 
@@ -63,7 +60,7 @@ export default function Category() {
 
     const render = () => {
         if (dbCategory.status === 'loading') {
-            return <Icon className={classnames(classes.loadingSpinner, 'loadingWheel-2 m-auto')} path={mdiLoading} spin={1} />
+            return <Icon className={classnames('loadingWheel-2 m-auto')} path={mdiLoading} spin={1} />
         }
         return (
             <>
