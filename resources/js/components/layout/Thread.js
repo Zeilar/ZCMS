@@ -10,7 +10,7 @@ import React from 'react';
 export default function Thread({ thread }) {
     const styles = createUseStyles({
         thread: {
-            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
+            boxShadow: [0, 3, 5, 0, 'rgba(0, 0, 0, 0.15)'],
             backgroundColor: 'var(--color-primary)',
             transition: 'all 0.1s linear',
             alignItems: 'center',
@@ -56,7 +56,7 @@ export default function Thread({ thread }) {
     const classes = styles();
 
     return (
-        <article className={classnames(classes.thread, 'row mt-1')}>
+        <article className={classnames(classes.thread, 'row mt-2')}>
             <div className={classnames('col w-50')}>
                 <NavLink className={classnames(classes.title, 'w-fit bold')} to={`/thread/${thread.id}/${thread.slug}`}>
                     {thread.title}

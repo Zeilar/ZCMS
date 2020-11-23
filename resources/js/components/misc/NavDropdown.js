@@ -14,13 +14,12 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
         },
         listWrapper: {
             transform: 'translateX(-50%)',
-            background: 'none',
             paddingTop: 10,
             left: '50%',
         },
         list: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
-            background: 'none',
+            borderRadius: 4,
         },
         item: {
             borderTop: '1px solid var(--border-primary)',
