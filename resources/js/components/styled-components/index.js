@@ -24,7 +24,7 @@ const LinkButton = styled.a`
 `;
 
 const BigNavButton = styled.a`
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
     background-color: var(--color-primary);
     transition: all 0.05s linear;
     color: var(--text-primary);
