@@ -15,8 +15,11 @@ class LogoutTest extends TestCase
     public function testExample()
     {
         Auth::loginUsingId(1);
+        
         $response = $this->get('/api/logout');
-
         $response->assertStatus(302);
+
+        $response = $this->get('/api/logout');
+        $response->assertStatus(405);
     }
 }

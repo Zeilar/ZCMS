@@ -14,11 +14,16 @@ class LoginTest extends TestCase
      */
     public function testExample()
     {
-        $response = $this->json('POST', '/api/login', [
+        $response = $this->post('/api/login', [
             'id'       => 'user',
             'password' => '123',
         ]);
-
         $response->assertStatus(200);
+        
+        $response = $this->post('/api/login', [
+            'id'       => 'user',
+            'password' => '123',
+        ]);
+        $response->assertStatus(405);
     }
 }
