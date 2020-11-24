@@ -102,11 +102,11 @@ export default function Header() {
                             },
                             {
                                 name: 'Logout',
-                                args: { router: false },
                                 to: {
                                     pathname: '/api/logout',
                                     state: { url: window.location.pathname },
                                 },
+                                args: { router: false },
                             },
                         ]} 
                     />
