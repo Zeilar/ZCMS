@@ -198,7 +198,7 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
         const formData = new FormData();
         formData.append('hasLiked', hasLiked);
         setLiking(true);
-        const response = await Http.put(`posts/${post.id}/toggleLike`);
+        const response = await Http.put(`posts/${post.id}/like`);
         setLiking(false);
         errorCodeHandler(response.code, setMessage, () => {
             setRepuation(p => hasLiked ? p - 1 : p + 1);

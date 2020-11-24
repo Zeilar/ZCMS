@@ -77,7 +77,7 @@ class PostPolicy
         //
     }
     
-    public function toggleLike(User $user, Post $post) {
+    public function like(User $user, Post $post) {
         return !$user->isAuthor($post);
     }
 }

@@ -40,7 +40,7 @@ Route::post('threads/{thread}', [ThreadsController::class, 'update']);
 
 // PostsController
 Route::resource('posts', PostsController::class, ['except' => ['create', 'edit', 'update']]);
-Route::put('/posts/{post}/toggleLike', [PostsController::class, 'toggleLike']);
+Route::put('/posts/{post}/like', [PostsController::class, 'like']);
 Route::post('posts/{post}', [PostsController::class, 'update']);
 
 // ChatmessagesController
