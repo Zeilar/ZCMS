@@ -34,7 +34,7 @@ Route::resource('categories', CategoriesController::class, ['except' => ['create
 
 // ThreadsController
 Route::bind('thread', fn($value) => Thread::where('id', $value)->orWhere('slug', $value)->orWhere('title', $value)->firstOrFail());
-Route::resource('threads', ThreadsController::class, ['except' => ['create', 'edit']]);
+Route::resource('threads', ThreadsController::class, ['except' => ['create', 'edit', 'update']]);
 Route::post('threads/{thread}', [ThreadsController::class, 'update']);
 
 // PostsController
