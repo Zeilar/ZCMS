@@ -66,7 +66,8 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
                 <ul className={classnames(classes.list, 'col')}>
                     {
                         open && items.length > 0 && items.map(item => (
-                            <NavLink
+                            item.args?.router === true
+                            ? <NavLink
                                 className={classnames(classes.item, 'relative bold')}
                                 onClick={() => setOpen(false)}
                                 key={item.name}
@@ -74,6 +75,14 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
                             >
                                 {item.name}
                             </NavLink>
+                            : <a
+                                href={`${window.location.origin}${item.to.pathname}`}
+                                className={classnames(classes.item, 'relative bold')}
+                                onClick={() => setOpen(false)}
+                                key={item.name}
+                            >
+                                {item.name}
+                            </a>
                         ))
                     }
                 </ul>

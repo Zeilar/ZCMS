@@ -102,8 +102,9 @@ export default function Header() {
                             },
                             {
                                 name: 'Logout',
+                                args: { router: false },
                                 to: {
-                                    pathname: '/logout',
+                                    pathname: '/api/logout',
                                     state: { url: window.location.pathname },
                                 },
                             },
