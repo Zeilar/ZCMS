@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Auth;
 
-class ViewProfileThreadsTest extends TestCase
+class UpdateThreadTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -14,11 +14,12 @@ class ViewProfileThreadsTest extends TestCase
      */
     public function testExample()
     {
-        $response = $this->get('/api/profile/1/threads');
-        $response->assertStatus(200);
-
         Auth::loginUsingId(1);
-        $response = $this->get('/api/profile/1/threads');
+
+        $response = $this->json('POST', '/api/threads/1');
+        $response->assertStatus(422);
+
+        $response = $this->json('POST', '/api/threads/1', ['title' => 'Test title']);
         $response->assertStatus(200);
     }
 }
