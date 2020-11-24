@@ -22,7 +22,6 @@ Route::get('logout', [AuthController::class, 'logout']);
 Route::post('login', [AuthController::class, 'login']);
 
 // ProfilesController
-
 Route::bind('user', fn($value) => User::where('id', $value)->orWhere('username', $value)->firstOrFail());
 // Route::get('user/{user}/messages', [ProfilesController::class, 'messages']);
 Route::get('profile/{user}/threads', [ProfilesController::class, 'threads']);
