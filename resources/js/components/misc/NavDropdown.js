@@ -68,8 +68,8 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
                         open && items.length > 0 && items.map(item => (
                             item.args?.router === false
                                 ? <a
-                                    href={`${window.location.origin}${item.to.pathname}`}
                                     className={classnames(classes.item, 'relative bold')}
+                                    href={`${window.location.origin}${item.to.pathname}`}
                                     onClick={() => setOpen(false)}
                                     key={item.name}
                                 >
