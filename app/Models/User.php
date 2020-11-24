@@ -94,9 +94,9 @@ class User extends Authenticatable
         return $this->suspensions()->where('expiration', '>=', Carbon::now())->pluck('expiration')->first() ?? false;
     }
 
-    public function suspend($message, $expiration) {
+    public function suspend(string $message, $expiration): User {
         Suspension::create([
-            'expiration' => $expiration ?? Carbon::now(),
+            'expiration' => $expiration ?? Carbon::now()->addDays(7),
             'user_id' => $this->id,
             'message' => $message,
         ]);
