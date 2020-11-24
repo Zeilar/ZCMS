@@ -54,16 +54,14 @@ class ThreadsController extends Controller
     public function update(Request $request, Thread $thread)
     {
         $this->authorize('update', $thread);
+        $data = [];
         if ($request->locked) {
             $this->authorize('lock', $thread);
+            $data['locked'] = $request->locked;
         }
+        $data['title'] = $request->title;
         $request->validate(['title' => 'required|string|min:3|max:150']);
-        $title = $request->title;
-        $thread->update([
-            'title'  => $title,
-            'slug'   => str_replace(' ', '-', $title),
-            'locked' => $request->locked,
-        ]);
+        $thread->update($data);
         return response($thread);
     }
 

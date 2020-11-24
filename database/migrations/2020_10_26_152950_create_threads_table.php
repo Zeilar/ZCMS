@@ -22,7 +22,7 @@ class CreateThreadsTable extends Migration
             $table->unsignedBigInteger('views')->default(0);
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->boolean('locked')->default(false);
+            $table->boolean('locked')->default(0);
             $table->timestamps();
         });
     }
