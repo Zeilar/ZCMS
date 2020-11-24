@@ -66,23 +66,23 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
                 <ul className={classnames(classes.list, 'col')}>
                     {
                         open && items.length > 0 && items.map(item => (
-                            item.args?.router === true
-                            ? <NavLink
-                                className={classnames(classes.item, 'relative bold')}
-                                onClick={() => setOpen(false)}
-                                key={item.name}
-                                to={item.to}
-                            >
-                                {item.name}
-                            </NavLink>
-                            : <a
-                                href={`${window.location.origin}${item.to.pathname}`}
-                                className={classnames(classes.item, 'relative bold')}
-                                onClick={() => setOpen(false)}
-                                key={item.name}
-                            >
-                                {item.name}
-                            </a>
+                            item.args?.router === false
+                                ? <a
+                                    href={`${window.location.origin}${item.to.pathname}`}
+                                    className={classnames(classes.item, 'relative bold')}
+                                    onClick={() => setOpen(false)}
+                                    key={item.name}
+                                >
+                                    {item.name}
+                                </a>
+                                : <NavLink
+                                    className={classnames(classes.item, 'relative bold')}
+                                    onClick={() => setOpen(false)}
+                                    key={item.name}
+                                    to={item.to}
+                                >
+                                    {item.name}
+                                </NavLink>
                         ))
                     }
                 </ul>
