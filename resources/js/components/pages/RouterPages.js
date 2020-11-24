@@ -2,9 +2,9 @@ import { NewThread, Category, Thread } from '../threads';
 import { FeedbackModalContext } from '../../contexts';
 import AdminDashboard from '../admin/dashboard/Index';
 import { ScrollToTop, FeedbackModal } from '../misc';
-import { Register, Login, Logout } from '../auth';
 import { Route, Switch } from 'react-router';
 import React, { useContext } from 'react';
+import { Register, Login } from '../auth';
 import { PostSingle } from '../layout';
 import { AdminRoute } from '../routes';
 import { Profile } from '../profile';
@@ -24,7 +24,6 @@ export default function RouterPages() {
                 <Route component={Category} path="/category/:category/:page?" exact />
                 <Route component={Thread} path="/thread/:id/:slug?/:page?" exact />
                 <Route component={Login} path="/login" exact />
-                <Route component={Logout} path="/logout" exact />
                 <Route component={Register} path="/register" exact />
                 <AdminRoute component={AdminDashboard} path="/admin" />
                 <Route>

@@ -30,7 +30,8 @@ Route::get('profile/{user}', [ProfilesController::class, 'show']);
 
 // CategoriesController
 Route::bind('category', fn($value) => Category::where('id', $value)->orWhere('name', $value)->firstOrFail());
-Route::resource('categories', CategoriesController::class, ['except' => ['create', 'edit']]);
+Route::get('categories/{category}', [CategoriesController::class, 'show']);
+Route::get('categories', [CategoriesController::class, 'index']);
 
 // ThreadsController
 Route::bind('thread', fn($value) => Thread::where('id', $value)->orWhere('slug', $value)->orWhere('title', $value)->firstOrFail());
