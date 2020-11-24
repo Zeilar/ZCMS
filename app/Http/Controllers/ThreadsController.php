@@ -55,7 +55,7 @@ class ThreadsController extends Controller
     {
         $this->authorize('update', $thread);
         $data = [];
-        if ($request->locked) {
+        if (isset($request->locked)) {
             $this->authorize('lock', $thread);
             $data['locked'] = $request->locked;
         }
