@@ -1,3 +1,4 @@
+import { TableTitle, Back } from './tables';
 import styled from 'styled-components';
 
 const Knockout = styled.p`
@@ -20,6 +21,47 @@ const LinkButton = styled.a`
     color: inherit;
     &:hover {
         text-decoration: none;
+    }
+`;
+
+const Tab = styled.a`
+    border: 1px solid var(--border-primary);
+    background-color: var(--color-primary);
+    transition: all 0.05s linear;
+    color: var(--text-primary);
+    justify-content: center;
+    flex-direction: column;
+    font-family: Raleway;
+    align-items: center;
+    font-size: 1.25rem;
+    position: relative;
+    padding: 10px 20px;
+    margin-left: -1px;
+    user-select: none;
+    font-weight: bold;
+    display: flex;
+    &::after {
+        background-color: var(--color-main);
+        position: absolute;
+        display: none;
+        bottom: -1px;
+        content: "";
+        width: 100%;
+        height: 2px;
+        left: 0;
+    }
+    &:first-child {
+        margin-left: 0;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+    &:hover, &.active {
+        border-bottom-color: var(--color-main);
+        color: var(--color-main);
+        &::after {
+            display: block;
+        }
     }
 `;
 
@@ -61,5 +103,8 @@ export {
     BigNavButton,
     LinkStandard,
     LinkButton,
+    TableTitle,
     Knockout,
+    Back,
+    Tab,
 };

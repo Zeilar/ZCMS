@@ -1,5 +1,5 @@
 import { humanReadableDate } from '../../functions/helpers';
-import { BigNavButton } from '../styled-components';
+import { Tab } from '../styled-components';
 import { UserContext } from '../../contexts';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
@@ -30,7 +30,7 @@ export default function Profile() {
             fontFamily: 'Merriweather',
         },
         tabs: {
-            gap: '75px',
+            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.05)'],
         },
         tab: {
             fontFamily: 'TitilliumWeb !important',
@@ -104,17 +104,17 @@ export default function Profile() {
                     </div>
                 </div>
                 <nav className={classnames(classes.tabs, 'center-children mt-4')}>
-                    <BigNavButton as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/threads`}>
+                    <Tab as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/threads`}>
                         Threads
-                    </BigNavButton>
-                    <BigNavButton as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/posts`}>
+                    </Tab>
+                    <Tab as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/posts`}>
                         Posts
-                    </BigNavButton>
+                    </Tab>
                     {
                         user &&
-                            <BigNavButton as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/chat`}>
+                            <Tab as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/chat`}>
                                 Chat
-                            </BigNavButton>
+                            </Tab>
                     }
                 </nav>
                 <div className={classnames(classes.content, 'col py-4 relative')}>

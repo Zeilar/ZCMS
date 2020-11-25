@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { mdiArrowLeft, mdiLoading, mdiPlusBox } from '@mdi/js';
-import { Back, TableTitle } from '../styled-components/tables';
+import { Back, TableTitle } from '../styled-components';
 import { ucfirst } from '../../functions/helpers';
 import { UserContext } from '../../contexts';
 import { createUseStyles } from 'react-jss';
