@@ -1,20 +1,23 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\{
     ChatmessagesController,
+    Admin\UsersController,
     CategoriesController,
     ProfilesController,
     ThreadsController,
     PostsController,
     AuthController,
 };
-use App\Http\Controllers\Admin\UsersController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Models\Setting;
-use App\Models\Thread;
-use App\Models\User;
+use App\Models\{
+    Category,
+    Setting,
+    Thread,
+    Post,
+    User,
+};
 
 // AuthController
 Route::post('register', [AuthController::class, 'register']);
@@ -56,20 +59,18 @@ Route::prefix('admin')->middleware('IsAdmin')->group(function() {
     });
 });
 
-// Route::get('search', function(Request $request) {
-//     if (!$request->search) return abort(400);
-//     $perPage = Setting::get('perPage', auth()->user());
-//     switch ($request->resource) {
-//         case 'users':
-//             return response(User::search($request->search)->paginate($perPage));
-//         case 'posts':
-//             return response(App\Models\Post::search($request->search)->paginate($perPage));
-//         case 'threads':
-//             return response(App\Models\Thread::search($request->search)->paginate($perPage));
-//         default:
-//             return abort(400);
-//     }
-// });
+Route::get('search', function(Request $request) {
+    if (!$request->q) return abort(400);
+    $perPage = Setting::get('perPage', auth()->user());
+    $threads = Thread::search($request->q)->paginate($perPage);
+    $users   = User::search($request->q)->paginate($perPage);
+    $posts   = Post::search($request->q)->paginate($perPage);
+    return response([
+        'threads' => $threads,
+        'users'   => $users,
+        'posts'   => $posts,
+    ]);
+});
 
 Route::get('authenticate', function() {
     $user = auth()->user();

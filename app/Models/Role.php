@@ -9,6 +9,7 @@ class Role extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['created_at', 'updated_at', 'pivot'];
     protected $guarded = [];
 
     public function users() {

@@ -13,6 +13,7 @@ class Thread extends Model
 
     protected $dispatchesEvents = ['saved' => CreatedOrUpdatedThread::class, 'updating' => CreatedOrUpdatedThread::class];
     protected $appends = ['latestPost', 'firstPost', 'postsAmount'];
+    protected $hidden = ['updated_at'];
     protected $with = ['user'];
     protected $guarded = [];
 
