@@ -27,7 +27,6 @@ const LinkButton = styled.a`
 const Tab = styled.a`
     border: 1px solid var(--border-primary);
     background-color: var(--color-primary);
-    transition: all 0.05s linear;
     color: var(--text-primary);
     justify-content: center;
     flex-direction: column;
@@ -39,6 +38,7 @@ const Tab = styled.a`
     margin-left: -1px;
     user-select: none;
     font-weight: bold;
+    transition: none;
     display: flex;
     &::after {
         background-color: var(--color-main);
