@@ -42,13 +42,13 @@ const Tab = styled.a`
     display: flex;
     &::after {
         background-color: var(--color-main);
+        width: calc(100% + 2px);
         position: absolute;
         display: none;
         bottom: -1px;
         content: "";
-        width: 100%;
         height: 2px;
-        left: 0;
+        left: -1px;
     }
     &:first-child {
         margin-left: 0;
