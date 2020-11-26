@@ -11,24 +11,32 @@ function errorCodeHandler(code, errorCallback, successCallback) {
             if (successCallback) successCallback();
             break;
 
-        case 404:
-            errorCallback('Post not found');
+        case 401:
+            errorCallback('Unauthorized');
             break;
 
         case 403:
             errorCallback('Insufficient permissions');
             break;
 
-        case 401:
-            errorCallback('Unauthorized');
+        case 404:
+            errorCallback('Post not found');
+            break;
+
+        case 405:
+            errorCallback('Method not allowed');
             break;
 
         case 500:
             errorCallback('Something went wrong');
             break;
 
+        case 503:
+            errorCallback('The server is busy, try again later');
+            break;
+
         default:
-            errorCallback('Unexpected error');
+            errorCallback('Something went wrong');
             break;
     }
 }

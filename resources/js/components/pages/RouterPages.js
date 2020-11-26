@@ -9,6 +9,7 @@ import { PostSingle } from '../layout';
 import { AdminRoute } from '../routes';
 import { Profile } from '../profile';
 import { HttpError } from '../http';
+import { Search } from '../search';
 import { Home } from './';
 
 export default function RouterPages() {
@@ -25,6 +26,7 @@ export default function RouterPages() {
                 <Route component={Thread} path="/thread/:id/:slug?/:page?" exact />
                 <Route component={Login} path="/login" exact />
                 <Route component={Register} path="/register" exact />
+                <Route component={Search} path="/search/:query?/:tab?/:page?" exact />
                 <AdminRoute component={AdminDashboard} path="/admin" />
                 <Route>
                     <HttpError code={404} />

@@ -19,8 +19,8 @@ export default function Posts() {
 
     const { id, page } = useParams();
 
-    const { data, status } = useQuery([page ?? 1, `profile-${id}-posts`], async () => {
-        const pageFinal = page ? `?page=${page ?? 1}` : '';
+    const { data, status } = useQuery([page ?? '1', `profile-${id}-posts`], async () => {
+        const pageFinal = page ? `?page=${page ?? '1'}` : '';
         const { data, code } = await Http.get(`profile/${id}/posts${pageFinal}`);
         if (code !== 200) return code;
         return data;

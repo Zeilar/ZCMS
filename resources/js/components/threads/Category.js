@@ -40,7 +40,7 @@ export default function Category() {
     const { category, page } = useParams();
 
     useEffect(async () => {
-        const response = await Http.get(`threads?category=${category}&page=${page ?? 1}`);
+        const response = await Http.get(`threads?category=${category}&page=${page ?? '1'}`);
         if (response.code !== 404 && response.code !== 200) setThreadsStatus('error');
         if (response.code === 200) setThreads(response.data);
         setThreadsStatus('success');

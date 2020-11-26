@@ -84,7 +84,7 @@ export default function Threads() {
     const reply = useRef();
 
     const posts = useQuery([page, `thread-${id}`], async (page) => {
-        const response = await Http.get(`posts?thread=${id}&page=${page ?? 1}`);
+        const response = await Http.get(`posts?thread=${id}&page=${page ?? '1'}`);
         if (response.code !== 200) return setHttpError(response.code);
         setHttpError(false);
         return response.data;
