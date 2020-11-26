@@ -133,8 +133,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
 
         // If more than 20 pages, display a goto-page button
         if (pagination.lastPage >= 20) {
-            const item = pages[Math.ceil(pages.length / 2)];
-            pages.splice(pages.indexOf(item), 0, (
+            pages.splice(pages.indexOf(pages[Math.ceil(pages.length / 2)]), 0, (
                 <form key="goto" onSubmit={goTo}>
                     <input
                         className={classnames(classes.input, 'bold mr-2')}
