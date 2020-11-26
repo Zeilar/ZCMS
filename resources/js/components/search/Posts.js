@@ -5,6 +5,7 @@ import React from 'react';
 
 export default function Posts({ data }) {
     function renderPagination() {
+        if (data.data.length <= 0) return;
         return (
             <Pagination pagination={{
                 currentPage: data.current_page,
@@ -14,8 +15,6 @@ export default function Posts({ data }) {
             }} />
         );
     }
-
-    console.log(data.data);
 
     return (
         <>

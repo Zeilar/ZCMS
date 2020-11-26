@@ -5,6 +5,7 @@ import React from 'react';
 
 export default function Threads({ data }) {
     function renderPagination() {
+        if (data.data.length <= 0) return;
         return (
             <Pagination pagination={{
                 currentPage: data.current_page,
