@@ -101,6 +101,14 @@ export default function Header() {
                                 to: { pathname: `/user/${user.username}` },
                             },
                             {
+                                name: 'Search',
+                                to: { pathname: '/search' },
+                            },
+                            {
+                                name: 'Chat',
+                                to: { pathname: '/chat' },
+                            },
+                            {
                                 name: 'Logout',
                                 to: {
                                     pathname: '/api/logout',

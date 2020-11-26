@@ -63,12 +63,12 @@ Route::get('search', function(Request $request) {
     if (!$request->q) return abort(400);
     $perPage = Setting::get('perPage', auth()->user());
     $threads = Thread::search($request->q)->paginate($perPage);
-    $users   = User::search($request->q)->paginate($perPage);
     $posts   = Post::search($request->q)->paginate($perPage);
+    $users   = User::search($request->q)->paginate($perPage);
     return response([
         'threads' => $threads,
-        'users'   => $users,
         'posts'   => $posts,
+        'users'   => $users,
     ]);
 });
 

@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { createUseStyles } from 'react-jss';
+import { Pagination } from '../misc';
 import classnames from 'classnames';
 import { Thread } from '../layout';
-import { Pagination } from '../misc';
+import React from 'react';
 
 export default function Threads({ data }) {
     function renderPagination() {

@@ -36,7 +36,6 @@ export default function Profile() {
             fontFamily: 'TitilliumWeb !important',
             transform: 'none !important',
             padding: 10,
-            flex: 1,
         },
         signature: {
             fontFamily: 'RobotoSlab',
@@ -103,7 +102,7 @@ export default function Profile() {
                         </div>
                     </div>
                 </div>
-                <nav className={classnames(classes.tabs, 'center-children mt-4')}>
+                <nav className={classnames(classes.tabs, 'center-children mt-4 mx-auto w-fit')}>
                     <Tab as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/threads`}>
                         Threads
                     </Tab>
