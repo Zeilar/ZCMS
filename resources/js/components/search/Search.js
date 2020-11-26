@@ -36,14 +36,14 @@ export default function Search() {
     const { setMessage } = useContext(FeedbackModalContext);
     const { query, tab, page } = useParams();
 
-    if (!query) return <HttpError code={404} />
-
     const { data, status } = useQuery([page ?? '1', `search-${query}`], async () => {
-        if (!query) return;
+        if (!query) {
+            return { threads: { total: 0 }, posts: { total: 0 }, users: { total: 0 } };
+        }
         const { data, code } = await Http.get(`search?q=${query}&page=${page ?? '1'}`);
         errorCodeHandler(code, message => setMessage(message));
         return data;
-    });
+    }, { retry: false });
 
     return (
         <>
@@ -68,9 +68,9 @@ export default function Search() {
                     }
                 </div>
                 <div className={classnames(classes.content, 'col')}>
-                    {tab === 'users' && status === 'success' && <Users data={data.users} />}
-                    {tab === 'threads' && status === 'success' && <Threads data={data.threads} />}
-                    {tab === 'posts' && status === 'success' && <Posts data={data.posts} />}
+                    {tab === 'users' && status === 'success' && data && <Users data={data.users} />}
+                    {tab === 'threads' && status === 'success' && data && <Threads data={data.threads} />}
+                    {tab === 'posts' && status === 'success' && data && <Posts data={data.posts} />}
                 </div>
             </div>
         </>
