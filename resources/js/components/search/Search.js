@@ -19,10 +19,10 @@ export default function Search() {
         container: {
             margin: [0, 'var(--container-margin)'],
         },
-        header: {
-            '& span': {
-                
-            },
+        query: {
+            backgroundImage: 'var(--color-main-gradient)',
+            color: 'var(--color-primary)',
+            borderRadius: 4,
         },
         tab: {
             fontFamily: 'TitilliumWeb !important',
@@ -47,8 +47,13 @@ export default function Search() {
         <>
             <Header />
             <div className={classnames(classes.container, 'col my-4')}>
-                {query && <h1 className={classnames(classes.header)}><span>Search results for</span> {query}</h1>}
-                <div className={classnames('row mt-2 py-2')}>
+                {
+                    query &&
+                        <h1 className={classnames('w-fit')}>
+                            Results for <span className={classnames(classes.query, 'p-2')}>{query}</span>
+                        </h1>
+                }
+                <div className={classnames('row mt-3 py-2')}>
                     {status === 'loading' && <Icon className={classnames('color-main center-self loadingWheel-2')} path={mdiLoading} spin={1} />}
                     {
                         status === 'success' && data &&
