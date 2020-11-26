@@ -54,14 +54,9 @@ export default function Search() {
         <>
             <Header />
             <div className={classnames(classes.container, 'col my-4')}>
+                <h2 className={classnames(classes.header, 'mb-1')}>Search</h2>
                 <Searchbar defaultValue={query} onSubmit={search} />
-                {
-                    query &&
-                        <h1 className={classnames(classes.header, 'w-fit')}>
-                            Results for <span className={classnames(classes.query, 'p-2')}>{query}</span>
-                        </h1>
-                }
-                <div className={classnames('row mt-3 py-2')}>
+                <div className={classnames('row mt-2 py-2')}>
                     {status === 'loading' && <Icon className={classnames('color-main center-self loadingWheel-2')} path={mdiLoading} spin={1} />}
                     {
                         status === 'success' && data &&

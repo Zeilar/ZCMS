@@ -293,6 +293,23 @@ body {
   color: var(--color-main);
 }
 
+::-moz-placeholder {
+  -moz-user-select: none;
+       user-select: none;
+}
+
+:-ms-input-placeholder {
+  -ms-user-select: none;
+      user-select: none;
+}
+
+::placeholder {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
 a,
 button {
   cursor: pointer;

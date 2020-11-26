@@ -28,6 +28,10 @@ body {
     color: var(--color-main);
 }
 
+::placeholder {
+    user-select: none;
+}
+
 a,
 button {
     cursor: pointer;
