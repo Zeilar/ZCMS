@@ -37,9 +37,7 @@ export default function Search() {
     const { query, tab, page } = useParams();
 
     const { data, status } = useQuery([page ?? '1', `search-${query}`], async () => {
-        if (!query) {
-            return { threads: { total: 0 }, posts: { total: 0 }, users: { total: 0 } };
-        }
+        if (!query) return;
         const { data, code } = await Http.get(`search?q=${query}&page=${page ?? '1'}`);
         errorCodeHandler(code, message => setMessage(message));
         return data;
@@ -49,12 +47,12 @@ export default function Search() {
         <>
             <Header />
             <div className={classnames(classes.container, 'col my-4')}>
-                <h1 className={classnames(classes.header)}><span>Search results for</span> {query}</h1>
+                {query && <h1 className={classnames(classes.header)}><span>Search results for</span> {query}</h1>}
                 <div className={classnames('row mt-2 py-2')}>
+                    {status === 'loading' && <Icon className={classnames('color-main center-self loadingWheel-2')} path={mdiLoading} spin={1} />}
                     {
-                        status === 'loading'
-                            ? <Icon className={classnames('color-main center-self loadingWheel-2')} path={mdiLoading} spin={1} />
-                            : <>
+                        status === 'success' && data &&
+                            <>
                                 <Tab className={classnames(classes.tab)} as={NavLink} to={`/search/${query}/users`}>
                                     Users ({data.users.total})
                                 </Tab>
