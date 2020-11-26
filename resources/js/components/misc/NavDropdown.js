@@ -25,6 +25,7 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
             backgroundColor: 'var(--color-primary)',
             color: 'var(--text-primary)',
             fontFamily: 'TitilliumWeb',
+            textAlign: 'center',
             transition: 'none',
             padding: [15, 35],
             '&:hover': {
