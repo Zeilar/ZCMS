@@ -24,6 +24,9 @@ export default function Search() {
             color: 'var(--color-primary)',
             borderRadius: 4,
         },
+        header: {
+            fontFamily: 'Merriweather',
+        },
         tab: {
             fontFamily: 'TitilliumWeb !important',
         },
@@ -54,7 +57,7 @@ export default function Search() {
                 <Searchbar defaultValue={query} onSubmit={search} />
                 {
                     query &&
-                        <h1 className={classnames('w-fit')}>
+                        <h1 className={classnames(classes.header, 'w-fit')}>
                             Results for <span className={classnames(classes.query, 'p-2')}>{query}</span>
                         </h1>
                 }
