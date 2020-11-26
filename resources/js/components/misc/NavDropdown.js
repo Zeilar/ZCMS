@@ -55,7 +55,7 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
 
     return (
         <div
-            className={classnames('relative p-2 pointer no-select', { 'ml-4': align === 'right', 'mr-4': align !== 'right', containerClassName })}
+            className={classnames('relative p-2 no-select', { 'ml-4': align === 'right', 'mr-4': align !== 'right', containerClassName })}
             onMouseLeave={() => setOpen(false)}
             onMouseEnter={() => setOpen(true)}
             ref={wrapper}
