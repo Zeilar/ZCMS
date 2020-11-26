@@ -9,7 +9,7 @@ import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import { mdiLoading } from '@mdi/js';
 import { Http } from '../../classes';
-import { HttpError } from '../http';
+import { Searchbar } from '../misc';
 import classnames from 'classnames';
 import { Header } from '../layout';
 import Icon from '@mdi/react';
@@ -26,9 +26,6 @@ export default function Search() {
         },
         tab: {
             fontFamily: 'TitilliumWeb !important',
-        },
-        content: {
-            
         },
     });
     const classes = styles();
@@ -47,6 +44,7 @@ export default function Search() {
         <>
             <Header />
             <div className={classnames(classes.container, 'col my-4')}>
+                <Searchbar />
                 {
                     query &&
                         <h1 className={classnames('w-fit')}>
@@ -70,7 +68,7 @@ export default function Search() {
                             </>
                     }
                 </div>
-                <div className={classnames(classes.content, 'col')}>
+                <div className={classnames('col')}>
                     {tab === 'users' && status === 'success' && data && <Users data={data.users} />}
                     {tab === 'threads' && status === 'success' && data && <Threads data={data.threads} />}
                     {tab === 'posts' && status === 'success' && data && <Posts data={data.posts} />}
