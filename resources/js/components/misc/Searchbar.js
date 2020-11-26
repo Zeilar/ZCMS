@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { mdiClose } from '@mdi/js';
 import Icon from '@mdi/react';
 
-export default function Searchbar({ onSubmit, className, placeholder }) {
+export default function Searchbar({ defaultValue, onSubmit, className, placeholder }) {
     const styles = createUseStyles({
         bar: {
             border: '1px solid var(--border-primary)',
@@ -26,7 +26,7 @@ export default function Searchbar({ onSubmit, className, placeholder }) {
     });
     const classes = styles();
 
-    const [input, setInput] = useState('');
+    const [input, setInput] = useState(defaultValue ?? '');
 
     return (
         <form className={classnames(classes.bar, className, 'row p-2')} tabIndex={-1} onSubmit={e => onSubmit(e, input)}>

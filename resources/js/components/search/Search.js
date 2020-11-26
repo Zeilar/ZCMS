@@ -51,7 +51,7 @@ export default function Search() {
         <>
             <Header />
             <div className={classnames(classes.container, 'col my-4')}>
-                <Searchbar onSubmit={search} />
+                <Searchbar defaultValue={query} onSubmit={search} />
                 {
                     query &&
                         <h1 className={classnames('w-fit')}>
