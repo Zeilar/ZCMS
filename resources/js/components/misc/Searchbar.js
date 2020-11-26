@@ -29,7 +29,7 @@ export default function Searchbar({ onSubmit, className, placeholder }) {
     const [input, setInput] = useState('');
 
     return (
-        <form className={classnames(classes.bar, className, 'row p-2')} tabIndex={-1} onSubmit={onSubmit}>
+        <form className={classnames(classes.bar, className, 'row p-2')} tabIndex={-1} onSubmit={e => onSubmit(e, input)}>
             <input
                 className={classnames(classes.input, 'p-0')}
                 onChange={e => setInput(e.target.value)}

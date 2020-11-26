@@ -5,7 +5,7 @@ import { Users, Threads, Posts } from './';
 import { NavLink } from 'react-router-dom';
 import { Tab } from '../styled-components';
 import React, { useContext } from 'react';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import { mdiLoading } from '@mdi/js';
 import { Http } from '../../classes';
@@ -32,6 +32,7 @@ export default function Search() {
 
     const { setMessage } = useContext(FeedbackModalContext);
     const { query, tab, page } = useParams();
+    const history = useHistory();
 
     const { data, status } = useQuery([page ?? '1', `search-${query}`], async () => {
         if (!query) return;
@@ -40,11 +41,17 @@ export default function Search() {
         return data;
     }, { retry: false });
 
+    function search(e, input) {
+        e.preventDefault();
+        if (!input) return;
+        history.push(`/search/${input}`);
+    }
+
     return (
         <>
             <Header />
             <div className={classnames(classes.container, 'col my-4')}>
-                <Searchbar />
+                <Searchbar onSubmit={search} />
                 {
                     query &&
                         <h1 className={classnames('w-fit')}>
