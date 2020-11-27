@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
-use App\Models\Role;
 use App\Models\Setting;
+use App\Models\Role;
 use App\Models\User;
 
 class UserSeeder extends Seeder
@@ -17,6 +18,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $files = Storage::allFiles('public/avatars');
+        $superadminIcon = array_search('public/avatars/philip.png', $files);
+        if ($superadminIcon) unset($files[$superadminIcon]);
+        Storage::delete($files);
+
         $superadminRole = Role::where('name', 'superadmin')->first();
         $adminRole = Role::where('name', 'admin')->first();
         $moderatorRole = Role::where('name', 'moderator')->first();
