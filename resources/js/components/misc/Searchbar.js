@@ -18,10 +18,14 @@ export default function Searchbar({ defaultValue, onSubmit, className, placehold
         },
         input: {
             backgroundColor: 'transparent',
+            fontSize: '1.5rem',
             border: 0,
             '&:focus': {
                 boxShadow: 'none',
             },
+        },
+        icon: {
+            width: '1.5rem',
         },
     });
     const classes = styles();
@@ -36,7 +40,7 @@ export default function Searchbar({ defaultValue, onSubmit, className, placehold
                 placeholder={placeholder ?? 'Aa'}
                 value={input}
             />
-            <Icon className={classnames('pointer')} path={mdiClose} onClick={() => setInput('')} />
+            {input !== '' && <Icon className={classnames(classes.icon, 'pointer')} path={mdiClose} onClick={() => setInput('')} />}
         </form>
     );
 }
