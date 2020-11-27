@@ -132,7 +132,7 @@ export default function NewThread() {
                     <div className={classnames(classes.titleGroup, 'relative mb-3')}>
                         <input
                             className={classnames(classes.title, { active: title !== '' }, 'relative')} 
-                            value={title} onChange={e => setTitle(e.target.value)}
+                            value={title} onChange={e => setTitle(e.target.value)} type="text"
                         />
                         <label className={classnames(classes.label, 'absolute no-select no-pointer')}>Title</label>
                         <div className={classnames(classes.border, 'absolute')}></div>

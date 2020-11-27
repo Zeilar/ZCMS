@@ -189,11 +189,11 @@ export default function Register({ location }) {
                 {renderErrors()}
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Username</label>
-                    <input className={`${classes.input} mt-2`} value={username} onChange={e => setUsername(e.target.value)} />
+                    <input className={`${classes.input} mt-2`} value={username} onChange={e => setUsername(e.target.value)} type="text" />
                 </div>
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Email</label>
-                    <input className={`${classes.input} mt-2`} value={email} onChange={e => setEmail(e.target.value)} />
+                    <input className={`${classes.input} mt-2`} value={email} onChange={e => setEmail(e.target.value)} type="text" />
                 </div>
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Password</label>

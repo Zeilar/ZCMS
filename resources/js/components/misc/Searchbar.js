@@ -39,6 +39,7 @@ export default function Searchbar({ defaultValue, onSubmit, className, placehold
                 onChange={e => setInput(e.target.value)}
                 placeholder={placeholder ?? 'Aa'}
                 value={input}
+                type="text"
             />
             {input !== '' && <Icon className={classnames(classes.icon, 'pointer')} path={mdiClose} onClick={() => setInput('')} />}
         </form>

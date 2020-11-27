@@ -28,7 +28,7 @@ export default function PasswordField({ children, className, containerClass, ico
                 className={classnames(classes.icon, iconProps?.className, 'color-main absolute pointer')}
                 path={visible ? mdiEye : mdiEyeOff}
                 onClick={() => setVisible(p => !p)}
-                {...iconProps} 
+                {...iconProps}
             />
         </div>
     );

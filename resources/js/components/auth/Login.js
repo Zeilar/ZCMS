@@ -165,7 +165,7 @@ export default function Login({ location }) {
                 {renderErrors()}
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Username or Email</label>
-                    <input className={`${classes.input} mt-2`} value={id} onChange={e => setId(e.target.value)} />
+                    <input className={`${classes.input} mt-2`} value={id} onChange={e => setId(e.target.value)} type="text" />
                 </div>
                 <div className={`${classes.row} col`}>
                     <div className="row">
