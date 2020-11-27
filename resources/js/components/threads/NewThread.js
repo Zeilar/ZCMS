@@ -1,12 +1,13 @@
 import { errorCodeHandler } from '../../functions/helpers';
 import { useHistory, useParams } from 'react-router';
+import { mdiLoading, mdiArrowLeft } from '@mdi/js';
 import MdEditor from 'react-markdown-editor-lite';
+import { Http, Validator } from '../../classes';
 import { createUseStyles } from 'react-jss';
+import { Back } from '../styled-components';
 import { NavLink } from 'react-router-dom';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { Http, Validator } from '../../classes';
-import { mdiLoading } from '@mdi/js';
 import { HttpError } from '../http';
 import classnames from 'classnames';
 import { Header } from '../layout';
@@ -29,6 +30,7 @@ export default function NewThread() {
             backgroundImage: 'var(--color-main-gradient)',
             color: 'var(--color-primary)',
             borderRadius: 3,
+            padding: 15,
             '&:hover': {
                 color: 'var(--color-primary)',
                 textDecoration: 'none',
@@ -130,10 +132,15 @@ export default function NewThread() {
         if (status === 'loading') return <Icon className={classnames('loadingWheel-2 center-self')} path={mdiLoading} spin={1} />
         return (
             <>
-                <NavLink className={classnames(classes.header, 'ml-4 px-3 py-2 center-children w-fit mb-3')} to={`/category/${data?.name}`}>
-                    <img className={classnames(classes.categoryIcon, 'mr-2')} src={`/storage/category-icons/${data?.icon}.svg`} alt={data?.name} />
-                    <h2>{data?.name}</h2>
-                </NavLink>
+                <div className={classnames('row mb-3')}>
+                    <Back as={NavLink} to={`/category/${data?.name}`}>
+                        <Icon path={mdiArrowLeft} />
+                    </Back>
+                    <h2 className={classnames(classes.header, 'ml-2 center-children w-fit')}>
+                        <img className={classnames(classes.categoryIcon, 'mr-2')} src={`/storage/category-icons/${data?.icon}.svg`} alt={data?.name} />
+                        <span>{data?.name}</span>
+                    </h2>
+                </div>
                 <form className={classnames(classes.form, 'p-4')} onSubmit={submit}>
                     <div className={classnames(classes.titleGroup, 'relative mb-1')}>
                         <input
