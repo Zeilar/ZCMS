@@ -35,11 +35,4 @@ class ThreadFactory extends Factory
             'category_id' => Category::inRandomOrder()->limit(1)->first()->id,
         ];
     }
-
-    public function configure()
-    {
-        return $this->afterCreating(function(Thread $thread) {
-            Post::factory(['thread_id' => $thread->id, 'user_id' => $thread->user->id])->count(1)->create();
-        });
-    }
 }
