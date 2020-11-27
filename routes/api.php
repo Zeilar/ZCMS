@@ -61,6 +61,7 @@ Route::prefix('admin')->middleware('IsAdmin')->group(function() {
 
 Route::get('search', function(Request $request) {
     if (!$request->q) return abort(400);
+    $request->validate(['q' => 'required|min:3|max:50']);
     $perPage = Setting::get('perPage', auth()->user());
     $threads = Thread::search($request->q)->paginate($perPage);
     $posts   = Post::search($request->q)->paginate($perPage);

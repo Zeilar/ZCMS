@@ -1,14 +1,14 @@
 import { errorCodeHandler } from '../../functions/helpers';
 import { FeedbackModalContext } from '../../contexts';
+import { useHistory, useParams } from 'react-router';
+import { Http, Validator } from '../../classes';
 import { createUseStyles } from 'react-jss';
 import { Users, Threads, Posts } from './';
 import { NavLink } from 'react-router-dom';
 import { Tab } from '../styled-components';
-import React, { useContext } from 'react';
-import { useHistory, useParams } from 'react-router';
+import React, { useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import { mdiLoading } from '@mdi/js';
-import { Http } from '../../classes';
 import { Searchbar } from '../misc';
 import classnames from 'classnames';
 import { Header } from '../layout';
@@ -30,15 +30,20 @@ export default function Search() {
         tab: {
             fontFamily: 'TitilliumWeb !important',
         },
+        inputError: {
+            color: 'var(--color-danger)',
+        },
     });
     const classes = styles();
 
     const { setMessage } = useContext(FeedbackModalContext);
+    const [inputError, setInputError] = useState();
     const { query, tab, page } = useParams();
     const history = useHistory();
 
     const { data, status } = useQuery([page ?? '1', `search-${query}`], async () => {
         if (!query) return;
+        setInputError(false);
         const { data, code } = await Http.get(`search?q=${query}&page=${page ?? '1'}`);
         errorCodeHandler(code, message => setMessage(message));
         return data;
@@ -46,7 +51,10 @@ export default function Search() {
 
     function search(e, input) {
         e.preventDefault();
-        if (!input) return;
+        const results = new Validator(input, 'search').required().min(3).max(50);
+        if (results.errors.length > 0) {
+            return setInputError(results.errors[0]);
+        }
         history.push(`/search/${input}`);
     }
 
@@ -56,6 +64,7 @@ export default function Search() {
             <div className={classnames(classes.container, 'col my-4')}>
                 <h2 className={classnames(classes.header, 'mb-1')}>Search</h2>
                 <Searchbar defaultValue={query} onSubmit={search} />
+                {inputError && <p className={classnames(classes.inputError, 'mt-1')} dangerouslySetInnerHTML={{ __html: inputError }} />}
                 <div className={classnames('row mt-2 py-2')}>
                     {status === 'loading' && <Icon className={classnames('color-main center-self loadingWheel-2')} path={mdiLoading} spin={1} />}
                     {
