@@ -107,6 +107,7 @@ export default function Threads() {
         if (response.code === 422) setEditorError(response.data.errors.content);
         if (response.code === 200) {
             setEditorContent('');
+            setEditorError(null);
             const thread = dbThread.data;
             const post = response.data;
             history.push(`/thread/${thread.id}/${thread.slug}/${post.pageNumber}#${post.id}`)
