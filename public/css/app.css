@@ -213,6 +213,10 @@ span.color-3 {
   color: var(--color-main);
 }
 
+.color-danger {
+  color: var(--color-danger);
+}
+
 @font-face {
   src: url("/storage/fonts/Roboto-Regular.ttf");
   font-family: "Roboto";

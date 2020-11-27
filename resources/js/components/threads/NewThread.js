@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { Http } from '../../classes';
+import { Http, Validator } from '../../classes';
 import { mdiLoading } from '@mdi/js';
 import { HttpError } from '../http';
 import classnames from 'classnames';
@@ -94,6 +94,7 @@ export default function NewThread() {
     const classes = styles();
 
     const [submitting, setSubmitting] = useState(false);
+    const [inputErrors, setInputErrors] = useState({});
     const [httpError, setHttpError] = useState(false);
     const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
@@ -108,6 +109,11 @@ export default function NewThread() {
     
     async function submit(e) {
         e.preventDefault();
+        const validatedTitle = new Validator(title, 'title').required().min(3).max(150);
+        const validatedContent = new Validator(content, 'content').required().min(3).max(1000);
+        if (validatedTitle.errors.length > 0 || validatedContent.errors.length > 0) {
+            return setInputErrors({ title: validatedTitle.errors[0], content: validatedContent.errors[0] });
+        }
         const formData = new FormData();
         formData.append('category', category);
         formData.append('content', content);
@@ -115,7 +121,7 @@ export default function NewThread() {
         setSubmitting(true);
         const response = await Http.post('threads', { body: formData });
         setSubmitting(false);
-        errorCodeHandler(response.code, () => console.log(''/* INPUT HANDLING */), () => history.push(`/thread/${response.data.id}/${response.data.slug}`));
+        errorCodeHandler(response.code, message => setMessage(message), () => history.push(`/thread/${response.data.id}/${response.data.slug}`));
     }
 
     if (httpError) return <HttpError code={httpError} />
@@ -129,7 +135,7 @@ export default function NewThread() {
                     <h2>{data?.name}</h2>
                 </NavLink>
                 <form className={classnames(classes.form, 'p-4')} onSubmit={submit}>
-                    <div className={classnames(classes.titleGroup, 'relative mb-3')}>
+                    <div className={classnames(classes.titleGroup, 'relative mb-1')}>
                         <input
                             className={classnames(classes.title, { active: title !== '' }, 'relative')} 
                             value={title} onChange={e => setTitle(e.target.value)} type="text"
@@ -137,14 +143,16 @@ export default function NewThread() {
                         <label className={classnames(classes.label, 'absolute no-select no-pointer')}>Title</label>
                         <div className={classnames(classes.border, 'absolute')}></div>
                     </div>
+                    {inputErrors.title && <p className={classnames('color-danger mt-2')} dangerouslySetInnerHTML={{ __html: inputErrors.title }} />}
                     <MdEditor
                         onChange={({ text }) => setContent(text)}
+                        style={{ height: 400, marginTop: 25 }}
                         renderHTML={text => marked(text)}
                         view={{ menu: true, md: true }}
-                        style={{ height: 400 }}
                         placeholder="Aa"
                         value={content}
                     />
+                    {inputErrors.content && <p className={classnames('color-danger mt-3')} dangerouslySetInnerHTML={{ __html: inputErrors.content }} />}
                     <button className={classnames(classes.button, 'btn mt-3')} disabled={submitting}>
                         {submitting ? <Icon className={classnames(classes.icon)} path={mdiLoading} spin={1} /> : <span>Create thread</span>}
                     </button>
