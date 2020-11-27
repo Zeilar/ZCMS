@@ -44,6 +44,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             '&.active': {
                 backgroundImage: 'var(--color-main-gradient)',
                 color: 'var(--color-primary)',
+                cursor: 'default',
             },
             '&:hover, &:focus': {
                 textDecoration: 'none',
