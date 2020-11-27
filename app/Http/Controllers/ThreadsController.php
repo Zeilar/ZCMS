@@ -16,9 +16,9 @@ class ThreadsController extends Controller
     
     public function index()
     {
-        $threads = Thread::paginate($this->perPage());
+        $threads = Thread::orderByDesc('id')->paginate($this->perPage());
         if ($id = request()->query('category', false)) {
-            $threads = Category::where('name', $id)->orWhere('id', $id)->firstOrFail()->threads()->paginate($this->perPage());
+            $threads = Category::where('name', $id)->orWhere('id', $id)->firstOrFail()->threads()->orderByDesc('id')->paginate($this->perPage());
         }
         return response($threads);
     }

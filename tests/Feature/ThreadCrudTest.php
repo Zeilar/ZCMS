@@ -2,11 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Thread;
 use Tests\TestCase;
 use Auth;
 
-class UpdateThreadTest extends TestCase
+class ThreadCrudTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -15,9 +16,17 @@ class UpdateThreadTest extends TestCase
      */
     public function testExample()
     {
-        $thread = Thread::inRandomOrder()->limit(1)->firstOrFail();
+        $category = Category::inRandomOrder()->limit(1)->firstOrFail();
+
+        $response = $this->json('POST', '/api/threads', ['category' => $category->name, 'title' => 'Some test thread', 'content' => 'This was a test']);
+        $response->assertStatus(403);
 
         Auth::loginUsingId(4);
+
+        $response = $this->json('POST', '/api/threads', ['category' => $category->name, 'title' => 'Some test thread', 'content' => 'This was a test']);
+        $response->assertStatus(200);
+
+        $thread = Thread::latest()->firstOrFail();
 
         $response = $this->json('POST', "/api/threads/$thread->id", ['locked' => 1]);
         $response->assertStatus(403);
@@ -31,6 +40,9 @@ class UpdateThreadTest extends TestCase
         $response->assertStatus(422);
 
         $response = $this->json('POST', "/api/threads/$thread->id", ['title' => 'Test title', 'locked' => 1]);
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/threads/$thread->id");
         $response->assertStatus(200);
 
         $response = $this->json('DELETE', "/api/threads/$thread->id");
