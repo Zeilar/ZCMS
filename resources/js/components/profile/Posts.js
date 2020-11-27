@@ -20,8 +20,7 @@ export default function Posts() {
     const { id, page } = useParams();
 
     const { data, status } = useQuery([page ?? '1', `profile-${id}-posts`], async () => {
-        const pageFinal = page ? `?page=${page ?? '1'}` : '';
-        const { data, code } = await Http.get(`profile/${id}/posts${pageFinal}`);
+        const { data, code } = await Http.get(`profile/${id}/posts?page=${page ?? '1'}`);
         if (code !== 200) return code;
         return data;
     }, { retry: false });
@@ -31,6 +30,7 @@ export default function Posts() {
     }
 
     const paginationRender = () => {
+        if (!gotPosts()) return;
         return (
             <Pagination pagination={{
                 currentPage: data.current_page,
@@ -46,9 +46,9 @@ export default function Posts() {
     return (
         <div className={classnames(classes.posts)}>
             {!gotPosts() && <h5 className={classnames(classes.noposts, 'text-center')}>No posts were found</h5>}
-            {gotPosts() && paginationRender()}
+            {paginationRender()}
             {gotPosts() && data.data.map(post => <Post post={post} controls={false} permalink={true} key={post.id} />)}
-            {gotPosts() && paginationRender()}
+            {paginationRender()}
         </div>
     );
 }

@@ -20,8 +20,7 @@ export default function Threads() {
     const { id, page } = useParams();
 
     const { data, status } = useQuery([page ?? '1', `profile-${id}-threads`], async () => {
-        const pageFinal = page ? `?page=${page ?? '1'}` : '';
-        const { data, code } = await Http.get(`profile/${id}/threads${pageFinal}`);
+        const { data, code } = await Http.get(`profile/${id}/threads?page=${page ?? '1'}`);
         if (code !== 200) return code;
         return data;
     }, { retry: false });
@@ -31,6 +30,7 @@ export default function Threads() {
     }
 
     const paginationRender = () => {
+        if (!gotThreads()) return;
         return (
             <Pagination pagination={{
                 currentPage: data.current_page,
@@ -46,9 +46,9 @@ export default function Threads() {
     return (
         <div className={classnames(classes.posts)}>
             {!gotThreads() && <h5 className={classnames(classes.nothreads, 'text-center')}>No threads were found</h5>}
-            {gotThreads() && paginationRender()}
+            {paginationRender()}
             {gotThreads() && data.data.map(thread => <Thread thread={thread} key={thread.id} />)}
-            {gotThreads() && paginationRender()}
+            {paginationRender()}
         </div>
     );
 }
