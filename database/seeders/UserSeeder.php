@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
+use App\Models\Setting;
 use App\Models\User;
 
 class UserSeeder extends Seeder
@@ -26,6 +27,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make(env('ADMIN_PASSWORD')),
         ]);
         $superadmin->roles()->syncWithoutDetaching([$superadminRole->id, $adminRole->id, $moderatorRole->id]);
+        $superadmin->settings()->attach(Setting::where('name', 'avatar')->first(), ['value' => 'philip.png']);
         
         $admin = User::create([
             'username' => 'Admin',
