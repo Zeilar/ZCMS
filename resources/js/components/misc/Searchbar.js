@@ -25,6 +25,7 @@ export default function Searchbar({ defaultValue, onSubmit, className, placehold
             },
         },
         icon: {
+            color: 'var(--text-secondary)',
             width: '1.5rem',
         },
     });
@@ -33,15 +34,15 @@ export default function Searchbar({ defaultValue, onSubmit, className, placehold
     const [input, setInput] = useState(defaultValue ?? '');
 
     return (
-        <form className={classnames(classes.bar, className, 'row p-2')} tabIndex={-1} onSubmit={e => onSubmit(e, input)}>
+        <form className={classnames(classes.bar, className, 'row')} tabIndex={-1} onSubmit={e => onSubmit(e, input)}>
             <input
-                className={classnames(classes.input, 'p-0')}
+                className={classnames(classes.input, 'p-2')}
                 onChange={e => setInput(e.target.value)}
                 placeholder={placeholder ?? 'Aa'}
                 value={input}
                 type="text"
             />
-            {input !== '' && <Icon className={classnames(classes.icon, 'pointer')} path={mdiClose} onClick={() => setInput('')} />}
+            {input !== '' && <Icon className={classnames(classes.icon, 'pointer mr-2')} path={mdiClose} onClick={() => setInput('')} />}
         </form>
     );
 }
