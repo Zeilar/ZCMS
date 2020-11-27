@@ -93,7 +93,7 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
 
         pages = pages.map(number => (
             <NavLink
-                className={classnames(classes.item, { active: currentPage === 1 && currentPage === number })}
+                className={classnames(classes.item, { active: currentPage === number || currentPage === 1 })}
                 to={`${url}/${number}`}
                 key={number}
             >

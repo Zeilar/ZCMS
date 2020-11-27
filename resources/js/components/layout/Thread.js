@@ -82,7 +82,7 @@ export default function Thread({ thread }) {
                 </span>
                 <NavLink
                     className={classnames(classes.latestLink, `color-${thread.latestPost.user.roles[0].clearance}`, 'bold ml-auto mt-2')}
-                    to={`/thread/${thread.id}/${thread.slug}/${thread.latestPost.pageNumber}/#${thread.latestPost.id}`}
+                    to={`/thread/${thread.id}/${thread.slug}/${thread.latestPost.pageNumber}#${thread.latestPost.id}`}
                 >
                     {thread.latestPost.user.username}
                 </NavLink>
