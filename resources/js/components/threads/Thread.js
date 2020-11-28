@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { FeedbackModalContext, UserContext } from '../../contexts';
+import { errorCodeHandler } from '../../functions/helpers';
 import { useHistory, useParams } from 'react-router';
 import { mdiArrowLeft, mdiLoading } from '@mdi/js';
 import MdEditor from 'react-markdown-editor-lite';
@@ -105,13 +106,13 @@ export default function Threads() {
         const response = await Http.post('posts', { body: formData });
         setSubmitting(false);
         if (response.code === 422) setEditorError(response.data.errors.content);
-        if (response.code === 200) {
+        errorCodeHandler(response.code, message => setMessage(message), () => {
             setEditorContent('');
             setEditorError(null);
             const thread = dbThread.data;
             const post = response.data;
-            history.push(`/thread/${thread.id}/${thread.slug}/${post.pageNumber}#${post.id}`)
-        }
+            history.push(`/thread/${thread.id}/${thread.slug}/${post.pageNumber}#${post.id}`);
+        });
     }
 
     function goToReply() {

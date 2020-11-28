@@ -71,6 +71,8 @@ export default function Profile() {
 
     if (data === 404) return <HttpError code={data} />
 
+    const isOwnProfile = () => user && user.id === data.id;
+
     const render = () => {
         if (status === 'loading') {
             return <Icon className={classnames('loadingWheel-2 center-self')} path={mdiLoading} spin={1} />
@@ -110,7 +112,7 @@ export default function Profile() {
                         Posts
                     </Tab>
                     {
-                        user &&
+                        !isOwnProfile() &&
                             <Tab as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/chat`}>
                                 Chat
                             </Tab>
@@ -119,7 +121,7 @@ export default function Profile() {
                 <div className={classnames(classes.content, 'col py-4 relative')}>
                     {tab === 'threads' && <Threads />}
                     {tab === 'posts' && <Posts />}
-                    {tab === 'chat' && user && <Chat />}
+                    {tab === 'chat' && !isOwnProfile() && <Chat />}
                 </div>
             </div>
         );

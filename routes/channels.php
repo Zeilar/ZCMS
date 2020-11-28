@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
-use App\Broadcasting\ThreadChannel;
 
-Broadcast::channel('thread-{id}', function() {
-    return true;
+Broadcast::channel('profile-{id}', function($user, $id) {
+    return ['user' => $user, 'profileId' => $id];
 });
