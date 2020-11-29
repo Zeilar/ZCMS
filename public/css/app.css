@@ -640,6 +640,14 @@ hr {
       rgb(0, 175, 125) 75%,
       rgb(0, 175, 150) 100%
   );
+  --color-main-gradient-rotated: linear-gradient(
+      15deg,
+      rgb(0, 175, 50) 0%,
+      rgb(0, 175, 75) 25%,
+      rgb(0, 175, 100) 50%,
+      rgb(0, 175, 125) 75%,
+      rgb(0, 175, 150) 100%
+  );
   --color-primary: white;
   --color-secondary: rgb(245, 245, 245);
   --color-dark: rgb(20, 20, 20);
@@ -850,6 +858,14 @@ span.color-3 {
   color: var(--color-danger);
 }
 
+.color-primary {
+  color: var(--color-primary);
+}
+
+.color-white {
+  color: white;
+}
+
 @font-face {
   src: url("/storage/fonts/Roboto-Regular.ttf");
   font-family: "Roboto";
@@ -914,6 +930,15 @@ body {
   background-color: var(--color-body);
   color: var(--text-primary);
   font-family: Roboto;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-main-gradient);
+  border-radius: 8px;
 }
 
 #app {

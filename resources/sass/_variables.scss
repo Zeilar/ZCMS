@@ -8,6 +8,14 @@
         rgb(0, 175, 125) 75%,
         rgb(0, 175, 150) 100%
     );
+    --color-main-gradient-rotated: linear-gradient(
+        15deg, 
+        rgb(0, 175, 50) 0%,
+        rgb(0, 175, 75) 25%,
+        rgb(0, 175, 100) 50%,
+        rgb(0, 175, 125) 75%,
+        rgb(0, 175, 150) 100%
+    );
     --color-primary: white;
     --color-secondary: rgb(245, 245, 245);
     --color-dark: rgb(20, 20, 20);

@@ -19,13 +19,18 @@ class ChatmessagesController extends Controller
         $this->authorize('viewAny', Chatmessage::class);
         if ($id = request()->query('profile', false)) {
             $profile = User::where('id', $id)->orWhere('username', $id)->firstOrFail();
-            return Chatmessage::where('receiver_id', $profile->id)
-                ->where('user_id', auth()->user()->id)
-                ->orderByDesc('id')
-                ->limit(30)
-                ->get();
+            $user = auth()->user();
+            return Chatmessage::where(function($q) use ($profile, $user) {
+                $q->where('receiver_id', $profile->id)->where('user_id', $user->id);
+            })
+            ->orWhere(function($q) use ($profile, $user) {
+                $q->where('receiver_id', $user->id)->where('user_id', $profile->id);
+            })
+            ->orderByDesc('id')
+            ->limit(30)
+            ->get();
         }
-        return Chatmessage::orderByDesc('id')->limit(30)->get();
+        return abort(400);
     }
 
     /**

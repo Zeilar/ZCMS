@@ -20,6 +20,15 @@ body {
     font-family: Roboto;
 }
 
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-main-gradient);
+    border-radius: 8px;
+}
+
 #app {
     min-height: 100vh;
 }
