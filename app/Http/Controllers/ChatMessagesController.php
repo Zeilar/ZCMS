@@ -27,7 +27,7 @@ class ChatmessagesController extends Controller
                 $q->where('receiver_id', $user->id)->where('user_id', $profile->id);
             })
             ->latest()
-            ->limit(30)
+            ->limit(100)
             ->get()
             ->reverse()
             ->values();
