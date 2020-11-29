@@ -20,7 +20,7 @@ function errorCodeHandler(code, errorCallback, successCallback) {
             break;
 
         case 404:
-            errorCallback('Post not found');
+            errorCallback('Resource not found');
             break;
 
         case 405:

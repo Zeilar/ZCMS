@@ -55,20 +55,37 @@ export default function Chatbox({ className = '', messages = [], receiver, setMe
     async function submit(e) {
         e.preventDefault();
         if (!input) return;
+
+        setInput('');
+
         const formData = new FormData();
         formData.append('content', input);
         formData.append('receiverId', receiver);
+
+        const loadingMessage = {
+            created_at: new Date(),
+            receiver_id: receiver,
+            id: Math.random(),
+            user_id: user.id,
+            content: input,
+            loading: true,
+            user: user,
+        };
+        setMessages(p => [...p, loadingMessage]);
+
         const { code } = await Http.post('chatmessages', { body: formData });
+        
         errorCodeHandler(code, message => setMessage(message), () => {
-            setInput('');
-            setMessages(p => [...p, {
-                created_at: new Date(),
-                receiver_id: receiver,
-                id: Math.random(),
-                user_id: user.id,
-                content: input,
-                user: user,
-            }]);
+            setMessages(p => {
+                const old = p;
+                old.shift();
+                return old.map(message => {
+                    if (message.id === loadingMessage.id) {
+                        message.loading = false;
+                    }
+                    return message;
+                });
+            });
         });
     }
 
