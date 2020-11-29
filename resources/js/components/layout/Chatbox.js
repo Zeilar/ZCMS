@@ -44,16 +44,16 @@ export default function Chatbox({ className = '', messages = [], onSubmit, place
 
     function keyHandler(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
-            if (!input) return;
             e.preventDefault();
-            onSubmit(input);
+            if (!input) return;
+            onSubmit(input, setInput);
         }
     }
 
     function submit(e) {
         e.preventDefault();
         if (!input) return;
-        onSubmit(input);
+        onSubmit(input, setInput);
     }
 
     return (
@@ -68,6 +68,7 @@ export default function Chatbox({ className = '', messages = [], onSubmit, place
                     style={{ resize: 'none' }}
                     placeholder={placeholder}
                     onKeyDown={keyHandler}
+                    value={input}
                     rows={3}
                 ></textarea>
                 <Tooltip className={classnames(classes.button, 'd-flex')} tagName="button" title="Send" type="submit">

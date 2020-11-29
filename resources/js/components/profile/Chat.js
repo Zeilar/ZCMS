@@ -1,30 +1,45 @@
+import React, { useContext, useState, useEffect } from 'react';
+import { errorCodeHandler } from '../../functions/helpers';
+import { UserContext } from '../../contexts';
 import { useParams } from 'react-router';
 import Chatbox from '../layout/Chatbox';
-import { useQuery } from 'react-query';
 import { mdiLoading } from '@mdi/js';
 import { Http } from '../../classes';
 import Icon from '@mdi/react';
-import React from 'react';
 
 export default function Chat() {
+    const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const { user } = useContext(UserContext);
     const { id } = useParams();
 
-    const { data, status } = useQuery(`chat-${id}`, async () => {
+    useEffect(async () => {
         const { data } = await Http.get(`chatmessages?profile=${id}`);
-        return data;
-    });
+        setLoading(false);
+        setMessages(data);
+    }, []);
 
-    if (status === 'loading') {
+    if (loading) {
         return <Icon className="loadingWheel-2 center-self" path={mdiLoading} spin={1} />
     }
 
-    if (status === 'error') {
-        return <p className="text-center color-danger mt-2">Something went wrong loading the chat</p>;
+    async function send(input, setInput) {
+        const formData = new FormData();
+        formData.append('content', input);
+        formData.append('receiverId', id);
+        const { code } = await Http.post('chatmessages', { body: formData });
+        errorCodeHandler(code, message => setMessage(message), () => {
+            setInput('');
+            setMessages(p => [...p, {
+                created_at: new Date(),
+                id: Math.random(),
+                user_id: user.id,
+                receiver_id: id,
+                content: input,
+                user: user,
+            }]);
+        });
     }
 
-    function test(input) {
-        console.log(input);
-    }
-
-    return <Chatbox messages={data} style={{ height: 500 }} onSubmit={test} />;
+    return <Chatbox messages={messages} style={{ height: 500 }} onSubmit={send} />;
 }

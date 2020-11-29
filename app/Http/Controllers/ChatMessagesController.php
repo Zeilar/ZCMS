@@ -26,7 +26,7 @@ class ChatmessagesController extends Controller
             ->orWhere(function($q) use ($profile, $user) {
                 $q->where('receiver_id', $user->id)->where('user_id', $profile->id);
             })
-            ->orderByDesc('id')
+            ->orderBy('id')
             ->limit(30)
             ->get();
         }
@@ -41,11 +41,13 @@ class ChatmessagesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', $request->profile);
+        $receiver = User::where('id', $request->receiverId)->orWhere('username', $request->receiverId)->firstOrFail();
+        $this->authorize('create', [$receiver, Chatmessage::class]);
 
         $message = Chatmessage::create([
-            'user_id' => auth()->user()->id,
-            'content' => $request->content,
+            'receiver_id' => $receiver->id,
+            'user_id'     => auth()->user()->id,
+            'content'     => $request->content,
         ]);
 
         broadcast(new NewChatmessage($message));
