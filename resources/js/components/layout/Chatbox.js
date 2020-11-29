@@ -11,6 +11,7 @@ export default function Chatbox({ className = '', messages = [], onSubmit, place
         container: {
             backgroundImage: 'var(--color-main-gradient-rotated)',
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.25)'],
+            maxHeight: '100vh !important',
             color: 'var(--color-primary)',
             borderRadius: 3,
         },
@@ -32,6 +33,9 @@ export default function Chatbox({ className = '', messages = [], onSubmit, place
             background: 'none',
             border: 0,
         },
+        input: {
+            borderRadius: 3,  
+        },
     });
     const classes = styles();
 
@@ -41,14 +45,6 @@ export default function Chatbox({ className = '', messages = [], onSubmit, place
     useEffect(() => {
         messagesContainer.current.scrollTo(0, 99999);
     }, [messages, messagesContainer]);
-
-    function keyHandler(e) {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            if (!input) return;
-            onSubmit(input, setInput);
-        }
-    }
 
     function submit(e) {
         e.preventDefault();
@@ -62,15 +58,13 @@ export default function Chatbox({ className = '', messages = [], onSubmit, place
                 {messages.map(message => <Chatmessage message={message} key={message.id} />)}
             </div>
             <form className={classnames(classes.footer, 'row center-children')} onSubmit={e => submit(e, input)}>
-                <textarea 
+                <input
+                    className={classnames(classes.input, 'flex p-2 mr-2')}
                     onChange={e => setInput(e.target.value)}
-                    className={classnames('flex p-2 mr-2')}
-                    style={{ resize: 'none' }}
                     placeholder={placeholder}
-                    onKeyDown={keyHandler}
                     value={input}
-                    rows={3}
-                ></textarea>
+                    type="text"
+                />
                 <Tooltip className={classnames(classes.button, 'd-flex')} tagName="button" title="Send" type="submit">
                     <Icon path={mdiSend} style={{ width: 35 }} />
                 </Tooltip>

@@ -41,5 +41,5 @@ export default function Chat() {
         });
     }
 
-    return <Chatbox messages={messages} style={{ height: 500 }} onSubmit={send} />;
+    return <Chatbox messages={messages} style={{ height: 800 }} onSubmit={send} />;
 }

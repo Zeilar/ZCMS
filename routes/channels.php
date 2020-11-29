@@ -2,6 +2,6 @@
 
 use Illuminate\Support\Facades\Broadcast;
 
-Broadcast::channel('profile-{id}', function($user, $id) {
-    return ['user' => $user, 'profileId' => $id];
+Broadcast::channel('profile-{id}', function($user) {
+    return ['user' => $user];
 });

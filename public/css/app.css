@@ -936,9 +936,12 @@ body {
   width: 12px;
 }
 
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.5);
+}
+
 ::-webkit-scrollbar-thumb {
   background: var(--color-main-gradient);
-  border-radius: 8px;
 }
 
 #app {
