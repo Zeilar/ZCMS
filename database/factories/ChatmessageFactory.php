@@ -22,9 +22,12 @@ class ChatmessageFactory extends Factory
      */
     public function definition()
     {
+        $sender = User::inRandomOrder()->limit(1)->first()->id;
+
         return [
-            'content' => $this->faker->sentence(10),
-            'user_id' => User::inRandomOrder()->limit(1)->first()->id,
+            'content'     => $this->faker->sentence(10),
+            'user_id'     => $sender,
+            'receiver_id' => User::inRandomOrder()->where('id', '!=', $sender)->limit(1)->first()->id,
         ];
     }
 }

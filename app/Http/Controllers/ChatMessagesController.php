@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\NewChatmessage;
 use Illuminate\Http\Request;
 use App\Models\Chatmessage;
-use Auth;
+use App\Models\User;
 
 class ChatmessagesController extends Controller
 {
@@ -16,7 +16,16 @@ class ChatmessagesController extends Controller
      */
     public function index()
     {
-        return Chatmessage::orderByDesc('id')->limit(Chatmessage::$MAX_PER_PAGE)->with('user.roles')->get();
+        $this->authorize('viewAny', Chatmessage::class);
+        if ($id = request()->query('profile', false)) {
+            $profile = User::where('id', $id)->orWhere('username', $id)->firstOrFail();
+            return Chatmessage::where('receiver_id', $profile->id)
+                ->where('user_id', auth()->user()->id)
+                ->orderByDesc('id')
+                ->limit(30)
+                ->get();
+        }
+        return Chatmessage::orderByDesc('id')->limit(30)->get();
     }
 
     /**
@@ -27,17 +36,16 @@ class ChatmessagesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Chatmessage::class);
+        $this->authorize('create', $request->profile);
 
         $message = Chatmessage::create([
             'user_id' => auth()->user()->id,
             'content' => $request->content,
         ]);
-        $message->user = $message->user;
 
         broadcast(new NewChatmessage($message));
 
-        return response()->json($message);
+        return response(true);
     }
 
     /**

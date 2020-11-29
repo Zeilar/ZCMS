@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Models\Post;
+use App\Models\Chatmessage;
 use App\Models\User;
 use Auth;
 
@@ -17,67 +17,36 @@ class ChatmessagePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, User $profile)
     {
-        if ($user->suspended()) return false;
-        return Auth::check();
+        if (!Auth::check()) return false;
+        if ($user->id === $profile->id) {
+            return false;
+        }
+
+        // If the receipient is moderator or higher, allow messages to be sent (for appeals and such)
+        if ($user->suspended()) {
+            return $profile->highestRole()->clearance <= 3;
+        }
+
+        return true;
     }
 
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Post  $post
-     * @return mixed
-     */
-    public function update(User $user, Post $post)
+    public function viewAny(User $user)
     {
-        if ($user->suspended()) return false;
-        return $user->hasAnyRole(['admin', 'moderator']) || $user->isAuthor($post);
+        return Auth::check();
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Post  $post
+     * @param  \App\Chatmessage  $chatmessage
      * @return mixed
      */
-    public function delete(User $user, Post $post)
+    public function delete(User $user, Chatmessage $chatmessage)
     {
         if ($user->suspended()) return false;
-        return $user->getClearance() <= 2;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Post  $post
-     * @return mixed
-     */
-    public function restore(User $user, Post $post)
-    {
-        if ($user->suspended()) return false;
-        return $user->getClearance() <= 2;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Post  $post
-     * @return mixed
-     */
-    public function forceDelete(User $user, Post $post)
-    {
-        if ($user->suspended()) return false;
-        return $user->getClearance() <= 2;
-    }
-
-    public function like(User $user, Post $post)
-    {
-        if ($user->suspended()) return false;
-        return Auth::check();
+        return $user->getClearance() <= 2 || $user->lowerClearance($chatmessage->user);
     }
 }

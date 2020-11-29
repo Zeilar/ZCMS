@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Chatmessage;
+use App\Models\User;
 
 class ChatmessageSeeder extends Seeder
 {
@@ -14,6 +15,6 @@ class ChatmessageSeeder extends Seeder
      */
     public function run()
     {
-        Chatmessage::factory()->count(50)->create();
+        Chatmessage::factory()->count(User::count() * 30)->create();
     }
 }
