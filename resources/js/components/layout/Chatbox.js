@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { FeedbackModalContext, UserContext } from '../../contexts';
-import { errorCodeHandler } from '../../functions/helpers';
+import { UserContext } from '../../contexts';
 import { createUseStyles } from 'react-jss';
 import { Http } from '../../classes';
 import classnames from 'classnames';
@@ -42,7 +41,6 @@ export default function Chatbox({ className = '', messages = [], receiver, setMe
     });
     const classes = styles();
 
-    const { setMessage } = useContext(FeedbackModalContext);
     const { user } = useContext(UserContext);
 
     const [input, setInput] = useState('');
@@ -68,25 +66,24 @@ export default function Chatbox({ className = '', messages = [], receiver, setMe
             id: Math.random(),
             user_id: user.id,
             content: input,
-            loading: true,
             user: user,
         };
         setMessages(p => [...p, loadingMessage]);
 
         const { code } = await Http.post('chatmessages', { body: formData });
-        
-        errorCodeHandler(code, message => setMessage(message), () => {
+
+        if (code !== 200) {
             setMessages(p => {
                 const old = p;
                 old.shift();
                 return old.map(message => {
                     if (message.id === loadingMessage.id) {
-                        message.loading = false;
+                        message.loading = true;
                     }
                     return message;
                 });
             });
-        });
+        }
     }
 
     return (
