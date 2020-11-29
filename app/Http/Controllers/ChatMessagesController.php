@@ -26,9 +26,11 @@ class ChatmessagesController extends Controller
             ->orWhere(function($q) use ($profile, $user) {
                 $q->where('receiver_id', $user->id)->where('user_id', $profile->id);
             })
-            ->orderBy('id')
+            ->latest()
             ->limit(30)
-            ->get();
+            ->get()
+            ->reverse()
+            ->values();
         }
         return abort(400);
     }
@@ -50,7 +52,7 @@ class ChatmessagesController extends Controller
             'content'     => $request->content,
         ]);
 
-        broadcast(new NewChatmessage($message));
+        // broadcast(new NewChatmessage($message));
 
         return response(true);
     }

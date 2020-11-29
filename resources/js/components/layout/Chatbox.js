@@ -1,12 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { FeedbackModalContext, UserContext } from '../../contexts';
+import { errorCodeHandler } from '../../functions/helpers';
 import { createUseStyles } from 'react-jss';
+import { Http } from '../../classes';
 import classnames from 'classnames';
 import { Tooltip } from '../misc';
 import { mdiSend } from '@mdi/js';
 import { Chatmessage } from './';
 import Icon from '@mdi/react';
 
-export default function Chatbox({ className = '', messages = [], onSubmit, placeholder = 'Aa', ...props }) {
+export default function Chatbox({ className = '', messages = [], receiver, setMessages, placeholder = 'Aa', ...props }) {
     const styles = createUseStyles({
         container: {
             backgroundImage: 'var(--color-main-gradient-rotated)',
@@ -39,17 +42,34 @@ export default function Chatbox({ className = '', messages = [], onSubmit, place
     });
     const classes = styles();
 
+    const { setMessage } = useContext(FeedbackModalContext);
+    const { user } = useContext(UserContext);
+
     const [input, setInput] = useState('');
     const messagesContainer = useRef();
 
     useEffect(() => {
-        messagesContainer.current.scrollTo(0, 99999);
+        messagesContainer.current.scrollTo(0, 9999);
     }, [messages, messagesContainer]);
 
-    function submit(e) {
+    async function submit(e) {
         e.preventDefault();
         if (!input) return;
-        onSubmit(input, setInput);
+        const formData = new FormData();
+        formData.append('content', input);
+        formData.append('receiverId', receiver);
+        const { code } = await Http.post('chatmessages', { body: formData });
+        errorCodeHandler(code, message => setMessage(message), () => {
+            setInput('');
+            setMessages(p => [...p, {
+                created_at: new Date(),
+                receiver_id: receiver,
+                id: Math.random(),
+                user_id: user.id,
+                content: input,
+                user: user,
+            }]);
+        });
     }
 
     return (
@@ -57,7 +77,7 @@ export default function Chatbox({ className = '', messages = [], onSubmit, place
             <div className={classnames(classes.messages, 'col flex mb-3 overflow-auto')} ref={messagesContainer}>
                 {messages.map(message => <Chatmessage message={message} key={message.id} />)}
             </div>
-            <form className={classnames(classes.footer, 'row center-children')} onSubmit={e => submit(e, input)}>
+            <form className={classnames(classes.footer, 'row center-children')} onSubmit={submit}>
                 <input
                     className={classnames(classes.input, 'flex p-2 mr-2')}
                     onChange={e => setInput(e.target.value)}
