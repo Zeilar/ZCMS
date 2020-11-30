@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { mdiSend, mdiLoading } from '@mdi/js';
 import { UserContext } from '../../contexts';
 import { createUseStyles } from 'react-jss';
 import { Http } from '../../classes';
 import classnames from 'classnames';
 import { Tooltip } from '../misc';
-import { mdiSend } from '@mdi/js';
 import { Chatmessage } from './';
 import Icon from '@mdi/react';
 
-export default function Chatbox({ className = '', messages = [], placeholder = 'Aa', loading = false, ...props }) {
+export default function Chatbox({ className = '', messages = [], placeholder = 'Aa', loading = true, ...props }) {
     const styles = createUseStyles({
         container: {
             backgroundImage: 'var(--color-main-gradient-rotated)',
@@ -88,17 +88,9 @@ export default function Chatbox({ className = '', messages = [], placeholder = '
 
     return (
         <div className={classnames(classes.container, className, 'col p-3')} {...props}>
-            <div className={classnames(classes.tabs, 'row')}>
-                {/* {
-                    tabs.map(tab => (
-                        <div className={classnames(classes.tab)} key={tab.user}>
-                            {tab.user}
-                        </div>
-                    ))
-                } */}
-            </div>
-            <div className={classnames(classes.messages, 'col flex mb-3 overflow-auto p-2')} ref={messagesContainer}>
+            <div className={classnames(classes.messages, 'col flex mb-3 overflow-auto p-2 relative')} ref={messagesContainer}>
                 {messages.map(message => <Chatmessage message={message} key={message.id} />)}
+                {loading && <h1>loading</h1>}
             </div>
             <form className={classnames(classes.footer, 'row center-children')} onSubmit={submit}>
                 <input
@@ -108,9 +100,9 @@ export default function Chatbox({ className = '', messages = [], placeholder = '
                     value={input}
                     type="text"
                 />
-                <Tooltip className={classnames(classes.button, 'd-flex')} tagName="button" title="Send" type="submit">
+                <button className={classnames(classes.button, 'd-flex')}>
                     <Icon path={mdiSend} style={{ width: 35 }} />
-                </Tooltip>
+                </button>
             </form>
         </div>
     );

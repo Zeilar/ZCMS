@@ -34,7 +34,7 @@ export default function Chatmessage({ className, message }) {
     const { user } = useContext(UserContext);
 
     return (
-        <article className={classnames(classes.wrapper, className, { loading: message.loading }, 'w-fit row')}>
+        <div className={classnames(classes.wrapper, className, { loading: message.loading }, 'w-fit row')}>
             <img className={classnames(classes.avatar, 'round')} src={`/storage/avatars/${message.user.avatar}`} alt="Profile picture" />
             <div className={classnames(classes.contentWrapper, 'col')}>
                 <p className={classnames(classes.meta, 'mb-1')}>
@@ -43,6 +43,6 @@ export default function Chatmessage({ className, message }) {
                 </p>
                 <p className={classnames(classes.content, 'p-2')}>{message.content}</p>
             </div>
-        </article>
+        </div>
     );
 }

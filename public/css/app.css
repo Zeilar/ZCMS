@@ -641,7 +641,7 @@ hr {
       rgb(0, 175, 150) 100%
   );
   --color-main-gradient-rotated: linear-gradient(
-      15deg,
+      -135deg,
       rgb(0, 175, 50) 0%,
       rgb(0, 175, 75) 25%,
       rgb(0, 175, 100) 50%,
