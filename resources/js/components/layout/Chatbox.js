@@ -8,7 +8,7 @@ import { mdiSend } from '@mdi/js';
 import { Chatmessage } from './';
 import Icon from '@mdi/react';
 
-export default function Chatbox({ className = '', messages = [], receiver, setMessages, placeholder = 'Aa', ...props }) {
+export default function Chatbox({ className = '', messages = [], placeholder = 'Aa', loading = false, ...props }) {
     const styles = createUseStyles({
         container: {
             backgroundImage: 'var(--color-main-gradient-rotated)',
@@ -58,11 +58,11 @@ export default function Chatbox({ className = '', messages = [], receiver, setMe
 
         const formData = new FormData();
         formData.append('content', input);
-        formData.append('receiverId', receiver);
+        formData.append('receiverId', active);
 
         const loadingMessage = {
             created_at: new Date(),
-            receiver_id: receiver,
+            receiver_id: active,
             id: Math.random(),
             user_id: user.id,
             content: input,
@@ -88,7 +88,16 @@ export default function Chatbox({ className = '', messages = [], receiver, setMe
 
     return (
         <div className={classnames(classes.container, className, 'col p-3')} {...props}>
-            <div className={classnames(classes.messages, 'col flex mb-3 overflow-auto')} ref={messagesContainer}>
+            <div className={classnames(classes.tabs, 'row')}>
+                {/* {
+                    tabs.map(tab => (
+                        <div className={classnames(classes.tab)} key={tab.user}>
+                            {tab.user}
+                        </div>
+                    ))
+                } */}
+            </div>
+            <div className={classnames(classes.messages, 'col flex mb-3 overflow-auto p-2')} ref={messagesContainer}>
                 {messages.map(message => <Chatmessage message={message} key={message.id} />)}
             </div>
             <form className={classnames(classes.footer, 'row center-children')} onSubmit={submit}>

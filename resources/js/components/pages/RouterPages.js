@@ -10,7 +10,7 @@ import { AdminRoute } from '../routes';
 import { Profile } from '../profile';
 import { HttpError } from '../http';
 import { Search } from '../search';
-import { Home } from './';
+import { Home, Chat } from './';
 
 export default function RouterPages() {
     const { type, message } = useContext(FeedbackModalContext);
@@ -26,6 +26,7 @@ export default function RouterPages() {
                 <Route component={Thread} path="/thread/:id/:slug?/:page?" exact />
                 <Route component={Login} path="/login" exact />
                 <Route component={Register} path="/register" exact />
+                <Route component={Chat} path="/chat" exact />
                 <Route component={Search} path="/search/:query?/:tab?/:page?" exact />
                 <AdminRoute component={AdminDashboard} path="/admin" />
                 <Route>

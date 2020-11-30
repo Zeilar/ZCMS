@@ -13,12 +13,12 @@ export default function Chat() {
     useEffect(async () => {
         const { data } = await Http.get(`chatmessages?profile=${id}`);
         setLoading(false);
-        setMessages(data);
+        setMessages([{ user: id, messages: data, active: true }]);
     }, []);
 
     if (loading) {
         return <Icon className="loadingWheel-2 center-self" path={mdiLoading} spin={1} />
     }
 
-    return <Chatbox messages={messages} setMessages={setMessages} receiver={id} style={{ height: 800 }} />;
+    return <Chatbox chats={messages} setMessages={setMessages} receiver={id} style={{ height: 800 }} />;
 }
