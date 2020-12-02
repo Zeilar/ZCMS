@@ -43,7 +43,7 @@ class ChatmessagesController extends Controller
      */
     public function store(Request $request)
     {
-        $receiver = User::where('id', $request->receiverId)->orWhere('username', $request->receiverId)->firstOrFail();
+        $receiver = User::where('id', $request->receiver)->orWhere('username', $request->receiver)->firstOrFail();
         $this->authorize('create', [$receiver, Chatmessage::class]);
 
         $message = Chatmessage::create([

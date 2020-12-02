@@ -8,7 +8,7 @@ import { Tooltip } from '../misc';
 import { Chatmessage } from './';
 import Icon from '@mdi/react';
 
-export default function Chatbox({ className = '', messages = [], placeholder = 'Aa', loading = true, ...props }) {
+export default function Chatbox({ className = '', messages = [], setChats, receiver, placeholder = 'Aa', loading = true, ...props }) {
     const styles = createUseStyles({
         container: {
             backgroundImage: 'var(--color-main-gradient-rotated)',
@@ -48,7 +48,7 @@ export default function Chatbox({ className = '', messages = [], placeholder = '
 
     useEffect(() => {
         messagesContainer.current.scrollTo(0, 9999);
-    }, [messages, messagesContainer]);
+    });
 
     async function submit(e) {
         e.preventDefault();
@@ -57,31 +57,37 @@ export default function Chatbox({ className = '', messages = [], placeholder = '
         setInput('');
 
         const formData = new FormData();
+        formData.append('receiver', receiver);
         formData.append('content', input);
-        formData.append('receiverId', active);
 
         const loadingMessage = {
             created_at: new Date(),
-            receiver_id: active,
             id: Math.random(),
             user_id: user.id,
             content: input,
             user: user,
         };
-        setMessages(p => [...p, loadingMessage]);
+        setChats(p => {
+            const old = p.find(chat => chat.tab === receiver);
+            old.messages.push(loadingMessage);
+            return [...p, old];
+        });
 
         const { code } = await Http.post('chatmessages', { body: formData });
 
         if (code !== 200) {
-            setMessages(p => {
-                const old = p;
-                old.shift();
-                return old.map(message => {
+            setChats(p => {
+                let old = p.find(chat => chat.tab === receiver);
+                if (old.messages.length >= 30) {
+                    old.messages.shift();
+                }
+                old.messages = old.messages.map(message => {
                     if (message.id === loadingMessage.id) {
                         message.loading = true;
                     }
                     return message;
                 });
+                return [...p, old];
             });
         }
     }

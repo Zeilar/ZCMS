@@ -28,7 +28,7 @@ export default function Chat() {
                 backgroundImage: 'var(--color-main-gradient)',
                 color: 'var(--color-primary)',
                 fontWeight: 'bold',
-                cursor: 'text',
+                cursor: 'default',
             },
         },
         new: {
@@ -42,6 +42,7 @@ export default function Chat() {
     const [active, setActive] = useState(JSON.parse(localStorage.getItem('activeChatTab')) ?? '');
     const [tabs, setTabs] = useState(JSON.parse(localStorage.getItem('chatTabs')) ?? []);
     const [loading, setLoading] = useState(true);
+    const [newTab, setNewTab] = useState(false);
     const [chats, setChats] = useState([]);
 
     useEffect(() => {
@@ -98,7 +99,7 @@ export default function Chat() {
                         <Icon path={mdiPlus} />
                     </button>
                 </div>
-                <Chatbox style={{ height: 800 }} messages={chats.find(chat => chat.tab === active)?.messages} loading={loading} />
+                <Chatbox style={{ height: 800 }} messages={chats.find(chat => chat.tab === active)?.messages} setChats={setChats} receiver={active} loading={loading} />
             </div>
         </>
     );
