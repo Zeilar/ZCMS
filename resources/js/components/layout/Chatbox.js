@@ -48,7 +48,7 @@ export default function Chatbox({ className = '', messages = [], setChats, recei
 
     useEffect(() => {
         messagesContainer.current.scrollTo(0, 9999);
-    });
+    }, [messages, messagesContainer]);
 
     async function submit(e) {
         e.preventDefault();

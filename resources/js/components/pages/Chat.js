@@ -99,7 +99,13 @@ export default function Chat() {
                         <Icon path={mdiPlus} />
                     </button>
                 </div>
-                <Chatbox style={{ height: 800 }} messages={chats.find(chat => chat.tab === active)?.messages} setChats={setChats} receiver={active} loading={loading} />
+                <Chatbox
+                    messages={chats.find(chat => chat.tab === active)?.messages}
+                    style={{ height: 800 }}
+                    setChats={setChats}
+                    receiver={active}
+                    loading={loading}
+                />
             </div>
         </>
     );
