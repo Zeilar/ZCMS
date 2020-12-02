@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import useOnclickOutside from 'react-cool-onclickoutside';
+import { FeedbackModalContext } from '../../contexts';
 import { Chatbox, Header } from '../layout';
 import { createUseStyles } from 'react-jss';
 import { Http } from '../../classes';
 import classnames from 'classnames';
-import { mdiPlus } from '@mdi/js';
+import { mdiCloseCircle, mdiPlus } from '@mdi/js';
 import Icon from '@mdi/react';
 
 export default function Chat() {
@@ -35,15 +37,43 @@ export default function Chat() {
             minWidth: 'unset',
             width: '2.5rem',
             marginLeft: 5,
+            '&.active': {
+                width: '15rem',
+            },
+        },
+        tabInput: {
+            color: 'var(--color-primary)',
+            background: 'none',
+            border: 0,
+            '&:focus': {
+                boxShadow: 'none',
+            },
+        },
+        remove: {
+            background: 'none',
+            border: 0,
+            '& svg': {
+                width: '1rem',
+            },
         },
     });
     const classes = styles();
 
-    const [active, setActive] = useState(JSON.parse(localStorage.getItem('activeChatTab')) ?? '');
+    const [active, setActive] = useState(JSON.parse(localStorage.getItem('activeChatTab')) ?? tabs[0] ?? '');
     const [tabs, setTabs] = useState(JSON.parse(localStorage.getItem('chatTabs')) ?? []);
-    const [loading, setLoading] = useState(true);
-    const [newTab, setNewTab] = useState(false);
+    const [tabInput, setTabInput] = useState('');
     const [chats, setChats] = useState([]);
+
+    const { setMessage } = useContext(FeedbackModalContext);
+
+    const [creatingTab, setCreatingTab] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    const tabInputElement = useRef();
+
+    const createTab = useOnclickOutside(() => {
+        setCreatingTab(false);
+    });
 
     useEffect(() => {
         const chats = [];
@@ -64,18 +94,36 @@ export default function Chat() {
         localStorage.setItem('chatTabs', JSON.stringify(tabs));
     }, [tabs, active]);
 
-    async function add(tab = '') {
-        if (tabs.includes(tab)) {
+    useEffect(() => {
+        setActive(tabs[0] ?? '');
+    }, [tabs]);
+
+    useEffect(() => {
+        tabInputElement.current?.focus();
+    }, [creatingTab]);
+
+    async function add(e) {
+        e.preventDefault();
+
+        if (tabs.includes(tabInput)) {
             return;
         }
 
         setLoading(true);
-        const { data } = await Http.get(`chatmessages?profile=${tab}`);
+        const { data, code } = await Http.get(`chatmessages?profile=${tabInput}`);
         setLoading(false);
-        
-        setChats(p => [...p, { tab: tab, messages: data }]);
-        setTabs(p => [...p, tab]);
-        setActive(tab);
+
+        if (code === 404) {
+            setMessage('User not found');
+        }
+
+        if (code === 200) {
+            setChats(p => [...p, { tab: tabInput, messages: data }]);
+            setTabs(p => [...p, tabInput]);
+            setCreatingTab(false);
+            setActive(tabInput);
+            setTabInput('');
+        }
     }
 
     function remove(tab) {
@@ -90,14 +138,40 @@ export default function Chat() {
                 <div className={classnames(classes.tabs, 'row')}>
                     {
                         tabs.map(tab => (
-                            <div className={classnames(classes.tab, { active: active === tab })} key={tab} onClick={() => setActive(tab)}>
-                                {tab}
+                            <div
+                                className={classnames(classes.tab, { active: active === tab }, 'center-children')}
+                                onClick={() => setActive(tab)}
+                                key={tab}
+                            >
+                                <span>{tab}</span>
+                                {
+                                    active === tab &&
+                                        <button
+                                            className={classnames(classes.remove, 'ml-1 center-children')}
+                                            onClick={() => remove(tab)}
+                                            type="button"
+                                        >
+                                            <Icon path={mdiCloseCircle} />
+                                        </button>
+                                }
                             </div>
                         ))
                     }
-                    <button className={classnames(classes.tab, classes.new, 'btn center-children p-0')}>
-                        <Icon path={mdiPlus} />
-                    </button>
+                    <form
+                        className={classnames(classes.tab, classes.new, 'btn center-children p-0', { active: creatingTab })}
+                        onClick={() => setCreatingTab(true)} ref={createTab} onSubmit={add}
+                    >
+                        {!creatingTab && <Icon path={mdiPlus} />}
+                        {
+                            creatingTab &&
+                                <input
+                                    className={classnames(classes.tabInput, 'bold')}
+                                    onChange={e => setTabInput(e.target.value)}
+                                    ref={tabInputElement}
+                                    value={tabInput}
+                                />
+                        }
+                    </form>
                 </div>
                 <Chatbox
                     messages={chats.find(chat => chat.tab === active)?.messages}

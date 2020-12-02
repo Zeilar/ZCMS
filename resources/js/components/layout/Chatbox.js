@@ -73,11 +73,13 @@ export default function Chatbox({ className = '', messages = [], setChats, recei
             return [...p, old];
         });
 
+        messagesContainer.current.scrollTo(0, 9999);
+
         const { code } = await Http.post('chatmessages', { body: formData });
 
         if (code !== 200) {
             setChats(p => {
-                let old = p.find(chat => chat.tab === receiver);
+                const old = p.find(chat => chat.tab === receiver);
                 if (old.messages.length >= 30) {
                     old.messages.shift();
                 }
@@ -90,6 +92,8 @@ export default function Chatbox({ className = '', messages = [], setChats, recei
                 return [...p, old];
             });
         }
+
+        messagesContainer.current.scrollTo(0, 9999);
     }
 
     return (
