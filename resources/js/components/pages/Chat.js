@@ -33,7 +33,6 @@ export default function Chat() {
         new: {
             minWidth: 'unset',
             width: '2.5rem',
-            marginLeft: 5,
             '&.active': {
                 width: '15rem',
             },
@@ -155,7 +154,7 @@ export default function Chat() {
                         ))
                     }
                     <form
-                        className={classnames(classes.tab, classes.new, 'btn center-children p-0', { active: creatingTab })}
+                        className={classnames(classes.tab, classes.new, 'btn center-children p-0', { active: creatingTab, 'ml-1': tabs.length > 0 })}
                         onClick={() => setCreatingTab(true)} ref={createTab} onSubmit={add}
                     >
                         {!creatingTab && <Icon path={mdiPlus} />}

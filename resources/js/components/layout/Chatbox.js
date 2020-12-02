@@ -100,7 +100,7 @@ export default function Chatbox({ className = '', messages = [], setChats, recei
         <div className={classnames(classes.container, className, 'col p-3')} {...props}>
             <div className={classnames(classes.messages, 'col flex mb-3 overflow-auto p-2 relative')} ref={messagesContainer}>
                 {messages.map(message => <Chatmessage message={message} key={message.id} />)}
-                {loading && <h1>loading</h1>}
+                {loading && <Icon className={classnames('loadingWheel-2')} path={mdiLoading} spin={1} />}
             </div>
             <form className={classnames(classes.footer, 'row center-children')} onSubmit={submit}>
                 <input
