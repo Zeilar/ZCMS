@@ -932,16 +932,18 @@ body {
   font-family: Roboto;
 }
 
-::-webkit-scrollbar {
-  width: 12px;
-}
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
 
-::-webkit-scrollbar-track {
-  background: var(--color-dark);
-}
+  ::-webkit-scrollbar-track {
+    background: var(--color-dark);
+  }
 
-::-webkit-scrollbar-thumb {
-  background: var(--color-main-gradient);
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-main-gradient);
+  }
 }
 
 #app {
