@@ -13,9 +13,6 @@ export default function Chat() {
         wrapper: {
             margin: [0, 'var(--container-margin)'],
         },
-        tabs: {
-            marginBottom: 1,
-        },
         tab: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
             backgroundColor: 'var(--color-primary)',
@@ -95,7 +92,7 @@ export default function Chat() {
     }, [tabs, active]);
 
     useEffect(() => {
-        setActive(tabs[0] ?? '');
+        setActive(tabs[tabs.length - 1] ?? '');
     }, [tabs]);
 
     useEffect(() => {
@@ -135,7 +132,7 @@ export default function Chat() {
         <>
             <Header />
             <div className={classnames(classes.wrapper, 'col mt-4')}>
-                <div className={classnames(classes.tabs, 'row')}>
+                <div className={classnames('row overflow-auto pb-2')}>
                     {
                         tabs.map(tab => (
                             <div
