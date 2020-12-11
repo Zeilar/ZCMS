@@ -1,12 +1,12 @@
 import { NewThread, Category, Thread } from '../threads';
 import { FeedbackModalContext } from '../../contexts';
-import AdminDashboard from '../admin/dashboard/Index';
 import { ScrollToTop, FeedbackModal } from '../misc';
 import { Route, Switch } from 'react-router';
 import React, { useContext } from 'react';
 import { Register, Login } from '../auth';
 import { PostSingle } from '../layout';
 import { AdminRoute } from '../routes';
+import { Dashboard } from '../admin';
 import { Profile } from '../profile';
 import { HttpError } from '../http';
 import { Search } from '../search';
@@ -28,7 +28,7 @@ export default function RouterPages() {
                 <Route component={Register} path="/register" exact />
                 <Route component={Chat} path="/chat" exact />
                 <Route component={Search} path="/search/:query?/:tab?/:page?" exact />
-                <AdminRoute component={AdminDashboard} path="/admin" />
+                <AdminRoute component={Dashboard} path="/admin" />
                 <Route>
                     <HttpError code={404} />
                 </Route>
