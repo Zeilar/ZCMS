@@ -15,11 +15,15 @@ export default function Dashboard() {
     return (
         <div className={classnames(classes.wrapper, 'row flex')}>
             <Sidebar />
-            <Switch>
-                <Route component={Start} path="/admin" exact />
-                <Route component={Users} path="/admin/users" exact />
-                <Route component={Start} />
-            </Switch>
+            <div className={classnames('col flex p-4')}>
+                <Switch>
+                    <Route component={Start} path="/admin" exact />
+                    <Route component={Users} path="/admin/users" exact />
+                    <Route>
+                        {/* <HttpError code={404} /> */}
+                    </Route>
+                </Switch>
+            </div>
         </div>
     );
 }

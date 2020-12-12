@@ -1,20 +1,22 @@
 import { createUseStyles } from 'react-jss';
+import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 export default function Sidebar() {
     const styles = createUseStyles({
         sidebar: {
+            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.75)'],
             backgroundColor: 'var(--color-main)',
             color: 'var(--color-primary)',
             minWidth: 200,
+            zIndex: 100,
         },
         brand: {
             fontFamily: 'Merriweather',
-            margin: [10, 20],
             letterSpacing: 3,
             fontSize: '2rem',
+            margin: [10, 20],
             color: 'inherit',
             marginTop: 20,
             '&:hover': {
@@ -22,33 +24,39 @@ export default function Sidebar() {
             },
         },
         navlist: {
-            marginTop: 20,
+            
         },
         navlink: {
-            border: '2px solid transparent',
+            borderLeft: '4px solid transparent',
+            fontFamily: 'Montserrat',
             fontSize: '1.25rem',
+            userSelect: 'none',
             transition: 'none',
             padding: [10, 20],
             color: 'inherit',
             '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.35)',
+                backgroundColor: 'rgba(0, 0, 0, 0.15)',
                 textDecoration: 'none',
                 color: 'inherit',
             },
             '&.active': {
-                borderLeftColor: '',
+                borderLeftColor: 'var(--color-primary)',
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                fontWeight: 'bold',
             },
         },
     });
     const classes = styles();
 
     return (
-        <div className={classnames(classes.sidebar, 'bold col')}>
-            <NavLink className={classnames(classes.brand, 'w-fit')} to="/">TPH</NavLink>
-            <ul className={classnames(classes.navlist)}>
+        <div className={classnames(classes.sidebar, 'col')}>
+            <NavLink className={classnames(classes.brand, 'w-fit no-select')} to="/">TPH</NavLink>
+            <ul className={classnames(classes.navlist, 'mt-5')}>
                 <li>
-                    <NavLink className={classnames(classes.navlink, 'd-flex')} to="/admin">Start</NavLink>
-                    <NavLink className={classnames(classes.navlink, 'd-flex')} to="/admin/users">Users</NavLink>
+                    <NavLink className={classnames(classes.navlink, 'd-flex')} to="/admin" exact>Start</NavLink>
+                </li>
+                <li>
+                    <NavLink className={classnames(classes.navlink, 'd-flex')} to="/admin/users" exact>Users</NavLink>
                 </li>
             </ul>
         </div>

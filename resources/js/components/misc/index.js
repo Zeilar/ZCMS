@@ -1,3 +1,4 @@
+import MaterialTable from './MaterialTable';
 import FeedbackModal from './FeedbackModal';
 import PasswordField from './PasswordField';
 import NavDropdown from './NavDropdown';
@@ -8,6 +9,7 @@ import Checkbox from './Checkbox';
 import Tooltip from './Tooltip';
 
 export {
+    MaterialTable,
     FeedbackModal,
     PasswordField,
     NavDropdown,
