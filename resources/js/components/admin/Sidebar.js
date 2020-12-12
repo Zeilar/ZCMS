@@ -16,10 +16,11 @@ export default function Sidebar() {
             fontFamily: 'Merriweather',
             letterSpacing: 3,
             fontSize: '2rem',
-            margin: [10, 20],
             color: 'inherit',
             marginTop: 20,
+            padding: 20,
             '&:hover': {
+                textDecoration: 'none',
                 color: 'inherit',
             },
         },
@@ -50,7 +51,7 @@ export default function Sidebar() {
 
     return (
         <div className={classnames(classes.sidebar, 'col')}>
-            <NavLink className={classnames(classes.brand, 'w-fit no-select')} to="/">TPH</NavLink>
+            <NavLink className={classnames(classes.brand, 'no-select text-center bold')} to="/">TPH</NavLink>
             <ul className={classnames(classes.navlist, 'mt-5')}>
                 <li>
                     <NavLink className={classnames(classes.navlink, 'd-flex')} to="/admin" exact>Start</NavLink>
