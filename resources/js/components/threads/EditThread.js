@@ -87,7 +87,7 @@ export default function EditThread({ thread, refetch }) {
                     editing
                         ? <>
                             <input 
-                                className={classnames(classes.input, 'w-100')} value={input} type="text"
+                                className={classnames(classes.input, 'input w-100')} value={input} type="text"
                                 onChange={e => setInput(e.target.value)} placeholder="Title"
                             />
                             {

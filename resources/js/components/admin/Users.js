@@ -23,6 +23,7 @@ export default function Users() {
                 ]}
                 options={{
                     selection: true,
+                    pageSize: 10,
                 }}
                 data={users}
                 title="Users"

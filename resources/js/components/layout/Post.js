@@ -284,7 +284,7 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
                         <label className={classnames(classes.editedByLabel, 'mb-2')}>
                             Edit reason <span className={classnames('italic')}>(optional)</span>
                         </label>
-                        <input value={editedByInput} onChange={e => setEditedByInput(e.target.value)} placeholder="Aa" />
+                        <input className={classnames('input')} value={editedByInput} onChange={e => setEditedByInput(e.target.value)} placeholder="Aa" />
                     </form>
             }
             <div className={classnames(classes.footer, 'row p-3')}>

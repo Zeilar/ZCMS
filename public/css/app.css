@@ -1017,7 +1017,7 @@ label {
   cursor: text;
 }
 
-input {
+.input {
   border: 1px solid var(--border-primary);
   transition: all 0.05s linear;
   border-radius: 2px;
@@ -1025,7 +1025,7 @@ input {
   padding: 8px;
 }
 
-input:focus {
+.input:focus {
   box-shadow: 0 0 0 2px var(--color-main);
 }
 
