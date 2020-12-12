@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
 
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import DeleteOutline from '@material-ui/icons/DeleteOutline';
 import ChevronRight from '@material-ui/icons/ChevronRight';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import FilterList from '@material-ui/icons/FilterList';
