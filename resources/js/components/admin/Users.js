@@ -15,6 +15,11 @@ export default function Users() {
     const [addModalOpen, setAddModalOpen] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
 
+    const [editModalFields, setEditModalFields] = useState([
+        { title: 'Username', name: 'username', value: '' },
+        { title: 'Email', name: 'email', value: '' },
+    ]);
+
     const [users, setUsers] = useState([]);
 
     useEffect(async () => {
@@ -29,6 +34,10 @@ export default function Users() {
     async function deleteUser(id) {
         const { code } = await Http.delete(`admin/users/${id}`);
         errorCodeHandler(code, message => setMessage(message), () => setUsers(p => p.filter(user => user.id !== id)));
+    }
+
+    async function addUser(id) {
+        
     }
 
     async function updateUser(id) {
@@ -59,6 +68,10 @@ export default function Users() {
                         icon: () => <Icon path={mdiPencil} />,
                         tooltip: 'Edit user',
                         onClick: (e, rowData) => {
+                            setEditModalFields([
+                                { title: 'Username', name: 'username', value: rowData.username },
+                                { title: 'Email', name: 'email', value: rowData.email },
+                            ]);
                             setEditModalOpen(true);
                         },
                     },
@@ -75,20 +88,47 @@ export default function Users() {
                 ]}
                 title="Users"
             />
-            <CrudModal
-                fields={[
-                    { title: 'Username', name: 'username', value: '' },
-                    { title: 'Email', name: 'email', value: '' },
-                ]}
-                render={(fields, update) => {
-                    return (
-                        <>
-                            <CrudField field={fields.find(field => field.title === 'Username')} update={update} />
-                            <CrudField field={fields.find(field => field.title === 'Email')} update={update} />
-                        </>
-                    );
-                }}
-            />
+            {
+                editModalOpen &&
+                    <CrudModal
+                        open={editModalOpen}
+                        close={() => setEditModalOpen(false)}
+                        fields={editModalFields}
+                        render={(fields, updateField) => {
+                            return (
+                                <>
+                                    <CrudField field={fields.find(field => field.title === 'Username')} updateField={updateField} />
+                                    <CrudField field={fields.find(field => field.title === 'Email')} updateField={updateField} />
+                                    <CrudTags field={fields.find(field => field.title === 'Roles')} updateField={updateField} />
+                                </>
+                            );
+                        }}
+                        action="Edit"
+                        resource="user"
+                    />
+            }
+            {
+                addModalOpen &&
+                    <CrudModal
+                        open={addModalOpen}
+                        close={() => setAddModalOpen(false)}
+                        fields={[
+                            { title: 'Username', name: 'username', value: '' },
+                            { title: 'Email', name: 'email', value: '' },
+                        ]}
+                        render={(fields, updateField) => {
+                            return (
+                                <>
+                                    <CrudField field={fields.find(field => field.title === 'Username')} updateField={updateField} />
+                                    <CrudField field={fields.find(field => field.title === 'Email')} updateField={updateField} />
+                                    <CrudTags field={fields.find(field => field.title === 'Roles')} updateField={updateField} />
+                                </>
+                            );
+                        }}
+                        action="Add"
+                        resource="user"
+                    />
+            }
         </div>
     );
 }

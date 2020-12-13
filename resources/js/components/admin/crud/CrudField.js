@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import classnames from 'classnames';
 
-export default function CrudField({ field = {}, update }) {
+export default function CrudField({ field = {}, updateField }) {
     function onChangeHandler(e) {
-        update(p => {
+        updateField(p => {
             const old = p;
             return old.map(element => {
                 if (element.title === field.title) {

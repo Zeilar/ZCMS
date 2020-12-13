@@ -3,7 +3,7 @@ import { createUseStyles } from 'react-jss';
 import React, { useState } from 'react';
 import classnames from 'classnames';
 
-export default function CrudModal({ open = true, close, onSubmit, action = '', resource = '', render, fields = [] }) {
+export default function CrudModal({ open = false, close, onSubmit, action = '', resource = '', render, fields = [] }) {
     const styles = createUseStyles({
         modal: {
             boxShadow: [0, 0, 10, 0, 'rgba(0, 0, 0, 0.5)'],
