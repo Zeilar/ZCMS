@@ -18,6 +18,7 @@ export default function Users() {
     const [editModalFields, setEditModalFields] = useState([
         { title: 'Username', name: 'username', value: '' },
         { title: 'Email', name: 'email', value: '' },
+        { title: 'Roles', name: 'roles', value: '' },
     ]);
 
     const [users, setUsers] = useState([]);
@@ -68,9 +69,11 @@ export default function Users() {
                         icon: () => <Icon path={mdiPencil} />,
                         tooltip: 'Edit user',
                         onClick: (e, rowData) => {
+                            const parsedTags = rowData.roles.map(role => role.name).join(',');
                             setEditModalFields([
                                 { title: 'Username', name: 'username', value: rowData.username },
                                 { title: 'Email', name: 'email', value: rowData.email },
+                                { title: 'Roles', name: 'roles', value: parsedTags },
                             ]);
                             setEditModalOpen(true);
                         },

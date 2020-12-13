@@ -28,7 +28,7 @@ export default function Sidebar() {
             
         },
         navlink: {
-            borderLeft: '4px solid transparent',
+            borderLeft: '5px solid transparent',
             fontFamily: 'Montserrat',
             fontSize: '1.25rem',
             userSelect: 'none',

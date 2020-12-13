@@ -32,6 +32,7 @@
     "dependencies": {
         "@material-ui/core": "^4.11.2",
         "@material-ui/icons": "^4.11.2",
+        "@yaireo/tagify": "^3.21.5",
         "classnames": "^2.2.6",
         "dayjs": "^1.9.6",
         "laravel-echo": "^1.9.0",
@@ -47,6 +48,7 @@
         "react-query": "^2.26.2",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
-        "styled-components": "^5.2.1"
+        "styled-components": "^5.2.1",
+        "tagify": "^0.1.1"
     }
 }

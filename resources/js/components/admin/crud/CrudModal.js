@@ -19,6 +19,7 @@ export default function CrudModal({ open = false, close, onSubmit, action = '', 
             backgroundColor: 'var(--color-primary)',
             transition: 'all 0.25s linear',
             borderRadius: 2,
+            minWidth: 400,
             zIndex: 5000,
         },
         background: {
@@ -27,6 +28,9 @@ export default function CrudModal({ open = false, close, onSubmit, action = '', 
             width: '100%',
             left: 0,
             top: 0,
+        },
+        fields: {
+            gap: '30px',
         },
     });
     const classes = styles();
@@ -40,8 +44,8 @@ export default function CrudModal({ open = false, close, onSubmit, action = '', 
     return (
         <form className={classnames(classes.modal, 'col fixed center-self center-children p-2', { closed: !open })} onSubmit={onSubmit}>
             <div className={classnames(classes.background, 'absolute')} />
-            <div className={classnames(classes.content, 'col w-fit p-3')} ref={modal}>
-                <h2 className={classnames(classes.title, 'mb-2')}>{action} {resource}</h2>
+            <div className={classnames(classes.content, 'col p-3')} ref={modal}>
+                <h2 className={classnames(classes.title, 'mb-3')}>{action} {resource}</h2>
                 <div className={classnames(classes.fields, 'col')}>
                     {render(fieldsState, setFieldsState)}
                 </div>
