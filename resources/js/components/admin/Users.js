@@ -1,15 +1,20 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { errorCodeHandler } from '../../functions/helpers';
+import { mdiPencil, mdiPlus, mdiTrashCan } from '@mdi/js';
 import { FeedbackModalContext } from '../../contexts';
-import { mdiPencil, mdiTrashCan } from '@mdi/js';
+import { CrudModal, CrudField, CrudTags } from './';
 import { createUseStyles } from 'react-jss';
 import { MaterialTable } from '../misc';
 import { Http } from '../../classes';
 import classnames from 'classnames';
 import Icon from '@mdi/react';
-import { errorCodeHandler } from '../../functions/helpers';
 
 export default function Users() {
     const { setMessage } = useContext(FeedbackModalContext);
+
+    const [addModalOpen, setAddModalOpen] = useState(false);
+    const [editModalOpen, setEditModalOpen] = useState(false);
+
     const [users, setUsers] = useState([]);
 
     useEffect(async () => {
@@ -26,6 +31,10 @@ export default function Users() {
         errorCodeHandler(code, message => setMessage(message), () => setUsers(p => p.filter(user => user.id !== id)));
     }
 
+    async function updateUser(id) {
+        
+    }
+
     return (
         <div>
             <MaterialTable
@@ -34,16 +43,23 @@ export default function Users() {
                     { title: 'Email', field: 'email' },
                 ]}
                 options={{
-                    // selection: true,
                     pageSize: 10,
                 }}
                 data={users}
                 actions={[
                     {
+                        icon: () => <Icon path={mdiPlus} />,
+                        tooltip: 'Add user',
+                        onClick: () => {
+                            setAddModalOpen(true);
+                        },
+                        isFreeAction: true,
+                    },
+                    {
                         icon: () => <Icon path={mdiPencil} />,
                         tooltip: 'Edit user',
                         onClick: (e, rowData) => {
-                            
+                            setEditModalOpen(true);
                         },
                     },
                     {
@@ -58,6 +74,20 @@ export default function Users() {
                     },
                 ]}
                 title="Users"
+            />
+            <CrudModal
+                fields={[
+                    { title: 'Username', name: 'username', value: '' },
+                    { title: 'Email', name: 'email', value: '' },
+                ]}
+                render={(fields, update) => {
+                    return (
+                        <>
+                            <CrudField field={fields.find(field => field.title === 'Username')} update={update} />
+                            <CrudField field={fields.find(field => field.title === 'Email')} update={update} />
+                        </>
+                    );
+                }}
             />
         </div>
     );
