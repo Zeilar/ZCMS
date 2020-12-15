@@ -14,7 +14,7 @@ export default class Http {
         try {
             data = await response.json();
         } catch (e) {
-            console.error(`${method.toUpperCase()} ${location.origin}${url} ${response.status}`);
+            console.error(e);
         }
         return { data: data, code: response.status, response: response };
     }

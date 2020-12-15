@@ -56,6 +56,7 @@ Route::prefix('admin')->middleware('IsAdmin')->group(function() {
         Route::delete('/', [UsersController::class, 'bulkDelete']);
         Route::post('{user}/suspend', [UsersController::class, 'suspend']);
         Route::post('{user}/pardon', [UsersController::class, 'pardon']);
+        Route::post('{user}', [UsersController::class, 'update']);
     });
 });
 

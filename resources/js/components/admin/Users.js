@@ -3,7 +3,6 @@ import { errorCodeHandler } from '../../functions/helpers';
 import { mdiPencil, mdiPlus, mdiTrashCan } from '@mdi/js';
 import { FeedbackModalContext } from '../../contexts';
 import { CrudModal, CrudField, CrudTags } from './';
-import { createUseStyles } from 'react-jss';
 import { MaterialTable } from '../misc';
 import { Http } from '../../classes';
 import classnames from 'classnames';
@@ -11,6 +10,10 @@ import Icon from '@mdi/react';
 
 export default function Users() {
     const { setMessage } = useContext(FeedbackModalContext);
+
+    const [modalLoading, setModalLoading] = useState(false);
+    
+    const [modalTarget, setModalTarget] = useState();
 
     const [addModalOpen, setAddModalOpen] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
@@ -37,12 +40,36 @@ export default function Users() {
         errorCodeHandler(code, message => setMessage(message), () => setUsers(p => p.filter(user => user.id !== id)));
     }
 
-    async function addUser(id) {
+    async function addUser() {
         
     }
 
-    async function updateUser(id) {
-        
+    async function updateUser(fields) {
+        const formData = new FormData();
+        fields.forEach(field => {
+            if (typeof field.value !== 'string') {
+                formData.append(field.name, JSON.stringify(field.value));
+            } else {
+                formData.append(field.name, field.value);
+            }
+        });
+        const { code } = await Http.post(`admin/users/${modalTarget.id}`, { body: formData });
+        errorCodeHandler(code, message => setMessage(message), () => {
+            setUsers(p => p.map(user => {
+                if (user.id === modalTarget.id) {
+                    const username = fields.find(field => field.title === 'Username');
+                    const email = fields.find(field => field.title === 'Email');
+                    const roles = fields.find(field => field.title === 'Roles');
+                    return {
+                        ...user,
+                        username: username.value,
+                        email: email.value,
+                        roles: roles.value,
+                    };
+                }
+                return user;
+            }));
+        });
     }
 
     return (
@@ -69,12 +96,13 @@ export default function Users() {
                         icon: () => <Icon path={mdiPencil} />,
                         tooltip: 'Edit user',
                         onClick: (e, rowData) => {
-                            const parsedTags = rowData.roles.map(role => role.name).join(',');
+                            const parsedTags = rowData.roles.map(role => ({ value: role.name }));
                             setEditModalFields([
                                 { title: 'Username', name: 'username', value: rowData.username },
                                 { title: 'Email', name: 'email', value: rowData.email },
                                 { title: 'Roles', name: 'roles', value: parsedTags },
                             ]);
+                            setModalTarget(rowData);
                             setEditModalOpen(true);
                         },
                     },
@@ -94,20 +122,21 @@ export default function Users() {
             {
                 editModalOpen &&
                     <CrudModal
-                        open={editModalOpen}
                         close={() => setEditModalOpen(false)}
                         fields={editModalFields}
+                        onSubmit={updateUser}
+                        open={editModalOpen}
+                        resource="user"
+                        action="Edit"
                         render={(fields, updateField) => {
                             return (
                                 <>
-                                    <CrudField field={fields.find(field => field.title === 'Username')} updateField={updateField} />
+                                    <CrudField field={fields.find(field => field.title === 'Username')} updateField={updateField} autofocus={true} />
                                     <CrudField field={fields.find(field => field.title === 'Email')} updateField={updateField} />
-                                    <CrudTags field={fields.find(field => field.title === 'Roles')} updateField={updateField} />
+                                    <CrudTags field={fields.find(field => field.title === 'Roles')} updateField={updateField} placeholder="member" />
                                 </>
                             );
                         }}
-                        action="Edit"
-                        resource="user"
                     />
             }
             {
@@ -118,13 +147,14 @@ export default function Users() {
                         fields={[
                             { title: 'Username', name: 'username', value: '' },
                             { title: 'Email', name: 'email', value: '' },
+                            { title: 'Roles', name: 'roles', value: '' },
                         ]}
                         render={(fields, updateField) => {
                             return (
                                 <>
-                                    <CrudField field={fields.find(field => field.title === 'Username')} updateField={updateField} />
+                                    <CrudField field={fields.find(field => field.title === 'Username')} updateField={updateField} autofocus={true} />
                                     <CrudField field={fields.find(field => field.title === 'Email')} updateField={updateField} />
-                                    <CrudTags field={fields.find(field => field.title === 'Roles')} updateField={updateField} />
+                                    <CrudTags field={fields.find(field => field.title === 'Roles')} updateField={updateField} placeholder="member" />
                                 </>
                             );
                         }}

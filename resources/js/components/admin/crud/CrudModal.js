@@ -53,7 +53,10 @@ export default function CrudModal({ open = false, close, onSubmit, action = '', 
     return (
         <div className={classnames(classes.modal, 'col fixed center-self center-children p-2', { closed: !open })}>
             <div className={classnames(classes.background, 'absolute')} />
-            <form className={classnames(classes.content, 'col p-3 relative')} ref={modal} onSubmit={onSubmit}>
+            <form className={classnames(classes.content, 'col p-3 relative')} ref={modal} onSubmit={e => {
+                e.preventDefault();
+                onSubmit(fieldsState);
+            }}>
                 <button className={classnames(classes.close, 'absolute d-flex')} type="button" onClick={close}>
                     <Icon path={mdiClose} />
                 </button>

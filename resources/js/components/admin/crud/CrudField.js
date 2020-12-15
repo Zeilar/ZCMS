@@ -2,7 +2,7 @@ import { createUseStyles } from 'react-jss';
 import classnames from 'classnames';
 import React from 'react';
 
-export default function CrudField({ field = {}, updateField }) {
+export default function CrudField({ field = {}, updateField, autofocus = false }) {
     const styles = createUseStyles({
         label: {
             fontFamily: 'Montserrat',
@@ -26,7 +26,7 @@ export default function CrudField({ field = {}, updateField }) {
     return (
         <div className={classnames('col')}>
             <label className={classnames(classes.label, 'mb-2 caps bold')}>{field.title}</label>
-            <input className={classnames('input')} type={field.type ?? 'text'} value={field.value} onChange={onChangeHandler} />
+            <input className={classnames('input')} type={field.type ?? 'text'} value={field.value} onChange={onChangeHandler} autoFocus={autofocus} />
         </div>
     );
 }

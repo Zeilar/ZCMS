@@ -66,7 +66,7 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         $this->authorize('update', $user);
-
+        
         $roles = [];
         if ($request->roles) {
             foreach (json_decode($request->roles) as $role) {
@@ -77,13 +77,17 @@ class UsersController extends Controller
             }
         }
 
-        $user->update([
-            'username' => $request->username ?? $user->username,
-            'email'    => $request->email ?? $user->email,
-        ]);
-        if (count($roles) > 0) $user->roles()->sync($roles);
-        
-        return response($roles);
+        $data = [];
+        if ($request->username) {
+            $data['username'] = $request->username;
+        }
+        if ($request->email) {
+            $data['email'] = $request->email;
+        }
+        if ($data) {
+            $user->update($data);
+        }
+        if (count($roles) > 0) $user->roles()->sync($roles);        
     }
 
     /**
