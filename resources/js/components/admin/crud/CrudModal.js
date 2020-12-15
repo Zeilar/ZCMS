@@ -1,8 +1,8 @@
 import useOnclickOutside from 'react-cool-onclickoutside';
+import { mdiClose, mdiLoading } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 import React, { useState } from 'react';
 import classnames from 'classnames';
-import { mdiClose } from '@mdi/js';
 import Icon from '@mdi/react';
 
 export default function CrudModal({ open = false, close, onSubmit, action = '', resource = '', render, fields = [] }) {
@@ -47,6 +47,7 @@ export default function CrudModal({ open = false, close, onSubmit, action = '', 
     const classes = styles();
 
     const [fieldsState, setFieldsState] = useState(fields);
+    const [submitting, setSubmitting] = useState(false);
 
     const modal = useOnclickOutside(close);
 
@@ -55,7 +56,7 @@ export default function CrudModal({ open = false, close, onSubmit, action = '', 
             <div className={classnames(classes.background, 'absolute')} />
             <form className={classnames(classes.content, 'col p-3 relative')} ref={modal} onSubmit={e => {
                 e.preventDefault();
-                onSubmit(fieldsState);
+                onSubmit(fieldsState, setSubmitting);
             }}>
                 <button className={classnames(classes.close, 'absolute d-flex')} type="button" onClick={close}>
                     <Icon path={mdiClose} />
@@ -64,7 +65,9 @@ export default function CrudModal({ open = false, close, onSubmit, action = '', 
                 <div className={classnames(classes.fields, 'col')}>
                     {render(fieldsState, setFieldsState)}
                 </div>
-                <button className={classnames(classes.submit, 'btn mt-3')}>Submit</button>
+                <button className={classnames(classes.submit, 'btn mt-3')}>
+                    {submitting ? <Icon path={mdiLoading} style={{ width: 15 }} spin={1} /> : 'Submit'}
+                </button>
             </form>
         </div>
     );

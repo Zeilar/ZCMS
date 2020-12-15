@@ -52,8 +52,6 @@ class UsersController extends Controller
             'password' => Hash::make($request->password),
         ]);
         if (count($roles) > 0) $user->roles()->sync($roles);
-
-        return response($user);
     }
 
     /**

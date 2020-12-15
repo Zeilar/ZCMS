@@ -11,8 +11,6 @@ import Icon from '@mdi/react';
 export default function Users() {
     const { setMessage } = useContext(FeedbackModalContext);
 
-    const [modalLoading, setModalLoading] = useState(false);
-    
     const [modalTarget, setModalTarget] = useState();
 
     const [addModalOpen, setAddModalOpen] = useState(false);
@@ -40,11 +38,7 @@ export default function Users() {
         errorCodeHandler(code, message => setMessage(message), () => setUsers(p => p.filter(user => user.id !== id)));
     }
 
-    async function addUser() {
-        
-    }
-
-    async function updateUser(fields) {
+    async function addUser(fields, setSubmitting) {
         const formData = new FormData();
         fields.forEach(field => {
             if (typeof field.value !== 'string') {
@@ -53,7 +47,35 @@ export default function Users() {
                 formData.append(field.name, field.value);
             }
         });
+        setSubmitting(true);
+        const { code } = await Http.post('admin/users', { body: formData });
+        setSubmitting(false);
+        errorCodeHandler(code, message => setMessage(message), () => {
+            setUsers(p => {
+                const username = fields.find(field => field.title === 'Username');
+                const email = fields.find(field => field.title === 'Email');
+                const roles = fields.find(field => field.title === 'Roles');
+                return [...p, {
+                    username: username.value,
+                    email: email.value,
+                    roles: roles.value,
+                }];
+            });
+        });
+    }
+
+    async function updateUser(fields, setSubmitting) {
+        const formData = new FormData();
+        fields.forEach(field => {
+            if (typeof field.value !== 'string') {
+                formData.append(field.name, JSON.stringify(field.value));
+            } else {
+                formData.append(field.name, field.value);
+            }
+        });
+        setSubmitting(true);
         const { code } = await Http.post(`admin/users/${modalTarget.id}`, { body: formData });
+        setSubmitting(false);
         errorCodeHandler(code, message => setMessage(message), () => {
             setUsers(p => p.map(user => {
                 if (user.id === modalTarget.id) {
@@ -131,8 +153,8 @@ export default function Users() {
                         render={(fields, updateField) => {
                             return (
                                 <>
-                                    <CrudField field={fields.find(field => field.title === 'Username')} updateField={updateField} autofocus={true} />
-                                    <CrudField field={fields.find(field => field.title === 'Email')} updateField={updateField} />
+                                    <CrudField field={fields.find(field => field.title === 'Username')} updateField={updateField} autoFocus={true} />
+                                    <CrudField field={fields.find(field => field.title === 'Email')} updateField={updateField} autoComplete="off" />
                                     <CrudTags field={fields.find(field => field.title === 'Roles')} updateField={updateField} placeholder="member" />
                                 </>
                             );
@@ -142,24 +164,29 @@ export default function Users() {
             {
                 addModalOpen &&
                     <CrudModal
-                        open={addModalOpen}
                         close={() => setAddModalOpen(false)}
+                        open={addModalOpen}
+                        onSubmit={addUser}
+                        resource="user"
+                        action="Add"
                         fields={[
                             { title: 'Username', name: 'username', value: '' },
                             { title: 'Email', name: 'email', value: '' },
+                            { title: 'Password', name: 'password', value: '' },
+                            { title: 'Password Confirmation', name: 'password_confirmation', value: '' },
                             { title: 'Roles', name: 'roles', value: '' },
                         ]}
                         render={(fields, updateField) => {
                             return (
                                 <>
-                                    <CrudField field={fields.find(field => field.title === 'Username')} updateField={updateField} autofocus={true} />
-                                    <CrudField field={fields.find(field => field.title === 'Email')} updateField={updateField} />
+                                    <CrudField field={fields.find(field => field.title === 'Username')} updateField={updateField} autoFocus={true} />
+                                    <CrudField field={fields.find(field => field.title === 'Email')} updateField={updateField} autoComplete="off" />
+                                    <CrudField field={fields.find(field => field.title === 'Password')} updateField={updateField} type="password" />
+                                    <CrudField field={fields.find(field => field.title === 'Password Confirmation')} updateField={updateField} type="password" />
                                     <CrudTags field={fields.find(field => field.title === 'Roles')} updateField={updateField} placeholder="member" />
                                 </>
                             );
                         }}
-                        action="Add"
-                        resource="user"
                     />
             }
         </div>

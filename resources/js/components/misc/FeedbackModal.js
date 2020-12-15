@@ -46,6 +46,7 @@ export default function FeedbackModal({ message, type }) {
             transform: 'translateX(-50%)',
             fontSize: '1.25rem',
             letterSpacing: 1,
+            zIndex: 10000000,
             borderRadius: 3,
             color: color,
             padding: 15,

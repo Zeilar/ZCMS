@@ -16,7 +16,6 @@ export default function CrudTags({ field = {}, updateField, placeholder }) {
     const input = useRef();
 
     function updateTags() {
-        console.log('update', input.current.value);
         updateField(p => p.map(element => {
             if (element.title === field.title) {
                 return {
