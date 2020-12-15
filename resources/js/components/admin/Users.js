@@ -9,7 +9,7 @@ import classnames from 'classnames';
 import Icon from '@mdi/react';
 
 export default function Users() {
-    const { setMessage } = useContext(FeedbackModalContext);
+    const { setMessage, setType } = useContext(FeedbackModalContext);
 
     const [modalTarget, setModalTarget] = useState();
 
@@ -51,6 +51,8 @@ export default function Users() {
         const { code } = await Http.post('admin/users', { body: formData });
         setSubmitting(false);
         errorCodeHandler(code, message => setMessage(message), () => {
+            setType('success');
+            setMessage('Successfully created user');
             setUsers(p => {
                 const username = fields.find(field => field.title === 'Username');
                 const email = fields.find(field => field.title === 'Email');
@@ -77,6 +79,8 @@ export default function Users() {
         const { code } = await Http.post(`admin/users/${modalTarget.id}`, { body: formData });
         setSubmitting(false);
         errorCodeHandler(code, message => setMessage(message), () => {
+            setType('success');
+            setMessage('Successfully updated user');
             setUsers(p => p.map(user => {
                 if (user.id === modalTarget.id) {
                     const username = fields.find(field => field.title === 'Username');
