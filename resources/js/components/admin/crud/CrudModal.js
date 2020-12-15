@@ -2,11 +2,12 @@ import useOnclickOutside from 'react-cool-onclickoutside';
 import { createUseStyles } from 'react-jss';
 import React, { useState } from 'react';
 import classnames from 'classnames';
+import { mdiClose } from '@mdi/js';
+import Icon from '@mdi/react';
 
 export default function CrudModal({ open = false, close, onSubmit, action = '', resource = '', render, fields = [] }) {
     const styles = createUseStyles({
         modal: {
-            boxShadow: [0, 0, 10, 0, 'rgba(0, 0, 0, 0.5)'],
             transition: 'all 0.25s linear',
             height: '100vh',
             width: '100vw',
@@ -16,6 +17,7 @@ export default function CrudModal({ open = false, close, onSubmit, action = '', 
             },
         },
         content: {
+            boxShadow: [0, 0, 10, 0, 'rgba(0, 0, 0, 0.5)'],
             backgroundColor: 'var(--color-primary)',
             transition: 'all 0.25s linear',
             borderRadius: 2,
@@ -30,26 +32,37 @@ export default function CrudModal({ open = false, close, onSubmit, action = '', 
             top: 0,
         },
         fields: {
-            gap: '30px',
+            gap: '20px',
+        },
+        submit: {
+            fontSize: '1.25rem',
+        },
+        close: {
+            background: 'none',
+            border: 0,
+            right: 15,
+            top: 15,
         },
     });
     const classes = styles();
 
     const [fieldsState, setFieldsState] = useState(fields);
 
-    const modal = useOnclickOutside(() => {
-        close();
-    });
+    const modal = useOnclickOutside(close);
 
     return (
-        <form className={classnames(classes.modal, 'col fixed center-self center-children p-2', { closed: !open })} onSubmit={onSubmit}>
+        <div className={classnames(classes.modal, 'col fixed center-self center-children p-2', { closed: !open })}>
             <div className={classnames(classes.background, 'absolute')} />
-            <div className={classnames(classes.content, 'col p-3')} ref={modal}>
+            <form className={classnames(classes.content, 'col p-3 relative')} ref={modal} onSubmit={onSubmit}>
+                <button className={classnames(classes.close, 'absolute d-flex')} type="button" onClick={close}>
+                    <Icon path={mdiClose} />
+                </button>
                 <h2 className={classnames(classes.title, 'mb-3')}>{action} {resource}</h2>
                 <div className={classnames(classes.fields, 'col')}>
                     {render(fieldsState, setFieldsState)}
                 </div>
-            </div>
-        </form>
+                <button className={classnames(classes.submit, 'btn mt-3')}>Submit</button>
+            </form>
+        </div>
     );
 }

@@ -1,8 +1,8 @@
 import Tags from '@yaireo/tagify/dist/react.tagify';
 import { createUseStyles } from 'react-jss';
 import '@yaireo/tagify/dist/tagify.css';
+import React, { useRef } from 'react';
 import classnames from 'classnames';
-import React from 'react';
 
 export default function CrudField({ field = {}, updateField }) {
     const styles = createUseStyles({
@@ -13,13 +13,16 @@ export default function CrudField({ field = {}, updateField }) {
     });
     const classes = styles();
 
-    function updateTags(e) {
-        const parsedTags = JSON.parse(e.target.value).map(object => object.value).join(',');
+    const input = useRef();
+
+    function updateTags() {
         updateField(p => {
-            const old = p;
-            return old.map(element => {
+            return p.map(element => {
                 if (element.title === field.title) {
-                    element.value = parsedTags;
+                    return {
+                        ...element,
+                        value: input.current.value,
+                    }
                 }
                 return element;
             });
@@ -29,7 +32,7 @@ export default function CrudField({ field = {}, updateField }) {
     return (
         <div className={classnames('col')}>
             <label className={classnames(classes.label, 'mb-2 caps bold')}>{field.title}</label>
-            <Tags value={field.value} onChange={updateTags} />
+            <Tags tagifyRef={input} value={field.value} onBlur={updateTags} />
         </div>
     );
 }
