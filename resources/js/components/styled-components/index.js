@@ -24,6 +24,18 @@ const LinkButton = styled.a`
     }
 `;
 
+const AdminStatisticBox = styled.div`
+    background-color: var(--color-primary);
+    flex-direction: column;
+    font-family: Raleway;
+    align-items: center;
+    border-radius: 2px;
+    width: fit-content;
+    font-weight: bold;
+    display: flex;
+    padding: 15px;
+`;
+
 const Tab = styled.a`
     border: 1px solid var(--border-primary);
     background-color: var(--color-primary);
@@ -100,6 +112,7 @@ const BigNavButton = styled.a`
 `;
 
 export {
+    AdminStatisticBox,
     BigNavButton,
     LinkStandard,
     LinkButton,

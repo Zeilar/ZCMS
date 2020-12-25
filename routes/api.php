@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\{
+    Admin\StatisticsController,
     ChatmessagesController,
     Admin\UsersController,
     CategoriesController,
@@ -49,7 +50,7 @@ Route::post('posts/{post}', [PostsController::class, 'update']);
 // ChatmessagesController
 Route::resource('chatmessages', ChatmessagesController::class, ['except' => ['create', 'edit', 'show']]);
 
-// Admin -> UsersController
+// Admin -> ...Controller
 Route::prefix('admin')->middleware('IsAdmin')->group(function() {
     Route::prefix('users')->group(function() {
         Route::resource('/', UsersController::class, ['except' => ['create', 'edit', 'show']])->parameters(['' => 'user']);
@@ -57,6 +58,11 @@ Route::prefix('admin')->middleware('IsAdmin')->group(function() {
         Route::post('{user}/suspend', [UsersController::class, 'suspend']);
         Route::post('{user}/pardon', [UsersController::class, 'pardon']);
         Route::post('{user}', [UsersController::class, 'update']);
+    });
+    Route::prefix('statistics')->group(function() {
+        Route::get('users', [StatisticsController::class, 'amountOfUsers']);
+        Route::get('threads', [StatisticsController::class, 'amountOfThreads']);
+        Route::get('posts', [StatisticsController::class, 'amountOfPosts']);
     });
 });
 

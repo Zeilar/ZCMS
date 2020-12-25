@@ -69,7 +69,7 @@ export default function EditThread({ thread, refetch }) {
     }
 
     async function remove() {
-        if (!confirm('Are you sure you want to delete this thread?')) return;
+        if (!confirm('Are you sure you want to delete this thread? This can NOT be undone!')) return;
         setDeleting(true);
         const response = await Http.delete(`threads/${thread.id}`);
         setDeleting(false);

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Scout\Searchable;
 use App\Events\CreatedUser;
+use App\Events\DeletedUser;
 use \Carbon\Carbon;
 
 class User extends Authenticatable
@@ -16,7 +17,7 @@ class User extends Authenticatable
     protected $appends = ['suspended', 'postsAmount', 'likesAmount', 'rank', 'avatar', 'signature'];
     protected $hidden = ['password', 'updated_at', 'remember_token', 'email_verified_at'];
     protected $fillable = ['username', 'email', 'password', 'role', 'avatar'];
-    protected $dispatchesEvents = ['saved' => CreatedUser::class];
+    protected $dispatchesEvents = ['saved' => CreatedUser::class, 'deleted' => DeletedUser::class];
     protected $casts = ['email_verified_at' => 'datetime'];
     protected $with = ['roles'];
 

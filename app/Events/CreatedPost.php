@@ -6,8 +6,10 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Events\NewPost;
 use App\Models\Rank;
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class CreatedPost
+class CreatedPost implements ShouldBroadcastNow
 {
     use Dispatchable, SerializesModels;
 
@@ -24,6 +26,11 @@ class CreatedPost
                 $user->ranks()->syncWithoutDetaching($rank->id);
             }
         });
-        broadcast(new NewPost($post->thread)); // TODO: ->toOthers()
+        // broadcast(new NewPost($post->thread)); // TODO: ->toOthers()
+    }
+
+    public function broadcastOn()
+    {
+        return new Channel('admin-statistics');
     }
 }

@@ -63,6 +63,7 @@ export default function Users() {
                     roles: roles.value,
                 }];
             });
+            setAddModalOpen(false);
         });
     }
 
@@ -136,7 +137,7 @@ export default function Users() {
                         icon: () => <Icon className={classnames('color-danger')} path={mdiTrashCan} />,
                         tooltip: 'Delete user',
                         onClick: (e, rowData) => {
-                            if (!confirm(`Are you sure you want to delete user ${rowData.username}?`)) {
+                            if (!confirm(`Are you sure you want to delete user ${rowData.username}? This can NOT be undone!`)) {
                                 return;
                             }
                             deleteUser(rowData.id);
@@ -178,7 +179,7 @@ export default function Users() {
                             { title: 'Email', name: 'email', value: '' },
                             { title: 'Password', name: 'password', value: '' },
                             { title: 'Password Confirmation', name: 'password_confirmation', value: '' },
-                            { title: 'Roles', name: 'roles', value: '' },
+                            { title: 'Roles', name: 'roles', value: 'member' },
                         ]}
                         render={(fields, updateField) => {
                             return (

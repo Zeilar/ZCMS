@@ -4,14 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Events\CreatedOrUpdatedThread;
 use Laravel\Scout\Searchable;
+use App\Events\CreatedThread;
+use App\Events\UpdatedThread;
+use App\Events\DeletedThread;
 
 class Thread extends Model
 {
     use HasFactory, Searchable;
 
-    protected $dispatchesEvents = ['saved' => CreatedOrUpdatedThread::class, 'updating' => CreatedOrUpdatedThread::class];
+    protected $dispatchesEvents = ['saved' => CreatedThread::class, 'updating' => UpdatedThread::class, 'deleted' => DeletedThread::Class];
     protected $appends = ['latestPost', 'firstPost', 'postsAmount'];
     protected $hidden = ['updated_at'];
     protected $with = ['user'];

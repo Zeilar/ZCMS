@@ -208,7 +208,7 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
     }
 
     async function deletePost() {
-        if (!confirm('Are you sure you want to delete this post?')) return;
+        if (!confirm('Are you sure you want to delete this post? This can NOT be undone!')) return;
         setDeleting(true);
         const response = await Http.delete(`posts/${post.id}`);
         setDeleting(false);
