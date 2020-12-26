@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/angelin/public_html/test/
+    - /bin/cp -R public $DEPLOYPATH
+    

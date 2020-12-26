@@ -19,6 +19,6 @@ if (mix.inProduction()) {
 	mix.copyDirectory('tests', 'dist/tph/tests');
 
 	// Public
-	mix.copyDirectory('public/css', 'dist/tph.angelin.dev/css');
-	mix.copyDirectory('public/js', 'dist/tph.angelin.dev/js');
+	mix.copyDirectory('public/css', 'dist/public/css');
+	mix.copyDirectory('public/js', 'dist/public/js');
 }
