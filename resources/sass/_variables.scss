@@ -35,6 +35,12 @@
 
     // Sizes
     --container-margin: 15vw;
+    @media (max-width: 1200px) {
+        --container-margin: 50px;
+    }
+    @media (max-width: 768px) {
+        --container-margin: 30px;
+    }
 
     // Role colors
     --color-1: var(--color-main);

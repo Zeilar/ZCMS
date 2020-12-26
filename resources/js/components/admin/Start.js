@@ -40,15 +40,15 @@ export default function Start() {
 
     return (
         <div className={classnames('row')}>
-            <AdminStatisticBox as="div">
+            <AdminStatisticBox className={classnames('mr-4')}>
                 <p>Users</p>
                 <CountUp end={users} duration={2} />
             </AdminStatisticBox>
-            <AdminStatisticBox as="div">
+            <AdminStatisticBox className={classnames('mr-4')}>
                 <p>Threads</p>
                 <CountUp end={threads} duration={2} />
             </AdminStatisticBox>
-            <AdminStatisticBox as="div">
+            <AdminStatisticBox>
                 <p>Posts</p>
                 <CountUp end={posts} duration={2} />
             </AdminStatisticBox>

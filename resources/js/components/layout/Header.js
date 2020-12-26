@@ -19,7 +19,10 @@ export default function Header() {
             },
         },
         navbar: {
-
+            margin: [25, 0],
+            '@media (max-width: 768px)': {
+                margin: [5, 0],
+            },
         },
         navlist: {
             alignItems: 'center',
@@ -65,10 +68,16 @@ export default function Header() {
             fontSize: '2.5rem',
             letterSpacing: 2,
             lineHeight: 0.7,
+            '@media (max-width: 768px)': {
+                fontSize: '1.5rem',
+            },
         },
         siteSlogan: {
             color: 'var(--color-primary)',
             fontFamily: 'Raleway',
+            '@media (max-width: 768px)': {
+                display: 'none',
+            },
         },
     });
     const classes = styles();
@@ -146,7 +155,7 @@ export default function Header() {
 
     return (
         <header className={classnames(classes.header, 'center-children sticky col')}>
-            <nav className={classnames(classes.navbar, 'w-100 row my-3')} ref={navbar}>
+            <nav className={classnames(classes.navbar, 'w-100 row')} ref={navbar}>
                 <ul className={classnames(classes.navlist, 'flex row')}>
                     <NavLink className={classnames(classes.brand, 'mr-auto col center-children')} to="/">
                         <Knockout className={classnames(classes.siteHeader, 'py-2')} as="h1">TPH</Knockout>

@@ -666,6 +666,18 @@ hr {
   --color-3: rgb(200, 100, 0);
 }
 
+@media (max-width: 1200px) {
+  :root {
+    --container-margin: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --container-margin: 30px;
+  }
+}
+
 .btn,
 .btn-outline {
   background-image: var(--color-main-gradient);
@@ -947,6 +959,7 @@ body {
 }
 
 #app {
+  overflow-x: hidden;
   min-height: 100vh;
 }
 

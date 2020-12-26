@@ -25,15 +25,18 @@ const LinkButton = styled.a`
 `;
 
 const AdminStatisticBox = styled.div`
+    border: 2px solid var(--border-primary);
     background-color: var(--color-primary);
     flex-direction: column;
     font-family: Raleway;
     align-items: center;
     border-radius: 2px;
+    padding: 25px 50px;
     width: fit-content;
     font-weight: bold;
+    font-size: 1.5rem;
     display: flex;
-    padding: 15px;
+    gap: 15px;
 `;
 
 const Tab = styled.a`
@@ -108,6 +111,10 @@ const BigNavButton = styled.a`
     &:hover {
         color: var(--text-primary);
         text-decoration: none;
+    }
+    @media (max-width: 768px) {
+        padding: 8px 12px;
+        font-size: 1rem;
     }
 `;
 
