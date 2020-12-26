@@ -104,7 +104,7 @@ export default function Chatbox({ className = '', messages = [], setChats, recei
             </div>
             <form className={classnames(classes.footer, 'row center-children')} onSubmit={submit}>
                 <input
-                    className={classnames(classes.input, 'flex p-2 mr-2')}
+                    className={classnames(classes.input, 'input flex p-2 mr-2')}
                     onChange={e => setInput(e.target.value)}
                     placeholder={placeholder}
                     value={input}

@@ -161,7 +161,7 @@ export default function Chat() {
                         {
                             creatingTab &&
                                 <input
-                                    className={classnames(classes.tabInput, 'bold')}
+                                    className={classnames(classes.tabInput, ' input bold')}
                                     onChange={e => setTabInput(e.target.value)}
                                     ref={tabInputElement}
                                     value={tabInput}

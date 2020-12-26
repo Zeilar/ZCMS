@@ -3,3 +3,4 @@ deployment:
   tasks:
     - /bin/cp -R dist/public /home/angelin/public_html/tph
     - /bin/cp -R dist/tph /home/angelin/tph
+    

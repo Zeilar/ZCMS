@@ -9,6 +9,7 @@ import Icon from '@mdi/react';
 export default function NavDropdown({ containerClassName = '', toggler, items = [], align = 'right' }) {
     const styles = createUseStyles({
         wrapper: {
+            position: 'relative',
             marginRight: 50,
             padding: 10,
             '&.right': {
@@ -17,7 +18,6 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
             },
             '@media (max-width: 768px)': {
                 transition: 'all 0.25s',
-                position: 'relative',
                 marginRight: 25,
                 padding: [5, 0],
                 '&.right': {
