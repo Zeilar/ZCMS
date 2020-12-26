@@ -6,7 +6,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
 
-class CreatedOrUpdatedThread
+class UpdatedThread
 {
     use Dispatchable, SerializesModels;
 

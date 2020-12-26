@@ -18,18 +18,15 @@ export default function Header() {
                 textDecoration: 'none',
             },
         },
-        navbar: {
-            margin: [25, 0],
-            '@media (max-width: 768px)': {
-                margin: [5, 0],
-            },
-        },
         navlist: {
             alignItems: 'center',
         },
         navitem: {
             margin: [0, 20, 0, 0],
+            alignItems: 'center',
             userSelect: 'none',
+            display: 'flex',
+            height: 100,
             '&:last-child': {
                 marginRight: 0,
             },
