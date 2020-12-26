@@ -43,7 +43,7 @@ class FillAvatars extends Command
      */
     public function handle()
     {
-        $confirmMessage = 'You are not in development mode! This will overwrite existing users, are you sure?';
+        $confirmMessage = 'You are in production mode! This will overwrite existing users, are you sure?';
         if (!$this->option('force') && env('APP_ENV') !== 'local' && !$this->confirm($confirmMessage)) {
             return;
         }

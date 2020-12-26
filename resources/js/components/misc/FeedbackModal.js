@@ -9,7 +9,7 @@ export default function FeedbackModal({ message, type }) {
     let icon = mdiAlertCircle;
     switch (type) {
         case 'success':
-            backgroundColor = 'rgb(0, 200, 0)';
+            backgroundColor = 'rgb(0, 127, 0)';
             icon = mdiCheckCircle;
             break;
         case 'warning':
@@ -25,11 +25,11 @@ export default function FeedbackModal({ message, type }) {
     const styles = createUseStyles({
         '@keyframes fadeIn': {
             from: {
-                top: '23vh',
+                top: '18vh',
                 opacity: 0,
             },
             to: {
-                top: '25vh',
+                top: '20vh',
                 opacity: 1,
             },
         },

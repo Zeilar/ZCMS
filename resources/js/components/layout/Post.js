@@ -52,7 +52,7 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
             backgroundColor: 'var(--color-primary)',
             color: 'var(--text-primary)',
             alignSelf: 'center',
-            zIndex: 100,
+            zIndex: 10,
             '&:hover': {
                 textDecoration: 'none',
             },

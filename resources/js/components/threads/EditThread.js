@@ -11,7 +11,9 @@ import Icon from '@mdi/react';
 export default function EditThread({ thread, refetch }) {
     const styles = createUseStyles({
         wrapper: {
-            
+            '@media (max-width: 768px)': {
+                flexDirection: 'column',
+            },
         },
         button: {
             justifyContent: 'center',
@@ -20,6 +22,13 @@ export default function EditThread({ thread, refetch }) {
             padding: 10,
             height: 50,
             width: 50,
+        },
+        buttons: {
+            display: 'flex',
+            '@media (max-width: 768px)': {
+                marginLeft: 'auto',
+                marginTop: 10,
+            },
         },
         input: {
             fontSize: '1.5rem',
@@ -90,33 +99,35 @@ export default function EditThread({ thread, refetch }) {
                                 className={classnames(classes.input, 'input w-100')} value={input} type="text"
                                 onChange={e => setInput(e.target.value)} placeholder="Title"
                             />
-                            {
-                                canRemove() &&
-                                    <button
-                                        className={classnames(classes.button, 'btn btn-outline btn-danger ml-2')}
-                                        onClick={remove} type="button"
-                                    >
-                                        {deleting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiTrashCanOutline} />}
-                                    </button>
-                            }
-                            {
-                                canLock() &&
-                                    <button 
-                                        className={classnames(classes.button, 'btn btn-outline mx-2 btn-dark')}
-                                        onClick={() => setLocked(p => p ? 0 : 1)} type="button"
-                                    >
-                                        <Icon path={locked ? mdiLockOutline : mdiLockOpenOutline} />
-                                    </button>
-                            }
-                            <button className={classnames(classes.button, 'btn btn-outline ml-2')} onClick={submit} disabled={submitting}>
-                                {submitting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiCheck} />}
-                            </button>
-                            <button
-                                className={classnames(classes.button, 'btn btn-outline ml-2 btn-dark')}
-                                onClick={() => setEditing(false)} type="button"
-                            >
-                                <Icon path={mdiClose} />
-                            </button>
+                            <div className={classnames(classes.buttons)}>
+                                {
+                                    canRemove() &&
+                                        <button
+                                            className={classnames(classes.button, 'btn btn-outline btn-danger ml-2')}
+                                            onClick={remove} type="button"
+                                        >
+                                            {deleting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiTrashCanOutline} />}
+                                        </button>
+                                }
+                                {
+                                    canLock() &&
+                                        <button 
+                                            className={classnames(classes.button, 'btn btn-outline mx-2 btn-dark')}
+                                            onClick={() => setLocked(p => p ? 0 : 1)} type="button"
+                                        >
+                                            <Icon path={locked ? mdiLockOutline : mdiLockOpenOutline} />
+                                        </button>
+                                }
+                                <button className={classnames(classes.button, 'btn btn-outline ml-2')} onClick={submit} disabled={submitting}>
+                                    {submitting ? <Icon path={mdiLoading} spin={1} /> : <Icon path={mdiCheck} />}
+                                </button>
+                                <button
+                                    className={classnames(classes.button, 'btn btn-outline ml-2 btn-dark')}
+                                    onClick={() => setEditing(false)} type="button"
+                                >
+                                    <Icon path={mdiClose} />
+                                </button>
+                            </div>
                         </>
                         : (
                             <button className={classnames(classes.button, 'btn btn-outline ml-auto btn-dark')} onClick={() => setEditing(true)} type="button">

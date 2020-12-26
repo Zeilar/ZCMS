@@ -154,7 +154,7 @@ export default function Header() {
     }
 
     return (
-        <header className={classnames(classes.header, 'center-children sticky col')}>
+        <header className={classnames(classes.header, 'center-children col')}>
             <nav className={classnames(classes.navbar, 'w-100 row')} ref={navbar}>
                 <ul className={classnames(classes.navlist, 'flex row')}>
                     <NavLink className={classnames(classes.brand, 'mr-auto col center-children')} to="/">
