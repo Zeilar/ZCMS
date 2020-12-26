@@ -1,0 +1,103 @@
+// @import url('https://cdn.angelin.dev/css/v1.0/app.css');
+@import './angelin'; // moving domain, using local copy for now
+@import './variables';
+@import './elements';
+@import './fonts';
+
+*,
+*::before,
+*::after {
+    outline: 0;
+}
+
+:root {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--color-body);
+    color: var(--text-primary);
+    font-family: Roboto;
+}
+
+@media (pointer: fine) {
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--color-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--color-main-gradient);
+    }
+}
+
+#app {
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+::selection {
+    background-color: rgba(0, 0, 0, 0.85);
+    color: var(--color-main);
+}
+
+::placeholder {
+    user-select: none;
+}
+
+a,
+button {
+    cursor: pointer;
+}
+
+a {
+    transition: all 0.05s linear;
+    color: var(--color-link);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+        color: var(--color-link);
+    }
+}
+
+textarea {
+    font-family: inherit;
+}
+
+img,
+svg,
+button {
+    user-select: none;
+}
+
+svg {
+    width: 25px;
+}
+
+label {
+    width: fit-content;
+    cursor: text;
+}
+
+.input {
+    border: 1px solid var(--border-primary);
+    transition: all 0.05s linear;
+    border-radius: 2px;
+    font-size: 1rem;
+    padding: 8px;
+
+    &:focus {
+        box-shadow: 0 0 0 2px var(--color-main);
+    }
+}
+
+div.custom-html-style {
+    p {
+        font-size: 1rem;
+        margin: 0;
+    }
+}
