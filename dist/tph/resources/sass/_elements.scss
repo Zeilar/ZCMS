@@ -1,0 +1,160 @@
+.btn {
+    background-image: var(--color-main-gradient);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.35);
+    background-color: var(--color-main);
+    transition: all 0.05s linear;
+    color: var(--color-primary);
+    min-height: 2.25rem;
+    border-radius: 3px;
+    position: relative;
+    width: fit-content;
+    font-weight: bold;
+    user-select: none;
+    padding: 8px 12px;
+    min-width: 3rem;
+    border: 0;
+
+    &:hover {
+        color: var(--color-primary);
+        text-decoration: none;
+    }
+
+    &:hover,
+    &[disabled] {
+        background-color: var(--color-main-dark);
+    }
+
+    &[disabled] {
+        cursor: default;
+    }
+
+    &.loading {
+        pointer-events: none;
+        padding: 2px;
+    }
+
+    &.btn-dark {    
+        background-color: rgb(15, 15, 15);
+        background-image: none;
+
+        &:hover {
+            background-color: rgb(35, 35, 35);
+        }
+    }
+
+    &.btn-danger {
+        background-color: var(--color-danger);
+        color: var(--color-primary);
+        background-image: none;
+
+        &:hover {
+            background-color: rgb(175, 0, 0);
+        }
+    }
+}
+
+.btn-outline {
+    @extend .btn;
+
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+    border: 2px solid var(--color-main);
+    background-color: transparent;
+    color: var(--color-main);
+    background-image: none;
+    transition: none;
+
+    &:hover {
+        background-color: var(--color-main);
+        color: var(--color-primary);
+    }
+
+    &.btn-dark {    
+        border-color: rgb(15, 15, 15);
+        background-color: transparent;
+        color: rgb(15, 15, 15);
+        background-image: none;
+
+        &:hover {
+            background-color: rgb(15, 15, 15);
+            color: var(--color-primary);
+        }
+    }
+
+    &.btn-danger {
+        border-color: var(--color-danger);
+        background-color: transparent;
+        color: var(--color-danger);
+        background-image: none;
+
+        &:hover {
+            background-color: var(--color-danger);
+            color: var(--color-primary);
+        }
+    }
+}
+
+// Loading wheel
+.loadingWheel {
+    color: var(--color-main);
+    width: 25px;
+}
+.loadingWheel-2 {
+    color: var(--color-main);
+    width: 50px;
+}
+.loadingWheel-3 {
+    color: var(--color-main);
+    width: 75px;
+}
+.loadingWheel-4 {
+    color: var(--color-main);
+    width: 100px;
+}
+
+input {
+    width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, span {
+    // Clearance colors
+    &.color-1 {
+        color: var(--color-1);
+    }
+    &.color-2 {
+        color: var(--color-2);
+    }
+    &.color-3 {
+        color: var(--color-3);
+    }
+}
+
+.outline {
+    transition: all 0.05s linear;
+    &:focus {
+        box-shadow: 0 0 0 1px var(--color-main-dark);
+    }
+}
+
+.ucfirst {
+    text-transform: capitalize;
+}
+
+.caps {
+    text-transform: uppercase;
+}
+
+.color-main {
+    color: var(--color-main);
+}
+
+.color-danger {
+    color: var(--color-danger);
+}
+
+.color-primary {
+    color: var(--color-primary);
+}
+
+.color-white {
+    color: white;
+}
