@@ -10,6 +10,7 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
     const styles = createUseStyles({
         wrapper: {
             marginRight: 50,
+            padding: 10,
             '&.right': {
                 marginRight: 0,
                 marginLeft: 50,
@@ -17,10 +18,11 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
             '@media (max-width: 768px)': {
                 transition: 'all 0.25s',
                 position: 'relative',
-                marginRight: 15,
+                marginRight: 25,
+                padding: [5, 0],
                 '&.right': {
                     marginRight: 0,
-                    marginLeft: 15,
+                    marginLeft: 25,
                 },
             },
         },
@@ -133,7 +135,7 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
     }, [open]);
 
     return (
-        <div className={classnames(classes.wrapper, 'p-2 no-select', align, containerClassName)} ref={wrapper}>
+        <div className={classnames(classes.wrapper, 'no-select', align, containerClassName)} ref={wrapper}>
             <button className={classnames(classes.toggler, 'color-main center-children bold')} onClick={() => setOpen(p => !p)}>
                 {toggler}
             </button>
