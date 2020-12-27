@@ -78,6 +78,9 @@ const Tab = styled.a`
             display: block;
         }
     }
+    @media (max-width: 768px) {
+        font-size: 1rem;           
+    }
 `;
 
 const BigNavButton = styled.a`

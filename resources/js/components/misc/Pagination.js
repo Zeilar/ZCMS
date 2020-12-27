@@ -56,6 +56,9 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
                     color: 'var(--color-primary)',
                 },
             },
+            '@media (max-width: 768px)': {
+                padding: [6],
+            },
         },
         icon: {
             width: '1rem',

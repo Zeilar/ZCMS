@@ -81,6 +81,9 @@ export default function Profile() {
         },
         metavalue: {
             fontSize: '1.5rem',
+            '@media (max-width: 768px)': {
+                fontSize: '1.25rem',
+            },
         },
     });
     const classes = styles();
