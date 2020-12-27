@@ -79,10 +79,6 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
         footer: {
             borderTop: '1px solid var(--border-primary)',
             gap: '10px',
-            '@media (max-width: 768px)': {
-                display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
-            },
         },
         metaboxes: {
             fontFamily: 'Montserrat',
