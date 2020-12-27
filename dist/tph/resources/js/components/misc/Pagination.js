@@ -23,6 +23,10 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
     }, [route]);
 
     const styles = createUseStyles({
+        paginator: {
+            flexWrap: 'wrap',
+            gap: '10px',
+        },
         item: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.1)'],
             backgroundColor: 'var(--color-primary)',
@@ -34,7 +38,6 @@ export default function Pagination({ pagination, containerClassname = '', ref, .
             fontSize: '1rem',
             padding: [8, 12],
             borderRadius: 3,
-            marginRight: 10,
             display: 'flex',
             minWidth: 40,
             '&.disabled': {

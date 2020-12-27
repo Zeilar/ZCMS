@@ -17,7 +17,10 @@ import Icon from '@mdi/react';
 export default function Category() {
     const styles = createUseStyles({
         container: {
-            padding: [0, 'var(--container-margin)'],
+            padding: [50, 'var(--container-margin)'],
+            '@media (max-width: 768px)': {
+                padding: 'var(--container-margin)',
+            },
         },
         categoryIcon: {
             filter: 'brightness(0) invert(1)',
@@ -124,7 +127,7 @@ export default function Category() {
     return (
         <>
             <Header />
-            <div className={`${classes.container} col py-4`}>
+            <div className={`${classes.container} col`}>
                 {render()}
             </div>
         </>

@@ -33,6 +33,10 @@ export default function EditThread({ thread, refetch }) {
         input: {
             fontSize: '1.5rem',
             height: 50,
+            '@media (max-width: 768px)': {
+                fontSize: '1rem',
+                height: 35,  
+            },
         },
         error: {
             color: 'var(--color-danger)',

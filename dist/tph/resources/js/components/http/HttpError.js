@@ -8,6 +8,7 @@ export default function HttpError({ code }) {
     const styles = createUseStyles({
         header: {
             fontFamily: 'Montserrat !important',
+            textAlign: 'center',
             fontSize: '4rem',
         },
     });

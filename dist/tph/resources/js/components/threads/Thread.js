@@ -19,7 +19,10 @@ import marked from 'marked';
 export default function Threads() {
     const styles = createUseStyles({
         container: {
-            padding: [0, 'var(--container-margin)'],
+            padding: [50, 'var(--container-margin)'],
+            '@media (max-width: 768px)': {
+                padding: 'var(--container-margin)',
+            },
         },
         header: {
 
@@ -32,6 +35,9 @@ export default function Threads() {
             fontSize: '1.5rem',
             borderRadius: 3,
             padding: 15,
+            '@media (max-width: 768px)': {
+                fontSize: '1rem',
+            },
         },
         back: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.35)'],
@@ -143,7 +149,9 @@ export default function Threads() {
     if (httpError) return <HttpError code={httpError} />
 
     window.addEventListener('beforeunload', function(e) {
-        if (editorContent) e.returnValue = 'You have unsaved changes';
+        if (editorContent.length > 25) {
+            e.returnValue = 'You have unsaved changes';
+        }
     });
 
     const paginationRender = () => {
@@ -219,7 +227,7 @@ export default function Threads() {
     return (
         <>
             <Header />
-            <div className={`${classes.container} col py-4`}>
+            <div className={`${classes.container} col`}>
                 {render()}
             </div>
         </>

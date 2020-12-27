@@ -71,15 +71,26 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
                 top: '50%',
                 width: 25,
                 left: -1,
+                '@media (max-width: 768px)': {
+                    content: 'none',
+                },
             },
         },
         footer: {
             borderTop: '1px solid var(--border-primary)',
             gap: '10px',
+            '@media (max-width: 768px)': {
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+            },
         },
         metaboxes: {
             fontFamily: 'Montserrat',
             alignItems: 'center',
+            display: 'flex',
+            '@media (max-width: 768px)': {
+                display: 'none',
+            },
         },
         metabox: {
             borderLeft: '1px solid var(--border-primary)',
@@ -259,21 +270,6 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
         if (post.content !== content) e.returnValue = 'You have unsaved changes';
     });
 
-    const likeButtonRender = () => {
-        if (liking) return <Icon className={classnames(classes.likeIcon, 'mr-0')} path={mdiLoading} spin={1} />;
-        if (hasLiked) {
-            return <>
-                <Icon className={classnames(classes.likeIcon)} path={mdiThumbUp} />
-                <span className={classnames(classes.likesAmount)}>({likes})</span>
-                <span>You liked this</span>
-            </>;
-        }
-        return <>
-            <span className={classnames(classes.likesAmount)}>({likes})</span>
-            <span>Like this</span>
-        </>;
-    }
-
     const controlsRender = () => {
         if (!user || !controls) return null;
         return <>
@@ -295,7 +291,16 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
                             className={classnames('btn', { 'btn-dark': !hasLiked, loading: liking })}
                             onClick={toggleLike} disabled={liking}
                         >
-                            <span className={classnames(classes.likeButton, 'center-children')}>{likeButtonRender()}</span>
+                            <span className={classnames(classes.likeButton, 'center-children')}>
+                                {
+                                    liking
+                                        ? <Icon className={classnames(classes.likeIcon, 'mr-0')} path={mdiLoading} spin={1} />
+                                        : <>
+                                            <Icon className={classnames(classes.likeIcon)} path={mdiThumbUp} />
+                                            <span className={classnames(classes.likesAmount)}>({likes})</span>
+                                        </>
+                                }
+                            </span>
                         </button>
                 }
                 {
@@ -339,7 +344,7 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
                     <NavLink to={`/user/${post.user.username}`}>{post.user.username}</NavLink>
                     <p className={classnames(classes.role, 'ucfirst mt-1')}>{post.user.roles[0].name}</p>
                 </h3>
-                <aside className={classnames(classes.metaboxes, 'ml-auto d-flex')}>
+                <aside className={classnames(classes.metaboxes, 'ml-auto')}>
                     <div className={classnames(classes.metabox)}>
                         <h4 className={classnames(classes.metaboxHeader)}>Forum Rank</h4>
                         <span className={classnames(classes.metaboxValue)}>{ucfirst(post.user.rank)}</span>
