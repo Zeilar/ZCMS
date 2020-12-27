@@ -3,13 +3,13 @@ import { Tab } from '../styled-components';
 import { UserContext } from '../../contexts';
 import { createUseStyles } from 'react-jss';
 import { NavLink } from 'react-router-dom';
-import { Posts, Threads, Chat } from './';
 import React, { useContext } from 'react';
 import HttpError from '../http/HttpError';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import { mdiLoading } from '@mdi/js';
 import { Http } from '../../classes';
+import { Posts, Threads } from './';
 import classnames from 'classnames';
 import { Header } from '../layout';
 import Icon from '@mdi/react';
@@ -17,7 +17,10 @@ import Icon from '@mdi/react';
 export default function Profile() {
     const styles = createUseStyles({
         container: {
-            margin: [0, 'var(--container-margin)'],
+            margin: [50, 'var(--container-margin)'],
+            '@media (max-width: 768px)': {
+                margin: 'var(--container-margin)',
+            },
         },
         content: {
             minHeight: 200,
@@ -28,6 +31,9 @@ export default function Profile() {
         },
         username: {
             fontFamily: 'Merriweather',
+            '@media (max-width: 768px)': {
+                fontSize: '1.5rem',
+            },
         },
         tabs: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.05)'],
@@ -41,6 +47,19 @@ export default function Profile() {
             fontFamily: 'RobotoSlab',
             fontSize: '1.15rem',
         },
+        meta: {
+            marginTop: 50,
+            '@media (max-width: 768px)': {
+                marginTop: 'var(--container-margin)',  
+            },
+        },
+        metaContent: {
+            '@media (max-width: 768px)': {
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gridGap: 'var(--container-margin)',
+                display: 'grid',
+            },
+        },
         metabox: {
             fontFamily: 'TitilliumWeb',
             justifyContent: 'center',
@@ -48,11 +67,17 @@ export default function Profile() {
             alignItems: 'center',
             display: 'flex',
             margin: [0, 40],
+            '@media (max-width: 768px)': {
+                margin: 0,  
+            },
         },
         metaheader: {
             fontWeight: 'normal',
-            fontSize: '1.25rem',
             marginBottom: 10,
+            fontSize: '1rem',
+            '@media (max-width: 768px)': {
+                marginBottom: 0,
+            },
         },
         metavalue: {
             fontSize: '1.5rem',
@@ -78,14 +103,14 @@ export default function Profile() {
             return <Icon className={classnames('loadingWheel-2 center-self')} path={mdiLoading} spin={1} />
         }
         return (
-            <div className={classnames(classes.container, 'mt-4')}>
+            <div className={classnames(classes.container)}>
                 <div className={classnames('col center-children')}>
                     <img className={classnames(classes.avatar, 'round')} src={`/storage/avatars/${data.avatar}`} alt="Profile avatar" />
                     <h1 className={classnames(classes.username, `color-${data.roles[0].clearance}`, 'mt-3')}>{data.username}</h1>
                     {data.signature && <p className={classnames(classes.signature, 'mt-3')}>{data.signature}</p>}
                 </div>
-                <div className={classnames('col center-children mt-4')}>
-                    <div className={classnames('row center-children')}>
+                <div className={classnames(classes.meta, 'col center-children')}>
+                    <div className={classnames(classes.metaContent, 'row center-children')}>
                         <div className={classnames(classes.metabox)}>
                             <h4 className={classnames(classes.metaheader)}>Rank</h4>
                             <h3 className={classnames(classes.metavalue, 'ucfirst')}>{data.rank}</h3>
@@ -111,17 +136,10 @@ export default function Profile() {
                     <Tab as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/posts`}>
                         Posts
                     </Tab>
-                    {
-                        !isOwnProfile() &&
-                            <Tab as={NavLink} className={classnames(classes.tab)} to={`/user/${id}/chat`}>
-                                Chat
-                            </Tab>
-                    }
                 </nav>
                 <div className={classnames(classes.content, 'col py-4 relative')}>
                     {tab === 'threads' && <Threads />}
                     {tab === 'posts' && <Posts />}
-                    {tab === 'chat' && !isOwnProfile() && <Chat />}
                 </div>
             </div>
         );
