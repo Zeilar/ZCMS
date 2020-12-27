@@ -47,6 +47,9 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
             top: '50%',
             width: 50,
             left: -80,
+            '@media (max-width: 1200px)': {
+                display: 'none',
+            },
         },
         user: {
             backgroundColor: 'var(--color-primary)',
@@ -71,7 +74,7 @@ export default function Post({ thread, post, refetch, quote, controls = true, pe
                 top: '50%',
                 width: 25,
                 left: -1,
-                '@media (max-width: 768px)': {
+                '@media (max-width: 1200px)': {
                     content: 'none',
                 },
             },
