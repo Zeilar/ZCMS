@@ -23,11 +23,25 @@ export default function Register({ location }) {
         register: {
             border: '1px solid var(--border-primary)',
             backgroundColor: 'var(--color-primary)',
+            margin: [25, 'auto', 0, 'auto'],
             borderRadius: 3,
             width: '22.5%',
+            '@media (max-width: 1200px)': {
+                width: '50%',
+            },
+            '@media (max-width: 768px)': {
+                margin: ['var(--container-margin)'],
+                width: 'unset',
+                marginTop: 15,
+            },
         },
         header: {
             fontSize: '2rem',
+            marginTop: 50,
+            '@media (max-width: 768px)': {
+                marginTop: 'var(--container-margin)',
+                fontSize: '1.5rem',
+            },
         },
         input: {
             border: '1px solid var(--border-secondary)',
@@ -184,8 +198,8 @@ export default function Register({ location }) {
     return (
         <>
             <Header />
-            <Knockout className={`${classes.header} text-center mt-4`} as="h2">Register</Knockout>
-            <form className={`${classes.register} mx-auto mt-3`} onSubmit={register}>
+            <Knockout className={`${classes.header} text-center`} as="h2">Register</Knockout>
+            <form className={`${classes.register}`} onSubmit={register}>
                 {renderErrors()}
                 <div className={`${classes.row} pb-0 col`}>
                     <label className={classes.label}>Username</label>

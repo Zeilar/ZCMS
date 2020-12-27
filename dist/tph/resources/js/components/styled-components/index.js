@@ -115,9 +115,13 @@ const BigNavButton = styled.a`
         color: var(--text-primary);
         text-decoration: none;
     }
+    @media (max-width: 1200px) {
+        font-size: 1.25rem; 
+        padding: 30px;
+    }
     @media (max-width: 768px) {
-        padding: 8px 12px;
         font-size: 1rem; 
+        padding: 20px;
     }
 `;
 
