@@ -27,6 +27,10 @@ export default function NewThread() {
             border: '1px solid var(--border-primary)',
             backgroundColor: 'var(--color-primary)',
             borderRadius: 3,
+            padding: 50,
+            '@media (max-width: 768px)': {
+                padding: 'var(--container-margin)',
+            },
         },
         header: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
@@ -37,6 +41,9 @@ export default function NewThread() {
             '&:hover': {
                 color: 'var(--color-primary)',
                 textDecoration: 'none',
+            },
+            '@media (max-width: 768px)': {
+                fontSize: '1.25rem',
             },
         },
         titleGroup: {
@@ -144,7 +151,7 @@ export default function NewThread() {
                         <span>{data?.name}</span>
                     </h2>
                 </div>
-                <form className={classnames(classes.form, 'p-4')} onSubmit={submit}>
+                <form className={classnames(classes.form)} onSubmit={submit}>
                     <div className={classnames(classes.titleGroup, 'relative mb-1')}>
                         <input
                             className={classnames(classes.title, { active: title !== '' }, 'relative')} 
