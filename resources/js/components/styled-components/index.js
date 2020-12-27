@@ -93,10 +93,10 @@ const BigNavButton = styled.a`
     font-family: Raleway;
     align-items: center;
     border-radius: 3px;
-    font-size: 1.25rem;
     padding: 30px 50px;
     user-select: none;
     font-weight: bold;
+    font-size: 1.5rem;
     display: flex;
     * {
         font-size: inherit;
