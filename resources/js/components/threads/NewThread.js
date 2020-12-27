@@ -18,6 +18,9 @@ export default function NewThread() {
     const styles = createUseStyles({
         wrapper: {
             margin: ['auto', 'var(--container-margin)'],
+            '@media (max-width: 768px)': {
+                margin: 'var(--container-margin)',
+            },
         },
         form: {
             boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
