@@ -22,7 +22,7 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
                 transition: 'all 0.25s',
                 marginRight: 25,
                 height: 'unset',
-                padding: [5, 0],
+                padding: 0,
                 '&.right': {
                     marginRight: 0,
                     marginLeft: 25,

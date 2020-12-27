@@ -16,6 +16,11 @@ export default function Home() {
             gridTemplateColumns: 'repeat(4, 1fr)',
             display: 'grid',
             gridGap: 50,
+            '@media (max-width: 1200px)': {
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gridGap: 'var(--container-margin)',
+                margin: 'var(--container-margin)',
+            },
             '@media (max-width: 768px)': {
                 gridTemplateColumns: 'repeat(2, 1fr)',
                 gridGap: 'var(--container-margin)',
