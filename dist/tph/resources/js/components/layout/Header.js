@@ -12,16 +12,13 @@ export default function Header() {
             padding: [0, 'var(--container-margin)'],
             backgroundColor: 'var(--color-dark)',
             zIndex: 100,
+            '@media (max-width: 768px)': {
+                padding: 'var(--container-margin)',
+            },
         },
         brand: {
             '&:hover': {
                 textDecoration: 'none',
-            },
-        },
-        navbar: {
-            margin: [25, 0],
-            '@media (max-width: 768px)': {
-                margin: [5, 0],
             },
         },
         navlist: {
@@ -29,7 +26,13 @@ export default function Header() {
         },
         navitem: {
             margin: [0, 20, 0, 0],
+            alignItems: 'center',
             userSelect: 'none',
+            display: 'flex',
+            height: 100,
+            '@media (max-width: 768px)': {
+                height: 'unset',
+            },
             '&:last-child': {
                 marginRight: 0,
             },

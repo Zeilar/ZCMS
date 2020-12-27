@@ -9,15 +9,17 @@ import Icon from '@mdi/react';
 export default function NavDropdown({ containerClassName = '', toggler, items = [], align = 'right' }) {
     const styles = createUseStyles({
         wrapper: {
+            position: 'relative',
             marginRight: 50,
+            display: 'flex',
             padding: 10,
+            height: 100,
             '&.right': {
                 marginRight: 0,
                 marginLeft: 50,
             },
             '@media (max-width: 768px)': {
                 transition: 'all 0.25s',
-                position: 'relative',
                 marginRight: 25,
                 padding: [5, 0],
                 '&.right': {
@@ -54,7 +56,7 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
         listWrapper: {
             transform: 'translateX(-50%)',
             position: 'absolute',
-            paddingTop: 10,
+            marginTop: 90,
             left: '50%',
             zIndex: 10,
             '@media (max-width: 768px)': {
@@ -65,7 +67,7 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
                 display: 'flex',
                 height: '100vh',
                 width: '100vw',
-                paddingTop: 0,
+                marginTop: 0,
                 top: '-100%',
                 left: 0,
                 '&.open': {
@@ -74,7 +76,7 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
             },
         },
         list: {
-            boxShadow: [0, 0, 5, 0, 'rgba(0, 0, 0, 0.15)'],
+            boxShadow: [0, 0, 5, 0, 'black'],
             borderRadius: 4,
             '@media (max-width: 768px)': {
                 boxShadow: 'none',
@@ -83,37 +85,28 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
             },
         },
         item: {
-            borderTop: '1px solid var(--border-primary)',
-            backgroundColor: 'var(--color-primary)',
-            color: 'var(--text-primary)',
+            backgroundColor: 'var(--color-dark)',
+            color: 'var(--color-primary)',
             fontFamily: 'TitilliumWeb',
             textAlign: 'center',
-            transition: 'none',
             padding: [15, 35],
+            '&.active, &:hover': {
+                color: 'var(--color-main)',
+            },
+            '&:last-child': {
+                borderBottomRightRadius: 2,
+                borderBottomLeftRadius: 2,
+            },
             '&:hover': {
-                backgroundImage: 'var(--color-main-gradient)',
-                color: 'var(--color-primary)',
-                borderColor: 'transparent',
                 textDecoration: 'none',
             },
             '@media (max-width: 768px)': {
                 background: 'none !important',
                 color: 'var(--color-primary)',
                 fontSize: '1.5rem',
-                borderRadius: 0,
-                border: 0,
                 '&:hover': {
                     color: 'var(--color-main)',
                 },
-            },
-            '&:first-child': {
-                borderTopRightRadius: 4,
-                borderTopLeftRadius: 4,
-                borderTop: 0,
-            },
-            '&:last-child': {
-                borderBottomRightRadius: 4,
-                borderBottomLeftRadius: 4,
             },
         },
     });

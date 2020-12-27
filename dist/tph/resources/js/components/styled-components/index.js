@@ -95,6 +95,9 @@ const BigNavButton = styled.a`
     user-select: none;
     font-weight: bold;
     display: flex;
+    * {
+        font-size: inherit;
+    }
     &:hover, &.active {
         transform: scale(1.02);
     }
@@ -114,7 +117,7 @@ const BigNavButton = styled.a`
     }
     @media (max-width: 768px) {
         padding: 8px 12px;
-        font-size: 1rem;
+        font-size: 1rem; 
     }
 `;
 
