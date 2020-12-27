@@ -12,6 +12,9 @@ export default function Header() {
             padding: [0, 'var(--container-margin)'],
             backgroundColor: 'var(--color-dark)',
             zIndex: 100,
+            '@media (max-width: 768px)': {
+                padding: 'var(--container-margin)',
+            },
         },
         brand: {
             '&:hover': {
@@ -27,6 +30,9 @@ export default function Header() {
             userSelect: 'none',
             display: 'flex',
             height: 100,
+            '@media (max-width: 768px)': {
+                height: 'unset',
+            },
             '&:last-child': {
                 marginRight: 0,
             },
