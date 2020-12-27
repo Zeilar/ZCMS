@@ -21,6 +21,7 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
             '@media (max-width: 768px)': {
                 transition: 'all 0.25s',
                 marginRight: 25,
+                height: 'unset',
                 padding: [5, 0],
                 '&.right': {
                     marginRight: 0,
