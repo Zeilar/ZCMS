@@ -55,13 +55,13 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
             },
         },
         listWrapper: {
+            backgroundColor: 'var(--color-dark)',
             transform: 'translateX(-50%)',
             position: 'absolute',
-            marginTop: 90,
+            marginTop: 89,
             left: '50%',
             zIndex: 10,
             '@media (max-width: 768px)': {
-                backgroundColor: 'var(--color-dark)',
                 transition: 'all 0.25s ease-in-out',
                 transform: 'none',
                 position: 'fixed',
@@ -86,7 +86,6 @@ export default function NavDropdown({ containerClassName = '', toggler, items = 
             },
         },
         item: {
-            backgroundColor: 'var(--color-dark)',
             color: 'var(--color-primary)',
             fontFamily: 'TitilliumWeb',
             textAlign: 'center',
