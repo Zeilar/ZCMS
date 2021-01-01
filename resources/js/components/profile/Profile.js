@@ -88,7 +88,6 @@ export default function Profile() {
     });
     const classes = styles();
 
-    const { user } = useContext(UserContext);
     const { id, tab } = useParams();
 
     const { data, status } = useQuery(`profile-${id}`, async () => {
@@ -99,7 +98,7 @@ export default function Profile() {
 
     if (data === 404) return <HttpError code={data} />
 
-    const isOwnProfile = () => user && user.id === data.id;
+    document.title = `TPH | ${id}`;
 
     const render = () => {
         if (status === 'loading') {

@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { FeedbackModalContext } from '../../contexts';
+import { mdiCloseCircle, mdiPlus } from '@mdi/js';
 import { Chatbox, Header } from '../layout';
 import { createUseStyles } from 'react-jss';
 import { Http } from '../../classes';
 import classnames from 'classnames';
-import { mdiCloseCircle, mdiPlus } from '@mdi/js';
 import Icon from '@mdi/react';
 
 export default function Chat() {
+    document.title = 'TPH | Chat';
+
     const styles = createUseStyles({
         wrapper: {
             margin: [0, 'var(--container-margin)'],

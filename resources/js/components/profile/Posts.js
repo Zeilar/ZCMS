@@ -29,6 +29,8 @@ export default function Posts() {
         return <Icon className={classnames('center-self loadingWheel-2')} path={mdiLoading} spin={1} />
     }
 
+    document.title = `TPH | ${id} - Posts`;
+
     const paginationRender = () => {
         if (!gotPosts()) return;
         return (

@@ -10,6 +10,8 @@ import Icon from '@mdi/react';
 import React from 'react';
 
 export default function Home() {
+    document.title = 'The Pioneer Hangout';
+
     const styles = createUseStyles({
         categories: {
             margin: [50, 'var(--container-margin)'],

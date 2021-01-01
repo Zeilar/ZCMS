@@ -29,6 +29,8 @@ export default function Threads() {
         return <Icon className={classnames('center-self loadingWheel-2')} path={mdiLoading} spin={1} />
     }
 
+    document.title = `TPH | ${id} - Threads`;
+
     const paginationRender = () => {
         if (!gotThreads()) return;
         return (

@@ -5,6 +5,8 @@ import classnames from 'classnames';
 import React from 'react';
 
 export default function Dashboard() {
+    document.title = 'TPH | Admin';
+
     const styles = createUseStyles({
         wrapper: {
             

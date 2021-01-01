@@ -1,12 +1,13 @@
 import { errorCodeHandler } from '../../functions/helpers';
 import { FeedbackModalContext } from '../../contexts';
 import { useHistory, useParams } from 'react-router';
+import React, { useContext, useState } from 'react';
+import { ucfirst } from '../../functions/helpers';
 import { Http, Validator } from '../../classes';
 import { createUseStyles } from 'react-jss';
 import { Users, Threads, Posts } from './';
 import { NavLink } from 'react-router-dom';
 import { Tab } from '../styled-components';
-import React, { useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import { mdiLoading } from '@mdi/js';
 import { Searchbar } from '../misc';
@@ -40,6 +41,8 @@ export default function Search() {
     const [inputError, setInputError] = useState();
     const { query, tab, page } = useParams();
     const history = useHistory();
+
+    document.title = `TPH | ${query ?? 'Search'} ${tab ? '- ' + ucfirst(tab) : ''}`;
 
     const { data, status } = useQuery([page ?? '1', `search-${query}`], async () => {
         if (!query) return;
