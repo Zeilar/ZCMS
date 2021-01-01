@@ -42,6 +42,8 @@ export default function Category() {
     const { user } = useContext(UserContext);
     const { category, page } = useParams();
 
+    document.title = `TPH | ${ucfirst(category)}`;
+
     useEffect(async () => {
         const response = await Http.get(`threads?category=${category}&page=${page ?? '1'}`);
         if (response.code !== 404 && response.code !== 200) setThreadsStatus('error');

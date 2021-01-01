@@ -19,6 +19,8 @@ export default function Login({ location }) {
         return <Redirect to="/" />
     }
 
+    document.title = 'TPH | Login';
+
     const styles = createUseStyles({
         login: {
             border: '1px solid var(--border-primary)',

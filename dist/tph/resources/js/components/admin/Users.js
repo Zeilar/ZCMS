@@ -9,6 +9,8 @@ import classnames from 'classnames';
 import Icon from '@mdi/react';
 
 export default function Users() {
+    document.title = 'TPH | Admin - Users';
+
     const { setMessage, setType } = useContext(FeedbackModalContext);
 
     const [modalTarget, setModalTarget] = useState();

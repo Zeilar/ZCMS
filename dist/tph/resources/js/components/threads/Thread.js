@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { errorCodeHandler, ucfirst } from '../../functions/helpers';
 import { FeedbackModalContext, UserContext } from '../../contexts';
-import { errorCodeHandler } from '../../functions/helpers';
 import { useHistory, useParams } from 'react-router';
 import { mdiArrowLeft, mdiLoading } from '@mdi/js';
 import MdEditor from 'react-markdown-editor-lite';
@@ -86,7 +86,7 @@ export default function Threads() {
     const [httpError, setHttpError] = useState(false);
     const [editorError, setEditorError] = useState();
     const { user } = useContext(UserContext);
-    const { id, page } = useParams();
+    const { id, slug, page } = useParams();
     const history = useHistory();
     const reply = useRef();
 
@@ -102,6 +102,8 @@ export default function Threads() {
         if (response.code !== 200) return setHttpError(response.code);
         return response.data;
     }, { retry: false });
+
+    document.title = `${dbThread.data ? 'TPH | ' + dbThread.data.title : 'The Pioneer Hangout'}`;
 
     async function submitPost(e) {
         e.preventDefault();

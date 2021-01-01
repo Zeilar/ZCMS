@@ -1,4 +1,4 @@
-import { errorCodeHandler } from '../../functions/helpers';
+import { errorCodeHandler, ucfirst } from '../../functions/helpers';
 import { useHistory, useParams } from 'react-router';
 import { mdiLoading, mdiArrowLeft } from '@mdi/js';
 import MdEditor from 'react-markdown-editor-lite';
@@ -112,6 +112,8 @@ export default function NewThread() {
     const [title, setTitle] = useState('');
     const { category } = useParams();
     const history = useHistory();
+
+    document.title = `TPH | ${ucfirst(category)} - New thread`;
 
     const { data, status } = useQuery(`category-${category}`, async () => {
         const response = await Http.get(`categories/${category}`);

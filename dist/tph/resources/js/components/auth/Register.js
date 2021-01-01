@@ -19,6 +19,8 @@ export default function Register({ location }) {
         return <Redirect to="/" />
     }
 
+    document.title = 'TPH | Register';
+
     const styles = createUseStyles({
         register: {
             border: '1px solid var(--border-primary)',

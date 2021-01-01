@@ -42,6 +42,8 @@ export default function HttpError({ code }) {
             break;
     }
 
+    document.title = `TPH | ${code} ${message}`;
+
     return (
         <>
             <Header />
