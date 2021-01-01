@@ -99,6 +99,7 @@ class UsersController extends Controller
     {
         $this->authorize('delete', $user);
         $user->delete();
+        return response(true);
     }
 
     public function suspend(Request $request, User $user) {
