@@ -55,8 +55,8 @@ export default function Chat() {
     });
     const classes = styles();
 
-    const [active, setActive] = useState(JSON.parse(localStorage.getItem('activeChatTab')) ?? tabs[0] ?? '');
     const [tabs, setTabs] = useState(JSON.parse(localStorage.getItem('chatTabs')) ?? []);
+    const [active, setActive] = useState(JSON.parse(localStorage.getItem('activeChatTab')) ?? tabs.length > 0 ? tabs[0] : '');
     const [tabInput, setTabInput] = useState('');
     const [chats, setChats] = useState([]);
 
