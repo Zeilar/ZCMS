@@ -1,8 +1,8 @@
+import { CrudModal, CrudField, CrudTags, CrudSuspend } from './';
 import React, { useState, useContext, useEffect } from 'react';
 import { errorCodeHandler } from '../../functions/helpers';
 import { mdiPencil, mdiPlus, mdiTrashCan } from '@mdi/js';
 import { FeedbackModalContext } from '../../contexts';
-import { CrudModal, CrudField, CrudTags } from './';
 import { MaterialTable } from '../misc';
 import { Http } from '../../classes';
 import classnames from 'classnames';
@@ -22,6 +22,7 @@ export default function Users() {
         { title: 'Username', name: 'username', value: '' },
         { title: 'Email', name: 'email', value: '' },
         { title: 'Roles', name: 'roles', value: '' },
+        { title: 'Suspend', name: 'suspend', value: false },
     ]);
 
     const [users, setUsers] = useState([]);
@@ -89,11 +90,13 @@ export default function Users() {
                     const username = fields.find(field => field.title === 'Username');
                     const email = fields.find(field => field.title === 'Email');
                     const roles = fields.find(field => field.title === 'Roles');
+                    const suspended = fields.find(field => field.title === 'Suspend');
                     return {
                         ...user,
                         username: username.value,
                         email: email.value,
                         roles: roles.value,
+                        suspended: suspended.value || false,
                     };
                 }
                 return user;
@@ -130,6 +133,7 @@ export default function Users() {
                                 { title: 'Username', name: 'username', value: rowData.username },
                                 { title: 'Email', name: 'email', value: rowData.email },
                                 { title: 'Roles', name: 'roles', value: parsedTags },
+                                { title: 'Suspend', name: 'suspend', value: rowData.suspended },
                             ]);
                             setModalTarget(rowData);
                             setEditModalOpen(true);
@@ -163,6 +167,7 @@ export default function Users() {
                                     <CrudField field={fields.find(field => field.title === 'Username')} updateField={updateField} autoFocus={true} />
                                     <CrudField field={fields.find(field => field.title === 'Email')} updateField={updateField} autoComplete="off" />
                                     <CrudTags field={fields.find(field => field.title === 'Roles')} updateField={updateField} placeholder="member" />
+                                    <CrudSuspend field={fields.find(field => field.title === 'Suspend')} updateField={updateField} />
                                 </>
                             );
                         }}

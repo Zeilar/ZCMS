@@ -86,7 +86,14 @@ class UsersController extends Controller
         if ($data) {
             $user->update($data);
         }
-        if (count($roles) > 0) $user->roles()->sync($roles);        
+        $suspend = $request->suspend;
+        if ($suspend && $suspend !== 'false') {
+            $user->suspend($request->suspendMessage ?? '', new Carbon($request->suspend));
+        } else if ($suspend === 'false') {
+            $user->pardon();
+        }
+        if (count($roles) > 0) $user->roles()->sync($roles);
+        return response(true);
     }
 
     /**
@@ -100,16 +107,6 @@ class UsersController extends Controller
         $this->authorize('delete', $user);
         $user->delete();
         return response(true);
-    }
-
-    public function suspend(Request $request, User $user) {
-        $this->authorize('toggleSuspension', $user);
-        $user->suspend($request->message, Carbon::now()->addDays($request->days ?? 7));
-    }
-
-    public function pardon(User $user) {
-        $this->authorize('toggleSuspension', $user);
-        $user->suspensions()->where('expiration', '>=', Carbon::now())->update(['expiration' => Carbon::now()->subMinutes(1)]);
     }
 
     public function bulkDelete(Request $request) {
