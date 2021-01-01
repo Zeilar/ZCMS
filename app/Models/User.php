@@ -14,10 +14,11 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, Searchable;
 
+    protected $dispatchesEvents = ['saved' => CreatedUser::class, 'deleted' => DeletedUser::class];
+
     protected $appends = ['suspended', 'postsAmount', 'likesAmount', 'rank', 'avatar', 'signature'];
     protected $hidden = ['password', 'updated_at', 'remember_token', 'email_verified_at'];
     protected $fillable = ['username', 'email', 'password', 'role', 'avatar'];
-    protected $dispatchesEvents = ['saved' => CreatedUser::class, 'deleted' => DeletedUser::class];
     protected $casts = ['email_verified_at' => 'datetime'];
     protected $with = ['roles'];
 
@@ -95,12 +96,17 @@ class User extends Authenticatable
         return $this->suspensions()->where('expiration', '>=', Carbon::now())->pluck('expiration')->first() ?? false;
     }
 
-    public function suspend(string $message, $expiration): User {
+    public function suspend(string $message = '', $expiration = null): User {
         Suspension::create([
             'expiration' => $expiration ?? Carbon::now()->addDays(7),
             'user_id' => $this->id,
             'message' => $message,
         ]);
+        return $this;
+    }
+
+    public function pardon(): User {
+        $this->suspensions()->where('expiration', '>=', Carbon::now())->update(['expiration' => Carbon::now()->subMinutes(1)]);
         return $this;
     }
     

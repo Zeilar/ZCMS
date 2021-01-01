@@ -53,8 +53,13 @@ function humanReadableDate(date) {
     });
 }
 
+function formatDate(date, format = 'YYYY-MM-DD') {
+    return dayjs(date).format(format);
+}
+
 export {
-    ucfirst,
-    errorCodeHandler,
     humanReadableDate,
+    errorCodeHandler,
+    formatDate,
+    ucfirst,
 };
