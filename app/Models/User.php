@@ -20,7 +20,7 @@ class User extends Authenticatable
     protected $hidden = ['password', 'updated_at', 'remember_token', 'email_verified_at'];
     protected $fillable = ['username', 'email', 'password', 'role', 'avatar'];
     protected $casts = ['email_verified_at' => 'datetime'];
-    protected $with = ['roles'];
+    protected $with = ['roles', 'settings'];
 
     public function posts() {
         return $this->hasMany(Post::class);
